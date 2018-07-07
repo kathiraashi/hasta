@@ -1,0 +1,60 @@
+<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
+  <div class="Modal_Header">
+     <p>Create PF Info</p>
+     <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+ </div>
+ <div class="Model_Body">
+  <div class="row">
+     <div class="col-sm-6 Form_Input">
+        <label>PF No:</label>
+        <input type="text" >
+     </div>
+   <div class="col-sm-6 Form_Input">
+      <label>Registration date:</label>
+        <input type="text">
+     </div><br>
+     <div class="col-sm-6 Form_Input">
+      <label>Signatory Name:</label>
+        <input type="text" >
+     </div>
+     <div class="col-sm-6 Form_Input">
+      <label>Signatory Designation:</label>
+        <input type="text"  >
+     </div>
+     <div class="col-sm-6 ">
+         <input type="radio" >PF Rules Same for all Employees
+     </div>
+  </div>
+</div>
+  <div class="Model_Footer">
+   <button mat-raised-button color="primary" > Submit </button>
+</div>
+
+</div>
+<div class="Modal_Content" *ngIf="Type && Type === 'View'">
+        <div class="Modal_Header">
+           <p>View PF Info</p>
+           <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+       </div>
+       <div class="Model_Body">
+            <div class="row">
+                  <div class="col-sm-6 text-right Static">  PF No : </div>
+                  <div class="col-sm-6 text-left Data">  4355</div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-6 text-right Static"> Registration Date: </div>
+                  <div class="col-sm-6 text-left Data"> 25/08/17 </div>
+               </div>
+             <div class="row">
+                  <div class="col-sm-6 text-right Static">  Signatory Name : </div>
+                  <div class="col-sm-6 text-left Data">   Signatory Name </div>
+               </div>
+               <div class="row">
+                     <div class="col-sm-6 text-right Static">  Signatory Designation : </div>
+                     <div class="col-sm-6 text-left Data">  Signatory Designation </div>
+                  </div>
+      </div>
+        <div class="Model_Footer">
+       </div>
+      </div>
+

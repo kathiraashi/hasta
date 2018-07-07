@@ -1,0 +1,44 @@
+
+<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
+    <div class="Modal_Header">
+        <p> Create Income type</p>
+        <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+    </div>
+    <div class="Model_Body">
+      <div class="row">
+        <div class="col-sm-6 Form_Input">
+            <label>Income type:</label>
+            <input type="text">
+        </div>
+     </div>
+    </div>
+    <div class="Model_Footer">
+        <button mat-raised-button color="primary" > Submit </button>
+     </div>
+    </div>
+   <div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+    <div class="Modal_Header">
+       <p>View  Income type</p>
+       <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+         <div class="row">
+               <div class="col-sm-6 text-right Static">Income Type: </div>
+               <div class="col-sm-6 text-left Data">Income Type</div>
+             </div>
+   </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

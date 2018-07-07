@@ -1,0 +1,104 @@
+
+
+
+<div class="row header_part">
+    <div class="col-sm-6">
+      <button class="Create_Button" mat-raised-button (click)="CreateQuoteTerms()"> + Create </button>
+    </div>
+    <div class="col-sm-6">
+      <div class="Search_Section">
+        <input type="text" placeholder="Search.." name="search">
+        <i class="material-icons">search</i>
+      </div>
+    </div>
+  </div>
+<div class="Table_Section">
+    <table >
+      <thead>
+        <tr>
+          <th>S.no</th>
+          <th>quote Terms</th>
+          <th>Createdby </th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="S_no"> 1 </span>
+          </td>
+          <td>
+            <span class="Style_1">checking Add</span>
+          </td>
+          <td>
+            <span class="Style_1"> Admin </span>
+          </td>
+          <td>
+            <span class="Style_1">May 29,2018</span>
+        </td>
+        <td>
+         <button (click)="ViewQuoteTerms()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+            <i class="material-icons">zoom_in</i>
+         </button>
+         <button  (click)="CreateQuoteTerms()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+            <i class="material-icons">edit</i>
+         </button>
+         <button (click)=" DeleteQuoteTerms()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+            <i class="material-icons">delete_forever</i>
+         </button>
+      </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="S_no"> 2 </span>
+            </td>
+            <td>
+              <span class="Style_1"> Checking Success </span>
+            </td>
+            <td>
+              <span class="Style_1"> Admin </span>
+            </td>
+            <td>
+              <span class="Style_1">May 29,2018</span>
+          </td>
+          <td>
+            <button (click)="ViewQuoteTerms()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+               <i class="material-icons">zoom_in</i>
+            </button>
+            <button  (click)="CreateQuoteTerms()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+               <i class="material-icons">edit</i>
+            </button>
+            <button (click)=" DeleteQuoteTerms()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+               <i class="material-icons">delete_forever</i>
+            </button>
+         </td>
+          </tr>
+          <tr>
+              <td>
+                <span class="S_no"> 3</span>
+              </td>
+              <td>
+                <span class="Style_1">Checking Success</span>
+              </td>
+              <td>
+                <span class="Style_1"> Admin </span>
+              </td>
+              <td>
+                <span class="Style_1">May 29,2018</span>
+            </td>
+            <td>
+               <button (click)="ViewQuoteTerms()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateQuoteTerms()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteQuoteTerms()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+            </tr>
+      </tbody>
+    </table>
+

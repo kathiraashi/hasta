@@ -1,0 +1,32 @@
+<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
+  <div class="Modal_Header">
+      <p> Create Ownership Type</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+  </div>
+  <div class="Model_Body">
+    <div class="row">
+      <div class="col-sm-6 Form_Input">
+        <label>Ownership Type: </label>
+          <input type="text">
+      </div>
+   </div>
+</div>
+<div class="Model_Footer">
+   <button mat-raised-button color="primary" > Submit </button>
+</div>
+</div>
+<div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+  <div class="Modal_Header">
+     <p>View Ownership Type</p>
+     <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+ </div>
+ <div class="Model_Body">
+      <div class="row">
+            <div class="col-sm-6 text-right Static">Ownership Type : </div>
+            <div class="col-sm-6 text-left Data"> Ownership type</div>
+         </div>
+ </div>
+</div>
+
+
+

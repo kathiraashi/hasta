@@ -1,0 +1,58 @@
+<div class="Page_Section">
+   <div class="container-fluid">
+      <div class="Page_Identity">
+      <div class="Page_Name">
+        <h5>CRM SETTINGS</h5>
+        </div>
+        <div class="Page_Track">
+            <ul >
+              <li class="HeaderName">Settings</li>
+              <li class="arrow">>></li>
+              <li>CRM Settings</li>
+              </ul>
+            </div>
+      </div>
+      <div class="Page_Content CRM_Settings">
+         <div class="Main_Section">
+            <div class="Left_Section">
+               <ul class="Tabs">
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Industry_type'}" (click)="Active_Tab_Change('Industry_type')"><span class="Tab_Content">Industry type</span></li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Ownership_type'}" (click)="Active_Tab_Change('Ownership_type')"><span class="Tab_Content">Ownership type</span> </li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_type'}" (click)="Active_Tab_Change('Activity_type')"><span class="Tab_Content">Activity type </span> </li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_status'}" (click)="Active_Tab_Change('Activity_status')"><span class="Tab_Content">Activity status </span></li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_priority'}" (click)="Active_Tab_Change('Activity_priority')"><span class="Tab_Content">Activity priority</span> </li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Contact_role'}" (click)="Active_Tab_Change('Contact_role')"><span class="Tab_Content">Contact role </span></li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Pipeline_Status'}" (click)="Active_Tab_Change('Pipeline_Status')"><span class="Tab_Content">Pipeline status </span> </li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'quote_terms'}" (click)="Active_Tab_Change('quote_terms')"><span class="Tab_Content">Quote terms  </span></li>
+               </ul>
+            </div>
+            <div class="Right_Section">
+              <div *ngIf="Active_Tab === 'Industry_type'">
+                <app-industry-type-crm-settings></app-industry-type-crm-settings>
+              </div>
+              <div *ngIf="Active_Tab === 'Ownership_type'">
+                <app-owner-ship-type-crm-settings></app-owner-ship-type-crm-settings>
+              </div>
+              <div *ngIf="Active_Tab === 'Activity_type'">
+                <app-activity-type-crm-settings></app-activity-type-crm-settings>
+              </div>
+              <div *ngIf="Active_Tab === 'Activity_status'">
+                <app-activity-status-type-crm-settings></app-activity-status-type-crm-settings>
+              </div>
+              <div *ngIf="Active_Tab === 'Activity_priority'">
+                <app-activity-priority-type-crm-settings></app-activity-priority-type-crm-settings>
+              </div>
+              <div *ngIf="Active_Tab === 'Pipeline_Status'">
+                <app-pipe-line-status-type-crm-settings></app-pipe-line-status-type-crm-settings>
+              </div>
+              <div *ngIf="Active_Tab === 'Contact_role'">
+                <app-contact-role-type-crm-settings></app-contact-role-type-crm-settings>
+              </div>
+              <div *ngIf="Active_Tab === 'quote_terms'">
+                <app-quote-terms-type-crm-settings></app-quote-terms-type-crm-settings>
+              </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,96 @@
+/* --------------   Page Identity Section  ----------------- */
+   .Page_Identity{
+      display: flex;
+      height:40px;
+      width: 100%;
+      margin-bottom: 5px;
+   }
+   .Page_Identity .Page_Name{
+      width:50%;
+   }
+   .Page_Identity .Page_Name h5{
+      color: #4f6a7a;
+      line-height: 35px;
+      font-size: 18px;
+      margin: 0px;
+      font-weight: 700;
+   }
+   /* left Section */
+   .change_button{
+      background-color:#08a92c;
+      border:1px solid #08a92c;
+      color:#fff;
+      outline:none;
+      margin-right: 32%;
+   }
+   /* Form Style */
+   .Form_Input input {
+      padding: 10px;
+      width: 100%;
+      height: 37px;
+      outline: none;
+      margin-bottom: 25px;
+      border: 1px solid gainsboro;
+      color: #484848;
+      font-weight: 500;
+      font-size: 14px;
+   }
+   .Form_Input input:-moz-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_Input input::-moz-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_Input input::-webkit-input-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_Input input:-ms-input-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_Select select{
+      width: 100%;
+      height: 37px;
+      color: #999;
+      outline: none;
+      padding: 0px 10px;
+      border: 1px solid #dcdcdc;
+      margin-bottom: 25px;
+   }
+   .Form_Select select option{
+      color: #999999;
+      width: 100%;
+   }
+   .Form_TextArea textarea {
+      padding: 10px;
+      width: 100%;
+      outline: none;
+      margin-bottom: 25px;
+      border: 1px solid gainsboro;
+      color: #484848;
+      font-weight: 500;
+      font-size: 14px;
+   }
+   .Form_TextArea textarea:-moz-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_TextArea textarea::-moz-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_TextArea textarea::-webkit-input-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_TextArea textarea:-ms-input-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .left_section .Form_Input input{
+   width:80%;
+   }
+   

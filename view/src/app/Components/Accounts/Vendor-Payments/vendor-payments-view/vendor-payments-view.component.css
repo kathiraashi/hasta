@@ -1,0 +1,240 @@
+.Form_Input input {
+    padding: 10px;
+    width: 100%;
+    height: 37px;
+    outline: none;
+    margin-bottom: 25px;
+    border: 1px solid gainsboro;
+    color: #484848;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .Form_Input label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: #4e6a7a;
+  }
+  .Form_Input input:-moz-placeholder{
+    color: #999999;
+    font-weight: 400;
+  }
+  .Form_Input input::-moz-placeholder{
+    color: #999999;
+    font-weight: 400;
+  }
+  .Form_Input input::-webkit-input-placeholder{
+    color: #999999;
+    font-weight: 400;
+  }
+  .Form_Input input:-ms-input-placeholder{
+    color: #999999;
+    font-weight: 400;
+  }
+  .Form_Select select{
+    width: 100%;
+    height: 37px;
+    color: #999;
+    outline: none;
+    padding: 0px 10px;
+    border: 1px solid #dcdcdc;
+    margin-bottom: 25px;
+  }
+  .Form_Select label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: #4e6a7a;
+  }
+  .Form_Select select option{
+    color: #999999;
+    width: 100%;
+  }
+  .Append_Btn i{
+    color: #484848;
+    line-height: 45px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+ .Form_TextArea textarea {
+    padding: 10px;
+    width: 100%;
+    outline: none;
+    margin-bottom: 25px;
+    border: 1px solid gainsboro;
+    color: #484848;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .Form_TextArea label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: #4e6a7a;
+  }
+  .Form_TextArea textarea:-moz-placeholder{
+    color: #999999;
+    font-weight: 400;
+  }
+  .Form_TextArea textarea::-moz-placeholder{
+    color: #999999;
+    font-weight: 400;
+  }
+  .Form_TextArea textarea::-webkit-input-placeholder{
+    color: #999999;
+    font-weight: 400;
+  }
+  .Form_TextArea textarea:-ms-input-placeholder{
+    color: #999999;
+    font-weight: 400;
+  }
+  .Company_Details{
+    background-color: #fff;
+    margin: 10px;
+    padding: 20px;
+    margin-left: 15px;
+    width: 100%;
+    border-radius: 5px;
+    border-top: 2px solid #49B660;
+    height:300px;
+  }
+  .table_section{
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    margin-right:10px;
+  }
+  .table_section .table_head{
+    font-size:16px;
+    color:#A6A6A6;
+    cursor:pointer;
+  }
+  .table_section tr{
+   border:1px solid #e4dcdc;
+    height: 45px;
+  }
+  .table_section tbody td{
+    background-color:#F5F5F5;
+    width:100%;
+    height:45px;
+    text-align:center;
+  }
+  .table_section tbody td span{
+   font-size:16px;
+   font-weight:400;
+   color:#6d6868;
+  }
+  .Title h5{
+    font-weight:600;
+    font-size:16px;
+    color:#4c4848;
+  }
+  .Value h5{
+    font-weight:400;
+    font-size:14px;
+    color:#6f6363;
+  }
+  
+.Main_Section {
+    width: 100%;
+    display: block;
+    position: relative;
+    padding: 24px;
+    border-radius: 2px;
+    background: #fff;
+    color: #4f6a7a;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+}
+.Left_Section .company_img {
+    vertical-align: middle;
+    border-style: none;
+    max-height: 225px;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    margin-bottom: 5px;
+}
+.Static{
+    font-weight: 800;
+    color: #4f6a7a;
+}
+.Data{
+    font-weight: 500;
+    color: #4f6a7a;
+}
+/* --------------   Page Identity Section  ----------------- */
+.Page_Identity{
+    display: flex;
+    height:40px;
+    width: 100%;
+    margin-bottom: 5px;
+ }
+ .Page_Identity .Page_Name{
+    width:50%;
+ }
+ .Page_Identity .Page_Name h5{
+    color: #4f6a7a;
+    line-height: 35px;
+    font-size: 18px;
+    margin: 0px;
+    font-weight: 700;
+ }
+ .Page_Identity .Page_Track{
+    width:50%;
+    line-height: 35px;
+ }
+ .Page_Identity .Page_Track ul{
+    display: flex;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    align-items: center;
+    float: right;
+ }
+ .Page_Identity .Page_Track ul li {
+    color: #a5adb1;
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 5px;
+ }
+ .Page_Identity .Page_Track ul li.arrow{
+    letter-spacing: -4px;
+    font-size: 19px;
+    transform: scale(.6, 1);
+ }
+ .Page_Identity .Page_Track ul li.arrowGreen{
+     letter-spacing: -4px;
+     font-size: 19px;
+     transform: scale(.6, 1);
+     color: #4ab65f;
+  }
+ .Page_Identity .Page_Track ul li.HeaderName{
+     color: #4ab65f;
+ }
+ .Page_Identity .Page_Track ul li.LinkName{
+    color: #4ab65f;
+    cursor: pointer;
+ }
+ .register_Payment{
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #4ab65f;
+  float:right;
+  margin-right: 20px;
+}
+.create_invoice{
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #4ab65f;
+  float:right;
+}
+
+
+
+
+  
+  
+  

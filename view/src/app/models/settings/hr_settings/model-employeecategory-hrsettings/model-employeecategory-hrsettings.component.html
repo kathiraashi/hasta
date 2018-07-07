@@ -1,0 +1,41 @@
+
+<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
+  <div class="Modal_Header">
+      <p> Create Employee category</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+  </div>
+  <div class="Model_Body">
+    <div class="row">
+      <div class="col-sm-6 Form_Input">
+        <label>Employee category:</label>
+          <input type="text">
+      </div>
+   </div>
+  </div>
+  <div class="Model_Footer">
+    <button mat-raised-button color="primary" > Submit </button>
+ </div>
+  </div>
+
+<div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+  <div class="Modal_Header">
+     <p>View Employee category</p>
+     <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+ </div>
+ <div class="Model_Body">
+    <div class="row">
+        <div class="col-sm-6 text-right Static">Employee Ctegory: </div>
+        <div class="col-sm-6 text-left Data">Employee Ctegory</div>
+     </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+

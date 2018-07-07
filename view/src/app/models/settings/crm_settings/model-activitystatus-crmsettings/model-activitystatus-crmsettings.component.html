@@ -1,0 +1,33 @@
+<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
+  <div class="Modal_Header">
+      <p> Create Activity status</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+  </div>
+  <div class="Model_Body">
+    <div class="row">
+      <div class="col-sm-6 Form_Input">
+        <label>Activity status:</label>
+          <input type="text">
+      </div>
+   </div>
+</div>
+<div class="Model_Footer">
+   <button mat-raised-button color="primary" > Submit </button>
+</div>
+  </div>
+<div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+  <div class="Modal_Header">
+     <p>View Activity status</p>
+     <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+ </div>
+ <div class="Model_Body">
+   <div class="row">
+      <div class="col-sm-6 text-right Static">Activity Status : </div>
+      <div class="col-sm-6 text-left Data"> Activity Status </div>
+   </div>
+ </div>
+</div>
+
+
+
+

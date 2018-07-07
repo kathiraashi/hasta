@@ -1,0 +1,145 @@
+   .Main_Section{
+      margin-top: 100px;
+   }
+/* --------------   Page Identity Section  ----------------- */
+   .Page_Identity{
+      display: flex;
+      height:40px;
+      width: 100%;
+      margin-bottom: 5px;
+   }
+   .Page_Identity .Page_Name{
+      width:50%;
+   }
+   .Page_Identity .Page_Name h5{
+      color: #4f6a7a;
+      line-height: 35px;
+      font-size: 18px;
+      margin: 0px;
+      font-weight: 700;
+   }
+   .Page_Identity .Page_Track{
+      width:50%;
+      line-height: 35px;
+   }
+   .Page_Identity .Page_Track ul{
+      display: flex;
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px;
+      align-items: center;
+      float: right;
+   }
+   .Page_Identity .Page_Track ul li {
+      color: #a5adb1;
+      font-size: 13px;
+      font-weight: 500;
+      margin-left: 5px;
+   }
+   .Page_Identity .Page_Track ul li.arrow{
+      letter-spacing: -4px;
+      font-size: 19px;
+      transform: scale(.6, 1);
+   }
+   .Page_Identity .Page_Track ul li.arrowGreen{
+      letter-spacing: -4px;
+      font-size: 19px;
+      transform: scale(.6, 1);
+      color: #4ab65f;
+   }
+   .Page_Identity .Page_Track ul li.HeaderName{
+      color: #4ab65f;
+   }
+   .Page_Identity .Page_Track ul li.LinkName{
+      color: #4ab65f;
+      cursor: pointer;
+   }
+/* ----------- Create and Search Section ---------- */
+   .header_part{
+      margin-bottom: 15px;
+   }
+   .Create_Button{
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      font-size: 14px;
+      margin-left: 3%;
+   }
+/* ---------- Search Section ----------- */
+   .Search_Section{
+      position: relative;
+      background-color: #ffffff;
+      height: 36px;
+      box-shadow: 1px 2px 4px 0px rgba(0,0,0,.2);
+      width: 96%;
+   }
+   .Search_Section input{
+      width: 100%;
+      border-radius: 0;
+      border: none;
+      background-color: transparent;
+      padding: 10px;
+      height: 36px;
+      color: #4f6a7a;
+      font-weight: 500;
+      outline: none;
+   }
+   .Search_Section input::placeholder{
+      color:#cccccc; 
+      font-weight:400;
+   }
+   .Search_Section i{
+      position: absolute;
+      right: 0px;
+      padding: 7px 5px;
+      color: #4ab65f;
+      font-weight: 600;
+      cursor: pointer;
+   }
+   .Content_Style{
+      padding:0px 20px;
+   }
+   .Page_Section .Page_Content{
+      margin:15px 0px;
+   }
+   .Page_Content .Sub_Content{
+      background-color:#fff;
+      width:100%;
+      height:100px;
+      padding:5px;
+      display:flex;
+      align-items: center;
+      position: relative;
+      box-shadow: 2px 2px 3px #6c7379;
+      outline:none;
+   }
+   .Page_Content .Sub_Content:hover{
+      box-shadow: 0px 0px 3px #6c7379;
+   }
+   .Page_Content .Sub_Content .image_section{
+      margin-left:0px;
+      width:85px;
+   }
+   .Page_Content .Sub_Content .image_section img{
+      width:100%;
+      height:100%;
+   }
+   .Page_Content .Sub_Content .Content_Section{
+      width:80%;
+      font-weight:400;
+      color:#516570;
+      width:calc(100% - 85px);
+   
+   }
+   .Page_Content .Sub_Content .Content_Section h5{
+      line-height:1;
+      font-size:13px;
+   }
+   .Page_Content .Sub_Content span{
+      position: absolute;
+      top: 5px;
+      right: 5px;
+   }
+   .Page_Content .Sub_Content span .settings{
+      color: #516570;
+      font-size:20px;
+   }

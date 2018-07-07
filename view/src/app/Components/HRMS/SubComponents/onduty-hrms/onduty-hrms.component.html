@@ -1,0 +1,155 @@
+<!-- Header part -->
+<!--  Create and search section -->
+<div class="row header_part">
+   <div class="col-sm-6">
+    <button class="Create_Button" mat-button (click)="CreateOnDuty()"> + Create </button>
+   </div>
+   <div class="col-sm-6">
+      <div class="Search_Section">
+         <input type="text" placeholder="Search.." name="search">
+         <i class="material-icons">search</i>
+      </div>
+   </div>
+</div>
+<!--  Table section -->
+<div class="Table_Section">
+   <table>
+      <thead>
+         <tr>
+            <th>S.no</th>
+            <th>Name</th>
+            <th>OD Date</th>
+            <th>Out Time</th>
+            <th>In Time</th>
+            <th>Status</th>
+            <th>Action</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>
+               <span class="S_no"> 1 </span>
+            </td>
+            <td>
+               <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+               <span class="Style_1"> 24/05/2017</span>
+            </td>
+            <td>
+               <span class="Style_1">12:05AM</span>
+            </td>
+            <td>
+               <span class="Style_1">12:05AM</span>
+            </td>
+            <td>
+               <span class="Style_1">Requested</span>
+            </td>
+            <td>
+                <button (click)="ViewOnDuty()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                   <i class="material-icons">zoom_in</i>
+                </button>
+                <button  (click)="CreateOnDuty()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                   <i class="material-icons">edit</i>
+                </button>
+                <button (click)=" DeleteOnDuty()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                   <i class="material-icons">delete_forever</i>
+                </button>
+             </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 2 </span>
+            </td>
+            <td>
+               <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+               <span class="Style_1"> 24/05/2017</span>
+            </td>
+            <td>
+               <span class="Style_1">12:05AM</span>
+            </td>
+            <td>
+               <span class="Style_1">12:05AM</span>
+            </td>
+            <td>
+               <span class="Style_1">Requested</span>
+            </td>
+            <td>
+                <button (click)="ViewOnDuty()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                   <i class="material-icons">zoom_in</i>
+                </button>
+                <button  (click)="CreateOnDuty()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                   <i class="material-icons">edit</i>
+                </button>
+                <button (click)=" DeleteOnDuty()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                   <i class="material-icons">delete_forever</i>
+                </button>
+             </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 3 </span>
+            </td>
+            <td>
+               <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+               <span class="Style_1"> 24/05/2017</span>
+            </td>
+            <td>
+               <span class="Style_1">12:05AM</span>
+            </td>
+            <td>
+               <span class="Style_1">12:05AM</span>
+            </td>
+            <td>
+               <span class="Style_1">Requested</span>
+            </td>
+            <td>
+                <button (click)="ViewOnDuty()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                   <i class="material-icons">zoom_in</i>
+                </button>
+                <button  (click)="CreateOnDuty()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                   <i class="material-icons">edit</i>
+                </button>
+                <button (click)=" DeleteOnDuty()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                   <i class="material-icons">delete_forever</i>
+                </button>
+             </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 4 </span>
+            </td>
+            <td>
+               <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+               <span class="Style_1">24/05/2017</span>
+            </td>
+            <td>
+               <span class="Style_1">12:05AM</span>
+            </td>
+            <td>
+               <span class="Style_1">12:05AM</span>
+            </td>
+            <td>
+               <span class="Style_1">Requested</span>
+            </td>
+            <td>
+                <button (click)="ViewOnDuty()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                   <i class="material-icons">zoom_in</i>
+                </button>
+                <button  (click)="CreateOnDuty()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                   <i class="material-icons">edit</i>
+                </button>
+                <button (click)=" DeleteOnDuty()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                   <i class="material-icons">delete_forever</i>
+                </button>
+             </td>
+         </tr>
+      </tbody>
+   </table>
+</div>

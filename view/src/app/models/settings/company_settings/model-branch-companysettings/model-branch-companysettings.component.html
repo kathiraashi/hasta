@@ -1,0 +1,138 @@
+<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
+   <div class="Modal_Header">
+     <p>Create Branch</p>
+     <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="row">
+         <div class="col-sm-6 Form_Input">
+            <label>Branch Name:</label>
+            <input type="text">
+         </div>
+         <div class="col-sm-6 Form_Input">
+            <label>Branch Head:</label>
+            <input type="text">
+         </div>
+         <div class="col-sm-6 Form_Select">
+            <label>Departments:</label>
+            <select>
+               <option disabled> Department</option>
+               <option> Department </option>
+               <option>Department </option>
+               <option> Department</option>
+               <option> Department</option>
+               <option> Department</option>
+               <option> Department</option>
+            </select>
+         </div>
+         <div class="col-sm-6 Form_Input">
+         <label>No/Street:</label>
+            <input type="text"  >
+         </div>
+         <div class="col-sm-6 Form_Input">
+         <label>Area:</label>
+            <input type="text" >
+         </div>
+         <div class="col-sm-6 Form_Select">
+         <label>Select Country:</label>
+            <select>
+               <option disabled> Select Country</option>
+               <option> All </option>
+               <option> country1 </option>
+               <option> country2 </option>
+               <option> country3 </option>
+               <option> country4 </option>
+               <option> country5 </option>
+            </select>
+         </div>
+         <div class="col-sm-6 Form_Select">
+         <label>Select State:</label>   
+            <select>
+               <option disabled> Select State</option>
+               <option> All </option>
+               <option> state1 </option>
+               <option> state2 </option>
+               <option> state3  </option>
+               <option> state4  </option>
+               <option> state5  </option>
+            </select>
+         </div>
+         <div class="col-sm-6 Form_Select">
+         <label>city:</label>
+           <select>
+               <option disabled> Select City</option>
+               <option> All </option>
+               <option> city1 </option>
+               <option> city2 </option>
+               <option> city3 </option>
+               <option> city4 </option>
+               <option> city5 </option>
+            </select>
+         </div>
+         <div class="col-sm-6 Form_Input">
+         <label>Zip Code:</label>
+            <input type="text" >
+         </div>
+         <div class="col-sm-6 Form_TextArea">
+            <label>Addresss:</label>
+                  <textarea class="message" rows="2"></textarea>
+               </div>
+      </div>
+   </div>
+   <div class="Model_Footer">
+    <button mat-raised-button color="primary" > Submit </button>
+ </div>
+   </div>
+
+<div class="Modal_Content" *ngIf="Type && Type === 'View'">
+      <div class="Modal_Header">
+        <p>View Branch</p>
+        <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+      </div>
+      <div class="Model_Body">
+            <div class="row">
+                  <div class="col-sm-6 text-right Static">  Branch Name : </div>
+                  <div class="col-sm-6 text-left Data">  branch name </div>
+               </div>
+             <div class="row">
+                  <div class="col-sm-6 text-right Static">  Branch Head : </div>
+                  <div class="col-sm-6 text-left Data">  branch head </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-6 text-right Static">  Department : </div>
+                  <div class="col-sm-6 text-left Data"> department </div>
+               </div>
+              <div class="row">
+                  <div class="col-sm-6 text-right Static">  No/Street: </div>
+                  <div class="col-sm-6 text-left Data"> 22,bharathiyar street.</div>
+               </div>
+             <div class="row">
+                  <div class="col-sm-6 text-right Static">  Area : </div>
+                  <div class="col-sm-6 text-left Data"> ganapathy</div>
+               </div>
+             <div class="row">
+                  <div class="col-sm-6 text-right Static">  Country :</div>
+                  <div class="col-sm-6 text-left Data"> India  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-6 text-right Static">  State :</div>
+                  <div class="col-sm-6 text-left Data"> tamilnadu  </div>
+               </div>
+               <div class="row">
+                     <div class="col-sm-6 text-right Static">  City :</div>
+                     <div class="col-sm-6 text-left Data"> chennai  </div>
+                  </div>
+                  <div class="row">
+                        <div class="col-sm-6 text-right Static">  Zip Code :</div>
+                        <div class="col-sm-6 text-left Data"> CODE_1122  </div>
+                     </div>
+                     <div class="row">
+                           <div class="col-sm-6 text-right Static">  Address:</div>
+                           <div class="col-sm-6 text-left Data"> ganapathy  </div>
+                        </div>
+                     </div>
+          <div class="Model_Footer">
+         </div>
+         </div>
+     
+  

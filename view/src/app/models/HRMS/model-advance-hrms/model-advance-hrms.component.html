@@ -1,0 +1,127 @@
+<div class="Modal_Content" style="background-color: #F1F4F7;"*ngIf="Type && Type === 'Create'">
+   <div class="Modal_Header">
+      <p>Create Advance</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="row">
+         <div class="Company_Details">
+            <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Personal <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5><br>
+            <div class="col-sm-12">
+               <div class="row">
+                  <div class="col-sm-6 Form_Input" >
+                     <label>Name:</label>
+                     <input type="text" placeholder="Name">
+                  </div>
+                  <div class="col-sm-6 Form_Input" >
+                     <label>UserName:</label>
+                     <input type="text" placeholder="username">
+                  </div>
+                  <div class="col-sm-6 Form_Input" >
+                     <label>Designation:</label>
+                     <input type="text" placeholder="Designation">
+                  </div>
+                  <div class="col-sm-6 Form_Input" >
+                     <label>Email Id:</label>
+                     <input type="text" placeholder="emailid"> 
+                  </div>
+                  <div class="col-sm-6 Form_Input" >
+                     <label>Contact Number:</label>
+                     <input type="text" placeholder="contactnumber"> 
+                  </div>
+               </div>
+            </div>
+         </div>
+         <br>
+         <div class="Product_Details">
+            <h5 style="color:#49B660;font-size:20px;font-weight: 600;"> Application <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5><br>
+            <div class="col-sm-12">
+               <div class="row">
+                  <div class="col-sm-6 Form_Input" >
+                     <label>Date:</label>
+                     <input type="text" placeholder="Date">
+                  </div>
+                  <div class="col-sm-6 Form_Input" >
+                     <label>Amount:</label>
+                     <input type="text" placeholder="Amount"> 
+                  </div>
+                  <div class="col-sm-6 Form_TextArea" >
+                     <label>Description:</label>
+                     <textarea class="Description" rows="3"></textarea>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="Model_Footer">
+      <button mat-raised-button color="primary" > Submit </button>
+   </div>
+</div>
+<div class="Modal_Content" style="background-color: #F1F4F7;"*ngIf="Type && Type === 'View'">
+   <div class="Modal_Header">
+      <p>View Advance</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="row">
+         <div class="Company_Details">
+            <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Personal <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5><br>
+            <div class="col-sm-12">
+               <div class="row">
+                     <div class="col-sm-6 text-center Left_Section">
+                           <div class="row">
+                              <div class="col-sm-4 text-right Static"> Name: </div>
+                              <div class="col-sm-8 text-left Data">aashi </div>
+                             </div>
+                             <div class="row">
+                                 <div class="col-sm-4 text-right Static"> UserName: </div>
+                                 <div class="col-sm-8 text-left Data"> aashi</div>
+                                </div>
+                          </div>
+                          <div class="col-sm-6 Right_Section">
+                            <div class="left-data">
+                             <div class="row">
+                                <div class="col-sm-4 text-right Static">  Email: </div>
+                                <div class="col-sm-8 text-left Data">sample@gmail.com </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-sm-4 text-right Static">  Contact: </div>
+                                    <div class="col-sm-8 text-left Data">+6454375 </div>
+                                  </div>
+                            </div>
+                          </div>
+               </div>
+            </div>
+         </div>
+         <br>
+         <div class="Product_Details">
+            <h5 style="color:#49B660;font-size:20px;font-weight: 600;"> Application <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5><br>
+            <div class="col-sm-12">
+               <div class="row">
+                     <div class="col-sm-6 text-center Left_Section">
+                           <div class="row">
+                              <div class="col-sm-4 text-right Static"> Date: </div>
+                              <div class="col-sm-8 text-left Data">27/03/18 </div>
+                             </div>
+                             <div class="row">
+                                 <div class="col-sm-4 text-right Static"> Amount: </div>
+                                 <div class="col-sm-8 text-left Data"> 35000</div>
+                                </div>
+                          </div>
+                          <div class="col-sm-6 Right_Section">
+                            <div class="left-data">
+                             <div class="row">
+                                    <div class="col-sm-4 text-right Static">  Description: </div>
+                                    <div class="col-sm-8 text-left Data">Lorem ipsum dolor sit amet consectetur adipisicing elit. </div>
+                                  </div>
+                            </div>
+                          </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="Model_Footer">
+   </div>
+</div>

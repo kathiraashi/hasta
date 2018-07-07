@@ -1,0 +1,164 @@
+<div class="page" style="margin-top:100px;">
+   <div class="container-fluid">
+      <!-- page Identity -->
+      <div class="Page_Identity">
+         <div class="Page_Name">
+            <h5>Invoice Create</h5>
+         </div>
+      </div>
+      <!-- Company Details -->
+      <div class="row">
+         <div class="Company_Details">
+            <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Company <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5><br>
+            <div class="col-sm-12">
+               <div class="row">
+                  <div class="col-sm-4 Form_Input" >
+                     <input type="text" placeholder="Date">
+                  </div>
+                  <div class="col-sm-4 Form_Select" >
+                     <select>
+                        <option checked> Company Name</option>
+                        <option> Company Name1</option>
+                        <option>   Company Name2 </option>
+                        <option>   Company Name3 </option>
+                        <option>   Company Name4 </option>
+                        <option>   Company Name5 </option>
+                     </select>
+                  </div>
+                  <div class="col-sm-4 Form_Select" >
+                     <select>
+                        <option checked>Contact Person</option>
+                        <option> Contact Person1</option>
+                        <option> Contact Person2 </option>
+                        <option> Contact Person3 </option>
+                        <option> Contact Person4 </option>
+                        <option> Contact Person5 </option>
+                     </select>
+                  </div>
+                  <div class="col-sm-4 Form_Input" >
+                     <input type="text" placeholder="Quote Reference Number"> 
+                  </div>
+                  <div class="col-sm-4 Form_Input" >
+                     <input type="text" placeholder="Valid Till"> 
+                  </div>
+                  <div class="col-sm-4 Form_Select" >
+                     <select>
+                        <option checked>Opportunity Name</option>
+                        <option> Opportunity Name1</option>
+                        <option> Opportunity Name2 </option>
+                        <option> Opportunity Name3 </option>
+                        <option> Opportunity Name4 </option>
+                        <option> Opportunity Name5 </option>
+                     </select>
+                  </div>
+                  <div class="col-sm-4 Form_Select" >
+                     <select>
+                        <option checked> Employee Name</option>
+                        <option> Employee Name1 </option>
+                        <option> Employee Name2 </option>
+                        <option> Employee Name3 </option>
+                        <option> Employee Name4 </option>
+                        <option> Employee Name5 </option>
+                     </select>                             
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Tabs -->
+         <div class="Product">
+            <div class="Product_Tab">
+               <div class="Product_details">
+                  <span [ngClass]="{'active': Active_Tab === 'Product_Details'}" (click)="Active_Tab_Change('Product_Details')">Product Details</span>
+               </div>
+               <div class="Quote_Terms">
+                  <span [ngClass]="{'active': Active_Tab === 'quote_Terms'}" (click)="Active_Tab_Change('quote_Terms')">Quote Terms</span>
+               </div>
+            </div><br>
+            <!-- Product Details -->
+            <div class="Product_Details" *ngIf="Active_Tab === 'Product_Details'">
+               <table class="table_section">
+                  <thead class="table_head">
+                     <tr>
+                        <th>S.No</th>  
+                        <th>Product</th>  
+                        <th>Description</th>  
+                        <th>Price</th>  
+                        <th>Quantity</th>  
+                        <th>Tax</th> 
+                        <th>Total</th> 
+                        <th>Action</th> 
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td  colspan="8"><span> No Records found</span> </td>
+                     </tr>
+                  </tbody>
+               </table><br>
+               <div class="row">
+                  <div class="col-sm-8">
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="Title">
+                        <h5>SubTotal:</h5>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="Value">
+                        <h5>RS. 0</h5>
+                     </div>
+                  </div>
+                  <div class="col-sm-8">
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="Title">
+                        <h5>Total Tax:</h5>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="Value">
+                        <h5>RS. 0</h5>
+                     </div>
+                  </div>
+                  <div class="col-sm-8">
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="Title">
+                        <h5>Total:</h5>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="Value">
+                        <h5>RS. 0</h5>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         <br>
+         <div class="Done_Section" *ngIf="Active_Tab === 'quote_Terms'">
+           <div class="row">
+               <div class="col-sm-4 Form_Select">
+                  <select>
+                     <option checked>Select Quote Terms</option>
+                     <option> QuoteTermOptions-One</option>
+                     <option> QuoteTermOptions-Two </option>
+                     <option> QuoteTermOptions-Three </option>
+                     <option> QuoteTermOptions-Four </option>
+                     <option> QuoteTermOptions-Five </option>
+                  </select>
+               </div>
+               <div class="col-sm-4 Form_TextArea" >
+                     <textarea  type="text" row="4" placeholder="Notes"></textarea>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row" style="margin-top:20px;"> 
+      <div class="col-sm-12 text-right">
+         <button mat-raised-button color="primary" > Submit </button>
+      </div>
+   </div>
+</div>
+

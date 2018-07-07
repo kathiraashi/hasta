@@ -1,0 +1,128 @@
+<div class="row header_part">
+  <div class="col-sm-6">
+    <button class="Create_Button" mat-raised-button (click)="CreateAssetType()"> + Create </button>
+  </div>
+  <div class="col-sm-6">
+    <div class="Search_Section">
+      <input type="text" placeholder="Search.." name="search">
+      <i class="material-icons">search</i>
+    </div>
+  </div>
+</div>
+<div class="Table_Section">
+  <table>
+    <thead>
+      <tr>
+        <th>S.no</th>
+        <th>Asset Type</th>
+        <th>Created By</th>
+        <th>Last Modification Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span class="S_no"> 1 </span>
+        </td>
+        <td>
+          <span class="Style_1"> Type-11</span>
+        </td>
+        <td>
+          <span class="Style_1">admin</span>
+        </td>
+        <td>
+          <span class="Style_1">28-9-2008</span>
+        </td>
+        <td>
+          <button (click)="ViewAssetType()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+             <i class="material-icons">zoom_in</i>
+          </button>
+          <button  (click)="CreateAssetType()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+             <i class="material-icons">edit</i>
+          </button>
+          <button (click)=" DeleteAssetType()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+             <i class="material-icons">delete_forever</i>
+          </button>
+       </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="S_no"> 2 </span>
+        </td>
+        <td>
+          <span class="Style_1"> Type-11</span>
+        </td>
+
+        <td>
+          <span class="Style_1">admin</span>
+        </td>
+        <td>
+          <span class="Style_1">28-9-2008</span>
+        </td>
+        <td>
+          <button (click)="ViewAssetType()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+             <i class="material-icons">zoom_in</i>
+          </button>
+          <button  (click)="CreateAssetType()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+             <i class="material-icons">edit</i>
+          </button>
+          <button (click)=" DeleteAssetType()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+             <i class="material-icons">delete_forever</i>
+          </button>
+       </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="S_no"> 3 </span>
+        </td>
+        <td>
+          <span class="Style_1"> Type-11</span>
+        </td>
+        <td>
+          <span class="Style_1">admin</span>
+        </td>
+        <td>
+          <span class="Style_1">28-9-2008</span>
+        </td>
+        <td>
+          <button (click)="ViewAssetType()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+             <i class="material-icons">zoom_in</i>
+          </button>
+          <button  (click)="CreateAssetType()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+             <i class="material-icons">edit</i>
+          </button>
+          <button (click)=" DeleteAssetType()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+             <i class="material-icons">delete_forever</i>
+          </button>
+       </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="S_no"> 4 </span>
+        </td>
+        <td>
+          <span class="Style_1"> Type-11</span>
+        </td>
+
+        <td>
+          <span class="Style_1">admin</span>
+        </td>
+        <td>
+          <span class="Style_1">28-9-2008</span>
+        </td>
+        <td>
+          <button (click)="ViewAssetType()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+             <i class="material-icons">zoom_in</i>
+          </button>
+          <button  (click)="CreateAssetType()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+             <i class="material-icons">edit</i>
+          </button>
+          <button (click)=" DeleteAssetType()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+             <i class="material-icons">delete_forever</i>
+          </button>
+       </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

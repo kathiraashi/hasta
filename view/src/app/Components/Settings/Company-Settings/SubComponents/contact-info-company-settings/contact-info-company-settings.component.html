@@ -1,0 +1,384 @@
+<div class="row header_part">
+   <div class="col-sm-6">
+      <button class="Create_Button" mat-raised-button (click)="CreateContactInfo()"> + Create </button>
+   </div>
+   <div class="col-sm-6">
+      <div class="Search_Section">
+         <input type="text" placeholder="Search.." name="search">
+            <i class="material-icons">search</i>
+      </div>
+   </div>
+   <!-- <div class="col-sm-2">
+      <div style="display: flex; align-items: center"> 
+         <mat-form-field style="width:50px">
+               <mat-select value='10'>
+                  <mat-option value='10'> 10 </mat-option>
+                  <mat-option value='25'> 25 </mat-option>
+                  <mat-option value='50'> 50 </mat-option>
+                  <mat-option value='75'> 75 </mat-option>
+                  <mat-option value='100'> 100 </mat-option>
+               </mat-select>
+            </mat-form-field>
+       </div>
+   </div> -->
+</div>
+
+<div class="Table_Section">
+   <table >
+      <thead>
+         <tr>
+            <th>S.no</th>
+            <th>Contact Person</th>
+            <th>phone </th>
+            <th>Email</th>
+            <th>Created By</th>
+            <th>Branch</th>
+            <th style="width:130px">Action</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>
+               <span class="S_no"> 1 </span>
+            </td>
+            <td>
+               <span class="Style_1">AASHI</span>
+            </td>
+            <td>
+               <span class="Style_1"> 987654321 </span>
+            </td>
+            <td>
+               <span class="Style_1">aaa@gmail.com</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">head office</span>
+            </td>
+            <td>
+               <button (click)="ViewContactInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateContactInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteContactInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 2 </span>
+            </td>
+            <td>
+               <span class="Style_1">AASHI</span>
+            </td>
+            <td>
+               <span class="Style_1"> 987654321 </span>
+            </td>
+            <td>
+               <span class="Style_1">aaa@gmail.com</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">head office</span>
+            </td>
+            <td>
+               <button (click)="ViewContactInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateContactInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteContactInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 3</span>
+            </td>
+            <td>
+               <span class="Style_1">AASHI</span>
+            </td>
+            <td>
+               <span class="Style_1"> 987654321 </span>
+            </td>
+            <td>
+               <span class="Style_1">aaa@gmail.com</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">head office</span>
+            </td>
+            <td>
+               <button (click)="ViewContactInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateContactInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteContactInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 4 </span>
+            </td>
+            <td>
+               <span class="Style_1">AASHI</span>
+            </td>
+            <td>
+               <span class="Style_1"> 987654321 </span>
+            </td>
+            <td>
+               <span class="Style_1">aaa@gmail.com</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">head office</span>
+            </td>
+            <td>
+               <button (click)="ViewContactInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateContactInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteContactInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 5 </span>
+            </td>
+            <td>
+               <span class="Style_1">AASHI</span>
+            </td>
+            <td>
+               <span class="Style_1"> 987654321 </span>
+            </td>
+            <td>
+               <span class="Style_1">aaa@gmail.com</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">head office</span>
+            </td>
+            <td>
+               <button (click)="ViewContactInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateContactInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteContactInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 6 </span>
+            </td>
+            <td>
+               <span class="Style_1">AASHI</span>
+            </td>
+            <td>
+               <span class="Style_1"> 987654321 </span>
+            </td>
+            <td>
+               <span class="Style_1">aaa@gmail.com</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">head office</span>
+            </td>
+            <td>
+               <button (click)="ViewContactInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateContactInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteContactInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 7 </span>
+            </td>
+            <td>
+               <span class="Style_1">AASHI</span>
+            </td>
+            <td>
+               <span class="Style_1"> 987654321 </span>
+            </td>
+            <td>
+               <span class="Style_1">aaa@gmail.com</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">head office</span>
+            </td>
+            <td>
+               <button (click)="ViewContactInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateContactInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteContactInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 8 </span>
+            </td>
+            <td>
+               <span class="Style_1">AASHI</span>
+            </td>
+            <td>
+               <span class="Style_1"> 987654321 </span>
+            </td>
+            <td>
+               <span class="Style_1">aaa@gmail.com</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">head office</span>
+            </td>
+            <td>
+               <button (click)="ViewContactInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateContactInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteContactInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 9 </span>
+            </td>
+            <td>
+               <span class="Style_1">AASHI</span>
+            </td>
+            <td>
+               <span class="Style_1"> 987654321 </span>
+            </td>
+            <td>
+               <span class="Style_1">aaa@gmail.com</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">head office</span>
+            </td>
+            <td>
+               <button (click)="ViewContactInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateContactInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteContactInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 10 </span>
+            </td>
+            <td>
+               <span class="Style_1">AASHI</span>
+            </td>
+            <td>
+               <span class="Style_1"> 987654321 </span>
+            </td>
+            <td>
+               <span class="Style_1">aaa@gmail.com</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">head office</span>
+            </td>
+            <td>
+               <button (click)="ViewContactInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button  (click)="CreateContactInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteContactInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+      </tbody>
+      <tfoot>
+         <tr>
+            <td colspan="100">
+               <div class="Table_Footer_Section">
+                  <div class="Footer_Left">
+                     <p> Showing <span> 50 </span> to <span> 60 </span> out of <span> 100 </span> entries </p>
+                  </div>
+                  <div class="Footer_Right">
+                     <div class="Pagination">
+                        <ul>
+                           <li class="previous">
+                              <span class="arrow"> << </span>
+                              <span> Previous </span>
+                           </li>
+                           <li class="pages"> <span> 1 </span> </li>
+                           <li class="dots"> <span> ... </span> </li>
+                           <li class="pages"> <span> 4 </span> </li>
+                           <li class="pages active"> <span> 5 </span> </li>
+                           <li class="pages"> <span> 6 </span> </li>
+                           <li class="dots"> <span> ... </span> </li>
+                           <li class="pages"> <span> 10 </span> </li>
+                           <li class="next">
+                              <span> Next </span>
+                              <span class="arrow"> >> </span>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </td>
+         </tr>
+      </tfoot>
+      </table>
+  </div>
