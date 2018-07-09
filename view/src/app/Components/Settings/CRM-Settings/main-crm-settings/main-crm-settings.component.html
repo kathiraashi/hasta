@@ -22,8 +22,8 @@
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_status'}" (click)="Active_Tab_Change('Activity_status')"><span class="Tab_Content">Activity status </span></li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_priority'}" (click)="Active_Tab_Change('Activity_priority')"><span class="Tab_Content">Activity priority</span> </li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Contact_role'}" (click)="Active_Tab_Change('Contact_role')"><span class="Tab_Content">Contact role </span></li>
-                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Pipeline_Status'}" (click)="Active_Tab_Change('Pipeline_Status')"><span class="Tab_Content">Pipeline status </span> </li>
-                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'quote_terms'}" (click)="Active_Tab_Change('quote_terms')"><span class="Tab_Content">Quote terms  </span></li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Ticket_Type'}" (click)="Active_Tab_Change('Ticket_Type')"><span class="Tab_Content"> Ticket Type </span> </li>
+                  <!-- <li class="Tab" [ngClass]="{'active':Active_Tab === 'quote_terms'}" (click)="Active_Tab_Change('quote_terms')"><span class="Tab_Content">Quote terms  </span></li> -->
                </ul>
             </div>
             <div class="Right_Section">
@@ -45,7 +45,7 @@
               <div *ngIf="Active_Tab === 'Pipeline_Status'">
                 <app-pipe-line-status-type-crm-settings></app-pipe-line-status-type-crm-settings>
               </div>
-              <div *ngIf="Active_Tab === 'Contact_role'">
+              <div *ngIf="Active_Tab === 'Ticket_Type'">
                 <app-contact-role-type-crm-settings></app-contact-role-type-crm-settings>
               </div>
               <div *ngIf="Active_Tab === 'quote_terms'">
