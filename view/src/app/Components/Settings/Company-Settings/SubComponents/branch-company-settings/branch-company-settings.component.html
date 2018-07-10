@@ -1,165 +1,168 @@
+<!-- header part -->
+<!-- create and search section -->
 <div class="row header_part">
-  <div class="col-sm-6">
-    <button class="Create_Button" mat-raised-button (click)="Createbranch()"> + Create </button>
-  </div>
-  <div class="col-sm-6">
-    <div class="Search_Section">
-      <input type="text" placeholder="Search.." name="search">
-      <i class="material-icons">search</i>
-    </div>
-  </div>
+   <div class="col-sm-6">
+      <button class="Create_Button" mat-button (click)="Createbranch()"> + Create </button>
+   </div>
+   <div class="col-sm-6">
+      <div class="Search_Section">
+         <input type="text" placeholder="Search.." name="search">
+         <i class="material-icons">search</i>
+      </div>
+   </div>
 </div>
+<!-- Table section -->
 <div class="Table_Section">
-  <table>
-    <thead>
-      <tr>
-        <th>S.no</th>
-        <th>Branch</th>
-        <th>Branch Head</th>
-        <th>Departments</th>
-        <th>Address</th>
-        <th>Created By</th>
-        <th>Last Modification date</th>
-        <th>Action</th>
-      </tr>
+   <table>
+      <thead>
+         <tr>
+            <th>S.no</th>
+            <th>Branch</th>
+            <th>Branch Head</th>
+            <th>Departments</th>
+            <th>Address</th>
+            <th>Created By</th>
+            <th>Last Modification date</th>
+            <th>Action</th>
+         </tr>
     </thead>
     <tbody>
       <tr>
-        <td>
-          <span class="S_no"> 1 </span>
-        </td>
-        <td>
-          <span class="Style_1">Branch one</span>
-        </td>
-        <td>
-          <span class="Style_1">Branch head one </span>
-        </td>
-        <td>
-          <span class="Style_1">Departments three</span>
-        </td>
-        <td>
-          <span class="Style_1">no/area/street code</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="Viewbranch()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="Createbranch()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteBranch()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
+         <td>
+            <span class="S_no"> 1 </span>
+         </td>
+         <td>
+            <span class="Style_1">Branch one</span>
+         </td>
+         <td>
+            <span class="Style_1">Branch head one </span>
+         </td>
+         <td>
+            <span class="Style_1">Departments three</span>
+         </td>
+         <td>
+            <span class="Style_1">no/area/street code</span>
+         </td>
+         <td>
+            <span class="Style_1">admin</span>
+         </td>
+         <td>
+            <span class="Style_1">may 26,2018</span>
+         </td>
+         <td>
+            <button (click)="Viewbranch()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+               <i class="material-icons">zoom_in</i>
+            </button>
+            <button   (click)="Createbranch()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+               <i class="material-icons">edit</i>
+            </button>
+            <button (click)="  DeleteBranch()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+               <i class="material-icons">delete_forever</i>
+            </button>
+         </td>
       </tr>
       <tr>
-        <td>
-          <span class="S_no"> 2 </span>
-        </td>
-        <td>
-          <span class="Style_1">Branch one</span>
-        </td>
-        <td>
-          <span class="Style_1">Branch head one </span>
-        </td>
-        <td>
-          <span class="Style_1">Departments three</span>
-        </td>
-        <td>
-          <span class="Style_1">no/area/street code</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="Viewbranch()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="Createbranch()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteBranch()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
+         <td>
+            <span class="S_no"> 2 </span>
+         </td>
+         <td>
+            <span class="Style_1">Branch one</span>
+         </td>
+         <td>
+            <span class="Style_1">Branch head one </span>
+         </td>
+         <td>
+            <span class="Style_1">Departments three</span>
+         </td>
+         <td>
+            <span class="Style_1">no/area/street code</span>
+         </td>
+         <td>
+            <span class="Style_1">admin</span>
+         </td>
+         <td>
+            <span class="Style_1">may 26,2018</span>
+         </td>
+         <td>
+            <button (click)="Viewbranch()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+               <i class="material-icons">zoom_in</i>
+            </button>
+            <button   (click)="Createbranch()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+               <i class="material-icons">edit</i>
+            </button>
+            <button (click)="  DeleteBranch()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+               <i class="material-icons">delete_forever</i>
+            </button>
+         </td>
       </tr>
       <tr>
-        <td>
-          <span class="S_no"> 3 </span>
-        </td>
-        <td>
-          <span class="Style_1">Branch one</span>
-        </td>
-        <td>
-          <span class="Style_1">Branch head one </span>
-        </td>
-        <td>
-          <span class="Style_1">Departments three</span>
-        </td>
-        <td>
-          <span class="Style_1">no/area/street code</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="Viewbranch()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="Createbranch()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteBranch()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
+         <td>
+            <span class="S_no"> 3 </span>
+         </td>
+         <td>
+            <span class="Style_1">Branch one</span>
+         </td>
+         <td>
+            <span class="Style_1">Branch head one </span>
+         </td>
+         <td>
+            <span class="Style_1">Departments three</span>
+         </td>
+         <td>
+            <span class="Style_1">no/area/street code</span>
+         </td>
+         <td>
+            <span class="Style_1">admin</span>
+         </td>
+         <td>
+            <span class="Style_1">may 26,2018</span>
+         </td>
+         <td>
+            <button (click)="Viewbranch()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+               <i class="material-icons">zoom_in</i>
+            </button>
+            <button   (click)="Createbranch()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+               <i class="material-icons">edit</i>
+            </button>
+            <button (click)="  DeleteBranch()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+               <i class="material-icons">delete_forever</i>
+            </button>
+         </td>
       </tr>
       <tr>
-        <td>
-          <span class="S_no"> 4 </span>
-        </td>
-        <td>
-          <span class="Style_1">Branch one</span>
-        </td>
-        <td>
-          <span class="Style_1">Branch head one </span>
-        </td>
-        <td>
-          <span class="Style_1">Departments three</span>
-        </td>
-        <td>
-          <span class="Style_1">no/area/street code</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="Viewbranch()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="CreateDepartmentInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteBranch()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
+         <td>
+            <span class="S_no"> 4 </span>
+         </td>
+         <td>
+            <span class="Style_1">Branch one</span>
+         </td>
+         <td>
+            <span class="Style_1">Branch head one </span>
+         </td>
+         <td>
+            <span class="Style_1">Departments three</span>
+         </td>
+         <td>
+            <span class="Style_1">no/area/street code</span>
+         </td>
+         <td>
+            <span class="Style_1">admin</span>
+         </td>
+         <td>
+            <span class="Style_1">may 26,2018</span>
+         </td>
+         <td>
+            <button (click)="Viewbranch()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+               <i class="material-icons">zoom_in</i>
+            </button>
+            <button   (click)="CreateDepartmentInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+               <i class="material-icons">edit</i>
+            </button>
+            <button (click)="  DeleteBranch()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+               <i class="material-icons">delete_forever</i>
+            </button>
+         </td>
       </tr>
-    </tbody>
-  </table>
+   </tbody>
+</table>
 

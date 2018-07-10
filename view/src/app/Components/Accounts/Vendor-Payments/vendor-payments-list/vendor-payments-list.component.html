@@ -1,32 +1,37 @@
 <app-header></app-header>
 <div class="Main_Section">
-  <div class="Page_Section">
+   <!-- page section -->
+   <div class="Page_Section">
       <div class="container-fluid">
-          <div class="Page_Identity">
-              <div class="Page_Name">
-                 <h5>Customer Payments</h5>
-              </div>
-              <div class="Page_Track">
-                 <ul >
-                   <li class="HeaderName">Accounts</li>
-                   <li class="arrow">>></li>
-                   <li class= "LinkName">Customer Payments</li>
-                   <li class="arrow">>></li>
-                   <li >Customer Payments List</li>
-                 </ul>
-              </div>
-           </div>
-           <div class="row header_part">
-              <div class="col-sm-6">
-                <button class="Create_Button" mat-raised-button [routerLink]="['/vendor_payment_create']"> + Create </button>
-              </div>
-              <div class="col-sm-6">
-                <div class="Search_Section">
-                  <input type="text" placeholder="Search.." name="search">
-                  <i class="material-icons">search</i>
-                </div>
-              </div>
+         <!-- page Identity -->
+         <div class="Page_Identity">
+            <div class="Page_Name">
+               <h5>Customer Payments</h5>
             </div>
+            <div class="Page_Track">
+               <ul >
+                  <li class="HeaderName">Accounts</li>
+                  <li class="arrow">>></li>
+                  <li class= "LinkName">Customer Payments</li>
+                  <li class="arrow">>></li>
+                  <li >Customer Payments List</li>
+               </ul>
+            </div>
+         </div>
+         <!-- header part -->
+         <!-- create and search section -->
+         <div class="row header_part">
+            <div class="col-sm-6">
+               <button class="Create_Button" mat-button [routerLink]="['/vendor_payment_create']"> + Create </button>
+            </div>
+            <div class="col-sm-6">
+               <div class="Search_Section">
+                  <input type="text" placeholder="Search.." name="search">
+               <i class="material-icons">search</i>
+               </div>
+            </div>
+         </div>
+         <!-- Table Section -->
          <div class="Table_Section">
             <table>
                <thead>
@@ -244,12 +249,12 @@
                       <button mat-raised-button color="primary" [routerLink]="['/vendor_payment_view']"> Action </button>
                      </td>
                   </tr>
-                  </tbody>
-               </table>
-            </div>
+               </tbody>
+            </table>
          </div>
       </div>
    </div>
+</div>
 
 
 

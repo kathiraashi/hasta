@@ -5,7 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { ModelContactinfoCompanysettingsComponent } from '../../../../../models/settings/company_settings/model-contactinfo-companysettings/model-contactinfo-companysettings.component';
 import { DeleteConfirmationComponent } from '../../../../Common-Components/delete-confirmation/delete-confirmation.component';
-// import { CreateModelContactinfoCompanySettingsComponent } from '../../../../../models/settings/create-model-contactinfo-company-settings/create-model-contactinfo-company-settings.component';
+
 @Component({
   selector: 'app-contact-info-company-settings',
   templateUrl: './contact-info-company-settings.component.html',
@@ -20,12 +20,12 @@ export class ContactInfoCompanySettingsComponent implements OnInit {
   ngOnInit() {
   }
 
-  // CreateContactInfo() {
-  //   const initialState = {
-  //     Type: 'Create'
-  //   };
-  //   this.bsModalRef = this.modalService.show(CreateModelContactinfoCompanySettingsComponent, Object.assign({initialState}, { class: 'modal-lg' }));
-  // }
+  CreateContactInfo() {
+    const initialState = {
+      Type: 'Create'
+    };
+    this.bsModalRef = this.modalService.show(ModelContactinfoCompanysettingsComponent, Object.assign({initialState}, { class: 'modal-lg' }));
+  }
   ViewContactInfo() {
     const initialState = {
       Type: 'View'

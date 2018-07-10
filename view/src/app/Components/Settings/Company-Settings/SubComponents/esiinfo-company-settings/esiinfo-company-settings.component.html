@@ -1,165 +1,169 @@
+<!-- header part -->
+<!-- create and search section -->
 <div class="row header_part">
-  <div class="col-sm-6">
-    <button class="Create_Button" mat-raised-button (click)="CreateEsiInfo()"> + Create </button>
-  </div>
-  <div class="col-sm-6">
-    <div class="Search_Section">
-      <input type="text" placeholder="Search.." name="search">
-      <i class="material-icons">search</i>
-    </div>
-  </div>
+   <div class="col-sm-6">
+      <button class="Create_Button" mat-button (click)="CreateEsiInfo()"> + Create </button>
+   </div>
+   <div class="col-sm-6">
+      <div class="Search_Section">
+         <input type="text" placeholder="Search.." name="search">
+         <i class="material-icons">search</i>
+      </div>
+   </div>
 </div>
+<!-- Table Section -->
 <div class="Table_Section">
-  <table>
-    <thead>
-      <tr>
-        <th>S.no</th>
-        <th>ESI NO</th>
-        <th>Registration Date</th>
-        <th>Signatory Name</th>
-        <th>Signatory Designation</th>
-        <th>Created By</th>
-        <th>Last Modification date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <span class="S_no"> 1 </span>
-        </td>
-        <td>
-          <span class="Style_1">ESI no one</span>
-        </td>
-        <td>
-          <span class="Style_1">27-5-2010</span>
-        </td>
-        <td>
-          <span class="Style_1">aashi</span>
-        </td>
-        <td>
-          <span class="Style_1">aashi</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="ViewEsiInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="CreateEsiInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteEsiInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
-      </tr>
-      <tr>
-        <td>
-          <span class="S_no"> 2 </span>
-        </td>
-        <td>
-          <span class="Style_1">ESI no one</span>
-        </td>
-        <td>
-          <span class="Style_1">27-5-2010</span>
-        </td>
-        <td>
-          <span class="Style_1">aashi</span>
-        </td>
-        <td>
-          <span class="Style_1">aashi</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="ViewEsiInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="CreateEsiInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteEsiInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
-      </tr>
-      <tr>
-        <td>
-          <span class="S_no"> 3 </span>
-        </td>
-        <td>
-          <span class="Style_1">ESI no one</span>
-        </td>
-        <td>
-          <span class="Style_1">27-5-2010</span>
-        </td>
-        <td>
-          <span class="Style_1">aashi</span>
-        </td>
-        <td>
-          <span class="Style_1">aashi</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="ViewEsiInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="CreateEsiInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteEsiInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
-      </tr>
-      <tr>
-        <td>
-          <span class="S_no"> 4 </span>
-        </td>
-        <td>
-          <span class="Style_1">ESI no one</span>
-        </td>
-        <td>
-          <span class="Style_1">27-5-2010</span>
-        </td>
-        <td>
-          <span class="Style_1">aashi</span>
-        </td>
-        <td>
-          <span class="Style_1">aashi</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="ViewEsiInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="CreateEsiInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteEsiInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
-      </tr>
-    </tbody>
-  </table>
+   <table>
+      <thead>
+         <tr>
+            <th>S.no</th>
+            <th>ESI NO</th>
+            <th>Registration Date</th>
+            <th>Signatory Name</th>
+            <th>Signatory Designation</th>
+            <th>Created By</th>
+            <th>Last Modification date</th>
+            <th>Action</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>
+               <span class="S_no"> 1 </span>
+            </td>
+            <td>
+               <span class="Style_1">ESI no one</span>
+            </td>
+            <td>
+               <span class="Style_1">27-5-2010</span>
+            </td>
+            <td>
+               <span class="Style_1">aashi</span>
+            </td>
+            <td>
+               <span class="Style_1">aashi</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">may 26,2018</span>
+            </td>
+            <td>
+               <button (click)="ViewEsiInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button   (click)="CreateEsiInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)="  DeleteEsiInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 2 </span>
+            </td>
+            <td>
+               <span class="Style_1">ESI no one</span>
+            </td>
+            <td>
+               <span class="Style_1">27-5-2010</span>
+            </td>
+            <td>
+               <span class="Style_1">aashi</span>
+            </td>
+            <td>
+               <span class="Style_1">aashi</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">may 26,2018</span>
+            </td>
+            <td>
+               <button (click)="ViewEsiInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button   (click)="CreateEsiInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)="  DeleteEsiInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 3 </span>
+            </td>
+            <td>
+               <span class="Style_1">ESI no one</span>
+            </td>
+            <td>
+               <span class="Style_1">27-5-2010</span>
+            </td>
+            <td>
+               <span class="Style_1">aashi</span>
+            </td>
+            <td>
+               <span class="Style_1">aashi</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">may 26,2018</span>
+            </td>
+            <td>
+               <button (click)="ViewEsiInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button   (click)="CreateEsiInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)="  DeleteEsiInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 4 </span>
+            </td>
+            <td>
+               <span class="Style_1">ESI no one</span>
+            </td>
+            <td>
+               <span class="Style_1">27-5-2010</span>
+            </td>
+            <td>
+               <span class="Style_1">aashi</span>
+            </td>
+            <td>
+               <span class="Style_1">aashi</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">may 26,2018</span>
+            </td>
+            <td>
+               <button (click)="ViewEsiInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button   (click)="CreateEsiInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)="  DeleteEsiInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</div>
 

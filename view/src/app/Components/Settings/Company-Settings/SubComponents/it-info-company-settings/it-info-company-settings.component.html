@@ -1,165 +1,169 @@
+<!-- header part -->
+<!-- craete and search section -->
 <div class="row header_part">
-  <div class="col-sm-6">
-    <button class="Create_Button" mat-raised-button (click)="CreateItInfo()"> + Create </button>
-  </div>
-  <div class="col-sm-6">
-    <div class="Search_Section">
-      <input type="text" placeholder="Search.." name="search">
-      <i class="material-icons">search</i>
-    </div>
-  </div>
+   <div class="col-sm-6">
+      <button class="Create_Button" mat-button (click)="CreateItInfo()"> + Create </button>
+   </div>
+   <div class="col-sm-6">
+      <div class="Search_Section">
+         <input type="text" placeholder="Search.." name="search">
+         <i class="material-icons">search</i>
+      </div>
+   </div>
 </div>
+<!-- Table section -->
 <div class="Table_Section">
-  <table>
-    <thead>
-      <tr>
-        <th>S.no</th>
-        <th>PAN no</th>
-        <th>TAN no</th>
-        <th>TAN circle no</th>
-        <th>TDS Details</th>
-        <th>Created By</th>
-        <th>Last Modification date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <span class="S_no"> 1 </span>
-        </td>
-        <td>
-          <span class="Style_1">pan no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">Tan no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">Tan circle no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">TDS details</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-          <button (click)="ViewItInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-             <i class="material-icons">zoom_in</i>
-          </button>
-          <button   (click)="CreateItInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-             <i class="material-icons">edit</i>
-          </button>
-          <button (click)="  DeleteItInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-             <i class="material-icons">delete_forever</i>
-          </button>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <span class="S_no"> 2 </span>
-        </td>
-        <td>
-          <span class="Style_1">pan no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">Tan no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">Tan circle no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">TDS details</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="ViewItInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="CreateItInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteItInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
-      </tr>
-      <tr>
-        <td>
-          <span class="S_no"> 3</span>
-        </td>
-        <td>
-          <span class="Style_1">pan no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">Tan no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">Tan circle no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">TDS details</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="ViewItInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="CreateItInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteItInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
-      </tr>
-      <tr>
-        <td>
-          <span class="S_no"> 4 </span>
-        </td>
-        <td>
-          <span class="Style_1">pan no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">Tan no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">Tan circle no 1</span>
-        </td>
-        <td>
-          <span class="Style_1">TDS details</span>
-        </td>
-        <td>
-          <span class="Style_1">admin</span>
-        </td>
-        <td>
-          <span class="Style_1">may 26,2018</span>
-        </td>
-        <td>
-         <button (click)="ViewItInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-            <i class="material-icons">zoom_in</i>
-         </button>
-         <button   (click)="CreateItInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-            <i class="material-icons">edit</i>
-         </button>
-         <button (click)="  DeleteItInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-            <i class="material-icons">delete_forever</i>
-         </button>
-      </td>
-      </tr>
-    </tbody>
-  </table>
+   <table>
+      <thead>
+         <tr>
+            <th>S.no</th>
+            <th>PAN no</th>
+            <th>TAN no</th>
+            <th>TAN circle no</th>
+            <th>TDS Details</th>
+            <th>Created By</th>
+            <th>Last Modification date</th>
+            <th>Action</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>
+               <span class="S_no"> 1 </span>
+            </td>
+            <td>
+               <span class="Style_1">pan no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">Tan no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">Tan circle no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">TDS details</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">may 26,2018</span>
+            </td>
+            <td>
+               <button (click)="ViewItInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button   (click)="CreateItInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)="  DeleteItInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 2 </span>
+            </td>
+            <td>
+               <span class="Style_1">pan no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">Tan no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">Tan circle no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">TDS details</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">may 26,2018</span>
+            </td>
+            <td>
+               <button (click)="ViewItInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button   (click)="CreateItInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)="  DeleteItInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 3</span>
+            </td>
+            <td>
+               <span class="Style_1">pan no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">Tan no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">Tan circle no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">TDS details</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">may 26,2018</span>
+            </td>
+            <td>
+               <button (click)="ViewItInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button   (click)="CreateItInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)="  DeleteItInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 4 </span>
+            </td>
+            <td>
+               <span class="Style_1">pan no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">Tan no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">Tan circle no 1</span>
+            </td>
+            <td>
+               <span class="Style_1">TDS details</span>
+            </td>
+            <td>
+               <span class="Style_1">admin</span>
+            </td>
+            <td>
+               <span class="Style_1">may 26,2018</span>
+            </td>
+            <td>
+               <button (click)="ViewItInfo()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button   (click)="CreateItInfo()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)="  DeleteItInfo()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</div>
 
