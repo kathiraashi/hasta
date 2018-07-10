@@ -42,11 +42,11 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
          // Company Settings Folder
             import { MainCompanySettingsComponent } from './Components/Settings/Company-Settings/main-company-settings/main-company-settings.component';
             // Sub Components Folder
-                import { CompanyInfoCompanySettingsComponent } from './Components/settings/Company-Settings/SubComponents/company-info-company-settings/company-info-company-settings.component';
-                import { ContactInfoCompanySettingsComponent } from './Components/settings/Company-Settings/SubComponents/contact-info-company-settings/contact-info-company-settings.component';
-                import { DepartmentsCompanySettingsComponent } from './Components/settings/Company-Settings/SubComponents/departments-company-settings/departments-company-settings.component';
-                import { BranchCompanySettingsComponent } from './Components/settings/Company-Settings/SubComponents/branch-company-settings/branch-company-settings.component';
-                import { RegistrationInfoCompanySettingsComponent } from './Components/settings/Company-Settings/SubComponents/registration-info-company-settings/registration-info-company-settings.component';
+                import { CompanyInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/company-info-company-settings/company-info-company-settings.component';
+                import { ContactInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/contact-info-company-settings/contact-info-company-settings.component';
+                import { DepartmentsCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/departments-company-settings/departments-company-settings.component';
+                import { BranchCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/branch-company-settings/branch-company-settings.component';
+                import { RegistrationInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/registration-info-company-settings/registration-info-company-settings.component';
                 import { ESIInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/esiinfo-company-settings/esiinfo-company-settings.component';
                 import { PFInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/pfinfo-company-settings/pfinfo-company-settings.component';
                 import { ItInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/it-info-company-settings/it-info-company-settings.component';
@@ -84,9 +84,9 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
                   import { MainCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-View/main-crm-customers-view/main-crm-customers-view.component';
                // SubComponents
                   import { AboutCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/about-crm-customers-view/about-crm-customers-view.component';
-                  import { ContactCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-view/SubComponents/contact-crm-customers-view/contact-crm-customers-view.component';
-                  import { ActivityCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-view/SubComponents/activity-crm-customers-view/activity-crm-customers-view.component';
-                  import { InvoiceCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-view/SubComponents/invoice-crm-customers-view/invoice-crm-customers-view.component';
+                  import { ContactCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/contact-crm-customers-view/contact-crm-customers-view.component';
+                  import { ActivityCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/activity-crm-customers-view/activity-crm-customers-view.component';
+                  import { InvoiceCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/invoice-crm-customers-view/invoice-crm-customers-view.component';
             // crm-customer-create
                   import { CrmCustomersCreateComponent } from './Components/CRM/Customers/crm-customers-create/crm-customers-create.component';
          // Invoice
