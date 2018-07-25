@@ -10,9 +10,9 @@
                   <span class="header_button">+Create</span>
                </span>
                <ul class="Button_Tree_View">
-                  <li class="Button_Tree_List"><a> Ticket </a></li>
+                  <li class="Button_Tree_List" [routerLink]="['/crm_ticket_list']"><a> Ticket </a></li>
                   <li class="Button_Tree_List"><a> Activity </a></li>
-                  <li class="Button_Tree_List"><a> Machine </a></li>
+                  <li class="Button_Tree_List" [routerLink]="['/crm_machine_list']"><a> Machine </a></li>
                </ul>
             </span>
          </span>
@@ -87,6 +87,13 @@
                      <li class="Menu_Tree_List" [routerLink]="['/Hr_Settings']" ><a> HR Settings </a></li>
                      <!-- <li class="Menu_Tree_List" [routerLink]="['/Account_Settings']"><a> Account Settings </a></li> -->
                   </ul>
+               </span>
+            </li>
+            <!-- HR -->
+            <li class="Menu_List"  [routerLink]="['/main_hr']" style="outline:none;">
+               <span class="Menu">
+                  <i class="material-icons">people</i>
+                  <span > &nbsp; HR </span> 
                </span>
             </li>
          </ul>

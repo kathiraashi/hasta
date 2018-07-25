@@ -1,0 +1,328 @@
+<!--  Header Part -->
+<!-- Create and search Section -->
+<div class="row header_part">
+   <div class="col-sm-6">
+      <button class="Create_Button" mat-button (click)="CreateEmployee()"> + Create </button>
+   </div>
+   <div class="col-sm-6">
+      <div class="Search_Section">
+         <input type="text" placeholder="Search.." name="search">
+         <i class="material-icons">search</i>
+      </div>
+   </div>
+</div>
+<!-- Table Section -->
+<div class="Table_Section">
+   <table>
+      <thead>
+         <tr>
+         <th>S.no</th>
+         <th>Employee Name</th>
+         <th>Code</th>
+         <th>Phone No</th>
+         <th>Department</th>
+         <th>Job Title</th>
+         <th>Manager</th>
+         <th>Action</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>
+               <span class="S_no"> 1 </span>
+            </td>
+            <td>
+               <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+               <span class="Style_1"> code</span>
+            </td>
+            <td>
+               <span class="Style_1">+4546546547</span>
+            </td>
+            <td>
+               <span class="Style_1">Department</span>
+            </td>
+            <td>
+               <span class="Style_1">Job Title</span>
+            </td>
+            <td>
+               <span class="Style_1">Manager</span>
+            </td>
+            <td>
+               <button (click)="ViewEmployee()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button (click)="CreateEmployee()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteEmployee()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 2 </span>
+            </td>
+            <td>
+               <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+               <span class="Style_1"> code</span>
+            </td>
+            <td>
+               <span class="Style_1">+4546546547</span>
+            </td>
+            <td>
+               <span class="Style_1">Department</span>
+            </td>
+            <td>
+               <span class="Style_1">Job Title</span>
+            </td>
+            <td>
+               <span class="Style_1">Manager</span>
+            </td>
+            <td>
+               <button (click)="ViewEmployee()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button (click)="CreateEmployee()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteEmployee()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 3 </span>
+            </td>
+            <td>
+               <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+               <span class="Style_1"> code</span>
+            </td>
+            <td>
+               <span class="Style_1">+4546546547</span>
+            </td>
+            <td>
+               <span class="Style_1">Department</span>
+            </td>
+            <td>
+               <span class="Style_1">Job Title</span>
+            </td>
+            <td>
+               <span class="Style_1">Manager</span>
+            </td>
+            <td>
+               <button (click)="ViewEmployee()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button (click)="CreateEmployee()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteEmployee()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span class="S_no"> 4 </span>
+            </td>
+            <td>
+               <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+               <span class="Style_1"> code</span>
+            </td>
+            <td>
+               <span class="Style_1">+4546546547</span>
+            </td>
+            <td>
+               <span class="Style_1">Department</span>
+            </td>
+            <td>
+               <span class="Style_1">Job Title</span>
+            </td>
+            <td>
+               <span class="Style_1">Manager</span>
+            </td>
+            <td>
+               <button (click)="ViewEmployee()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <i class="material-icons">zoom_in</i>
+               </button>
+               <button (click)="CreateEmployee()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <i class="material-icons">edit</i>
+               </button>
+               <button (click)=" DeleteEmployee()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">delete_forever</i>
+               </button>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</div>
+<br>
+<!-- Product Details -->
+<div class="Product_Details">
+   <!-- Product Tab -->
+   <div class="Product_Tab">
+      <div class="Product_details">
+         <span [ngClass]="{'active': Active_Tab === 'personal_info'}" (click)="Active_Tab_Change('personal_info')">Personal Info</span>
+      </div>
+      <div class="Quote_Terms">
+         <span [ngClass]="{'active': Active_Tab === 'salary_details'}" (click)="Active_Tab_Change('salary_details')">Salary Details</span>
+      </div>
+   </div>
+   <br>
+   <div class="page" *ngIf="Active_Tab === 'personal_info'">
+      <div class="container-fluid">
+         <!-- Company Details -->
+         <div class="row">
+            <div class="Company_Details">
+               <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Personal <span style="color:#516570;font-size:20px;font-weight: 600;">Info</span></h5><br>
+               <div class="col-sm-12">
+                  <div class="row">
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" placeholder="No/Street">
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" placeholder="Area">
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" placeholder="Country">
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" placeholder="State">
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" placeholder="City">
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" placeholder="Marital Status"> 
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" placeholder="Date Of Birth"> 
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row" style="margin-top:20px;"> 
+            <div class="col-sm-12 text-right">
+               <button mat-raised-button color="primary" > Submit </button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="page" *ngIf="Active_Tab === 'salary_details'">
+      <div class="container-fluid">
+         <!-- Company Details -->
+         <div class="row">
+            <div class="Company_Details">
+               <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Salary <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5>
+               <div class="col-sm-12">
+                  <div class="row">
+                     <div class="col-sm-4 Form_Select" >
+                        <select>
+                           <option checked>Select an option</option>
+                           <option> Monthly</option>
+                           <option> Hours</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+               <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Earnings
+                  <span style="color:#516570;font-size:20px;font-weight: 600;">Table</span>
+               </h5>
+               <!-- table section -->
+               <table class="table_section">
+                  <thead class="table_head">
+                     <tr>
+                     <th class="S_No">Earnings Type</th>
+                     <th>Based On</th>
+                     <th>Amount Or Percentage</th>
+                     <th>Total</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td >Basic Pay</td>
+                        <td class="Form_Select">
+                           <select>
+                              <option checked>Select an option</option>
+                              <option> Fixed</option>
+                              <option> Percentage</option>
+                           </select>
+                        </td>
+                        <td class="Form_Input" >
+                           <input type="text" style="margin-bottom:0px;">
+                        </td>
+                        <td class="Form_Input">
+                           <input type="text" style="margin-bottom:0px;">
+                        </td>
+                     </tr>
+                  </tbody>
+               </table><br>
+               <!-- Detection Table -->
+               <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Detection
+                  <span style="color:#516570;font-size:20px;font-weight: 600;">Table</span>
+               </h5>
+               <table class="table_section">
+                  <thead class="table_head">
+                     <tr>
+                        <th class="S_No">Detection Type</th>
+                        <th>Based On</th>
+                        <th>Amount Or Percentage</th>
+                        <th>Total</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td >ESI</td>
+                        <td class="Form_Select">
+                           <select>
+                              <option checked>Select an option</option>
+                              <option> Fixed</option>
+                              <option> Percentage</option>
+                           </select>
+                        </td>
+                        <td class="Form_Input" >
+                           <input type="text" style="margin-bottom:0px;">
+                        </td>
+                        <td class="Form_Input">
+                           <input type="text" style="margin-bottom:0px;">
+                        </td>
+                     </tr>
+                     <tr>
+                        <td >PF</td>
+                        <td class="Form_Select">
+                           <select>
+                              <option checked>Select an option</option>
+                              <option> Fixed</option>
+                              <option> Percentage</option>
+                           </select>
+                        </td>
+                        <td class="Form_Input" >
+                           <input type="text" style="margin-bottom:0px;">
+                        </td>
+                        <td class="Form_Input">
+                           <input type="text" style="margin-bottom:0px;">
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <div class="row" style="margin-top:20px;"> 
+            <div class="col-sm-12 text-right">
+               <button mat-raised-button color="primary" > Submit </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

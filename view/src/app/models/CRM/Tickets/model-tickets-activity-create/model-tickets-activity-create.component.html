@@ -1,0 +1,80 @@
+<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
+      <div class="Modal_Header">
+        <p>Activity</p>
+        <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+      </div>
+      <div class="Model_Body">
+        <div class="row">
+          <div class="col-sm-6 Form_Input">
+            <label>Machine Name:</label>
+            <input type="text">
+          </div>
+          <div class="col-sm-6 Form_Input">
+            <label>Date:</label>
+            <input type="text">
+          </div>
+          <div class="col-sm-6 Form_Input">
+            <label>Employee Name:</label>
+            <input type="text">
+          </div>
+          <div class="col-sm-6 Form_Input">
+            <label>From Time:</label>
+            <input type="text">
+          </div>
+          <div class="col-sm-6 Form_Input">
+            <label>To Time:</label>
+            <input type="text">
+          </div>
+          <div class="col-sm-6 Form_Select">
+            <label>Status:</label>
+            <select>
+             <option disabled> Inprogress</option>
+             <option> Completed</option>
+           </select>
+          </div>
+         <div class="col-sm-6 Form_TextArea">
+            <label>Description:</label>
+            <textarea ></textarea> 
+          </div>
+         </div>
+      </div>
+      <div class="Model_Footer">
+        <button mat-raised-button color="primary"> Submit </button>
+      </div>
+    </div>
+    <div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+      <div class="Modal_Header">
+        <p>Activity</p>
+        <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+      </div>
+      <div class="Model_Body">
+        <div class="row">
+          <div class="col-sm-6 text-right Static">Machine Name: </div>
+          <div class="col-sm-6 text-left Data"> Machine Name</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-right Static">Date: </div>
+          <div class="col-sm-6 text-left Data"> 28.08.18</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-right Static">Employee Name: </div>
+          <div class="col-sm-6 text-left Data"> Employee Name</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-right Static">From Time: </div>
+          <div class="col-sm-6 text-left Data"> 9am</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-right Static">To Time: </div>
+          <div class="col-sm-6 text-left Data"> 5pm</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-right Static">Status: </div>
+          <div class="col-sm-6 text-left Data"> In progress</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-right Static">Description: </div>
+          <div class="col-sm-6 text-left Data"> dgfdhgdhgfghg</div>
+        </div>
+      </div>
+    </div>

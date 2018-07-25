@@ -16,8 +16,6 @@
          <div class="Main_Section">
             <div class="Left_Section">
                <ul class="Tabs">
-                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Industry_type'}" (click)="Active_Tab_Change('Industry_type')"><span class="Tab_Content">Industry type</span></li>
-                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Ownership_type'}" (click)="Active_Tab_Change('Ownership_type')"><span class="Tab_Content">Ownership type</span> </li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_type'}" (click)="Active_Tab_Change('Activity_type')"><span class="Tab_Content">Activity type </span> </li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_status'}" (click)="Active_Tab_Change('Activity_status')"><span class="Tab_Content">Activity status </span></li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_priority'}" (click)="Active_Tab_Change('Activity_priority')"><span class="Tab_Content">Activity priority</span> </li>
@@ -27,13 +25,7 @@
                </ul>
             </div>
             <div class="Right_Section">
-              <div *ngIf="Active_Tab === 'Industry_type'">
-                <app-industry-type-crm-settings></app-industry-type-crm-settings>
-              </div>
-              <div *ngIf="Active_Tab === 'Ownership_type'">
-                <app-owner-ship-type-crm-settings></app-owner-ship-type-crm-settings>
-              </div>
-              <div *ngIf="Active_Tab === 'Activity_type'">
+            <div *ngIf="Active_Tab === 'Activity_type'">
                 <app-activity-type-crm-settings></app-activity-type-crm-settings>
               </div>
               <div *ngIf="Active_Tab === 'Activity_status'">
@@ -45,11 +37,11 @@
               <div *ngIf="Active_Tab === 'Pipeline_Status'">
                 <app-pipe-line-status-type-crm-settings></app-pipe-line-status-type-crm-settings>
               </div>
-              <div *ngIf="Active_Tab === 'Ticket_Type'">
-                <app-contact-role-type-crm-settings></app-contact-role-type-crm-settings>
+              <div *ngIf="Active_Tab === 'Contact_role'">
+                  <app-contact-role-type-crm-settings></app-contact-role-type-crm-settings>
               </div>
-              <div *ngIf="Active_Tab === 'quote_terms'">
-                <app-quote-terms-type-crm-settings></app-quote-terms-type-crm-settings>
+              <div *ngIf="Active_Tab === 'Ticket_Type'">
+               <app-ticket-type-crm-settings></app-ticket-type-crm-settings>
               </div>
             </div>
          </div>

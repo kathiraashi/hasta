@@ -39,19 +39,6 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
                import { PipeLineStatusTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/pipe-line-status-type-crm-settings/pipe-line-status-type-crm-settings.component';
                import { ContactRoleTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/contact-role-type-crm-settings/contact-role-type-crm-settings.component';
                import { QuoteTermsTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/quote-terms-type-crm-settings/quote-terms-type-crm-settings.component';
-         // Company Settings Folder
-            import { MainCompanySettingsComponent } from './Components/Settings/Company-Settings/main-company-settings/main-company-settings.component';
-            // Sub Components Folder
-                import { CompanyInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/company-info-company-settings/company-info-company-settings.component';
-                import { ContactInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/contact-info-company-settings/contact-info-company-settings.component';
-                import { DepartmentsCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/departments-company-settings/departments-company-settings.component';
-                import { BranchCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/branch-company-settings/branch-company-settings.component';
-                import { RegistrationInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/registration-info-company-settings/registration-info-company-settings.component';
-                import { ESIInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/esiinfo-company-settings/esiinfo-company-settings.component';
-                import { PFInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/pfinfo-company-settings/pfinfo-company-settings.component';
-                import { ItInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/it-info-company-settings/it-info-company-settings.component';
-                import { PTInfoCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/ptinfo-company-settings/ptinfo-company-settings.component';
-                import { RegistrationTypeCompanySettingsComponent } from './Components/Settings/Company-Settings/SubComponents/registration-type-company-settings/registration-type-company-settings.component';
          // Hrms Settings Folder
             import { MainHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/main-hrms-settings/main-hrms-settings.component';
             // Sub Components
@@ -63,18 +50,6 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
                import { EmployeeCategoryHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/employee-category-hr-settings/employee-category-hr-settings.component';
                import { DepartmentHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/department-hr-settings/department-hr-settings.component';
                import { DesignationHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/designation-hr-settings/designation-hr-settings.component';
-         // Account Settings Folder
-               import { MainAccountSettingsComponent } from './Components/Settings/Account-Settings/main-account-settings/main-account-settings.component';
-            // Sub Components
-               import { TaxesAccountSettingsComponent } from './Components/Settings/Account-Settings/SubComponents/taxes-account-settings/taxes-account-settings.component';
-               import { BankAccountSettingsComponent } from './Components/Settings/Account-Settings/SubComponents/bank-account-settings/bank-account-settings.component';
-               import { IncomeTypeAccountSettingsComponent } from './Components/Settings/Account-Settings/SubComponents/income-type-account-settings/income-type-account-settings.component';
-               import { AssetTypeAccountSettingsComponent } from './Components/Settings/Account-Settings/SubComponents/asset-type-account-settings/asset-type-account-settings.component';
-               import { PaymentTermsAccountSettingsComponent } from './Components/Settings/Account-Settings/SubComponents/payment-terms-account-settings/payment-terms-account-settings.component';
-         // Product Settings Folder
-               import { MainProductSettingsComponent } from './Components/Settings/Product-Settings/main-product-settings/main-product-settings.component';
-            // Sub Components
-               import { ConfigurationProductSettingsComponent } from './Components/Settings/Product-Settings/SubComponents/configuration-product-settings/configuration-product-settings.component';
       // CRM Folder
          // Customers
             // crm-customers-list
@@ -121,16 +96,8 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
             import { AccountsCustomerInvoiceListComponent } from './Components/Accounts/customer-invoice/accounts-customer-invoice-list/accounts-customer-invoice-list.component';
             import { AccountsCustomerPaymentsListComponent } from './Components/Accounts/customer-payments/accounts-customer-payments-list/accounts-customer-payments-list.component';
             import { AccountsCustomerInvoiceViewComponent } from './Components/Accounts/customer-invoice/accounts-customer-invoice-view/accounts-customer-invoice-view.component';
-         // vendor
             import { AccountsCustomerPaymentsViewComponent } from './Components/Accounts/customer-payments/accounts-customer-payments-view/accounts-customer-payments-view.component';
-            import { AccountsVendorListComponent } from './Components/Accounts/Vendor/accounts-vendor-list/accounts-vendor-list.component';
-            import { AccountsVendorbillsListComponent } from './Components/Accounts/Vendor-Bills/accounts-vendorbills-list/accounts-vendorbills-list.component';
-         // Customer payments
             import { CustomerPaymentsCreateComponent } from './Components/Accounts/customer-payments/customer-payments-create/customer-payments-create.component';
-         // Vendor payments
-            import { VendorPaymentsListComponent } from './Components/Accounts/Vendor-Payments/vendor-payments-list/vendor-payments-list.component';
-            import { VendorPaymentsCreateComponent } from './Components/Accounts/Vendor-Payments/vendor-payments-create/vendor-payments-create.component';
-            import { VendorPaymentsViewComponent } from './Components/Accounts/Vendor-Payments/vendor-payments-view/vendor-payments-view.component';
    // models
       // settings
          // company settings
@@ -171,6 +138,33 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
             import { ModelOndutyHrmsComponent } from './models/HRMS/model-onduty-hrms/model-onduty-hrms.component';
             import { ModelPermissionsHrmsComponent } from './models/HRMS/model-permissions-hrms/model-permissions-hrms.component';
             import { ModelAdvanceHrmsComponent } from './models/HRMS/model-advance-hrms/model-advance-hrms.component';
+import { TicketTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/ticket-type-crm-settings/ticket-type-crm-settings.component';
+import { ModelTickettypeCrmsettingsComponent } from './models/settings/crm_settings/model-tickettype-crmsettings/model-tickettype-crmsettings.component';
+import { EarningsHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/earnings-hr-settings/earnings-hr-settings.component';
+import { DetectionsHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/detections-hr-settings/detections-hr-settings.component';
+import { ModelEarningsHrsettingsComponent } from './models/settings/hr_settings/model-earnings-hrsettings/model-earnings-hrsettings.component';
+import { ModelDetectionsHrsettingsComponent } from './models/settings/hr_settings/model-detections-hrsettings/model-detections-hrsettings.component';
+import { ModelContactCrmCustomersViewComponent } from './models/CRM/Customers/model-contact-crm-customers-view/model-contact-crm-customers-view.component';
+import { MainHrComponent } from './Components/HR/main-hr/main-hr.component';
+import { AttendanceLogHrComponent } from './Components/HR/SubComponents/attendance-log-hr/attendance-log-hr.component';
+import { MainEmployeesHrComponent } from './Components/HR/SubComponents/Employees/main-employees-hr/main-employees-hr.component';
+import { ModelEmployeesCreateComponent } from './models/HR/model-employees-create/model-employees-create.component';
+import { ModelAttendanceLogCreateComponent } from './models/HR/model-attendance-log-create/model-attendance-log-create.component';
+import { ModelAttendanceReportCreateComponent } from './models/HR/model-attendance-report-create/model-attendance-report-create.component';
+import { MainAttendanceReportHrComponent } from './Components/HR/SubComponents/Attendance-Report/main-attendance-report-hr/main-attendance-report-hr.component';
+import { AttendanceReportViewComponent } from './Components/HR/SubComponents/Attendance-Report/attendance-report-view/attendance-report-view.component';
+import { MainPayrollHrComponent } from './Components/HR/SubComponents/Payroll/main-payroll-hr/main-payroll-hr.component';
+import { PayrollViewComponent } from './Components/HR/SubComponents/Payroll/payroll-view/payroll-view.component';
+import { MainPayrollMasterHrComponent } from './Components/HR/SubComponents/Payroll-Master/main-payroll-master-hr/main-payroll-master-hr.component';
+import { PayrollMasterCreateComponent } from './Components/HR/SubComponents/Payroll-Master/payroll-master-create/payroll-master-create.component';
+import { ModelPayrollMasterViewComponent } from './models/HR/model-payroll-master-view/model-payroll-master-view.component';
+import { ModelTicketsActivityCreateComponent } from './models/CRM/Tickets/model-tickets-activity-create/model-tickets-activity-create.component';
+import { ModelTicketsCreateComponent } from './models/CRM/Machines/model-tickets-create/model-tickets-create.component';
+import { ModelActivitiesCrmCustomersComponent } from './models/CRM/Customers/model-activities-crm-customers/model-activities-crm-customers.component';
+import { ModelMachinesCrmCustomersComponent } from './models/CRM/Customers/model-machines-crm-customers/model-machines-crm-customers.component';
+import { ModelTicketsCrmCustomersComponent } from './models/CRM/Customers/model-tickets-crm-customers/model-tickets-crm-customers.component';
+import { ModelInvoicesCrmCustomersComponent } from './models/CRM/Customers/model-invoices-crm-customers/model-invoices-crm-customers.component';
+
 
 
 @NgModule({
@@ -194,19 +188,6 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
                      PipeLineStatusTypeCrmSettingsComponent,
                      ContactRoleTypeCrmSettingsComponent,
                      QuoteTermsTypeCrmSettingsComponent,
-                // Company Settings Folder
-                 MainCompanySettingsComponent,
-                  // Sub Components Folder
-                     CompanyInfoCompanySettingsComponent,
-                     ContactInfoCompanySettingsComponent,
-                     DepartmentsCompanySettingsComponent,
-                     BranchCompanySettingsComponent,
-                     RegistrationInfoCompanySettingsComponent,
-                     ESIInfoCompanySettingsComponent,
-                     PFInfoCompanySettingsComponent,
-                     ItInfoCompanySettingsComponent,
-                     PTInfoCompanySettingsComponent,
-                     RegistrationTypeCompanySettingsComponent,
                 // Hrms Settings Folder
                  MainHrmsSettingsComponent,
                  // Sub Components
@@ -218,19 +199,7 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
                     EmployeeCategoryHrSettingsComponent,
                     DepartmentHrSettingsComponent,
                     DesignationHrSettingsComponent,
-               // Account Settings Folder
-                MainAccountSettingsComponent,
-                 // Sub Components
-                    TaxesAccountSettingsComponent,
-                    BankAccountSettingsComponent,
-                    IncomeTypeAccountSettingsComponent,
-                    AssetTypeAccountSettingsComponent,
-                    PaymentTermsAccountSettingsComponent,
-                // Product Settings Folder
-                 MainProductSettingsComponent,
-                 // Sub Components
-                    ConfigurationProductSettingsComponent,
-    // models
+   // models
     // settings
         // company settings
             ModelCompanyinfoCompanysettingsComponent,
@@ -311,15 +280,9 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
             AccountsCustomerInvoiceListComponent,
             AccountsCustomerPaymentsListComponent,
             AccountsCustomerInvoiceViewComponent,
-        // vendor
             AccountsCustomerPaymentsViewComponent,
-            AccountsVendorListComponent,
-            AccountsVendorbillsListComponent,
-
             CustomerPaymentsCreateComponent,
-            VendorPaymentsListComponent,
-            VendorPaymentsCreateComponent,
-            VendorPaymentsViewComponent,
+
             DashboardComponent,
             CrmMachinesListComponent,
             CrmMachinesCreateComponent,
@@ -329,6 +292,33 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
             CrmTicketsCreateComponent,
             CrmTicketsListComponent,
             CrmTicketsViewComponent,
+            TicketTypeCrmSettingsComponent,
+            ModelTickettypeCrmsettingsComponent,
+            EarningsHrSettingsComponent,
+            DetectionsHrSettingsComponent,
+            ModelEarningsHrsettingsComponent,
+            ModelDetectionsHrsettingsComponent,
+            ModelContactCrmCustomersViewComponent,
+            MainHrComponent,
+            AttendanceLogHrComponent,
+            MainEmployeesHrComponent,
+            ModelEmployeesCreateComponent,
+            ModelAttendanceLogCreateComponent,
+            ModelAttendanceReportCreateComponent,
+            MainAttendanceReportHrComponent,
+            AttendanceReportViewComponent,
+            MainPayrollHrComponent,
+            PayrollViewComponent,
+            MainPayrollMasterHrComponent,
+            PayrollMasterCreateComponent,
+            ModelPayrollMasterViewComponent,
+            ModelTicketsActivityCreateComponent,
+            ModelTicketsCreateComponent,
+            ModelActivitiesCrmCustomersComponent,
+            ModelMachinesCrmCustomersComponent,
+            ModelTicketsCrmCustomersComponent,
+            ModelInvoicesCrmCustomersComponent,
+
 
 
 
@@ -392,7 +382,20 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
     ModelLeavesHrmsComponent,
     ModelOndutyHrmsComponent,
     ModelPermissionsHrmsComponent,
-    ModelAdvanceHrmsComponent],
+    ModelAdvanceHrmsComponent,
+    ModelTickettypeCrmsettingsComponent,
+    ModelEarningsHrsettingsComponent,
+    ModelDetectionsHrsettingsComponent,
+    ModelEmployeesCreateComponent,
+    ModelAttendanceLogCreateComponent,
+    ModelAttendanceReportCreateComponent,
+    ModelPayrollMasterViewComponent,
+    ModelTicketsActivityCreateComponent,
+    ModelTicketsCreateComponent,
+    ModelContactCrmCustomersViewComponent,
+    ModelActivitiesCrmCustomersComponent,
+    ModelMachinesCrmCustomersComponent,
+    ModelTicketsCrmCustomersComponent],
    bootstrap: [AppComponent]
 })
 export class AppModule { }

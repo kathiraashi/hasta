@@ -1,0 +1,75 @@
+<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
+    <div class="Modal_Header">
+      <p>Tickets</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+    </div>
+    <div class="Model_Body">
+      <div class="row">
+       <div class="col-sm-6 Form_Input">
+          <label>Machine Name:</label>
+          <input type="text">
+        </div>
+        <div class="col-sm-6 Form_Input">
+            <label>Customer Name:</label>
+            <input type="text" readonly="true">
+          </div>
+          <div class="col-sm-6 Form_Input">
+               <label>Ticket ID:</label>
+               <input type="text">
+             </div>
+             <div class="col-sm-6 Form_Select">
+                  <label>Ticket Types:</label>
+                  <select>
+                        <option disabled>Type-11</option>
+                        <option> Type-11</option>
+                        <option>Type-11</option>
+                     </select>
+                </div>
+             <div class="col-sm-6 Form_Input">
+                  <label>Date:</label>
+                  <input type="text">
+                </div>
+                <div class="col-sm-6 Form_TextArea">
+                     <label>Issues:</label>
+                     <textarea ></textarea>
+                   </div>
+        </div>
+    </div>
+    <div class="Model_Footer">
+      <button mat-raised-button color="primary"> Submit </button>
+    </div>
+  </div>
+  <div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+    <div class="Modal_Header">
+      <p>Tickets</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+    </div>
+    <div class="Model_Body">
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Machine Name: </div>
+        <div class="col-sm-6 text-left Data"> Machine Name</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Customer Name: </div>
+        <div class="col-sm-6 text-left Data"> Customer Name</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Ticket ID: </div>
+        <div class="col-sm-6 text-left Data"> ID43213</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Ticket Types: </div>
+        <div class="col-sm-6 text-left Data"> Type-11</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Date: </div>
+        <div class="col-sm-6 text-left Data"> 25.07.18 </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Issues: </div>
+        <div class="col-sm-6 text-left Data"> fhfgjghvjh</div>
+      </div>
+    </div>
+  </div>
+
+

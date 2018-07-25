@@ -1,0 +1,110 @@
+<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
+    <div class="Modal_Header">
+      <p> Machines</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+    </div>
+    <div class="Model_Body">
+      <div class="row">
+       <div class="col-sm-6 Form_Input">
+          <label>Machine Name:</label>
+          <input type="text">
+        </div>
+        <div class="col-sm-6 Form_Input">
+            <label>Customer Name:</label>
+            <input type="text" readonly="true">
+          </div>
+          <div class="col-sm-6 Form_Input">
+               <label>Model:</label>
+               <input type="text">
+             </div>
+          <div class="col-sm-6 Form_Input">
+               <label>Machine Make:</label>
+               <input type="text">
+             </div>
+             <div class="col-sm-6 Form_Input">
+                  <label>mfg Serial No:</label>
+                  <input type="text">
+                </div>
+                <div class="col-sm-6 Form_Input">
+                     <label>Machine ID:</label>
+                     <input type="text">
+                   </div>
+        <div class="col-sm-6 Form_Select">
+          <label>Machine Types:</label>
+          <select>
+                <option disabled>Type-11</option>
+                <option> Type-11</option>
+                <option>Type-11</option>
+             </select>
+        </div>
+        <div class="col-sm-6 Form_Select">
+            <label>Controller Types:</label>
+            <select>
+                  <option disabled>Type-11</option>
+                  <option> Type-11</option>
+                  <option>Type-11</option>
+               </select>
+          </div>
+        <div class="col-sm-6 Form_Input">
+             <label>Controller Model No:</label>
+             <input type="text">
+           </div>
+           <div class="col-sm-6 Form_Input">
+               <label>mfg Year:</label>
+               <input type="text">
+             </div>
+       </div>
+    </div>
+    <div class="Model_Footer">
+      <button mat-raised-button color="primary"> Submit </button>
+    </div>
+  </div>
+  <div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+    <div class="Modal_Header">
+      <p>Machines</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+    </div>
+    <div class="Model_Body">
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Machine Name: </div>
+        <div class="col-sm-6 text-left Data"> Machine Name</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Customer Name: </div>
+        <div class="col-sm-6 text-left Data"> Customer Name</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Model: </div>
+        <div class="col-sm-6 text-left Data"> Model</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Machine Make: </div>
+        <div class="col-sm-6 text-left Data"> Machine Make</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">mfg Serial No: </div>
+        <div class="col-sm-6 text-left Data"> 1324</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Machine ID: </div>
+        <div class="col-sm-6 text-left Data"> ID241</div>
+      </div>
+      <div class="row">
+          <div class="col-sm-6 text-right Static">Machine Types: </div>
+          <div class="col-sm-6 text-left Data"> Type-11</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 text-right Static">Controller Types: </div>
+            <div class="col-sm-6 text-left Data"> Type-11</div>
+          </div>
+          <div class="row">
+               <div class="col-sm-6 text-right Static">Controller Model No: </div>
+               <div class="col-sm-6 text-left Data"> 6546</div>
+             </div>
+             <div class="row">
+                  <div class="col-sm-6 text-right Static">mfg Year: </div>
+                  <div class="col-sm-6 text-left Data"> 2008</div>
+                </div>
+    </div>
+  </div>
+

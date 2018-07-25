@@ -20,17 +20,25 @@
          <div class="Company_Details">
             <div class="col-sm-12">
                <div class="row">
-                  <div class="col-sm-6 Form_Input">
+                  <div class="col-sm-6 Form_Select">
                   <label>Customer:</label>
-                  <input type="text">
+                  <select>
+                        <option disabled>Customer</option>
+                        <option> Customer</option>
+                        <option>Customer</option>
+                     </select>
                   </div>
-                  <div class="col-sm-6 Form_Input">
-                  <label>Invoice No:</label>
-                  <input type="text">
-                  </div>
+                  <div class="col-sm-6 Form_Select">
+                        <label>Invoice No:</label>
+                        <select>
+                              <option disabled>IVC1324</option>
+                              <option> IVC1324</option>
+                              <option>IVC1324</option>
+                           </select>
+                        </div>
                   <div class="col-sm-6 Form_Input">
                   <label>Payment Amount:</label>
-                  <input type="text">
+                  <input type="text" readonly="true">
                   </div>
                   <div class="col-sm-6 Form_Input">
                   <label>Date:</label>
@@ -41,18 +49,7 @@
          </div>
          <!--product Details -->
          <div class="Product">
-            <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Payment<span style="color:#516570;font-size:20px;font-weight: 600;">Method</span></h5><br>
             <div class="Product_Details" >
-               <div class="row">
-                  <div class="col-sm-4 Form_Input">
-                     <label>Company Name:</label>
-                     <input type="text">
-                  </div>
-                  <div class="col-sm-4 Form_Input">
-                     <label>Invoice No:</label>
-                     <input type="text">
-                  </div>
-               </div>
                <div class="row">
                   <div class="col-sm-12">
                      <h5>Mode Of Payments</h5>

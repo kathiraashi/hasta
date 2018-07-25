@@ -1,3 +1,154 @@
-<p>
-  crm-tickets-view works!
-</p>
+<div class="Page_section" style="margin-top:100px;">
+  <div class="container-fluid">
+    <!-- page Identity -->
+    <div class="Page_Identity">
+      <div class="Page_Name">
+        <h5>Tickets View</h5>
+      </div>
+    </div>
+    
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Date: </div>
+        <div class="col-sm-6 text-left Data"> 25.07.18</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Ticket Id: </div>
+        <div class="col-sm-6 text-left Data"> ID432543</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Customer name: </div>
+        <div class="col-sm-6 text-left Data"> xxxx</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-right Static">Ticket Type:</div>
+        <div class="col-sm-6 text-left Data"> Type-11</div>
+      </div>
+    
+    <br>
+    <!-- Create and search Section -->
+    <div class="row header_part">
+      <div class="col-sm-6">
+        <h5>Activity</h5>
+      </div>
+      <div class="col-sm-6">
+        <button class="Create_Button" mat-button (click)="CreateTicketsActivity()"> + Create </button>
+      </div>
+    </div>
+    <!-- Table Section -->
+    <div class="Table_Section">
+      <table>
+        <thead>
+          <tr>
+            <th>S.no</th>
+            <th>Employee Name</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="S_no"> 1 </span>
+            </td>
+            <td>
+              <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+              <span class="Style_1"> 25.07.18</span>
+            </td>
+            <td>
+              <span class="Style_1">In progress</span>
+            </td>
+            <td>
+              <button (click)="ViewTicketsActivity()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                <i class="material-icons">zoom_in</i>
+              </button>
+              <button (click)="CreateTicketsActivity()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                <i class="material-icons">edit</i>
+              </button>
+              <button (click)=" DeleteTicketsActivity()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                <i class="material-icons">delete_forever</i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="S_no"> 2 </span>
+            </td>
+            <td>
+              <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+              <span class="Style_1"> 25.07.18</span>
+            </td>
+            <td>
+              <span class="Style_1">In progress</span>
+            </td>
+            <td>
+              <button (click)="ViewTicketsActivity()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                <i class="material-icons">zoom_in</i>
+              </button>
+              <button (click)="CreateTicketsActivity()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                <i class="material-icons">edit</i>
+              </button>
+              <button (click)=" DeleteTicketsActivity()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                <i class="material-icons">delete_forever</i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="S_no"> 3 </span>
+            </td>
+            <td>
+              <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+              <span class="Style_1"> 25.07.18</span>
+            </td>
+            <td>
+              <span class="Style_1">In progress</span>
+            </td>
+            <td>
+              <button (click)="ViewTicketsActivity()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                <i class="material-icons">zoom_in</i>
+              </button>
+              <button (click)="CreateTicketsActivity()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                <i class="material-icons">edit</i>
+              </button>
+              <button (click)=" DeleteTicketsActivity()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                <i class="material-icons">delete_forever</i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="S_no"> 4 </span>
+            </td>
+            <td>
+              <span class="Style_1">Employee Name</span>
+            </td>
+            <td>
+              <span class="Style_1"> 25.07.18</span>
+            </td>
+            <td>
+              <span class="Style_1">In progress</span>
+            </td>
+            <td>
+              <button (click)="ViewTicketsActivity()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                <i class="material-icons">zoom_in</i>
+              </button>
+              <button (click)="CreateTicketsActivity()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                <i class="material-icons">edit</i>
+              </button>
+              <button (click)=" DeleteTicketsActivity()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                <i class="material-icons">delete_forever</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
