@@ -1,73 +1,113 @@
-<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
-      <div class="Modal_Header">
-        <p> Contact</p>
-        <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
-      </div>
+<!-- If Create Or Edit The Controller Type -->
+<div class="Modal_Content" *ngIf="_Data?.Type && ( _Data?.Type === 'Create' || _Data?.Type === 'Edit')">
+   <div class="Modal_Header">
+      <p> {{_Data?.Type}} Contact </p>
+      <span *ngIf="!Uploading" data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <form [formGroup]="Form" (ngSubmit)="Submit()">
       <div class="Model_Body">
-        <div class="row">
-          <div class="col-sm-6 Form_Select">
-            <label>Title:</label>
-            <select>
-               <option disabled> Mr</option>
-               <option> Ms</option>
-               <option>Mrs</option>
-            </select>
-          </div>
-          <div class="col-sm-6 Form_Input">
-            <label>Name:</label>
-            <input type="text">
-          </div>
-          <div class="col-sm-6 Form_Input">
-            <label>Contact Role:</label>
-            <input type="text">
-          </div>
-          <div class="col-sm-6 Form_Input">
-            <label>Email:</label>
-            <input type="text">
-          </div>
-          <div class="col-sm-6 Form_Input">
-            <label>Mobile:</label>
-            <input type="text">
-          </div>
-         <div class="col-sm-6 Form_Input">
-            <label>Job Position:</label>
-            <input type="text">
-          </div>
+         <div class="row">
+            <div class="col-sm-6 Form_Input">
+               <label> Title:</label>
+               <ng-select class="NgSelect ValueBold" formControlName="Title" [searchable]="true" placeholder="Title">
+                  <ng-option *ngFor="let Title of _Titles" [value]="Title">{{ Title }}</ng-option>
+               </ng-select>
+               <p class="error" *ngIf="Form.controls['Title'].errors && !Form.controls['Title'].pristine">
+                  <span *ngIf="Form.controls['Title'].errors.required"> Title is required</span>
+               </p>
+            </div>
+            <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': !Form.controls['Name'].pristine && Form.controls['Name'].errors, 'Form_Success': Form.controls['Name'].valid && !Form.controls['Name'].pristine }">
+               <label> Name:</label>
+               <input type="text" formControlName="Name">
+               <p class="error" *ngIf="Form.controls['Name'].errors && !Form.controls['Name'].pristine">
+                  <span *ngIf="Form.controls['Name'].errors.required">  Name is required</span>
+               </p>
+            </div>
+            <div class="col-sm-6 Form_Input">
+               <label> Email:</label>
+               <input type="text" formControlName="Email">
+            </div>
+            <div class="col-sm-6 Form_Input">
+               <label> Mobile:</label>
+               <input type="text" formControlName="Mobile">
+            </div>
+            <div class="col-sm-6 Form_Input">
+               <label> Contact Role:</label>
+               <ng-select class="NgSelect ValueBold" formControlName="ContactRole" [searchable]="true" placeholder="Contact Role">
+                  <ng-option *ngFor="let Contact_Role of _Contact_Roles" [value]="Contact_Role">{{ Contact_Role?.Contact_Role }}</ng-option>
+               </ng-select>
+            </div>
+            <div class="col-sm-6 Form_Input">
+               <label> Job Position:</label>
+               <input type="text" formControlName="JobPosition">
+            </div>
          </div>
       </div>
       <div class="Model_Footer">
-        <button mat-raised-button color="primary"> Submit </button>
+         <button type="submit" [disabled]="Form.status !== 'VALID' || Uploading" mat-raised-button color="primary">
+            <span *ngIf="_Data?.Type === 'Create' && !Uploading">Submit</span>
+            <span *ngIf="_Data?.Type === 'Edit' && !Uploading">Update</span>
+            <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+         </button>
       </div>
-    </div>
-    <div class="Modal_Content" *ngIf=" Type && Type === 'View'">
-      <div class="Modal_Header">
-        <p>Contact</p>
-        <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </form>
+</div>
+
+<!-- If View The Controller Type -->
+<div class="Modal_Content" *ngIf=" _Data?.Type && _Data?.Type === 'View'">
+   <div class="Modal_Header">
+      <p>View Contact</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="view_item">
+         <div class="Static"> Name </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Contact_Info.Title}}.{{_Contact_Info.Name}} </div>
       </div>
-      <div class="Model_Body">
-        <div class="row">
-          <div class="col-sm-6 text-right Static">Title: </div>
-          <div class="col-sm-6 text-left Data"> Title</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 text-right Static">Name: </div>
-          <div class="col-sm-6 text-left Data"> Name</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 text-right Static">Contact Role: </div>
-          <div class="col-sm-6 text-left Data"> Contact Role</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 text-right Static">Email: </div>
-          <div class="col-sm-6 text-left Data"> sample@gmail.com</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 text-right Static">Mobile: </div>
-          <div class="col-sm-6 text-left Data"> +6546757657</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 text-right Static">Job Position: </div>
-          <div class="col-sm-6 text-left Data"> Job Position</div>
-        </div>
+      <div class="view_item">
+         <div class="Static"> Email </div>
+         <div class="dots"> : </div>
+         <div class="Data">  {{_Contact_Info.Email}} </div>
       </div>
-    </div>
+      <div class="view_item">
+         <div class="Static"> Mobile </div>
+         <div class="dots"> : </div>
+         <div class="Data">  {{_Contact_Info.Mobile}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Contact Role </div>
+         <div class="dots"> : </div>
+         <div class="Data">  {{_Contact_Info.ContactRole?.Contact_Role}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Job Position </div>
+         <div class="dots"> : </div>
+         <div class="Data">  {{_Contact_Info.JobPosition}}  </div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Created By </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Contact_Info.Created_By?.Name}}
+            <!-- <span class="Badge"> {{Data.Created_By.User_Type.User_Type}} </span> -->
+         </div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Last Modified By </div>
+         <div class="dots"> : </div>
+         <div class="Data">  {{_Contact_Info.Last_Modified_By?.Name}}
+            <!-- <span class="Badge"> {{Data.Last_Modified_By.User_Type.User_Type}} </span> -->
+         </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Created Date </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Contact_Info.createdAt | date:'medium' }} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Last Modified Date  </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Contact_Info.updatedAt | date:'medium' }} </div>
+      </div>
+   </div>
+</div>

@@ -1,6 +1,5 @@
 
 /* Button Color Overwrite */
-
 .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
    background-color: #49b660;
    color: #ffffff;
@@ -20,4 +19,26 @@
 }
 .Table_Action_mini.mat-mini-fab .mat-button-wrapper{
    padding: 5px 0px;
+}
+
+/* Check Box Background Color Overwrite */
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background{
+   background-color: #4ab65f;
+}
+.MatCheckboxStyle_1 .mat-checkbox-label{
+   color: #4d6a7a;
+   font-size: 14px;
+   letter-spacing: 0.5px;
+   font-weight: 800;
+}
+
+
+.mat-calendar-body-selected{
+   background-color: #4ab65f !important;
+}
+
+.mat-datepicker-content-touch .mat-calendar {
+   width: 370px !important;
+   height: 425px !important;
 }

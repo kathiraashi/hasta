@@ -107,5 +107,6 @@
  .Page_Content.CRM_Settings .Main_Section  .Right_Section{
     width:79%;
     margin-left: 1%;
+    position: relative;
  }
  

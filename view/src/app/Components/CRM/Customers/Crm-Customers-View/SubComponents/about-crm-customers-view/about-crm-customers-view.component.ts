@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-about-crm-customers-view',
@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutCrmCustomersViewComponent implements OnInit {
 
-  customClass: String = 'customClass';
+  @Input() CustomerData: Object;
 
   constructor() { }
 

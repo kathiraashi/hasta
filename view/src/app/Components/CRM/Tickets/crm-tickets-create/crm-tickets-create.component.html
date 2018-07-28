@@ -1,53 +1,88 @@
-<!-- Ticket creates Form -->
-<div class="page" style="margin-top:100px;">
+
+<div class="Page_Section">
    <div class="container-fluid">
       <!-- page Identity -->
       <div class="Page_Identity">
          <div class="Page_Name">
-            <h5>Support Tickets</h5>
+            <h5>TICKETS CREATE</h5>
          </div>
-       </div>
-       <!-- Ticket Details -->
-      <div class="row">
-         <div class="Ticket_Details">
-            <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Ticket <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5><br>
-            <div class="col-sm-12">
-               <div class="row">
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="Machine Name ">
-                  </div>
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="Customer Name">
-                  </div>
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="Ticket Id">
-                  </div>
-                  <div class="col-sm-4 Form_Select" >
-                     <select>
-                        <option checked> Ticket Types</option>
-                        <option> Type-11</option>
-                        <option> Type-11 </option>
-                        <option> Type-11 </option>
-                        <option> Type-11 </option>
-                        <option> Type-11 </option>
-                     </select>
-                  </div>
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="Date"> 
-                  </div>
-                  <div class="col-sm-4 Form_TextArea" >
-                    <textarea placeholder="Issue"></textarea> 
-                  </div>
-               </div>
-            </div>
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">CRM</li>
+               <li class="arrow">>></li>
+               <li class="LinkName" [routerLink]="['/crm_ticket_list']">Tickets List</li>
+               <li class="arrow">>></li>
+               <li> Tickets Create</li>
+            </ul>
          </div>
       </div>
-      <div class="row" style="margin-top:20px;"> 
-         <div class="col-sm-12 text-right">
-            <button mat-raised-button color="primary" > Submit </button>
+      <!-- Company Details -->
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="BoxStyle_1">
+               <form [formGroup]="Form">
+                  <div class="row">
+                     <div class="col-sm-4 Form_Input" >
+                        <ng-select class="NgSelect ValueBold" formControlName="Customer" [searchable]="true" placeholder="Customer" (ngModelChange)="Customer_Change()">
+                           <ng-option *ngFor="let Customer of _Customers" [value]="Customer">{{ Customer.CompanyName }}</ng-option>
+                        </ng-select>
+                        <p class="error" *ngIf="Form.controls['Customer'].errors && !Form.controls['Customer'].pristine">
+                           <span *ngIf="Form.controls['Customer'].errors.required"> Customer is required</span>
+                        </p>
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <ng-select class="NgSelect ValueBold" formControlName="Machine" [searchable]="true" placeholder="Machine">
+                           <ng-option *ngFor="let Machine of _Machines" [value]="Machine">{{ Machine.MachineName }}</ng-option>
+                        </ng-select>
+                        <p class="error" *ngIf="Form.controls['Machine'].errors && !Form.controls['Machine'].pristine">
+                           <span *ngIf="Form.controls['Machine'].errors.required"> Machine is required</span>
+                        </p>
+                     </div>
+                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['TicketId'].pristine && Form.controls['TicketId'].errors, 'Form_Success': Form.controls['TicketId'].valid && !Form.controls['TicketId'].pristine }">
+                        <input type="text" formControlName="TicketId" placeholder="Ticket Id">
+                        <p class="error" *ngIf="Form.controls['TicketId'].errors && !Form.controls['TicketId'].pristine">
+                           <span *ngIf="Form.controls['TicketId'].errors.required"> Ticket Id is required</span>
+                        </p>
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <ng-select class="NgSelect ValueBold" formControlName="TicketType" [searchable]="true" placeholder="Ticket Type">
+                           <ng-option *ngFor="let Ticket_Type of _Tickets_Types" [value]="Ticket_Type">{{ Ticket_Type.Ticket_Type }}</ng-option>
+                        </ng-select>
+                        <p class="error" *ngIf="Form.controls['TicketType'].errors && !Form.controls['TicketType'].pristine">
+                           <span *ngIf="Form.controls['TicketType'].errors.required"> Ticket Type is required</span>
+                        </p>
+                     </div>
+                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['TicketOpenDate'].pristine && Form.controls['TicketOpenDate'].errors, 'Form_Success': Form.controls['TicketOpenDate'].valid && !Form.controls['TicketOpenDate'].pristine }">
+                        <input type="text" formControlName="TicketOpenDate" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date">
+                        <mat-datepicker touchUi #Datepicker></mat-datepicker>
+                        <p class="error" *ngIf="Form.controls['TicketOpenDate'].errors && !Form.controls['TicketOpenDate'].pristine">
+                           <span *ngIf="Form.controls['TicketOpenDate'].errors.required"> Date is required</span>
+                        </p>
+                     </div>
+                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['TicketOpenTime'].pristine && Form.controls['TicketOpenTime'].errors, 'Form_Success': Form.controls['TicketOpenTime'].valid && !Form.controls['TicketOpenTime'].pristine }">
+                        <input type="text" formControlName="TicketOpenTime" [ngxTimepicker]="picker" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Time" >
+                        <ngx-material-timepicker #picker></ngx-material-timepicker>
+                        <p class="error" *ngIf="Form.controls['TicketOpenTime'].errors && !Form.controls['TicketOpenTime'].pristine">
+                           <span *ngIf="Form.controls['TicketOpenTime'].errors.required"> Date is required</span>
+                        </p>
+                     </div>
+                     <div class="col-sm-4 Form_TextArea" [ngClass]="{'Form_Err': !Form.controls['Issue'].pristine && Form.controls['Issue'].errors, 'Form_Success': Form.controls['Issue'].valid && !Form.controls['Issue'].pristine }">
+                        <textarea formControlName="Issue" placeholder="Issue"></textarea>
+                        <p class="error" *ngIf="Form.controls['Issue'].errors && !Form.controls['Issue'].pristine">
+                           <span *ngIf="Form.controls['Issue'].errors.required"> Issue is required</span>
+                        </p>
+                     </div>
+                  </div>
+                  <div class="row" > 
+                     <div class="col-sm-12 text-right">
+                        <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="Submit()"> Submit </button>
+                     </div>
+                  </div>
+               </form>
+            </div>
          </div>
       </div>
    </div>
 </div>
-
-
+ 
+ 

@@ -6,87 +6,59 @@
          <!-- page Identity -->
          <div class="Page_Identity">
             <div class="Page_Name">
-               <h5>Customers</h5>
+               <h5>CUSTOMERS</h5>
             </div>
-            <div class="Page_Track">
+           <div class="Page_Track">
                <ul >
                   <li class="HeaderName">CRM</li>
                   <li class="arrow">>></li>
-                  <li>Customers</li>
+                  <li> Customers Create</li>
                </ul>
             </div>
          </div>
          <!-- Create and Search -->
-         <div class="row header_part">
-            <div class="col-sm-6">
-               <button class="Create_Button" mat-button [routerLink]="['/crm_customers_create']"> + Create </button>
-            </div>
-            <div class="col-sm-6">
-               <div class="Search_Section">
-               <input type="text" placeholder="Search.." name="search">
-               <i class="material-icons">search</i>
+         <div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+            <div class="Loading">
+               <div class="spinner">
+                  <div class="rect1"></div>
+                  <div class="rect2"></div>
+                  <div class="rect3"></div>
+                  <div class="rect4"></div>
+                  <div class="rect5"></div>
+                  <div class="rect6"></div>
                </div>
             </div>
          </div>
-         <!-- Content Style -->
-         <div class="row Content_Style">
-            <div class="col-sm-3 Page_Content" >
-               <div class="Sub_Content"  [routerLink]="['/main_crm_customers_view']">
-                  <div class="image_section">
-                     <img src="../../../../assets/images/basic/company.png">
+         <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+            <div class="row header_part">
+               <div class="col-sm-6">
+                  <button class="Create_Button" mat-raised-button color="primary" [routerLink]="['/crm_customers_create']"> + Create </button>
+               </div>
+               <div class="col-sm-6">
+                  <div class="Search_Section">
+                  <input type="text" placeholder="Search.." name="search">
+                  <i class="material-icons">search</i>
                   </div>
-                  <div class=" Content_Section">
-                     <h5>Customer Name</h5>
-                     <h5>Customer@gmail.com</h5>
-                     <h5>+7776546677</h5>
-                     <h5>State,Country</h5>
-                  </div>
-                  <span><i class="material-icons settings">settings</i></span>
                </div>
             </div>
-            <div class="col-sm-3 Page_Content">
-               <div class="Sub_Content"  [routerLink]="['/main_crm_customers_view']">
-                  <div class="image_section">
-                     <img src="../../../../assets/images/basic/company.png">
-                  </div>
-                  <div class=" Content_Section">
-                     <h5>Customer Name</h5>
-                     <h5>Customer@gmail.com</h5>
-                     <h5>+7776546677</h5>
-                     <h5>State,Country</h5>
-                  </div>
-                  <span><i class="material-icons settings">settings</i></span>
-               </div>
-            </div>
-            <div class="col-sm-3 Page_Content">
-               <div class="Sub_Content"  [routerLink]="['/main_crm_customers_view']">
-                  <div class="image_section">
-                     <img src="../../../../assets/images/basic/company.png">
-                  </div>
-                  <div class=" Content_Section">
-                     <h5>Customer Name</h5>
-                     <h5>Customer@gmail.com</h5>
-                     <h5>+7776546677</h5>
-                     <h5>State,Country</h5>
-                  </div>
-                  <span><i class="material-icons settings">settings</i></span>
-               </div>
-            </div>
-            <div class="col-sm-3 Page_Content">
-                  <div class="Sub_Content"  [routerLink]="['/main_crm_customers_view']">
+            <!-- Content Style -->
+            <div class="row Content_Style">
+               <div class="col-sm-3 Page_Content" *ngFor="let Customer of _List; let i=index" >
+                  <div class="Sub_Content" [routerLink]="[ '/main_crm_customers_view', Customer._id ]">
                      <div class="image_section">
                         <img src="../../../../assets/images/basic/company.png">
                      </div>
                      <div class=" Content_Section">
-                        <h5>Customer Name</h5>
-                        <h5>Customer@gmail.com</h5>
-                        <h5>+7776546677</h5>
-                        <h5>State,Country</h5>
+                        <h5>{{Customer.CompanyName}}</h5>
+                        <h5>{{Customer.EmailAddress}}</h5>
+                        <h5>{{Customer.PhoneNumber}}</h5>
+                        <h5>{{Customer.BillingAddress.Area}}, {{Customer.BillingAddress.City.City_Name}}, {{Customer.BillingAddress.State.State_Name}}</h5>
                      </div>
-                     <span><i class="material-icons settings">settings</i></span>
+                     <!-- <span><i class="material-icons settings">settings</i></span> -->
                   </div>
                </div>
             </div>
          </div>
       </div>
    </div>
+</div>

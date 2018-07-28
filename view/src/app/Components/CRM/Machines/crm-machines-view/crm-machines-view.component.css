@@ -66,3 +66,112 @@
     font-weight: 500;
     color: #4f6a7a;
 }
+
+
+
+
+
+
+
+
+
+
+  /* Table section */
+  .Table_Section table {
+    border: 1px solid lightgray;
+    width: 100%;
+    box-shadow: 2px 2px 3px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
+   }
+   .Table_Section table thead {
+      line-height: 40px;
+      background-color: #ffffff;
+      color: #4d6a7a;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+   }
+   .Table_Section table thead th{
+      font-weight: 800;
+      text-align: left;
+   }
+   .Table_Section table thead th:first-child{
+      text-align: center;
+      width:80px;
+   }
+   .Table_Section table thead th:last-child{
+      text-align: center;
+   }
+   .Table_Section table tbody {
+      border: 1px solid #e8e8e8;
+      background-color: #ffffff;
+   }
+   .Table_Section table tbody tr {
+      align-items: center;
+      border-bottom: 1px solid #eaeaea;
+      height:50px;
+   }
+   .Table_Section table tbody tr td {
+      text-align: left;
+   }
+   .Table_Section table tbody tr td:first-child {
+      text-align: center;
+   }
+   .Table_Section table tbody tr td:last-child {
+      text-align: center;
+   }
+   .Table_Section table tbody tr:nth-child(odd) {
+      background-color: #f1f1f185;
+   }
+   .Table_Section table tbody tr:hover {
+      background-color: #4f6a7a40;
+   }
+   .Table_Section table tbody tr td .S_no {
+      font-size: 14px;
+      color: #4d6a7a;
+   }
+   .Table_Section table tbody tr td .Style_1 {
+      font-size: 14px;
+      color: rgba(77, 106, 122, 0.84);
+      font-weight: 600;
+      cursor: pointer;
+   }
+   .Table_Section table tbody tr td .Style_2 {
+      margin: 0px;
+      font-size: 14px;
+      color: rgb(77, 106, 122);
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 20px;
+   }
+   .Table_Section table tbody tr td .Style_3 {
+      font-size: 14px;
+      color: rgba(77, 106, 122, 0.84);
+      font-weight: 400;
+      cursor: pointer;
+      line-height: 20px;
+   }
+   .Table_Section table tbody tr td .Action_Section{
+      color: #ffffff;
+      height: 35px;
+      width: 35px;
+      line-height: 30px;
+      display: flex;
+      border-radius: 5px;
+      cursor: pointer;
+      float: right;
+      margin-right: 10px;
+   }
+   /* ----------- Create and Search Section ---------- */
+  .header_part{
+    margin-bottom: 10px;
+    margin-left:10px;
+  }
+  .Create_Button{
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .header_part h5{
+     font-size: 19px;
+     font-weight:600;
+     color:#4f6a7a;
+  }

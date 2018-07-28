@@ -13,11 +13,16 @@
    import { AppComponent } from './app.component';
 
 // Future Modules
-import { ModalModule, AccordionModule, BsDropdownModule } from 'ngx-bootstrap';
+import { ModalModule, AccordionModule, BsDropdownModule} from 'ngx-bootstrap';
 import {CalendarModule} from 'primeng/calendar';
-import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/material';
+import {MatButtonModule, MatDatepickerModule, MatNativeDateModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatMenuModule} from '@angular/material';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 // Custom Modules
    import { AppRoutingModule } from './app.routing.module';
+   import { AuthGuard } from './Authentication/auth.guard';
+
 // Custom Components
    // Header Component
    import { HeaderComponent } from './Components/Common-Components/header/header.component';
@@ -30,15 +35,12 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
          // CRM Settings Folder
             import { MainCrmSettingsComponent } from './Components/Settings/CRM-Settings/main-crm-settings/main-crm-settings.component';
             // Sub Components Folder
-               import { AccountTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/account-type-crm-settings/account-type-crm-settings.component';
                import { IndustryTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/industry-type-crm-settings/industry-type-crm-settings.component';
                import { OwnerShipTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/owner-ship-type-crm-settings/owner-ship-type-crm-settings.component';
                import { ActivityTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/activity-type-crm-settings/activity-type-crm-settings.component';
                import { ActivityStatusTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/activity-status-type-crm-settings/activity-status-type-crm-settings.component';
                import { ActivityPriorityTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/activity-priority-type-crm-settings/activity-priority-type-crm-settings.component';
-               import { PipeLineStatusTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/pipe-line-status-type-crm-settings/pipe-line-status-type-crm-settings.component';
                import { ContactRoleTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/contact-role-type-crm-settings/contact-role-type-crm-settings.component';
-               import { QuoteTermsTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/quote-terms-type-crm-settings/quote-terms-type-crm-settings.component';
          // Hrms Settings Folder
             import { MainHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/main-hrms-settings/main-hrms-settings.component';
             // Sub Components
@@ -50,6 +52,11 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
                import { EmployeeCategoryHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/employee-category-hr-settings/employee-category-hr-settings.component';
                import { DepartmentHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/department-hr-settings/department-hr-settings.component';
                import { DesignationHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/designation-hr-settings/designation-hr-settings.component';
+         // User Management And Permissions
+            import { UserManagementListComponent } from './Components/Settings/UserManagement/user-management-list/user-management-list.component';
+            import { UserPermissionsComponent } from './Components/Settings/UserPermissions/user-permissions/user-permissions.component';
+            import { ModelUserCreateUserManagementComponent } from './models/settings/user_management/model-user-create-user-management/model-user-create-user-management.component';
+            import { UserPermissionsGroupCreateComponent } from './Components/Settings/UserPermissions/user-permissions-group-create/user-permissions-group-create.component';
       // CRM Folder
          // Customers
             // crm-customers-list
@@ -117,9 +124,7 @@ import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/mat
             import { ModelActivitytypeCrmsettingsComponent } from './models/settings/crm_settings/model-activitytype-crmsettings/model-activitytype-crmsettings.component';
             import { ModelActivitystatusCrmsettingsComponent } from './models/settings/crm_settings/model-activitystatus-crmsettings/model-activitystatus-crmsettings.component';
             import { ModelActivitypriorityCrmsettingsComponent } from './models/settings/crm_settings/model-activitypriority-crmsettings/model-activitypriority-crmsettings.component';
-            import { ModelPipelinestatusCrmsettingsComponent } from './models/settings/crm_settings/model-pipelinestatus-crmsettings/model-pipelinestatus-crmsettings.component';
             import { ModelContactroleCrmsettingsComponent } from './models/settings/crm_settings/model-contactrole-crmsettings/model-contactrole-crmsettings.component';
-            import { ModelQuotetermsCrmsettingsComponent } from './models/settings/crm_settings/model-quoteterms-crmsettings/model-quoteterms-crmsettings.component';
          // HRMS settings
             import { ModelLeavetypeHrmssettingsComponent } from './models/settings/hrms_settings/model-leavetype-hrmssettings/model-leavetype-hrmssettings.component';
             import { ModelExpensestypeHrmssettingsComponent } from './models/settings/hrms_settings/model-expensestype-hrmssettings/model-expensestype-hrmssettings.component';
@@ -164,7 +169,11 @@ import { ModelActivitiesCrmCustomersComponent } from './models/CRM/Customers/mod
 import { ModelMachinesCrmCustomersComponent } from './models/CRM/Customers/model-machines-crm-customers/model-machines-crm-customers.component';
 import { ModelTicketsCrmCustomersComponent } from './models/CRM/Customers/model-tickets-crm-customers/model-tickets-crm-customers.component';
 import { ModelInvoicesCrmCustomersComponent } from './models/CRM/Customers/model-invoices-crm-customers/model-invoices-crm-customers.component';
-
+import { LoginComponent } from './Components/Common-Components/login/login.component';
+import { MachineTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/machine-type-crm-settings/machine-type-crm-settings.component';
+import { ControllerTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/controller-type-crm-settings/controller-type-crm-settings.component';
+import { ModelControllertypeCrmsettingsComponent } from './models/settings/crm_settings/model-controllertype-crmsettings/model-controllertype-crmsettings.component';
+import { ModelMachinetypeCrmsettingsComponent } from './models/settings/crm_settings/model-machinetype-crmsettings/model-machinetype-crmsettings.component';
 
 
 @NgModule({
@@ -179,15 +188,12 @@ import { ModelInvoicesCrmCustomersComponent } from './models/CRM/Customers/model
                // CRM Settings Folder
                   MainCrmSettingsComponent,
                   // Sub Components Folder
-                     AccountTypeCrmSettingsComponent,
                      IndustryTypeCrmSettingsComponent,
                      OwnerShipTypeCrmSettingsComponent,
                      ActivityTypeCrmSettingsComponent,
                      ActivityStatusTypeCrmSettingsComponent,
                      ActivityPriorityTypeCrmSettingsComponent,
-                     PipeLineStatusTypeCrmSettingsComponent,
                      ContactRoleTypeCrmSettingsComponent,
-                     QuoteTermsTypeCrmSettingsComponent,
                 // Hrms Settings Folder
                  MainHrmsSettingsComponent,
                  // Sub Components
@@ -218,9 +224,7 @@ import { ModelInvoicesCrmCustomersComponent } from './models/CRM/Customers/model
             ModelActivitytypeCrmsettingsComponent,
             ModelActivitystatusCrmsettingsComponent,
             ModelActivitypriorityCrmsettingsComponent,
-            ModelPipelinestatusCrmsettingsComponent,
             ModelContactroleCrmsettingsComponent,
-            ModelQuotetermsCrmsettingsComponent,
         // HRMS settings
             ModelLeavetypeHrmssettingsComponent,
             ModelExpensestypeHrmssettingsComponent,
@@ -234,6 +238,11 @@ import { ModelInvoicesCrmCustomersComponent } from './models/CRM/Customers/model
             ModelIncometypeAccountsettingsComponent,
             ModelAssettypeAccountsettingsComponent,
             ModelPaymenttermsAccountsettingsComponent,
+      // User Management and User Permissions
+      UserManagementListComponent,
+      UserPermissionsComponent,
+      ModelUserCreateUserManagementComponent,
+      UserPermissionsGroupCreateComponent,
    // Components
     // Common-Components
         // delete-confirmation
@@ -318,6 +327,11 @@ import { ModelInvoicesCrmCustomersComponent } from './models/CRM/Customers/model
             ModelMachinesCrmCustomersComponent,
             ModelTicketsCrmCustomersComponent,
             ModelInvoicesCrmCustomersComponent,
+            LoginComponent,
+            MachineTypeCrmSettingsComponent,
+            ControllerTypeCrmSettingsComponent,
+            ModelControllertypeCrmsettingsComponent,
+            ModelMachinetypeCrmsettingsComponent,
 
 
 
@@ -338,18 +352,26 @@ import { ModelInvoicesCrmCustomersComponent } from './models/CRM/Customers/model
          RouterModule,
          HttpModule,
          HttpClientModule,
+         FormsModule,
+         ReactiveFormsModule,
         // future modules
          ModalModule.forRoot(),
          AccordionModule.forRoot(),
          BsDropdownModule.forRoot(),
+         NgxMaterialTimepickerModule.forRoot(),
+         MatCheckboxModule,
+         MatMenuModule,
+         NgSelectModule,
          CalendarModule,
          MatButtonModule,
          MatFormFieldModule,
          MatSelectModule,
+         MatDatepickerModule,
+         MatNativeDateModule,
       // Custom Modules
           AppRoutingModule,
    ],
-   providers: [],
+   providers: [AuthGuard],
    entryComponents: [ModelCompanyinfoCompanysettingsComponent,
     ModelContactinfoCompanysettingsComponent,
     ModelDepartmentsCompanysettingsComponent,
@@ -365,9 +387,10 @@ import { ModelInvoicesCrmCustomersComponent } from './models/CRM/Customers/model
     ModelActivitytypeCrmsettingsComponent,
     ModelActivitystatusCrmsettingsComponent,
     ModelActivitypriorityCrmsettingsComponent,
-    ModelPipelinestatusCrmsettingsComponent,
     ModelContactroleCrmsettingsComponent,
-    ModelQuotetermsCrmsettingsComponent,
+    ModelControllertypeCrmsettingsComponent,
+    ModelMachinetypeCrmsettingsComponent,
+    ModelUserCreateUserManagementComponent,
     ModelLeavetypeHrmssettingsComponent,
     ModelExpensestypeHrmssettingsComponent,
     ModelEmployeecategoryHrsettingsComponent,

@@ -1,0 +1,98 @@
+
+<div class="Page_Section">
+   <div class="container-fluid">
+      <div class="Page_Identity">
+         <div class="Page_Name">
+            <h5>USER PERMISSIONS</h5>
+         </div>
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">Settings</li>
+               <li class="arrow">>></li>
+               <li>User Permissions</li>
+            </ul>
+         </div>
+      </div>
+      <div class="Page_Content User_Permissions">
+         <div class="Main_Section">
+            <div class="Left_Section">
+               <div class="row header_part">
+                  <div class="col-sm-12 text-left">
+                     <button class="Create_Button" mat-raised-button [routerLink]="['/User_Permissions_Group_Create']"> + Create </button>
+                  </div>
+               </div>
+               <ul class="Tabs">
+                  <li *ngFor="let item of _GroupsList; let i=index" class="Tab" [ngClass]="{'active': item.Active}" (click)="ActiveGroupChange(i)">
+                     <span class="Tab_Content"> {{item.Group_Name}} </span>
+                  </li>     
+               </ul>
+            </div>
+            <div class="Right_Section">
+               <h5 *ngIf="SelectedGroupName && SelectedGroupName !== ''" class="TableHeader"> <span> {{ SelectedGroupName }} </span> Permissions Details </h5>
+               <div class="TableSection">
+                  <table>
+                     <thead *ngFor="let MainModule of _List; let i=index">
+                        <tr class="MainModuleStyle">
+                           <td> {{MainModule.Module_Name}} </td>
+                           <td>
+                              <div  class="ModuleCheckboxField">
+                                 <mat-checkbox [(ngModel)]="MainModule.Access_Permission" [disabled]="true" [labelPosition]="'before'"> 
+                                    Permission for Access 
+                                 </mat-checkbox>
+                                 <span *ngIf="MainModule.Access_Permission" (click)="MainModule.Expend = !MainModule.Expend"> 
+                                    <i *ngIf="MainModule.Expend" class="material-icons"> keyboard_arrow_down </i>
+                                    <i *ngIf="!MainModule.Expend" class="material-icons"> keyboard_arrow_up </i> 
+                                 </span> 
+                              </div>
+                           </td>
+                        </tr>
+                        <tr class="SubModuleStyle" *ngIf="MainModule.Access_Permission && MainModule.Expend">
+                           <td colspan="2">
+                              <table> 
+                                 <thead> 
+                                    <tr>
+                                       <td> Sub Module Name</td>
+                                       <td> View </td>
+                                       <td> Create </td>
+                                       <td> Edit </td>
+                                       <td> Delete </td>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr *ngFor="let Sub_Module of MainModule.Sub_Modules; let j=index"> 
+                                       <td> {{Sub_Module.SubModule_Name}} </td>
+                                       <td> 
+                                          <mat-checkbox [disabled]="true"
+                                             [(ngModel)]="Sub_Module.View_Permission">
+                                          </mat-checkbox> 
+                                       </td>
+                                       <td> 
+                                          <mat-checkbox [disabled]="true"
+                                             [(ngModel)]="Sub_Module.Create_Permission" >
+                                          </mat-checkbox> 
+                                       </td>
+                                       <td> 
+                                          <mat-checkbox [disabled]="true"
+                                             [(ngModel)]="Sub_Module.Edit_Permission">
+                                          </mat-checkbox> 
+                                       </td>
+                                       <td> 
+                                          <mat-checkbox [disabled]="true"
+                                             [(ngModel)]="Sub_Module.Delete_Permission" >
+                                          </mat-checkbox> 
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </td>
+                        </tr>
+                     </thead>
+                  </table>
+               </div>             
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+

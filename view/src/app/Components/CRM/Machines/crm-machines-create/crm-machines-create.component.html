@@ -1,260 +1,78 @@
-<div class="page" style="margin-top:100px;">
+<div class="Page_Section">
    <div class="container-fluid">
-      <!-- page Idendity -->
+      <!-- page Identity -->
       <div class="Page_Identity">
          <div class="Page_Name">
-            <h5>Machines Create</h5>
+            <h5>MACHINES CREATE</h5>
+         </div>
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">CRM</li>
+               <li class="arrow">>></li>
+               <li class="LinkName" [routerLink]="['/crm_machine_list']">Machines List</li>
+               <li class="arrow">>></li>
+               <li> Machines Create</li>
+            </ul>
          </div>
       </div>
       <!-- Company Details -->
       <div class="row">
-         <div class="Company_Details">
-            <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Machine <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5><br>
-            <div class="col-sm-12">
-               <div class="row">
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="Machine Name">
+         <div class="col-sm-12">
+            <div class="BoxStyle_1">
+               <form [formGroup]="Form">
+                  <div class="row">
+                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['MachineName'].pristine && Form.controls['MachineName'].errors, 'Form_Success': Form.controls['MachineName'].valid && !Form.controls['MachineName'].pristine }">
+                        <input type="text" formControlName="MachineName" placeholder="Machine Name" >
+                        <p class="error" *ngIf="Form.controls['MachineName'].errors && !Form.controls['MachineName'].pristine">
+                           <span *ngIf="Form.controls['MachineName'].errors.required"> Machine Name is required</span>
+                        </p>
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <ng-select class="NgSelect ValueBold" formControlName="Customer" [searchable]="true" placeholder="Customer">
+                           <ng-option *ngFor="let Customer of _Customers" [value]="Customer">{{ Customer.CompanyName }}</ng-option>
+                        </ng-select>
+                        <p class="error" *ngIf="Form.controls['Customer'].errors && !Form.controls['Customer'].pristine">
+                           <span *ngIf="Form.controls['Customer'].errors.required"> Customer is required</span>
+                        </p>
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="MachineMake" placeholder="Machine make">
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="MachineModel" placeholder="Model">
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="MfgSerialNo" placeholder="Mfg Serial No">
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="MachineId" placeholder="Machine Id">
+                     </div>
+                     <div class="col-sm-4 Form_Select" >
+                        <ng-select class="NgSelect ValueBold" formControlName="MachineType" [searchable]="true" placeholder="Machine Type">
+                           <ng-option *ngFor="let Machine_Type of _Machine_Types" [value]="Machine_Type">{{ Machine_Type.Machine_Type }}</ng-option>
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Select" >
+                        <ng-select class="NgSelect ValueBold" formControlName="ControllerType" [searchable]="true" placeholder="Controller Type">
+                           <ng-option *ngFor="let Controller_Type of _Controller_Types" [value]="Controller_Type">{{ Controller_Type.Controller_Type }}</ng-option>
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="ControllerModelNo" placeholder="Controller Model No"> 
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="MfgYear" placeholder="Mfg Year"> 
+                     </div>
                   </div>
-                  <div class="col-sm-4 Form_Input" >
-                      <input type="text" placeholder="Customer Name">
-                   </div>
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="Machine make">
+                  <div class="row" > 
+                     <div class="col-sm-12 text-right">
+                        <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="Submit()"> Submit </button>
+                     </div>
                   </div>
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="Model">
-                  </div>
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="mfg Serial No">
-                  </div>
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="Machine Id">
-                  </div>
-                  <div class="col-sm-4 Form_Select" >
-                     <select>
-                        <option checked> Machine Types</option>
-                        <option> VMC</option>
-                        <option> HMC </option>
-                        <option> VMC </option>
-                        <option> HMC </option>
-                        <option> VMC </option>
-                     </select>
-                  </div>
-                  <div class="col-sm-4 Form_Select" >
-                     <select>
-                        <option checked>Controller Type</option>
-                        <option> VMC</option>
-                        <option> HMC </option>
-                        <option> VMC </option>
-                        <option> HMC </option>
-                        <option> VMC </option>
-                     </select>
-                  </div>
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="Controller Model No"> 
-                  </div>
-                  <div class="col-sm-4 Form_Input" >
-                     <input type="text" placeholder="Mfg Year"> 
-                  </div>
-               </div>
+               </form>
             </div>
          </div>
       </div>
-      <div class="row" style="margin-top:20px;"> 
-         <div class="col-sm-12 text-right">
-            <button mat-raised-button color="primary" > Submit </button>
-         </div>
-      </div>
-      <!-- Create and search Section -->
-    <div class="row header_part">
-         <div class="col-sm-6">
-           <h5>Tickets</h5>
-         </div>
-         <div class="col-sm-6">
-           <button class="Create_Button" mat-button (click)="CreateTickets()"> + Create </button>
-         </div>
-       </div>
-       <!-- Table Section -->
-       <div class="Table_Section">
-            <table>
-               <thead>
-                  <tr>
-                     <th>S.no</th>
-                     <th>Date</th>
-                     <th>Ticket Id</th>
-                     <th>Customer Name</th>
-                     <th>Ticket Type</th>
-                     <th>Created By</th>
-                     <th>Status</th>
-                     <th>Action</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 1 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Paid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 2 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">unPaid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 3 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">unPaid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 4 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Paid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 5 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Paid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 6 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">unPaid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
    </div>
 </div>
  

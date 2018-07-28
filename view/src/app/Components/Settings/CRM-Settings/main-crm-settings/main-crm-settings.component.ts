@@ -7,12 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainCrmSettingsComponent implements OnInit {
 
-Active_Tab = 'Activity_type';
+Active_Tab = 'Industry_Type';
   constructor() { }
 
   ngOnInit() {
   }
-Active_Tab_Change(name) {
-  this.Active_Tab = name;
-}
+
+  Active_Tab_Change(name) {
+    this.Active_Tab = name;
+  }
 }

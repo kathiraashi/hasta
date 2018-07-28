@@ -1,96 +1,187 @@
-/* --------------   Page Identity Section  ----------------- */
-.Page_Identity{
-   display: flex;
-   height:40px;
-   width: 100%;
+.Page_Section{
+   position: relative;
+   margin-top:100px;
+   padding: 0px 5px;
+ }
+ /* --------------   Page Identity Section  ----------------- */
+ .Page_Identity{
+  display: flex;
+  height:40px;
+  width: 100%;
+  margin-bottom: 5px;
+ }
+ .Page_Identity .Page_Name{
+  width:50%;
+ }
+ .Page_Identity .Page_Name h5{
+  color: #4f6a7a;
+  line-height: 35px;
+  font-size: 18px;
+  margin: 0px;
+  font-weight: 700;
+ }
+ .Page_Identity .Page_Track{
+  width:50%;
+  line-height: 35px;
+ }
+ .Page_Identity .Page_Track ul{
+  display: flex;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  align-items: center;
+  float: right;
+ }
+ .Page_Identity .Page_Track ul li {
+  color: #a5adb1;
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 5px;
+ }
+ .Page_Identity .Page_Track ul li.arrow{
+  letter-spacing: -4px;
+  font-size: 19px;
+  transform: scale(.6, 1);
+ }
+ .Page_Identity .Page_Track ul li.arrowGreen{
+  letter-spacing: -4px;
+  font-size: 19px;
+  transform: scale(.6, 1);
+  color: #4ab65f;
+ }
+ .Page_Identity .Page_Track ul li.HeaderName{
+  color: #4ab65f;
+ }
+ .Page_Identity .Page_Track ul li.LinkName{
+  color: #4ab65f;
+  cursor: pointer;
+ }
+ 
+ 
+ /* Form Style */
+ .Form_Input{
+   margin-bottom: 27px;
+ }
+ .Form_Input label {
+   font-size: 14px;
    margin-bottom: 5px;
-   }
-   .Page_Identity .Page_Name{
-   width:50%;
-   }
-   .Page_Identity .Page_Name h5{
-   color: #4f6a7a;
-   line-height: 35px;
-   font-size: 18px;
-   margin: 0px;
    font-weight: 700;
-   }
-/* Form style */
-   .Form_Input input {
-      padding: 10px;
-      width: 100%;
-      height: 37px;
-      outline: none;
-      margin-bottom: 25px;
-      border: 1px solid gainsboro;
-      color: #484848;
-      font-weight: 500;
-      font-size: 14px;
-   }
-   .Form_Input input:-moz-placeholder{
-      color: #999999;
-      font-weight: 400;
-   }
-   .Form_Input input::-moz-placeholder{
-      color: #999999;
-      font-weight: 400;
-   }
-   .Form_Input input::-webkit-input-placeholder{
-      color: #999999;
-      font-weight: 400;
-   }
-   .Form_Input input:-ms-input-placeholder{
-      color: #999999;
-      font-weight: 400;
-   }
-   .Form_Select select{
-      width: 100%;
-      height: 37px;
-      color: #999;
-      outline: none;
-      padding: 0px 10px;
-      border: 1px solid #dcdcdc;
-      margin-bottom: 25px;
-   }
-   .Form_Select select option{
-      color: #999999;
-      width: 100%;
-   }
-   .Form_TextArea textarea {
-      padding: 10px;
-      width: 100%;
-      outline: none;
-      margin-bottom: 25px;
-      border: 1px solid gainsboro;
-      color: #484848;
-      font-weight: 500;
-      font-size: 14px;
-   }
-   .Form_TextArea textarea:-moz-placeholder{
-      color: #999999;
-      font-weight: 400;
-   }
-   .Form_TextArea textarea::-moz-placeholder{
-      color: #999999;
-      font-weight: 400;
-   }
-   .Form_TextArea textarea::-webkit-input-placeholder{
-      color: #999999;
-      font-weight: 400;
-   }
-   .Form_TextArea textarea:-ms-input-placeholder{
-      color: #999999;
-      font-weight: 400;
-   }
-/* Ticket details */
-   .Ticket_Details{
-      background-color: #fff;
-      margin: 10px;
-      padding: 20px;
-      margin-left: 15px;
-      width: 100%;
-      border-radius: 5px;
-      border-top: 2px solid #49B660;
-   }
+   color: #4e6a7a;
+ }
+ .Form_Input input {
+   padding: 4px 10px;
+   width: 100%;
+   height: 37px;
+   outline: none;
+   border: 1px solid #e8e8e8;
+   color: rgb(79, 107, 123);
+   font-weight: 500;
+   font-size: 14px;
+   letter-spacing: 0.3px;
+ }
+ .Form_Input input:disabled {
+   background-color: #e6e6e6;
+ }
+ .Form_TextArea{
+   margin-bottom: 25px;
+ }
+ .Form_TextArea label {
+   font-size: 14px;
+   margin-bottom: 5px;
+   font-weight: 700;
+   color: #4e6a7a;
+ }
+ .Form_TextArea textarea {
+   padding: 4px 10px;
+   width: 100%;
+   outline: none;
+   border: 1px solid #e8e8e8;
+   color: rgb(79, 107, 123);
+   font-weight: 500;
+   font-size: 14px;
+   letter-spacing: 0.3px;
+   min-height: 80px;
+ }
+ .Form_Input input:-moz-placeholder{
+   color: #999999;
+   font-weight: 400;
+ }
+ .Form_Input input::-moz-placeholder{
+   color: #999999;
+   font-weight: 400;
+ }
+ .Form_Input input::-webkit-input-placeholder{
+   color: #999999;
+   font-weight: 400;
+ }
+ .Form_Input input:-ms-input-placeholder{
+   color: #999999;
+   font-weight: 400;
+ }
+ .Form_Select label {
+   font-size: 14px;
+   margin-bottom: 5px;
+   font-weight: 700;
+   color: #4e6a7a;
+ }
+ .Form_Select select{
+   width: 100%;
+   height: 37px;
+   outline: none;
+   padding: 0px 10px;
+   margin-bottom: 20px;
+   border: 1px solid #e8e8e8;
+   color: rgb(79, 107, 123);
+   font-weight: 500;
+   font-size: 14px;
+   letter-spacing: 0.3px;
+ }
+ .Form_Select select option{
+   color: rgb(79, 107, 123);
+   width: 100%;
+ }
+ .error{
+   margin: 0px;
+   color: rgb(221, 10, 10);
+   font-weight: 500;
+   text-align: left;
+   font-size: 13px;
+   word-spacing: 1px;
+   letter-spacing: 0.4px;
+ }
+ .Form_Input.Form_Err input{
+  border-color: rgb(221, 10, 10);
+ }
+ .Form_Input.Form_Success input{
+  border-color: #4ab65f;
+ }
+ .Form_Select.Form_Err select{
+   border-color: rgb(221, 10, 10);
+ }
+ .Form_Select.Form_Success select{
+   border-color: #4ab65f;
+ }
+ .Form_TextArea.Form_Err textarea{ 
+   border-color: rgb(221, 10, 10);
+ }
+ .Form_TextArea.Form_Success textarea{
+   border-color: #4ab65f;
+ }
+   
+ 
+ .BoxStyle_1{
+   background-color: #fff;
+   padding: 20px 30px;
+   box-shadow: 1px 1px 10px #d4d4d4;
+   padding-top: 30px;
+ }
+ .BoxStyle_1 .BoxHeader{
+   margin-bottom: 15px;
+   font-weight: 700;
+   font-size: 18px;
+   color: #4f6a7a;
+   letter-spacing: 0.3px;
+ }
+   
   
-  
+   

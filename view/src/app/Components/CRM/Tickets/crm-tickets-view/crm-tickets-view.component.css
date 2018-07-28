@@ -1,144 +1,192 @@
-/* --------------   Page Identity Section  ----------------- */
-.Page_Identity{
-    display: flex;
-    height:40px;
-    width: 100%;
-    margin-bottom: 5px;
+.Page_Section{
+    position: relative;
+    padding: 0px 2px;
+    margin-top:100px;
+  }
+  /* --------------   Page Identity Section  ----------------- */
+  .Page_Identity{
+   display: flex;
+   height:40px;
+   width: 100%;
+   margin-bottom: 5px;
  }
  .Page_Identity .Page_Name{
-    width:50%;
+   width:50%;
  }
  .Page_Identity .Page_Name h5{
-    color: #4f6a7a;
-    line-height: 35px;
-    font-size: 18px;
-    margin: 0px;
-    font-weight: 700;
+   color: #4f6a7a;
+   line-height: 35px;
+   font-size: 18px;
+   margin: 0px;
+   font-weight: 700;
  }
  .Page_Identity .Page_Track{
-    width:50%;
-    line-height: 35px;
+   width:50%;
+   line-height: 35px;
  }
  .Page_Identity .Page_Track ul{
-    display: flex;
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px;
-    align-items: center;
-    float: right;
+   display: flex;
+   list-style-type: none;
+   padding: 0px;
+   margin: 0px;
+   align-items: center;
+   float: right;
  }
  .Page_Identity .Page_Track ul li {
-    color: #a5adb1;
-    font-size: 13px;
-    font-weight: 500;
-    margin-left: 5px;
+   color: #a5adb1;
+   font-size: 13px;
+   font-weight: 500;
+   margin-left: 5px;
  }
  .Page_Identity .Page_Track ul li.arrow{
-    letter-spacing: -4px;
-    font-size: 19px;
-    transform: scale(.6, 1);
+   letter-spacing: -4px;
+   font-size: 19px;
+   transform: scale(.6, 1);
  }
  .Page_Identity .Page_Track ul li.arrowGreen{
-    letter-spacing: -4px;
-    font-size: 19px;
-    transform: scale(.6, 1);
-    color: #4ab65f;
+   letter-spacing: -4px;
+   font-size: 19px;
+   transform: scale(.6, 1);
+   color: #4ab65f;
  }
  .Page_Identity .Page_Track ul li.HeaderName{
-    color: #4ab65f;
+   color: #4ab65f;
  }
  .Page_Identity .Page_Track ul li.LinkName{
-    color: #4ab65f;
-    cursor: pointer;
+   color: #4ab65f;
+   cursor: pointer;
  }
-.Company_Details{
+
+
+
+
+ .Ticket_Info_Section{
+    line-height: 30px;
     background-color: #fff;
-    padding: 20px;
-    width: 100%;
-    border-radius: 5px;
-    border-top: 2px solid #49B660;
- }
- .Static{
-    font-weight: 800;
-    color: #4f6a7a;
+    border: 1px solid #fff;
+    padding: 15px;
+    box-shadow: 3px 3px 4px #bfb6b6;
+    margin: 0px;
 }
-.Data{
+.Ticket_Details_Title h5{
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0px;
+    line-height: 30px;
+    color: rgb(57, 66, 74);
+    font-family: 'Open Sans', sans-serif;
+}
+.Ticket_Details_Title h5 span{
+    position: absolute;
+    right: 0px;
+}
+.Ticket_Details_Value h5{
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0px;
+    line-height: 30px;
+    color: rgba(82, 105, 121, 0.76);
+    font-family: 'Open Sans', sans-serif;
+}
+.Ticket_Details_Value h5 span{
+    font-size: 13px;
     font-weight: 500;
-    color: #4f6a7a;
+    color: #4e6a7a94;
+    letter-spacing: -0.5px;
+    display: block;
+    line-height: 12px;
+    margin-bottom: 10px;
 }
-/* Table Section */
-.Table_Section table {
+.Activity_Header{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.Activity_Header h5{
+    color: #4f6a7a;
+    line-height: 35px;
+    font-size: 20px;
+    margin: 0px;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+ /* ********************************************** Table Main *********************************** */
+ .Table_Section table {
     border: 1px solid lightgray;
     width: 100%;
     box-shadow: 2px 2px 3px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
- }
- .Table_Section table thead {
-    line-height: 40px;
-    text-align: center;
-    background-color: #ffffff;
-    color: #4d6a7a;
-    font-size: 14px;
-    letter-spacing: 0.5px;
- }
- .Table_Section table thead th{
-    font-weight: 800;
- }
- .Table_Section table tbody {
-    border: 1px solid #e8e8e8;
-    background-color: #ffffff;
- }
- .Table_Section table tbody tr {
-    line-height: 42px;
-    text-align: center;
-    align-items: center;
-    border-bottom: 1px solid #eaeaea;
- }
- .Table_Section table tbody tr:nth-child(odd) {
-    background-color: #f1f1f185;
- }
- .Table_Section table tbody tr:hover {
-    background-color: #4f6a7a40;
- }
- .Table_Section table tbody tr td .S_no {
-    font-size: 14px;
-    color: #4d6a7a;
- }
- .Table_Section table tbody tr td .Style_1 {
-    font-size: 14px;
-    color: rgba(77, 106, 122, 0.84);
-    font-weight: 600;
-    cursor: pointer;
- }
- .Table_Section table tbody tr td .Action_Section{
-    color: #ffffff;
-    height: 35px;
-    width: 35px;
-    line-height: 30px;
-    display: flex;
-    border-radius: 5px;
-    cursor: pointer;
-    float: right;
-    margin-right: 10px;
- }
- .Table_Section table tbody tr td .Action_Section i {
-    width: 100%;
-    line-height: 35px;
- }
- /* ----------- Create and Search Section ---------- */
-.header_part{
-    margin-bottom: 10px;
-    margin-left:10px;
- }
- .Create_Button{
-    letter-spacing: 0.5px;
-    font-weight: 600;
-    font-size: 14px;
- }
- .header_part h5{
-     font-size: 19px;
-     font-weight:600;
-     color:#4f6a7a;
-
- }
+  }
+  /* ********************************************** Table Header Section *********************************** */
+    .Table_Section table thead {
+        line-height: 40px;
+        text-align: center;
+        background-color: #ffffff;
+        color: #4d6a7a;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+    .Table_Section table thead th{
+        font-weight: 800;
+    }
+  /* ********************************************** Table Body Section *********************************** */
+    .Table_Section table tbody {
+        border: 1px solid #e8e8e8;
+        background-color: #ffffff;
+    }
+    .Table_Section table tbody tr {
+        height: 42px;
+        text-align: center;
+        align-items: center;
+        border-bottom: 1px solid #eaeaea;
+    }
+    .Table_Section table tbody tr:nth-child(odd) {
+        background-color: #f1f1f185;
+    }
+    .Table_Section table tbody tr:hover {
+        background-color: #4f6a7a40;
+    }
+    .Table_Section table tbody tr td .S_no {
+        font-size: 14px;
+        color: #4d6a7a;
+    }
+    .Table_Section table tbody tr td {
+        line-height: 18px;
+    }
+    .Table_Section table tbody tr td .Style_1 {
+        font-size: 14px;
+        color: rgba(77, 106, 122, 0.84);
+        font-weight: 600;
+    }
+    .Table_Section table tbody tr td .Style_1 .Badge{
+        color: #4ab65f;
+        padding: 2px 4px;
+        border-radius: 20px;
+        font-size: 10px;
+        letter-spacing: 0.4px;
+        border: 1px solid #4ab65f;
+    }
+    .Table_Section table tbody tr td .Style_1 .Time{
+        font-size: 12px;
+        font-weight: 500;
+        color: #8ca5b3;
+    }
+    .Table_Section table tbody tr td .Action_Section{
+        color: #ffffff;
+        height: 35px;
+        width: 35px;
+        line-height: 30px;
+        display: flex;
+        border-radius: 5px;
+        cursor: pointer;
+        float: right;
+        margin-right: 10px;
+    }
+    .Table_Section table tbody tr td .Action_Section i {
+        width: 100%;
+        line-height: 35px;
+    }
+  
 
  

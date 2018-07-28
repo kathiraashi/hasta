@@ -1,154 +1,217 @@
-<div class="Page_section" style="margin-top:100px;">
+<div class="Page_Section">
   <div class="container-fluid">
-    <!-- page Identity -->
-    <div class="Page_Identity">
-      <div class="Page_Name">
-        <h5>Tickets View</h5>
+      <!-- Page Identity -->
+      <div class="Page_Identity">
+         <div class="Page_Name">
+            <h5> TICKET VIEW</h5>
+         </div>
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">CRM</li>
+               <li class="arrow">>></li>
+               <li class="LinkName" [routerLink]="['/crm_ticket_list']">Tickets List</li>
+               <li class="arrow">>></li>
+               <li> Ticket View</li>
+            </ul>
+         </div>
       </div>
-    </div>
-    
-      <div class="row">
-        <div class="col-sm-6 text-right Static">Date: </div>
-        <div class="col-sm-6 text-left Data"> 25.07.18</div>
+      <!-- Ticket Info  -->
+      <!-- Loader -->
+      <div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+         <div class="Loading">
+            <div class="spinner">
+               <div class="rect1"></div>
+               <div class="rect2"></div>
+               <div class="rect3"></div>
+               <div class="rect4"></div>
+               <div class="rect5"></div>
+               <div class="rect6"></div>
+            </div>
+         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-6 text-right Static">Ticket Id: </div>
-        <div class="col-sm-6 text-left Data"> ID432543</div>
+      <!-- Main Datas -->
+      <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+         <div class="Ticket_Info_Section">
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Ticket_Details_Title">
+                           <h5>Ticket Id <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Ticket_Details_Value">
+                           <h5>{{_Data.TicketId}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Ticket_Details_Title">
+                           <h5> Customer <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Ticket_Details_Value">
+                           <h5>{{_Data.Customer?.CompanyName}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Ticket_Details_Title">
+                           <h5> Machine <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Ticket_Details_Value">
+                           <h5>{{_Data.Machine?.MachineName}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Ticket_Details_Title">
+                           <h5>Ticket Type <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Ticket_Details_Value">
+                           <h5 >{{_Data.TicketType?.Ticket_Type}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Ticket_Details_Title">
+                           <h5> Date of Creation <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Ticket_Details_Value">
+                           <h5>{{_Data.TicketOpenDate | date:'d-M-y'}}, {{_Data.TicketOpenTime}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Ticket_Details_Title">
+                           <h5> Status <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Ticket_Details_Value">
+                           <h5> {{_Data.CurrentStatus}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Ticket_Details_Title">
+                           <h5> Date of Completion <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Ticket_Details_Value">
+                           <h5>{{_Data.TicketCloseDate | date:'d-M-y'}}, {{_Data.TicketCloseTime }}</h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Ticket_Details_Title">
+                           <h5> Created By <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Ticket_Details_Value">
+                           <h5 >{{_Data.Created_By?.Name}} <span> ( {{_Data.createdAt | date:'medium'}} ) </span> </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Ticket_Details_Title">
+                           <h5>Last Modified By <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Ticket_Details_Value">
+                           <h5 >{{_Data.Last_Modified_By?.Name}} <span> ( {{_Data.updatedAt | date:'medium'}} ) </span> </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Ticket_Details_Title">
+                           <h5> Issue <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Ticket_Details_Value">
+                           <h5> {{_Data.Issue}}</h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-6 text-right Static">Customer name: </div>
-        <div class="col-sm-6 text-left Data"> xxxx</div>
+      <br>
+      <!-- Create and search Section -->
+      <div class="row Activity_Header">
+         <div class="col-sm-3">
+            <button class="Create_Button" mat-raised-button color="primary" (click)="CreateTicketsActivity()"> + Create </button>
+         </div>
+         <div class="col-sm-6">
+            <h5>Activities</h5>
+         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-6 text-right Static">Ticket Type:</div>
-        <div class="col-sm-6 text-left Data"> Type-11</div>
+      <!-- Table Section -->
+      <div class="Table_Section">
+         <table>
+            <thead>
+               <tr>
+               <th style="width: 50px;">S.no</th>
+               <th style="width: 150px;"> Employee Name </th>
+               <th style="width: 160px;"> Activity From </th>
+               <th style="width: 160px;"> Activity To </th>
+               <th style="width: 170px;"> Last Modified </th>
+               <th style="width: 100px;"> Status </th>
+               <th> Description </th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td>
+                     <span class="S_no"> 1 </span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> Employee Name </span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> 25-07-18, 10.00 AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> 26-07-18, 11.00 AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">{{_Data.Last_Modified_By?.Name}}
+                        <br> <span class="Time">{{_Data.updatedAt | date:'medium'}}</span>
+                     </span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> Opened </span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae sapiente consectetur quos laudantium animi voluptatum officia cupiditate nihil totam natus, eaque debitis eligendi quia labore! Magni reprehenderit iure ullam repellat. </span>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
       </div>
-    
-    <br>
-    <!-- Create and search Section -->
-    <div class="row header_part">
-      <div class="col-sm-6">
-        <h5>Activity</h5>
-      </div>
-      <div class="col-sm-6">
-        <button class="Create_Button" mat-button (click)="CreateTicketsActivity()"> + Create </button>
-      </div>
-    </div>
-    <!-- Table Section -->
-    <div class="Table_Section">
-      <table>
-        <thead>
-          <tr>
-            <th>S.no</th>
-            <th>Employee Name</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <span class="S_no"> 1 </span>
-            </td>
-            <td>
-              <span class="Style_1">Employee Name</span>
-            </td>
-            <td>
-              <span class="Style_1"> 25.07.18</span>
-            </td>
-            <td>
-              <span class="Style_1">In progress</span>
-            </td>
-            <td>
-              <button (click)="ViewTicketsActivity()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                <i class="material-icons">zoom_in</i>
-              </button>
-              <button (click)="CreateTicketsActivity()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                <i class="material-icons">edit</i>
-              </button>
-              <button (click)=" DeleteTicketsActivity()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                <i class="material-icons">delete_forever</i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="S_no"> 2 </span>
-            </td>
-            <td>
-              <span class="Style_1">Employee Name</span>
-            </td>
-            <td>
-              <span class="Style_1"> 25.07.18</span>
-            </td>
-            <td>
-              <span class="Style_1">In progress</span>
-            </td>
-            <td>
-              <button (click)="ViewTicketsActivity()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                <i class="material-icons">zoom_in</i>
-              </button>
-              <button (click)="CreateTicketsActivity()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                <i class="material-icons">edit</i>
-              </button>
-              <button (click)=" DeleteTicketsActivity()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                <i class="material-icons">delete_forever</i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="S_no"> 3 </span>
-            </td>
-            <td>
-              <span class="Style_1">Employee Name</span>
-            </td>
-            <td>
-              <span class="Style_1"> 25.07.18</span>
-            </td>
-            <td>
-              <span class="Style_1">In progress</span>
-            </td>
-            <td>
-              <button (click)="ViewTicketsActivity()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                <i class="material-icons">zoom_in</i>
-              </button>
-              <button (click)="CreateTicketsActivity()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                <i class="material-icons">edit</i>
-              </button>
-              <button (click)=" DeleteTicketsActivity()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                <i class="material-icons">delete_forever</i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="S_no"> 4 </span>
-            </td>
-            <td>
-              <span class="Style_1">Employee Name</span>
-            </td>
-            <td>
-              <span class="Style_1"> 25.07.18</span>
-            </td>
-            <td>
-              <span class="Style_1">In progress</span>
-            </td>
-            <td>
-              <button (click)="ViewTicketsActivity()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                <i class="material-icons">zoom_in</i>
-              </button>
-              <button (click)="CreateTicketsActivity()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                <i class="material-icons">edit</i>
-              </button>
-              <button (click)=" DeleteTicketsActivity()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                <i class="material-icons">delete_forever</i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+   </div>
 </div>

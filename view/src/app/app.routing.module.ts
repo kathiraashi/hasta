@@ -1,5 +1,9 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+
+import { AuthGuard } from './Authentication/auth.guard';
+
+import { LoginComponent } from './Components/Common-Components/login/login.component';
 import { MainCrmSettingsComponent } from './Components/Settings/CRM-Settings/main-crm-settings/main-crm-settings.component';
 import { MainHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/main-hrms-settings/main-hrms-settings.component';
 import { MainHrSettingsComponent } from './Components/Settings/HR-Settings/main-hr-settings/main-hr-settings.component';
@@ -8,6 +12,9 @@ import { MainCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Cu
 import { CrmCustomersCreateComponent } from './Components/CRM/Customers/crm-customers-create/crm-customers-create.component';
 import { CrmInvoiceListComponent } from './Components/CRM/Invoice/crm-invoice-list/crm-invoice-list.component';
 import { CrmInvoiceCreateComponent } from './Components/CRM/Invoice/crm-invoice-create/crm-invoice-create.component';
+import { UserManagementListComponent } from './Components/Settings/UserManagement/user-management-list/user-management-list.component';
+import { UserPermissionsComponent } from './Components/Settings/UserPermissions/user-permissions/user-permissions.component';
+import { UserPermissionsGroupCreateComponent } from './Components/Settings/UserPermissions/user-permissions-group-create/user-permissions-group-create.component';
 import { MainHrmsComponentsComponent } from './Components/HRMS/main-hrms-components/main-hrms-components.component';
 import { CrmInvoiceViewComponent } from './Components/CRM/Invoice/crm-invoice-view/crm-invoice-view.component';
 import { AccountsCustomerListComponent } from './Components/Accounts/Customer/accounts-customer-list/accounts-customer-list.component';
@@ -30,151 +37,199 @@ import { CrmMachinesViewComponent } from './Components/CRM/Machines/crm-machines
 
 
 const appRoutes: Routes = [
-  {
+   {
       path: '',
-      component: MainCrmSettingsComponent,
-      data: { animation: { value: 'CRM_Settings'}  }
-  },
-  {
+      component: LoginComponent,
+      data: { animation: { value: 'Login'}  }
+   },
+   {
+      path: 'Login',
+      component: LoginComponent,
+      data: { animation: { value: 'Login'}  }
+   },
+   {
       path: 'CRM_Settings',
       component: MainCrmSettingsComponent,
+      canActivate: [AuthGuard],
       data: {   animation: { value: 'CRM_Settings'}   }
-  },
-{
-    path: 'Hrms_Settings',
-    component: MainHrmsSettingsComponent,
-    data: {   animation: { value: 'Hrms_Settings'}   }
-},
-{
-    path: 'Hr_Settings',
-    component: MainHrSettingsComponent,
-    data: {   animation: { value: 'Hr_Settings'}   }
-},
-{
-    path: 'Crm_Customers_List',
-    component: CrmCustomersListComponent,
-    data: {   animation: { value: 'Crm_Customers_List'}   }
-},
-{
-    path: 'main_crm_customers_view',
-    component: MainCrmCustomersViewComponent,
-    data: {   animation: { value: 'main_crm_customers_view'}   }
-},
-{
-    path: 'crm_customers_create',
-    component: CrmCustomersCreateComponent,
-    data: {   animation: { value: 'crm_customers_create'}   }
-},
-{
-    path: 'crm_invoice_list',
-    component: CrmInvoiceListComponent,
-    data: {   animation: { value: 'crm_invoice_list'}   }
-},
-{
-    path: 'crm_invoice_create',
-    component: CrmInvoiceCreateComponent,
-    data: {   animation: { value: 'crm_invoice_create'}   }
-},
+   },
+   {
+      path: 'Hrms_Settings',
+      component: MainHrmsSettingsComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Hrms_Settings'}   }
+   },
+   {
+      path: 'Hr_Settings',
+      component: MainHrSettingsComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Hr_Settings'}   }
+   },
+   {
+      path: 'User_Management',
+      component: UserManagementListComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'User_Management'}   }
+   },
+   {
+      path: 'User_Permissions',
+      component: UserPermissionsComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'User_Permissions'}   }
+   },
+   {
+      path: 'User_Permissions_Group_Create',
+      component: UserPermissionsGroupCreateComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'User_Permissions_Group_Create'}   }
+   },
+   {
+      path: 'Crm_Customers_List',
+      component: CrmCustomersListComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Crm_Customers_List'}   }
+   },
+   {
+      path: 'main_crm_customers_view/:Customer_Id',
+      component: MainCrmCustomersViewComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'main_crm_customers_view'}   }
+   },
+   {
+      path: 'crm_customers_create',
+      component: CrmCustomersCreateComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'crm_customers_create'}   }
+   },
+   {
+      path: 'crm_invoice_list',
+      component: CrmInvoiceListComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'crm_invoice_list'}   }
+   },
+   {
+      path: 'crm_invoice_create',
+      component: CrmInvoiceCreateComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'crm_invoice_create'}   }
+   },
 
-{
-    path: 'main_hrms',
-    component: MainHrmsComponentsComponent,
-    data: {   animation: { value: 'main_hrms'}   }
-},
+   {
+      path: 'main_hrms',
+      component: MainHrmsComponentsComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'main_hrms'}   }
+   },
 
-{
-    path: 'crm_invoice_view',
-    component: CrmInvoiceViewComponent,
-    data: {   animation: { value: 'crm_invoice_view'}   }
-},
+   {
+      path: 'crm_invoice_view',
+      component: CrmInvoiceViewComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'crm_invoice_view'}   }
+   },
 
-{
-    path: 'account_customer_list',
-    component: AccountsCustomerListComponent,
-    data: {   animation: { value: 'account_customer_list'}   }
-},
-{
-    path: 'account_customer_invoice_list',
-    component: AccountsCustomerInvoiceListComponent,
-    data: {   animation: { value: 'account_customer_invoice_list'}   }
-},
-{
-    path: 'account_customer_payments_list',
-    component: AccountsCustomerPaymentsListComponent,
-    data: {   animation: { value: 'account_customer_payments_list'}   }
-},
-{
-    path: 'account_customer_invoice_view',
-    component: AccountsCustomerInvoiceViewComponent,
-    data: {   animation: { value: 'account_customer_invoice_view'}   }
-},
-{
-    path: 'customer_payment_create',
-    component: CustomerPaymentsCreateComponent,
-    data: {   animation: { value: 'customer_payment_create'}   }
-},
-{
-    path: 'customer_payment_view',
-    component: AccountsCustomerPaymentsViewComponent,
-    data: {   animation: { value: 'customer_payment_view'}   }
-},
-{
-    path: 'dashboard',
-    component: DashboardComponent,
-    data: {   animation: { value: 'dashboard'}   }
-},
-{
-    path: 'crm_machine_list',
-    component: CrmMachinesListComponent,
-    data: {   animation: { value: 'crm_machine_list'}   }
-},
-{
-    path: 'crm_machine_create',
-    component: CrmMachinesCreateComponent,
-    data: {   animation: { value: 'crm_machine_create'}   }
-},
-{
-    path: 'crm_ticket_list',
-    component: CrmTicketsListComponent,
-    data: {   animation: { value: 'crm_ticket_list'}   }
-},
-{
-    path: 'crm_ticket_create',
-    component: CrmTicketsCreateComponent,
-    data: {   animation: { value: 'crm_ticket_create'}   }
-},
-{
-    path: 'main_hr',
-    component: MainHrComponent,
-    data: {   animation: { value: 'main_hr'}   }
-},
-{
-    path: 'Attendance_Report_View',
-    component: AttendanceReportViewComponent,
-    data: {   animation: { value: 'Attendance_Report_View'}   }
-},
-{
-    path: 'Payroll_View',
-    component: PayrollViewComponent,
-    data: {   animation: { value: 'Payroll_View'}   }
-},
-{
-    path: 'Payroll_master_View',
-    component: PayrollMasterCreateComponent,
-    data: {   animation: { value: 'Payroll_master_View'}   }
-},
-{
-    path: 'Crm_Tickets_View',
-    component: CrmTicketsViewComponent,
-    data: {   animation: { value: 'Crm_Tickets_View'}   }
-},
-{
-    path: 'Crm_Machines_View',
-    component: CrmMachinesViewComponent,
-    data: {   animation: { value: 'Crm_Machines_View'}   }
-},
-
-
+   {
+      path: 'account_customer_list',
+      component: AccountsCustomerListComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'account_customer_list'}   }
+   },
+   {
+      path: 'account_customer_invoice_list',
+      component: AccountsCustomerInvoiceListComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'account_customer_invoice_list'}   }
+   },
+   {
+      path: 'account_customer_payments_list',
+      component: AccountsCustomerPaymentsListComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'account_customer_payments_list'}   }
+   },
+   {
+      path: 'account_customer_invoice_view',
+      component: AccountsCustomerInvoiceViewComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'account_customer_invoice_view'}   }
+   },
+   {
+      path: 'customer_payment_create',
+      component: CustomerPaymentsCreateComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'customer_payment_create'}   }
+   },
+   {
+      path: 'customer_payment_view',
+      component: AccountsCustomerPaymentsViewComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'customer_payment_view'}   }
+   },
+   {
+      path: 'dashboard',
+      component: DashboardComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'dashboard'}   }
+   },
+   {
+      path: 'crm_machine_list',
+      component: CrmMachinesListComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'crm_machine_list'}   }
+   },
+   {
+      path: 'crm_machine_create',
+      component: CrmMachinesCreateComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'crm_machine_create'}   }
+   },
+   {
+      path: 'crm_ticket_list',
+      component: CrmTicketsListComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'crm_ticket_list'}   }
+   },
+   {
+      path: 'crm_ticket_create',
+      component: CrmTicketsCreateComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'crm_ticket_create'}   }
+   },
+   {
+      path: 'main_hr',
+      component: MainHrComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'main_hr'}   }
+   },
+   {
+      path: 'Attendance_Report_View',
+      component: AttendanceReportViewComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Attendance_Report_View'}   }
+   },
+   {
+      path: 'Payroll_View',
+      component: PayrollViewComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Payroll_View'}   }
+   },
+   {
+      path: 'Payroll_master_View',
+      component: PayrollMasterCreateComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Payroll_master_View'}   }
+   },
+   {
+      path: 'Crm_Tickets_View/:Ticket_Id',
+      component: CrmTicketsViewComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Crm_Tickets_View'}   }
+   },
+   {
+      path: 'Crm_Machines_View',
+      component: CrmMachinesViewComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Crm_Machines_View'}   }
+   },
 
 
 ];

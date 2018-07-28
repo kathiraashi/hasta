@@ -1,0 +1,152 @@
+
+<div class="Page_Section">
+   <div class="container-fluid">
+      <div class="Page_Identity">
+         <div class="Page_Name">
+            <h5>USER PERMISSIONS GROUP CREATE</h5>
+         </div>
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">Settings</li>
+               <li class="arrow">>></li>
+               <li [routerLink]="['/User_Permissions']" class="LinkName">User Permissions</li>
+               <li class="arrow">>></li>
+               <li>Group Create</li>
+            </ul>
+         </div>
+      </div>
+      <div class="Page_Content PermissionsGroupCreate">
+         <div class="Main_Section">
+            <div class="Left_Section">
+               <form [formGroup]="Form">
+                  <div class="Form_Input">
+                     <label> Select Module </label>
+                     <ng-select class="NgSelect" [searchable]="true" formControlName="Group_Module" (ngModelChange)="CreateGroupName()">
+                        <ng-option *ngFor="let Module of _Modules" [value]="Module">{{Module.Module_Name}}</ng-option>
+                     </ng-select>
+                     <p class="error" *ngIf="Form.controls['Group_Module'].errors && !Form.controls['Group_Module'].pristine">
+                        <span *ngIf="Form.controls['Group_Module'].errors.required"> Module is required</span>
+                     </p>
+                  </div>
+                  <div class="Form_Input">
+                     <label> Select User Type </label>
+                     <ng-select class="NgSelect" [searchable]="true" formControlName="Group_UserType" (ngModelChange)="CreateGroupName()">
+                        <ng-option *ngFor="let Type of _UserTypes" [value]="Type">{{Type.User_Type}}</ng-option>
+                     </ng-select>
+                     <p class="error" *ngIf="Form.controls['Group_UserType'].errors && !Form.controls['Group_UserType'].pristine">
+                        <span *ngIf="Form.controls['Group_UserType'].errors.required"> User Type is required</span>
+                     </p>
+                  </div>
+                  <div class="Form_Input" [ngClass]="{'Form_Success': Form.controls['Group_Name'].valid }">
+                     <label> Group Name </label>
+                     <input type="text" formControlName="Group_Name" (keypress)="NotAllow()" (keydown)="NotAllow()" readonly>
+                  </div>
+                  <div class="Form_TextArea">
+                     <label> Description </label>
+                     <textarea formControlName="Group_Description"></textarea>
+                  </div>    
+               </form>
+            </div>     
+            <div class="Right_Section">
+               <div class="TableSection">
+                  <table>
+                     <thead *ngFor="let MainModule of _List; let i=index">
+                        <tr class="MainModuleStyle">
+                           <td> {{MainModule.Module_Name}} 
+                           </td>
+                           <td>
+                              <div  class="MaduleChekboxField">
+                                 <mat-checkbox [(ngModel)]="MainModule.Access_Permission" (change)="MainModule.Expend = !MainModule.Expend; CheckFormIsValid(); ModuleRightsChange();" [labelPosition]="'before'"> 
+                                    Permission for Access 
+                                 </mat-checkbox>
+                                 <span *ngIf="MainModule.Access_Permission" (click)="MainModule.Expend = !MainModule.Expend"> 
+                                    <i *ngIf="MainModule.Expend" class="material-icons"> keyboard_arrow_down </i>
+                                    <i *ngIf="!MainModule.Expend" class="material-icons"> keyboard_arrow_up </i> 
+                                 </span> 
+                              </div>
+                           </td>
+                        </tr>
+                        <tr class="SubModuleStyle" *ngIf="MainModule.Access_Permission && MainModule.Expend">
+                           <td colspan="2">
+                              <table> 
+                                 <thead> 
+                                    <tr>
+                                       <td> Sub Module Name</td>
+                                       <td> 
+                                          <mat-checkbox 
+                                             [(ngModel)]="MainModule.AllView_Permission"
+                                             (change)="AllView_Change(i); CheckFormIsValid()"> 
+                                                View 
+                                          </mat-checkbox> 
+                                       </td>
+                                       <td> 
+                                          <mat-checkbox 
+                                             [(ngModel)]="MainModule.AllCreate_Permission"
+                                             (change)="AllCreate_Change(i); CheckFormIsValid()"> 
+                                                Create 
+                                          </mat-checkbox> 
+                                       </td>
+                                       <td> 
+                                          <mat-checkbox 
+                                             [(ngModel)]="MainModule.AllEdit_Permission"
+                                             (change)="AllEdit_Change(i); CheckFormIsValid()"> 
+                                                Edit 
+                                          </mat-checkbox> 
+                                       </td>
+                                       <td> 
+                                          <mat-checkbox 
+                                             [(ngModel)]="MainModule.AllDelete_Permission"
+                                             (change)="AllDelete_Change(i); CheckFormIsValid()"> 
+                                                Delete 
+                                          </mat-checkbox> 
+                                       </td>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr *ngFor="let Sub_Module of MainModule.Sub_Modules; let j=index"> 
+                                       <td> {{Sub_Module.SubModule_Name}} </td>
+                                       <td> 
+                                          <mat-checkbox 
+                                             [(ngModel)]="Sub_Module.View_Permission" 
+                                             (change)="CheckFormIsValid(); Check_AllViewPermission_IsActive(i)">
+                                          </mat-checkbox> 
+                                       </td>
+                                       <td> 
+                                          <mat-checkbox 
+                                             [(ngModel)]="Sub_Module.Create_Permission" 
+                                             (change)="CheckFormIsValid(); Check_AllCreatePermission_IsActive(i)">
+                                          </mat-checkbox> 
+                                       </td>
+                                       <td> 
+                                          <mat-checkbox 
+                                             [(ngModel)]="Sub_Module.Edit_Permission" 
+                                             (change)="CheckFormIsValid(); Check_AllEditPermission_IsActive(i)">
+                                          </mat-checkbox> 
+                                       </td>
+                                       <td> 
+                                          <mat-checkbox 
+                                             [(ngModel)]="Sub_Module.Delete_Permission" 
+                                             (change)="CheckFormIsValid(); Check_AllDeletePermission_IsActive(i)">
+                                          </mat-checkbox> 
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </td>
+                        </tr>
+                     </thead>
+                  </table>
+               </div> 
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="Page_Footer">
+      <div class="text-right">
+         <button mat-raised-button class="Bg_warning" style="margin-right: 20px; color:#fff"> Cancel </button>
+         <button (click)="Submit()" [disabled]="!Form.valid || !ValidForm" mat-raised-button color="primary"> Submit </button>
+      </div>
+   </div>
+</div>
+ 
+

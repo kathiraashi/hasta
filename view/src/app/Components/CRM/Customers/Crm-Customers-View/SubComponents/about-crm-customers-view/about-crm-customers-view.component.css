@@ -1,19 +1,22 @@
-.about_section .About_Section{
+.about_section{
     line-height: 30px;
     background-color: #fff;
     border: 1px solid #fff;
     padding: 15px;
-    border-radius: 5px;
     box-shadow: 3px 3px 4px #bfb6b6;
-    margin-left: 0px;
+    margin: 0px;
 }
 .Customer_Details_Title h5{
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15px;
     margin: 0px;
     line-height: 30px;
     color: rgb(57, 66, 74);
     font-family: 'Open Sans', sans-serif;
+}
+.Customer_Details_Title h5 span{
+    position: absolute;
+    right: 0px;
 }
 .Customer_Details_Value h5{
     font-weight: 600;
@@ -23,7 +26,10 @@
     color: rgba(82, 105, 121, 0.76);
     font-family: 'Open Sans', sans-serif;
 }
- .Image_Section img{
+.Customer_Details_Value.Address h5{
+    line-height: 25px;
+}
+.Image_Section img{
     width:100%;
     height:250px;
 }

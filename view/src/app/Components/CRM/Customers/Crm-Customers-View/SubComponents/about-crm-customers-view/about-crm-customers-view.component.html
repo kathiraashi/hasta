@@ -1,121 +1,166 @@
 <div class="about_section">
-   <div class="row About_Section">
+   <div class="row">
       <div class="col-sm-6">
          <div class="row">
             <div class="col-sm-4">
                <div class="Customer_Details_Title">
-                  <h5>Customer Name</h5>
+                  <h5>Customer Name <span>:</span></h5>
                </div>
             </div>
             <div class="col-sm-8">
                <div class="Customer_Details_Value">
-                  <h5>Customer Name</h5>
+                  <h5>{{CustomerData.CompanyName}}</h5>
                </div>
             </div>
          </div>
          <div class="row">
             <div class="col-sm-4">
                <div class="Customer_Details_Title">
-                  <h5>E-mail</h5>
+                  <h5>E-mail <span>:</span></h5>
                </div>
             </div>
             <div class="col-sm-8">
                <div class="Customer_Details_Value">
-                  <h5>Customerinfo@gmail.com</h5>
+                  <h5>{{CustomerData.EmailAddress}}</h5>
                </div>
             </div>
          </div>
          <div class="row">
             <div class="col-sm-4">
                <div class="Customer_Details_Title">
-                  <h5>Phone</h5>
+                  <h5>Phone <span>:</span></h5>
                </div>
             </div>
             <div class="col-sm-8">
                <div class="Customer_Details_Value">
-                  <h5>0435678</h5>
+                  <h5>{{CustomerData.PhoneNumber}}</h5>
                </div>
             </div>
          </div>
          <div class="row">
             <div class="col-sm-4">
                <div class="Customer_Details_Title">
-                  <h5>Mobile</h5>
+                  <h5>Website <span>:</span></h5>
                </div>
             </div>
             <div class="col-sm-8">
                <div class="Customer_Details_Value">
-                  <h5>+987654321</h5>
+                  <h5 >{{CustomerData.Website}}</h5>
                </div>
             </div>
          </div>
          <div class="row">
             <div class="col-sm-4">
                <div class="Customer_Details_Title">
-                  <h5>Industry Type</h5>
+                  <h5>GST No <span>:</span></h5>
                </div>
             </div>
             <div class="col-sm-8">
                <div class="Customer_Details_Value">
-                  <h5>Manufacturing</h5>
+                  <h5>{{CustomerData.GSTNo}}</h5>
                </div>
             </div>
          </div>
          <div class="row">
             <div class="col-sm-4">
                <div class="Customer_Details_Title">
-                  <h5>Customers</h5>
+                  <h5>State Code <span>:</span></h5>
                </div>
             </div>
             <div class="col-sm-8">
                <div class="Customer_Details_Value">
-                  <h5>75 </h5>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-sm-4">
-               <div class="Customer_Details_Title">
-                  <h5>Notes</h5>
-               </div>
-            </div>
-            <div class="col-sm-8">
-               <div class="Customer_Details_Value">
-                  <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos minima pariatur consequatur debitis quo laudantium nemo, illo eum odit neque.</h5>
+                  <h5> {{CustomerData.StateCode}}</h5>
                </div>
             </div>
          </div>
       </div>
-      <div class="col-sm-3">
-         <div class="Customer_Details_Title">
-            <h5>Shipping Address</h5>
+      <div class="col-sm-6">
+         <div class="row">
+            <div class="col-sm-4">
+               <div class="Customer_Details_Title">
+                  <h5>Company Type <span>:</span></h5>
+               </div>
+            </div>
+            <div class="col-sm-8">
+               <div class="Customer_Details_Value">
+                  <h5 >{{CustomerData.CompanyType}}</h5>
+               </div>
+            </div>
          </div>
-         <div class="Customer_Details_Value">
-            <h5>No.32 Shri Lakshmi Nagar,
-               Ganapathy,
-               Coimbatore,
-               Tamil Nadu - 641007,
-               India.
-            </h5>
-         </div>  
-      </div>
-      <div class="col-sm-3">
-         <div class="Customer_Details_Title">
-            <h5>Billing Address</h5>
+         <div class="row">
+            <div class="col-sm-4">
+               <div class="Customer_Details_Title">
+                  <h5>Industry Type <span>:</span></h5>
+               </div>
+            </div>
+            <div class="col-sm-8">
+               <div class="Customer_Details_Value">
+                  <h5 *ngIf="CustomerData.IndustryType !== null">{{CustomerData.IndustryType?.Industry_Type}}</h5>
+               </div>
+            </div>
          </div>
-         <div class="Customer_Details_Value">
-            <h5>No.32 Shri Lakshmi Nagar,
-               Ganapathy,
-               Coimbatore,
-               Tamil Nadu - 641007,
-               India.<br>
-               State code:TN<br>
-               GST No: abcd1234f
-            </h5>
+         <div class="row">
+            <div class="col-sm-4">
+               <div class="Customer_Details_Title">
+                  <h5>Ownership Type <span>:</span></h5>
+               </div>
+            </div>
+            <div class="col-sm-8">
+               <div class="Customer_Details_Value">
+                  <h5 *ngIf="CustomerData.OwnershipType !== null">{{CustomerData.OwnershipType?.Ownership_Type}}</h5>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-sm-4">
+               <div class="Customer_Details_Title">
+                  <h5>Notes <span>:</span></h5>
+               </div>
+            </div>
+            <div class="col-sm-8">
+               <div class="Customer_Details_Value">
+                  <h5> {{CustomerData.Notes}}</h5>
+               </div>
+            </div>
          </div>
       </div>
    </div>
-</div><br>
+   <hr style="margin: 20px 10px">
+   <div class="row">
+      <div class="col-sm-6">
+         <div class="row">
+            <div class="col-sm-4">
+               <div class="Customer_Details_Title">
+                  <h5>Billing Address <span>:</span> </h5>
+               </div>
+            </div>
+            <div class="col-sm-8">
+               <div class="Customer_Details_Value Address">
+                  <h5> {{CustomerData.BillingAddress?.Street}}, {{CustomerData.BillingAddress?.Area}},</h5>
+                  <h5> {{CustomerData.BillingAddress?.City?.City_Name}}, {{CustomerData.BillingAddress?.State?.State_Name}}, </h5>
+                  <h5> {{CustomerData.BillingAddress?.Country?.Country_Name}}-{{CustomerData.BillingAddress?.ZipCode}}. </h5>
+               </div>  
+            </div>
+         </div>
+      </div>
+      <div class="col-sm-6">
+         <div class="row">
+            <div class="col-sm-4" style="padding: 0px;">
+               <div class="Customer_Details_Title">
+                  <h5>Shop Floor Address <span>:</span> </h5>
+               </div>
+            </div>
+            <div class="col-sm-8">
+               <div class="Customer_Details_Value Address">
+                  <h5> {{CustomerData.ShopFloorAddress?.Street}}, {{CustomerData.ShopFloorAddress?.Area}},</h5>
+                  <h5> {{CustomerData.ShopFloorAddress?.City?.City_Name}}, {{CustomerData.ShopFloorAddress?.State?.State_Name}},</h5>
+                  <h5> {{CustomerData.ShopFloorAddress?.Country?.Country_Name}}, {{CustomerData.ShopFloorAddress?.ZipCode}}.</h5>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 
 
   

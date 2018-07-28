@@ -2,55 +2,82 @@
 <div class="Main_Section">
    <div class="container-fluid">
       <div class="Page_Section">
-            <div class="Page_Identity">
-                  <div class="Page_Name">
-                     <h5>Customers View</h5>
-                  </div>
-                </div>
-         <div class="row">
-            <div class="col-sm-9">
-               <div class="row">
-                  <div class="col-sm-2 Image_Section">
-                     <img src="../../../../../assets/images/basic/company.png">
-                  </div>
-                  <div class="col-sm-10 ">
-                     <div class="row">
+         <!-- Page Identity -->
+         <div class="Page_Identity">
+            <div class="Page_Name">
+               <h5> CUSTOMER VIEW</h5>
+            </div>
+            <div class="Page_Track">
+               <ul >
+                  <li class="HeaderName">CRM</li>
+                  <li class="arrow">>></li>
+                  <li class="LinkName" [routerLink]="['/Crm_Customers_List']">Customers List</li>
+                  <li class="arrow">>></li>
+                  <li> Customer View</li>
+               </ul>
+            </div>
+         </div>
+         <!-- Loader -->
+         <div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+            <div class="Loading">
+               <div class="spinner">
+                  <div class="rect1"></div>
+                  <div class="rect2"></div>
+                  <div class="rect3"></div>
+                  <div class="rect4"></div>
+                  <div class="rect5"></div>
+                  <div class="rect6"></div>
+               </div>
+            </div>
+         </div>
+         <!-- Main Datas -->
+         <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+            <div class="row">
+               <div class="col-sm-9">
+                  <div class="row">
+                     <div class="col-sm-2 Image_Section">
+                        <img src="../../../../../assets/images/basic/company.png">
+                     </div>
+                     <div class="col-sm-10 ">
+                        <div class="row">
                            <div class="col-sm-12">
-                                 <h5 class="customer_name">CUSTOMER NAME <span><i class="material-icons"> border_color</i></span>
-                                 <span class="Create_Button"> +Create</span></h5>
-                              </div>
-                        <div class="col-sm-3">
-                           <div class="Card card_bg_Liner_1">
-                              <div class="Card_Body">
-                                 <div class="Card_Left">
-                                    <i class="material-icons account_balance">account_balance_wallet</i>
+                              <h5 class="customer_name">{{_Data.CompanyName}} 
+                              <!-- <span><i class="material-icons"> border_color</i></span> -->
+                              <span class="Create_Button"> +Create</span>
+                           </h5>
+                           </div>
+                           <div class="col-sm-3">
+                              <div class="Card card_bg_Liner_1">
+                                 <div class="Card_Body">
+                                    <div class="Card_Left">
+                                       <i class="material-icons account_balance">account_balance_wallet</i>
+                                    </div>
+                                    <div class="Card_Right">
+                                       <h5 class="card_color_1"> Account Balnce </h5>
+                                       <h6> Rs.2,00,00,000.00</h6>
+                                    </div>
                                  </div>
-                                 <div class="Card_Right">
-                                    <h5 class="card_color_1"> Account Balnce </h5>
-                                    <h6> Rs.2,00,00,000.00</h6>
+                                 <div class="Card_Footer card_bg_1">
+                                    <span class="Card_Info"> Rs.5,000.00 Last Added </span>
                                  </div>
-                              </div>
-                              <div class="Card_Footer card_bg_1">
-                                 <span class="Card_Info"> Rs.5,000.00 Last Added </span>
                               </div>
                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                           <div class="Card card_bg_Liner_2">
-                              <div class="Card_Body">
-                                 <div class="Card_Left">
-                                    <i class="material-icons assignment">   assignment   </i>
+                           <div class="col-sm-3">
+                              <div class="Card card_bg_Liner_2">
+                                 <div class="Card_Body">
+                                    <div class="Card_Left">
+                                       <i class="material-icons assignment">   assignment   </i>
+                                    </div>
+                                    <div class="Card_Right">
+                                       <h5 class="card_color_2 ">Logs Activity </h5>
+                                       <h6>25 Logs</h6>
+                                    </div>
                                  </div>
-                                 <div class="Card_Right">
-                                    <h5 class="card_color_2 ">Logs Activity </h5>
-                                    <h6>25 Logs</h6>
+                                 <div class="Card_Footer card_bg_2">
+                                    <span class="Card_Info"> 45 Logs In last Day </span>
                                  </div>
-                              </div>
-                              <div class="Card_Footer card_bg_2">
-                                 <span class="Card_Info"> 45 Logs In last Day </span>
                               </div>
                            </div>
-                        </div>
                            <div class="col-sm-3">
                               <div class="Card card_bg_Liner_3">
                                  <div class="Card_Body">
@@ -67,114 +94,114 @@
                                  </div>
                               </div>
                            </div>
-                              <div class="col-sm-3">
-                                 <div class="Card card_bg_Liner_4">
-                                    <div class="Card_Body">
-                                       <div class="Card_Left">
-                                          <i class="material-icons alarm"> alarm </i>
-                                       </div>
-                                       <div class="Card_Right">
-                                          <h5 class="card_color_4"> Remainders</h5>
-                                          <h6> 10 Remainders </h6>
-                                       </div>
+                           <div class="col-sm-3">
+                              <div class="Card card_bg_Liner_4">
+                                 <div class="Card_Body">
+                                    <div class="Card_Left">
+                                       <i class="material-icons alarm"> alarm </i>
                                     </div>
-                                    <div class="Card_Footer card_bg_4">
-                                       <span class="Card_Info"> 10 Remainders In Last Day   </span>
+                                    <div class="Card_Right">
+                                       <h5 class="card_color_4"> Remainders</h5>
+                                       <h6> 10 Remainders </h6>
                                     </div>
                                  </div>
-                              </div><br>
-                              
+                                 <div class="Card_Footer card_bg_4">
+                                    <span class="Card_Info"> 10 Remainders In Last Day   </span>
+                                 </div>
+                              </div>
                            </div>
-                        </div>
-                     </div> <br>                
-                     <div class="row">
-                        <div class="col-sm-12">
-                           <div class="Menu_Bar">
-                              <ul class="Menu">
-                                 <li  [ngClass]="{'active': Active_Tab === 'About' }" (click)="Active_Tab_Change('About')"><span class="Menu_List">About</span></li>
-                                 <li  [ngClass]="{'active': Active_Tab === 'Contact' }" (click)="Active_Tab_Change('Contact')"><span class="Menu_List">Contacts</span></li>
-                                 <li  [ngClass]="{'active': Active_Tab === 'Activity' }" (click)="Active_Tab_Change('Activity')"><span class="Menu_List">Activities</span></li>
-                                 <li  [ngClass]="{'active': Active_Tab === 'Machines' }" (click)="Active_Tab_Change('Machines')"><span class="Menu_List">Machines</span></li>
-                                 <li  [ngClass]="{'active': Active_Tab === 'Tickets' }" (click)="Active_Tab_Change('Tickets')"><span class="Menu_List">Tickets</span></li>
-                                 <li  [ngClass]="{'active': Active_Tab === 'Invoice' }" (click)="Active_Tab_Change('Invoice')"><span class="Menu_List">Invoices</span></li>
-                              </ul>
-                           </div>
+                        </div><br>
+                     </div>
+                  </div>              
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div class="Menu_Bar">
+                           <ul class="Menu">
+                              <li  [ngClass]="{'active': Active_Tab === 'About' }" (click)="Active_Tab_Change('About')"><span class="Menu_List">About</span></li>
+                              <li  [ngClass]="{'active': Active_Tab === 'Contact' }" (click)="Active_Tab_Change('Contact')"><span class="Menu_List">Contacts</span></li>
+                              <li  [ngClass]="{'active': Active_Tab === 'Activity' }" (click)="Active_Tab_Change('Activity')"><span class="Menu_List">Activities</span></li>
+                              <li  [ngClass]="{'active': Active_Tab === 'Machines' }" (click)="Active_Tab_Change('Machines')"><span class="Menu_List">Machines</span></li>
+                              <li  [ngClass]="{'active': Active_Tab === 'Tickets' }" (click)="Active_Tab_Change('Tickets')"><span class="Menu_List">Tickets</span></li>
+                              <li  [ngClass]="{'active': Active_Tab === 'Invoice' }" (click)="Active_Tab_Change('Invoice')"><span class="Menu_List">Invoices</span></li>
+                           </ul>
                         </div>
                      </div>
-                     <div class="row" *ngIf=" Active_Tab === 'About' ">
-                        <div class="col-sm-12">
-                           <app-about-crm-customers-view></app-about-crm-customers-view>
-                        </div>
+                  </div>
+                  <div class="row" *ngIf=" Active_Tab === 'About' ">
+                     <div class="col-sm-12">
+                        <app-about-crm-customers-view [CustomerData]="_Data"></app-about-crm-customers-view>
                      </div>
-                     <div class="row" *ngIf=" Active_Tab === 'Contact' ">
-                        <div class="col-sm-12">
-                           <app-contact-crm-customers-view></app-contact-crm-customers-view>
-                        </div>
+                  </div>
+                  <div class="row" *ngIf=" Active_Tab === 'Contact' ">
+                     <div class="col-sm-12">
+                        <app-contact-crm-customers-view [CustomerData]="_Data"></app-contact-crm-customers-view>
                      </div>
-                     <div class="row" *ngIf=" Active_Tab === 'Activity' ">
-                        <div class="col-sm-12">
-                           <app-activity-crm-customers-view></app-activity-crm-customers-view>
-                        </div>
+                  </div>
+                  <div class="row" *ngIf=" Active_Tab === 'Activity' ">
+                     <div class="col-sm-12">
+                        <app-activity-crm-customers-view></app-activity-crm-customers-view>
                      </div>
-                     <div class="row" *ngIf=" Active_Tab === 'Machines' ">
-                        <div class="col-sm-12">
-                              <app-machines-crm-customers-view></app-machines-crm-customers-view>
-                        </div>
+                  </div>
+                  <div class="row" *ngIf=" Active_Tab === 'Machines' ">
+                     <div class="col-sm-12">
+                           <app-machines-crm-customers-view></app-machines-crm-customers-view>
                      </div>
-                     <div class="row" *ngIf=" Active_Tab === 'Tickets' ">
-                        <div class="col-sm-12">
-                              <app-tickets-crm-customers-view></app-tickets-crm-customers-view>
-                        </div>
+                  </div>
+                  <div class="row" *ngIf=" Active_Tab === 'Tickets' ">
+                     <div class="col-sm-12">
+                           <app-tickets-crm-customers-view></app-tickets-crm-customers-view>
                      </div>
-                     <div class="row" *ngIf=" Active_Tab === 'Invoice' ">
-                        <div class="col-sm-12">
-                           <app-invoice-crm-customers-view></app-invoice-crm-customers-view>
-                        </div>
+                  </div>
+                  <div class="row" *ngIf=" Active_Tab === 'Invoice' ">
+                     <div class="col-sm-12">
+                        <app-invoice-crm-customers-view></app-invoice-crm-customers-view>
                      </div>
-                   </div>
-                  <div class="col-sm-3">
-                        <div class="Calender">
-                          <p-calendar class="Custom_Calender_1" [inline]="true"></p-calendar> 
-                        </div>
-                        <br>
-                        <div class="Log_Section">
-                          <div class="Log_Header">
-                            <h5> Recent </h5>
-                          </div>
-                          <div class="Log_List">
-                            <ul>
-                              <li>
-                                <h5>New Location Added</h5>
-                                <h6> ( 27/05/2018 05:32-PM ) </h6>
-                              </li>
-                              <li>
-                                <h5>New Order Received</h5>
-                                <h6> ( 27/05/2018 05:22-PM ) </h6>
-                              </li>
-                              <li>
-                                <h5>New Food Item Added</h5>
-                                <h6> ( 27/05/2018 05:12-PM ) </h6>
-                              </li>
-                              <li>
-                                <h5>New Location Added</h5>
-                                <h6> ( 27/05/2018 05:12-PM ) </h6>
-                              </li>
-                              <li>
-                                <h5>One Promotion Used</h5>
-                                <h6> ( 27/05/2018 05:02-PM ) </h6>
-                              </li>
-                              <li>
-                                <h5>One Order Delivered</h5>
-                                <h6> ( 27/05/2018 05:02-PM ) </h6>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
+                  </div>
+               </div>
+               <div class="col-sm-3">
+                  <div class="Calender">
+                     <p-calendar class="Custom_Calender_1" [inline]="true"></p-calendar> 
+                  </div>
+                  <br>
+                  <div class="Log_Section">
+                     <div class="Log_Header">
+                        <h5> Recent </h5>
+                     </div>
+                     <div class="Log_List">
+                        <ul>
+                           <li>
+                              <h5>New Location Added</h5>
+                              <h6> ( 27/05/2018 05:32-PM ) </h6>
+                           </li>
+                           <li>
+                              <h5>New Order Received</h5>
+                              <h6> ( 27/05/2018 05:22-PM ) </h6>
+                           </li>
+                           <li>
+                              <h5>New Food Item Added</h5>
+                              <h6> ( 27/05/2018 05:12-PM ) </h6>
+                           </li>
+                           <li>
+                              <h5>New Location Added</h5>
+                              <h6> ( 27/05/2018 05:12-PM ) </h6>
+                           </li>
+                           <li>
+                              <h5>One Promotion Used</h5>
+                              <h6> ( 27/05/2018 05:02-PM ) </h6>
+                           </li>
+                           <li>
+                              <h5>One Order Delivered</h5>
+                              <h6> ( 27/05/2018 05:02-PM ) </h6>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
       </div>
+   </div>
+</div>
       
 
   

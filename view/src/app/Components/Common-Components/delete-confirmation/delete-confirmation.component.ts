@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -10,11 +11,19 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 })
 export class DeleteConfirmationComponent implements OnInit {
 
-Text: string;
-  constructor(public bsModalRef: BsModalRef) { }
+   onClose: Subject<any>;
+   Text: string;
+   constructor(public bsModalRef: BsModalRef) { }
 
-  ngOnInit() {
-    console.log(this.Text);
-  }
-
+   ngOnInit() {
+      this.onClose = new Subject();
+   }
+   Cancel() {
+      this.onClose.next({Status: false});
+      this.bsModalRef.hide();
+   }
+   Proceed() {
+      this.onClose.next({Status: true});
+      this.bsModalRef.hide();
+   }
 }

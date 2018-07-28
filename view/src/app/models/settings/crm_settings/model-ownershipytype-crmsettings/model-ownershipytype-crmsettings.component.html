@@ -1,32 +1,71 @@
-<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
-  <div class="Modal_Header">
-      <p> Ownership Type</p>
-      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
-  </div>
-  <div class="Model_Body">
-    <div class="row">
-      <div class="col-sm-6 Form_Input">
-        <label>Ownership Type: </label>
-          <input type="text">
+<!-- If Create Or Edit The Industry Type -->
+   <div class="Modal_Content" *ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+      <div class="Modal_Header">
+         <p>{{Type}} Ownership Type</p>
+         <span *ngIf="!Uploading" data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+      </div>
+      <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+         <div class="Model_Body">
+            <div class="row">
+               <div class="col-sm-10 Form_Input" [ngClass]="{'Form_Err': Form.controls['Ownership_Type'].errors && !Form.controls['Ownership_Type'].pristine, 'Form_Success': Form.controls['Ownership_Type'].valid && !Form.controls['Ownership_Type'].pristine }">
+                  <label>Ownership Type: </label>
+                  <input type="text" formControlName="Ownership_Type">
+                  <p class="error" *ngIf="Form.controls['Ownership_Type'].errors && !Form.controls['Ownership_Type'].pristine">
+                     <span *ngIf="Form.controls['Ownership_Type'].errors.required"> Ownership Type is required </span>
+                     <span *ngIf="Form.controls['Ownership_Type'].errors.OwnershipType_NotAvailable"> Ownership Type Already Exist </span>
+                  </p>
+               </div>
+            </div>
+         </div>
+         <div class="Model_Footer">
+            <button type="submit" [disabled]="Form.status !== 'VALID' || Uploading" mat-raised-button color="primary">
+               <span *ngIf="Type === 'Create' && !Uploading"> Submit </span>
+               <span *ngIf="Type === 'Edit' && !Uploading"> Update </span>
+               <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+            </button>
+         </div>
+      </form>
+   </div>
+<!-- If View The Industry Type -->
+   <div class="Modal_Content" *ngIf="Type && Type === 'View'">
+      <div class="Modal_Header">
+         <p>View Ownership Type</p>
+         <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+      </div>
+      <div class="Model_Body">
+         <div class="Model_Body">
+            <div class="view_item">
+               <div class="Static">Ownership Type </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.Ownership_Type}}</div>
+            </div>
+            <div class="view_item">
+               <div class="Static">Created By </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.Created_By.Name}} 
+                <!-- <span class="Badge"> {{Data.Created_By.User_Type.User_Type}} </span> -->
+             </div>
+            </div>
+            <div class="view_item">
+               <div class="Static">Last Modified By </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.Last_Modified_By.Name}}
+                <!-- <span class="Badge"> {{Data.Last_Modified_By.User_Type.User_Type}} </span> -->
+             </div>
+            </div>
+            <div class="view_item">
+               <div class="Static"> Created Date </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.createdAt | date:'medium'}}</div>
+            </div>
+            <div class="view_item">
+               <div class="Static">Last Modified Date  </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.updatedAt | date:'medium'}}</div>
+            </div>
+         </div>
       </div>
    </div>
-</div>
-<div class="Model_Footer">
-   <button mat-raised-button color="primary" > Submit </button>
-</div>
-</div>
-<div class="Modal_Content" *ngIf=" Type && Type === 'View'">
-  <div class="Modal_Header">
-     <p>Ownership Type</p>
-     <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
- </div>
- <div class="Model_Body">
-      <div class="row">
-            <div class="col-sm-6 text-right Static">Ownership Type : </div>
-            <div class="col-sm-6 text-left Data"> Ownership type</div>
-         </div>
- </div>
-</div>
 
 
 
