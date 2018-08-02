@@ -61,7 +61,7 @@ export class ContactCrmCustomersViewComponent implements OnInit {
       const initialState = {
          _Data: { Customer_Id: this.CustomerData['_id'], Type: 'Create' }
       };
-      this.bsModalRef = this.modalService.show(ModelContactCrmCustomersViewComponent, Object.assign({initialState}, { class: 'modal-lg' }));
+      this.bsModalRef = this.modalService.show(ModelContactCrmCustomersViewComponent, Object.assign({initialState}, { ignoreBackdropClick: true,  class: 'modal-lg' }));
       this.bsModalRef.content.onClose.subscribe(response => {
          if (response['Status']) {
            this._List.splice(0, 0, response['Response']);

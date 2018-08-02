@@ -225,7 +225,7 @@ const appRoutes: Routes = [
       data: {   animation: { value: 'Crm_Tickets_View'}   }
    },
    {
-      path: 'Crm_Machines_View',
+      path: 'Crm_Machines_View/:Machine_Id',
       component: CrmMachinesViewComponent,
       canActivate: [AuthGuard],
       data: {   animation: { value: 'Crm_Machines_View'}   }

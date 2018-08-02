@@ -25,6 +25,7 @@ export class CrmTicketsViewComponent implements OnInit {
    Loader: Boolean = true;
    _Data = {};
    Ticket_Id;
+   _ActivityList: any[] = [];
 
    bsModalRef: BsModalRef;
    constructor( private modalService: BsModalService,
@@ -44,8 +45,22 @@ export class CrmTicketsViewComponent implements OnInit {
                      if (response['status'] === 200 && ResponseData['Status'] ) {
                         const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                         const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-                        console.log(DecryptedData);
                         this._Data = DecryptedData;
+                     } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+                     } else if (response['status'] === 401 && !ResponseData['Status']) {
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+                     } else {
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Data Getting Error!, But not Identify!' });
+                     }
+                  });
+                  this.Crm_Service.CrmTicketActivities_List({ 'Info': Info }).subscribe( response => {
+                     const ResponseData = JSON.parse(response['_body']);
+                     this.Loader = false;
+                     if (response['status'] === 200 && ResponseData['Status'] ) {
+                        const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
+                        const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+                        this._ActivityList = DecryptedData;
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -62,9 +77,16 @@ export class CrmTicketsViewComponent implements OnInit {
 
    CreateTicketsActivity() {
       const initialState = {
+         _Data: this._Data,
          Type: 'Create'
       };
-      this.bsModalRef = this.modalService.show(ModelTicketsActivityCreateComponent, Object.assign({initialState}, { class: 'modal-lg' }));
+      this.bsModalRef = this.modalService.show(ModelTicketsActivityCreateComponent, Object.assign({initialState}, {ignoreBackdropClick: true,  class: 'modal-lg' }));
+      this.bsModalRef.content.onClose.subscribe(response => {
+         if (response['Status']) {
+           this._ActivityList.splice(0, 0, response['Response']);
+           this._Data['CurrentStatus'] = response['Response']['Status'];
+         }
+      });
    }
    ViewTicketsActivity() {
       const initialState = {

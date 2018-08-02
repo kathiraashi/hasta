@@ -174,6 +174,8 @@ import { MachineTypeCrmSettingsComponent } from './Components/Settings/CRM-Setti
 import { ControllerTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/controller-type-crm-settings/controller-type-crm-settings.component';
 import { ModelControllertypeCrmsettingsComponent } from './models/settings/crm_settings/model-controllertype-crmsettings/model-controllertype-crmsettings.component';
 import { ModelMachinetypeCrmsettingsComponent } from './models/settings/crm_settings/model-machinetype-crmsettings/model-machinetype-crmsettings.component';
+import { ModelMachinesStatusCrmCustomersComponent } from './models/CRM/Customers/model-machines-status-crm-customers/model-machines-status-crm-customers.component';
+import { MachineStatusCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/machine-status-crm-customers-view/machine-status-crm-customers-view.component';
 
 
 @NgModule({
@@ -332,6 +334,8 @@ import { ModelMachinetypeCrmsettingsComponent } from './models/settings/crm_sett
             ControllerTypeCrmSettingsComponent,
             ModelControllertypeCrmsettingsComponent,
             ModelMachinetypeCrmsettingsComponent,
+            ModelMachinesStatusCrmCustomersComponent,
+            MachineStatusCrmCustomersViewComponent,
 
 
 
@@ -418,6 +422,7 @@ import { ModelMachinetypeCrmsettingsComponent } from './models/settings/crm_sett
     ModelContactCrmCustomersViewComponent,
     ModelActivitiesCrmCustomersComponent,
     ModelMachinesCrmCustomersComponent,
+    ModelMachinesStatusCrmCustomersComponent,
     ModelTicketsCrmCustomersComponent],
    bootstrap: [AppComponent]
 })

@@ -97,7 +97,7 @@ var Schema = mongoose.Schema;
       TicketOpenTime: { type : String, required: true },
       TicketCloseDate: { type : Date  },
       TicketCloseTime: { type : String },
-      CurrentStatus: { type : String },
+      CurrentStatus: { type : String, required: true },
       Issue: { type : String, required: true, },
       TicketType: { type: Schema.Types.ObjectId, ref: 'TicketType' },
       Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
@@ -110,10 +110,36 @@ var Schema = mongoose.Schema;
    );
    var VarCrmTickets = mongoose.model( 'CrmTickets' ,CrmTicketsSchema, 'Crm_Tickets');
 
+
+
+   // Ticket Activity schema
+   var CrmTicketActivitiesSchema = mongoose.Schema({
+      Machine:  { type: Schema.Types.ObjectId, ref: 'CrmMachines', required : true },
+      Customer: { type: Schema.Types.ObjectId, ref: 'CrmCustomers', required : true },
+      Ticket: { type: Schema.Types.ObjectId, ref: 'CrmTickets', required: true },
+      Contact: { type: Schema.Types.ObjectId, ref: 'CrmCustomerContacts' },
+      Employee: { type : String },
+      StartDate: { type : Date, required: true },
+      StartTime: { type : String, required: true  },
+      EndDate: { type : Date },
+      EndTime: { type : String },
+      Status: { type : String, required: true },
+      Description: { type : String},
+      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
+      Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Active_Status: { type : Boolean , required : true},
+      If_Deleted: { type : Boolean , required : true }
+      },
+      { timestamps : true }
+   );
+   var VarCrmTicketActivities = mongoose.model( 'CrmTicketActivities' ,CrmTicketActivitiesSchema, 'CrmTicket_Activities');
+
       
 module.exports = {
    CrmCustomersSchema : VarCrmCustomers,
    CrmMachinesSchema : VarCrmMachines,
    CrmTicketsSchema : VarCrmTickets,
-   CrmCustomerContactsSchema : VarCrmCustomerContacts
+   CrmCustomerContactsSchema : VarCrmCustomerContacts,
+   CrmTicketActivitiesSchema : VarCrmTicketActivities
 };

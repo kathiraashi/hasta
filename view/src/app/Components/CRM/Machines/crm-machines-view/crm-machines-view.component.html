@@ -1,240 +1,245 @@
-<div class="Page_section" style="margin-top:100px;">
-      <div class="container-fluid">
-        <!-- page Identity -->
-        <div class="Page_Identity">
-          <div class="Page_Name">
-            <h5>Machines View</h5>
-          </div>
-        </div>
-        <div class="Company_Details">
-          <div class="row">
-            <div class="col-sm-6 text-right Static">Machine Name: </div>
-            <div class="col-sm-6 text-left Data"> Machine Name</div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6 text-right Static">Machine Make: </div>
-            <div class="col-sm-6 text-left Data"> Machine Make</div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6 text-right Static">Model: </div>
-            <div class="col-sm-6 text-left Data"> Model</div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6 text-right Static">mfg Serial No:</div>
-            <div class="col-sm-6 text-left Data"> 5664546</div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6 text-right Static">Machine Id:</div>
-            <div class="col-sm-6 text-left Data"> IS1213</div>
+<div class="Page_Section">
+   <div class="container-fluid">
+      <!-- Page Identity -->
+      <div class="Page_Identity">
+         <div class="Page_Name">
+            <h5> MACHINE VIEW</h5>
          </div>
-         <div class="row">
-            <div class="col-sm-6 text-right Static">Machine Types:</div>
-            <div class="col-sm-6 text-left Data"> Type-11</div>
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">CRM</li>
+               <li class="arrow">>></li>
+               <li class="LinkName" [routerLink]="['/crm_machine_list']">Machine List</li>
+               <li class="arrow">>></li>
+               <li> Machine View</li>
+            </ul>
          </div>
-         <div class="row">
-               <div class="col-sm-6 text-right Static">Controller Types:</div>
-               <div class="col-sm-6 text-left Data"> Type-11</div>
+      </div>
+      <!-- Ticket Info  -->
+      <!-- Loader -->
+      <div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+         <div class="Loading">
+            <div class="spinner">
+               <div class="rect1"></div>
+               <div class="rect2"></div>
+               <div class="rect3"></div>
+               <div class="rect4"></div>
+               <div class="rect5"></div>
+               <div class="rect6"></div>
             </div>
+         </div>
+      </div>
+      <!-- Main Datas -->
+      <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+         <div class="Machine_Info_Section">
             <div class="row">
-                  <div class="col-sm-6 text-right Static">Controller Model No:</div>
-                  <div class="col-sm-6 text-left Data"> MODEL323</div>
-               </div>
-               <div class="row">
-                     <div class="col-sm-6 text-right Static">mfg Year:</div>
-                     <div class="col-sm-6 text-left Data"> 2011</div>
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5> Machine Name <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5>{{_Data.MachineName}}</h5>
+                        </div>
+                     </div>
                   </div>
-        </div>
-        <br>
-        </div>
-              <!-- Create and search Section -->
-    <div class="row header_part">
-         <div class="col-sm-6">
-           <h5>Tickets</h5>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5> Customer <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5>{{_Data.Customer?.CompanyName}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5> Machine Make <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5>{{_Data.MachineMake}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5>Machine Model <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5 >{{_Data.MachineModel}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5> Mfg Serial No <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5>{{_Data.MfgSerialNo}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5>Mfg Year <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5 >{{_Data.MfgYear}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5> Machine Id <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5> {{_Data.MachineId}} </h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5>Machine Type <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5 >{{_Data.MachineType?.Machine_Type}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5>Controller Type <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5 >{{_Data.ControllerType?.Controller_Type}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5>Controller Model No <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5 >{{_Data.ControllerModelNo}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5> Created By <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5 >{{_Data.Created_By?.Name}} <span> ( {{_Data.createdAt | date:'medium'}} ) </span> </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5>Last Modified By <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5 >{{_Data.Last_Modified_By?.Name}} <span> ( {{_Data.updatedAt | date:'medium'}} ) </span> </h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <br>
+      <!-- Create and search Section -->
+      <div class="row Activity_Header">
+         <div class="col-sm-3">
+            <button *ngIf="_Data.CurrentStatus !== 'Closed'" class="Create_Button" mat-raised-button color="primary" (click)="CreateTicketsActivity()"> + Create </button>
          </div>
          <div class="col-sm-6">
-           <button class="Create_Button" mat-button (click)="CreateTickets()"> + Create </button>
+            <h5>TICKETS</h5>
          </div>
-       </div>
-       <!-- Table Section -->
-       <div class="Table_Section">
-            <table>
-               <thead>
-                  <tr>
-                     <th>S.no</th>
-                     <th>Date</th>
-                     <th>Ticket Id</th>
-                     <th>Customer Name</th>
-                     <th>Ticket Type</th>
-                     <th>Created By</th>
-                     <th>Status</th>
-                     <th>Action</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 1 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Paid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 2 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">unPaid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 3 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">unPaid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 4 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Paid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 5 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Paid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <span class="S_no"> 6 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> 27/05/18 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> ID5632423 </span>
-                     </td>
-                     <td>
-                        <span class="Style_3"> customer name </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Type-11
-                        </span>
-                     </td>
-                     <td>
-                        <span class="Style_3">Admin Name</span>
-                     </td>
-                     <td>
-                        <span class="Style_3">unPaid</span>
-                     </td>
-                     <td>
-                        <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View']"> Action </button>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-        </div>
+      </div>
+      <div class="Table_Section">
+         <table>
+            <thead>
+               <tr>
+                  <th style="width: 50px"> S.no </th>
+                  <th style="width: 135px"> Ticket Id </th>
+                  <th style="width: 130px"> Ticket Type </th>
+                  <th style="width: 150px"> Date and Time </th>
+                  <th> Issue </th>
+                  <th style="width: 150px"> Last Modified By </th>
+                  <th style="width: 150px"> Status </th>
+                  <th style="width: 100px"> Action </th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let Ticket of _TicketsList; let i=index">
+                  <td>
+                     <span class="S_no"> {{i + 1}} </span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> {{Ticket.TicketId}} </span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> {{Ticket.TicketType?.Ticket_Type}} </span>
+                  </td>
+                  <td>
+                     <span class="Style_1">{{Ticket.TicketOpenDate | date:'d-M-y'}}, {{Ticket.TicketOpenTime}}</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">{{Ticket.Issue}}</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">{{Ticket.Last_Modified_By?.Name}}
+                        <br> <span class="Time">{{Ticket.updatedAt | date:'medium'}}</span>
+                     </span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> {{Ticket.CurrentStatus}} </span>
+                  </td>
+                  <td>
+                     <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View', Ticket._id]"> Action </button>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
         

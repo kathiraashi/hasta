@@ -208,7 +208,7 @@ span i{
 .Menu_Bar .Menu li {
    border-right: 1px solid #3b4a52;
    display: block;
-   width: 16.66%;
+   width: 20%;
    height: 35px;
    line-height: 35px;
    text-align: center;
@@ -231,10 +231,39 @@ span i{
 .Menu_Bar .Menu li:last-child{
     border:none;
 }
-.Calender{
-    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
+.Main_MachineStatus {
+    background-color: #fff;
+    box-shadow: 2px 2px 8px #cccaca;
+    padding: 5px;
 }
-
+.Main_MachineStatus .Header h5{
+    color: #4f6a7a;
+    line-height: 35px;
+    font-size: 18px;
+    margin: 0px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: -5px;
+    text-decoration: underline;
+}
+.Machine_Statuses {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 5px;
+}
+.Machine {
+    padding: 5px 5px;
+    font-weight: 500;
+    font-size: 14px;
+    margin: 0px;
+    letter-spacing: 0.5px;
+    color: rgb(255, 255, 255);
+    background-color: #4ab65f;
+    text-align: center;
+}
+.Machine.Inactive {
+    background-color: #e31c13;
+}
 .Log_Section{
     background-color: #ffffff;
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
@@ -272,4 +301,54 @@ span i{
     margin: 0px;
     color: #afadad;
     font-size: 12px;
+}
+
+
+
+
+
+.Tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.Tooltip .TooltipText {
+    visibility: hidden;
+    width: 150px;
+    background-color: #546a79;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 0px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 120%;
+    left: 32%;
+    margin-left: -60px;
+    box-shadow: 1px 1px 7px #0a0a0a7a;
+}
+
+.Tooltip .TooltipText::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #546a79 transparent transparent transparent;
+}
+.TooltipText .LevelOne {
+    display: inline-block;
+}
+.TooltipText .LevelTwo {
+    display: inline-flex;
+    font-weight: 500;
+    font-size: 12px;
+    color: #c5c5c5;
+}
+
+.Tooltip:hover .TooltipText {
+    visibility: visible;
 }

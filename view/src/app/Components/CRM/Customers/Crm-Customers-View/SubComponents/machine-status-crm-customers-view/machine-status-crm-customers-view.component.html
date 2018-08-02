@@ -1,0 +1,112 @@
+<div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+  <div class="Loading">
+     <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+        <div class="rect6"></div>
+     </div>
+  </div>
+</div>
+<div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+  <!-- Create and search section -->
+  <div class="row header_part">
+     <div class="col-sm-6">
+        <button class="Create_Button" mat-raised-button color="primary" > + Create </button>
+     </div>
+     <div class="col-sm-6">
+        <div class="Search_Section">
+           <input type="text" placeholder="Search.." name="search">
+           <i class="material-icons">search</i>
+        </div>
+     </div>
+  </div>
+  <!-- Table Section -->
+  <div class="Table_Section">
+     <table>
+        <thead>
+           <tr>
+              <th> S.no </th>
+              <th> Date </th>
+              <th> Total No of Machines </th>
+              <th> No of Machines Active </th>
+              <th> No of Machines Ideal </th>
+              <th> Last Updated </th>
+              <th> Action </th>
+           </tr>
+        </thead>
+        <tbody>
+            <tr>
+               <td>
+                  <span class="S_no"> 1 </span>
+               </td>
+               <td>
+                  <span class="Style_1"> Jul 26, 2018 </span>
+               </td>
+               <td>
+                  <span class="Style_1"> 21 </span>
+               </td>
+               <td>
+                  <span class="Style_1"> 14 </span>
+               </td>
+               <td>
+                  <span class="Style_1"> 7 </span>
+               </td>
+               <td>
+                  <span class="Style_1"> kathiravan 
+                     <br>
+                     <span class="Time"> Jul 26, 2018, 6:51:47 PM </span> 
+                  </span>
+               </td>
+               <td>
+                  <button class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                     <i class="material-icons">zoom_in</i>
+                  </button>
+                  <button class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                     <i class="material-icons">edit</i>
+                  </button>
+                  <button class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                     <i class="material-icons">delete_forever</i>
+                  </button>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <span class="S_no"> 2 </span>
+               </td>
+               <td>
+                  <span class="Style_1"> Jul 25, 2018 </span>
+               </td>
+               <td>
+                  <span class="Style_1"> 21 </span>
+               </td>
+               <td>
+                  <span class="Style_1"> 16 </span>
+               </td>
+               <td>
+                  <span class="Style_1"> 5 </span>
+               </td>
+               <td>
+                  <span class="Style_1"> kathiravan 
+                    <br>
+                   <span class="Time"> Jul 25, 2018, 6:31:47 PM </span> 
+                 </span>
+               </td>
+               <td>
+                  <button class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                     <i class="material-icons">zoom_in</i>
+                  </button>
+                  <button class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                     <i class="material-icons">edit</i>
+                  </button>
+                  <button class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                     <i class="material-icons">delete_forever</i>
+                  </button>
+               </td>
+            </tr>
+        </tbody>
+     </table>
+  </div>
+</div>

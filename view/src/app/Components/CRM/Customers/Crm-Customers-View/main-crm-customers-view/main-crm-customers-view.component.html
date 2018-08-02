@@ -117,12 +117,13 @@
                      <div class="col-sm-12">
                         <div class="Menu_Bar">
                            <ul class="Menu">
-                              <li  [ngClass]="{'active': Active_Tab === 'About' }" (click)="Active_Tab_Change('About')"><span class="Menu_List">About</span></li>
-                              <li  [ngClass]="{'active': Active_Tab === 'Contact' }" (click)="Active_Tab_Change('Contact')"><span class="Menu_List">Contacts</span></li>
-                              <li  [ngClass]="{'active': Active_Tab === 'Activity' }" (click)="Active_Tab_Change('Activity')"><span class="Menu_List">Activities</span></li>
-                              <li  [ngClass]="{'active': Active_Tab === 'Machines' }" (click)="Active_Tab_Change('Machines')"><span class="Menu_List">Machines</span></li>
-                              <li  [ngClass]="{'active': Active_Tab === 'Tickets' }" (click)="Active_Tab_Change('Tickets')"><span class="Menu_List">Tickets</span></li>
-                              <li  [ngClass]="{'active': Active_Tab === 'Invoice' }" (click)="Active_Tab_Change('Invoice')"><span class="Menu_List">Invoices</span></li>
+                              <li [ngClass]="{'active': Active_Tab === 'About' }" (click)="Active_Tab_Change('About')"><span class="Menu_List">About</span></li>
+                              <li [ngClass]="{'active': Active_Tab === 'Contact' }" (click)="Active_Tab_Change('Contact')"><span class="Menu_List">Contacts</span></li>
+                              <!-- <li  [ngClass]="{'active': Active_Tab === 'Activity' }" (click)="Active_Tab_Change('Activity')"><span class="Menu_List">Activities</span></li> -->
+                              <li [ngClass]="{'active': Active_Tab === 'Machines' }" (click)="Active_Tab_Change('Machines')"><span class="Menu_List">Machines</span></li>
+                              <li [ngClass]="{'active': Active_Tab === 'Tickets' }" (click)="Active_Tab_Change('Tickets')"><span class="Menu_List">Tickets</span></li>
+                              <li [ngClass]="{'active': Active_Tab === 'MachineStatus' }" (click)="Active_Tab_Change('MachineStatus')"><span class="Menu_List">Machine Status</span></li>
+                              <!-- <li  [ngClass]="{'active': Active_Tab === 'Invoice' }" (click)="Active_Tab_Change('Invoice')"><span class="Menu_List">Invoices</span></li> -->
                            </ul>
                         </div>
                      </div>
@@ -137,19 +138,24 @@
                         <app-contact-crm-customers-view [CustomerData]="_Data"></app-contact-crm-customers-view>
                      </div>
                   </div>
-                  <div class="row" *ngIf=" Active_Tab === 'Activity' ">
+                  <!-- <div class="row" *ngIf=" Active_Tab === 'Activity' ">
                      <div class="col-sm-12">
                         <app-activity-crm-customers-view></app-activity-crm-customers-view>
                      </div>
-                  </div>
+                  </div> -->
                   <div class="row" *ngIf=" Active_Tab === 'Machines' ">
                      <div class="col-sm-12">
-                           <app-machines-crm-customers-view></app-machines-crm-customers-view>
+                        <app-machines-crm-customers-view [CustomerData]="_Data"></app-machines-crm-customers-view>
                      </div>
                   </div>
                   <div class="row" *ngIf=" Active_Tab === 'Tickets' ">
                      <div class="col-sm-12">
-                           <app-tickets-crm-customers-view></app-tickets-crm-customers-view>
+                           <app-tickets-crm-customers-view [CustomerData]="_Data"></app-tickets-crm-customers-view>
+                     </div>
+                  </div>
+                  <div class="row" *ngIf=" Active_Tab === 'MachineStatus' ">
+                     <div class="col-sm-12">
+                        <app-machine-status-crm-customers-view [CustomerData]="_Data"></app-machine-status-crm-customers-view>
                      </div>
                   </div>
                   <div class="row" *ngIf=" Active_Tab === 'Invoice' ">
@@ -159,9 +165,77 @@
                   </div>
                </div>
                <div class="col-sm-3">
-                  <div class="Calender">
-                     <p-calendar class="Custom_Calender_1" [inline]="true"></p-calendar> 
+                  <div class="Main_MachineStatus">
+                     <div class="Header">
+                        <h5> Machines Status</h5>
+                     </div>
+                     <div class="Machine_Statuses">
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip Inactive">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip Inactive">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip Inactive">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip ">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip Inactive">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip Inactive">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                        <div class="Machine Tooltip">
+                           <div class="machineName "> Machine...  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        </div>
+                     </div>
                   </div>
+                  
                   <br>
                   <div class="Log_Section">
                      <div class="Log_Header">
@@ -170,28 +244,20 @@
                      <div class="Log_List">
                         <ul>
                            <li>
-                              <h5>New Location Added</h5>
+                              <h5>New Machine Added</h5>
                               <h6> ( 27/05/2018 05:32-PM ) </h6>
                            </li>
                            <li>
-                              <h5>New Order Received</h5>
+                              <h5>New Ticket Created</h5>
                               <h6> ( 27/05/2018 05:22-PM ) </h6>
                            </li>
                            <li>
-                              <h5>New Food Item Added</h5>
+                              <h5>One Ticket Closed</h5>
                               <h6> ( 27/05/2018 05:12-PM ) </h6>
                            </li>
                            <li>
-                              <h5>New Location Added</h5>
+                              <h5>New Machine Added</h5>
                               <h6> ( 27/05/2018 05:12-PM ) </h6>
-                           </li>
-                           <li>
-                              <h5>One Promotion Used</h5>
-                              <h6> ( 27/05/2018 05:02-PM ) </h6>
-                           </li>
-                           <li>
-                              <h5>One Order Delivered</h5>
-                              <h6> ( 27/05/2018 05:02-PM ) </h6>
                            </li>
                         </ul>
                      </div>

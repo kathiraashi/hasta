@@ -164,7 +164,7 @@
       <!-- Create and search Section -->
       <div class="row Activity_Header">
          <div class="col-sm-3">
-            <button class="Create_Button" mat-raised-button color="primary" (click)="CreateTicketsActivity()"> + Create </button>
+            <button *ngIf="_Data.CurrentStatus !== 'Closed'" class="Create_Button" mat-raised-button color="primary" (click)="CreateTicketsActivity()"> + Create </button>
          </div>
          <div class="col-sm-6">
             <h5>Activities</h5>
@@ -175,28 +175,32 @@
          <table>
             <thead>
                <tr>
-               <th style="width: 50px;">S.no</th>
+               <th style="width: 50px;"> S.no </th>
+               <th style="width: 150px;"> Contact Person </th>
                <th style="width: 150px;"> Employee Name </th>
-               <th style="width: 160px;"> Activity From </th>
-               <th style="width: 160px;"> Activity To </th>
+               <th style="width: 160px;"> Activity Start </th>
+               <th style="width: 160px;"> Activity End </th>
                <th style="width: 170px;"> Last Modified </th>
-               <th style="width: 100px;"> Status </th>
+               <th> Status </th>
                <th> Description </th>
                </tr>
             </thead>
             <tbody>
-               <tr>
+               <tr *ngFor="let Activity of _ActivityList; let i=index">
                   <td>
-                     <span class="S_no"> 1 </span>
+                     <span class="S_no"> {{i + 1}} </span>
                   </td>
                   <td>
-                     <span class="Style_1"> Employee Name </span>
+                      <span class="Style_1"> {{Activity.Contact?.Name}} </span>
+                   </td>
+                  <td>
+                     <span class="Style_1"> {{Activity.Employee}} </span>
                   </td>
                   <td>
-                     <span class="Style_1"> 25-07-18, 10.00 AM</span>
+                     <span class="Style_1"> {{Activity.StartDate | date:'d-M-y'}}, {{Activity.StartTime}} </span>
                   </td>
                   <td>
-                     <span class="Style_1"> 26-07-18, 11.00 AM</span>
+                        <span class="Style_1"> {{Activity.EndDate | date:'d-M-y'}}, {{Activity.EndTime}} </span>
                   </td>
                   <td>
                      <span class="Style_1">{{_Data.Last_Modified_By?.Name}}
@@ -204,10 +208,10 @@
                      </span>
                   </td>
                   <td>
-                     <span class="Style_1"> Opened </span>
+                     <span class="Style_1"> {{Activity.Status}} </span>
                   </td>
                   <td>
-                     <span class="Style_1"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae sapiente consectetur quos laudantium animi voluptatum officia cupiditate nihil totam natus, eaque debitis eligendi quia labore! Magni reprehenderit iure ullam repellat. </span>
+                     <span class="Style_1"> {{Activity.Description}} </span>
                   </td>
                </tr>
             </tbody>

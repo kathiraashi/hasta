@@ -261,84 +261,61 @@ exports.CrmCustomerContact_List = function(req, res) {
       });
    }
 };
-// exports.CrmMachines_SimpleList = function(req, res) {
-//    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
-//    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+exports.CrmCustomerContact_SimpleList = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-//    if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-//       res.status(400).send({Status: false, Message: "Industry Type Id can not be empty" });
-//    } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
-//       res.status(400).send({Status: false, Message: "User Details can not be empty" });
-//    }else {
-//       CrmCustomersModel.CrmMachinesSchema
-//          .find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {MachineName: 1 }, {sort: { updatedAt: -1 }})
-//          .exec(function(err, result) {
-//          if(err) {
-//             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machines Simple List Find Query Error', 'Crm_Customers.controller.js', err);
-//             res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Machines Simple List!."});
-//          } else {
-//             var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
-//             ReturnData = ReturnData.toString();
-//             res.status(200).send({Status: true, Response: ReturnData });
-//          }
-//       });
-//    }
-// };
-// exports.CrmCustomerBasedMachines_SimpleList = function(req, res) {
-//    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
-//    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+   
+   if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Industry Type Id can not be empty" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+   }else {
+      CrmCustomersModel.CrmCustomerContactsSchema
+         .find({'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false }, { Name: 1 }, {sort: { updatedAt: -1 }})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Contact Simple List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Contact Simple List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+exports.CrmCustomerContact_View = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-//    if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-//       res.status(400).send({Status: false, Message: "Industry Type Id can not be empty" });
-//    } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
-//       res.status(400).send({Status: false, Message: "User Details can not be empty" });
-//    } else if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
-//       res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
-//    }else {
-//       CrmCustomersModel.CrmMachinesSchema
-//          .find({'Company_Id': ReceivingData.Company_Id, 'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false }, {MachineName: 1 }, {sort: { updatedAt: -1 }})
-//          .exec(function(err, result) {
-//          if(err) {
-//             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Based Machines Simple List Find Query Error', 'Crm_Customers.controller.js', err);
-//             res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Based Machines Simple List!."});
-//          } else {
-//             var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
-//             ReturnData = ReturnData.toString();
-//             res.status(200).send({Status: true, Response: ReturnData });
-//          }
-//       });
-//    }
-// };
-// exports.CrmMachine_View = function(req, res) {
-//    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
-//    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-
-//    if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-//       res.status(400).send({Status: false, Message: "Industry Type Id can not be empty" });
-//    } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
-//       res.status(400).send({Status: false, Message: "User Details can not be empty" });
-//    } else if (!ReceivingData.Machine_Id || ReceivingData.Machine_Id === ''  ) {
-//       res.status(400).send({Status: false, Message: "Crm Customer Details can not be empty" });
-//    }else {
-//       CrmCustomersModel.CrmCustomersSchema
-//          .findOne({'_id': ReceivingData.Machine_Id }, {}, {})
-//          .populate({ path: 'Customer', select: ['CompanyName'] })
-//          .populate({ path: 'MachineType', select: ['Machine_Type'] })
-//          .populate({ path: 'ControllerType', select: ['Controller_Type'] })
-//          .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
-//          .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
-//          .exec(function(err, result) {
-//          if(err) {
-//             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machine Data Find Query Error', 'Crm_Customers.controller.js', err);
-//             res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Machine Data!."});
-//          } else {
-//             var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
-//             ReturnData = ReturnData.toString();
-//             res.status(200).send({Status: true, Response: ReturnData });
-//          }
-//       });
-//    }
-// };
+   if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Company Details can not be empty" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if (!ReceivingData.Contact_Id || ReceivingData.Contact_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Crm Customer Contact Details can not be empty" });
+   }else {
+      CrmCustomersModel.CrmCustomersSchema
+         .findOne({'_id': ReceivingData.Contact_Id }, {}, {})
+         .populate({ path: 'Customer', select: ['CompanyName'] })
+         .populate({ path: 'ContactRole', select: ['Contact_Role'] })
+         .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+         .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Contact Data Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Contact Data!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
 
 
 
@@ -425,6 +402,36 @@ exports.CrmMachines_List = function(req, res) {
       });
    }
 };
+exports.CrmCustomerBasedMachines_List = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Industry Type Id can not be empty" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+   }else {
+      CrmCustomersModel.CrmMachinesSchema
+         .find({'Company_Id': ReceivingData.Company_Id, 'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+         .populate({ path: 'Customer', select: ['CompanyName'] })
+         .populate({ path: 'MachineType', select: ['Machine_Type'] })
+         .populate({ path: 'ControllerType', select: ['Controller_Type'] })
+         .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+         .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Based Machines List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Based Machines List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
 exports.CrmMachines_SimpleList = function(req, res) {
    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
@@ -484,7 +491,7 @@ exports.CrmMachine_View = function(req, res) {
    } else if (!ReceivingData.Machine_Id || ReceivingData.Machine_Id === ''  ) {
       res.status(400).send({Status: false, Message: "Crm Customer Details can not be empty" });
    }else {
-      CrmCustomersModel.CrmCustomersSchema
+      CrmCustomersModel.CrmMachinesSchema
          .findOne({'_id': ReceivingData.Machine_Id }, {}, {})
          .populate({ path: 'Customer', select: ['CompanyName'] })
          .populate({ path: 'MachineType', select: ['Machine_Type'] })
@@ -506,7 +513,9 @@ exports.CrmMachine_View = function(req, res) {
 
 
 
-// ------------------------------------------------- Ticket Id Search -------------------------------------------------
+
+
+// -------------------------------------------------- Crm Tickets Create -----------------------------------------------
 exports.CrmTicketId_Search = function(req, res) {
    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
@@ -533,7 +542,6 @@ exports.CrmTicketId_Search = function(req, res) {
       });
    }
 };
-// -------------------------------------------------- Crm Tickets Create -----------------------------------------------
 exports.CrmTickets_Create = function(req, res) {
 
    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
@@ -575,6 +583,7 @@ exports.CrmTickets_Create = function(req, res) {
          TicketOpenDate: ReceivingData.TicketOpenDate,
          TicketOpenTime: ReceivingData.TicketOpenTime,
          Issue: ReceivingData.Issue,
+         CurrentStatus: ReceivingData.CurrentStatus || 'Waiting',
          Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
          Company_Id : mongoose.Types.ObjectId(ReceivingData.Company_Id),
          Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
@@ -598,7 +607,7 @@ exports.CrmTickets_List = function(req, res) {
    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
    if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-      res.status(400).send({Status: false, Message: "Industry Type Id can not be empty" });
+      res.status(400).send({Status: false, Message: "Company Details can not be empty" });
    } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
    }else {
@@ -613,6 +622,66 @@ exports.CrmTickets_List = function(req, res) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Tickets List Find Query Error', 'Crm_Customers.controller.js', err);
             res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Tickets List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+exports.CrmCustomerBasedTickets_List = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Company Details can not be empty" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
+   }else {
+      CrmCustomersModel.CrmTicketsSchema
+         .find({'Company_Id': ReceivingData.Company_Id, Customer: ReceivingData.Customer_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+         .populate({ path: 'Customer', select: ['CompanyName'] })
+         .populate({ path: 'Machine', select: ['MachineName'] })
+         .populate({ path: 'TicketType', select: ['Ticket_Type'] })
+         .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+         .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Based Tickets List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Based Tickets List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+exports.CrmMachineBasedTickets_List = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Company Details can not be empty" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if (!ReceivingData.Machine_Id || ReceivingData.Machine_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
+   }else {
+      CrmCustomersModel.CrmTicketsSchema
+         .find({'Company_Id': ReceivingData.Company_Id, Machine: ReceivingData.Machine_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+         .populate({ path: 'Customer', select: ['CompanyName'] })
+         .populate({ path: 'Machine', select: ['MachineName'] })
+         .populate({ path: 'TicketType', select: ['Ticket_Type'] })
+         .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+         .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machine Based Tickets List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Machine Based Tickets List!."});
          } else {
             var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
             ReturnData = ReturnData.toString();
@@ -643,6 +712,118 @@ exports.CrmTickets_View = function(req, res) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Data Find Query Error', 'Crm_Customers.controller.js', err);
             res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Data!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+
+
+
+// -------------------------------------------------- Crm Ticket Activities Create -----------------------------------------------
+exports.CrmTicketActivities_Create = function(req, res) {
+
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Company Details can not be empty" });
+   } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if(!ReceivingData.TicketId || ReceivingData.TicketId === '' ) {
+      res.status(400).send({Status: false, Message: "Ticket Details can not be empty" });
+   } else if(!ReceivingData.StartDate || ReceivingData.StartDate === '' ) {
+      res.status(400).send({Status: false, Message: "Activity Start Date can not be empty" });
+   } else if(!ReceivingData.StartTime || ReceivingData.StartTime === '' ) {
+      res.status(400).send({Status: false, Message: "Activity Start Time can not be empty" });
+   } else if(!ReceivingData.Status || ReceivingData.Status === '' ) {
+      res.status(400).send({Status: false, Message: "Activity Status can not be empty" });
+   } else if(!ReceivingData.Machine || typeof ReceivingData.Machine !== 'object' || Object.keys(ReceivingData.Machine).length < 2 ) {
+      res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
+   } else if(!ReceivingData.Customer || typeof ReceivingData.Customer !== 'object' || Object.keys(ReceivingData.Customer).length < 2 ) {
+      res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+   } else {
+      if (ReceivingData.Machine && typeof ReceivingData.Machine === 'object' && Object.keys(ReceivingData.Machine).length > 0 ) {
+         ReceivingData.Machine = mongoose.Types.ObjectId(ReceivingData.Machine._id);
+      }
+      if (ReceivingData.Customer && typeof ReceivingData.Customer === 'object' && Object.keys(ReceivingData.Customer).length > 0 ) {
+         ReceivingData.Customer = mongoose.Types.ObjectId(ReceivingData.Customer._id);
+      }
+      if (ReceivingData.Contact && typeof ReceivingData.Contact === 'object' && Object.keys(ReceivingData.Contact).length > 0 ) {
+         ReceivingData.Contact = mongoose.Types.ObjectId(ReceivingData.Contact._id);
+      }
+      var Crm_TicketActivities = new CrmCustomersModel.CrmTicketActivitiesSchema({
+         Machine: ReceivingData.Machine,
+         Customer: ReceivingData.Customer,
+         Ticket: mongoose.Types.ObjectId(ReceivingData.TicketId),
+         Contact: ReceivingData.Contact,
+         Employee: ReceivingData.Employee,
+         StartDate: ReceivingData.StartDate,
+         StartTime: ReceivingData.StartTime,
+         EndDate: ReceivingData.EndDate,
+         EndTime: ReceivingData.EndTime,
+         Status: ReceivingData.Status,
+         Description: ReceivingData.Description,
+         Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+         Company_Id : mongoose.Types.ObjectId(ReceivingData.Company_Id),
+         Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+         If_Deleted: false,
+         Active_Status : ReceivingData.Active_Status || true,
+      });
+      Crm_TicketActivities.save(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Ticket Activities Creation Query Error', 'AdminManagement.controller.js', err);
+            res.status(400).send({Status: false, Message: "Some error occurred while creating the Crm Ticket Activities!."});
+         } else {
+            CrmCustomersModel.CrmTicketsSchema.update({ _id : mongoose.Types.ObjectId(ReceivingData.TicketId)  }, {$set: {CurrentStatus : result.Status } }).exec();
+            CrmCustomersModel.CrmTicketActivitiesSchema
+               .findOne({'_id': result._id}, {}, {})
+               .populate({ path: 'Customer', select: ['CompanyName'] })
+               .populate({ path: 'Machine', select: ['MachineName'] })
+               .populate({ path: 'Ticket', select: ['TicketId'] })
+               .populate({ path: 'Contact', select: ['Name'] })
+               .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+               .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+               .exec(function(err, result) {
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Activity Data Find Query Error', 'Crm_Customers.controller.js', err);
+                  res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Activity Data!."});
+               } else {
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+                  ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Response: ReturnData });
+               }
+            });
+         }
+      });
+   }
+};
+exports.CrmTicketActivities_List = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Industry Type Id can not be empty" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if (!ReceivingData.Ticket_Id || ReceivingData.Ticket_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Ticket Details can not be empty" });
+   }else {
+      CrmCustomersModel.CrmTicketActivitiesSchema
+         .find({'Ticket': ReceivingData.Ticket_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+         .populate({ path: 'Customer', select: ['CompanyName'] })
+         .populate({ path: 'Machine', select: ['MachineName'] })
+         .populate({ path: 'Ticket', select: ['TicketId'] })
+         .populate({ path: 'Contact', select: ['Name'] })
+         .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+         .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Activity List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Activity List!."});
          } else {
             var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
             ReturnData = ReturnData.toString();

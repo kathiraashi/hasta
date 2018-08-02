@@ -53,6 +53,7 @@
                         <th> Ticket Type </th>
                         <th> Date and Time </th>
                         <th> Last Modified By </th>
+                        <th> Status </th>
                         <th> Action </th>
                      </tr>
                   </thead>
@@ -80,6 +81,9 @@
                            <span class="Style_1">{{Ticket.Last_Modified_By?.Name}}
                               <br> <span class="Time">{{Ticket.updatedAt | date:'medium'}}</span>
                            </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{Ticket.CurrentStatus}} </span>
                         </td>
                         <td>
                            <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View', Ticket._id]"> Action </button>
