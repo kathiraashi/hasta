@@ -18,6 +18,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {MatButtonModule, MatDatepickerModule, MatNativeDateModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatMenuModule} from '@angular/material';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Custom Modules
    import { AppRoutingModule } from './app.routing.module';
@@ -372,6 +373,7 @@ import { MachineStatusCrmCustomersViewComponent } from './Components/CRM/Custome
          MatSelectModule,
          MatDatepickerModule,
          MatNativeDateModule,
+         NgxChartsModule,
       // Custom Modules
           AppRoutingModule,
    ],

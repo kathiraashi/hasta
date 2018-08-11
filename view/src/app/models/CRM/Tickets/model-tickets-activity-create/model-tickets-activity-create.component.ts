@@ -33,17 +33,20 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
 
   _TicketData: String;
 
-  _Statuses: any[] = [  'Opened',
-                        'Problem Identified',
-                        'Spare Ordered / Waiting for Spare',
-                        'Spare Received',
-                        'In Progress',
-                        'In Testing',
-                        'Completed',
-                        'Closed' ];
+  _Statuses: any[] = [  {Type: 'Type_1', Value: 'Opened'},
+                        {Type: 'Type_2', Value: 'Problem Identified'},
+                        {Type: 'Type_3', Value: 'Spare Ordered / Waiting for Spare'},
+                        {Type: 'Type_4', Value: 'Spare Received'},
+                        {Type: 'Type_5', Value: 'Work Started'},
+                        {Type: 'Type_6', Value: 'In Progress'},
+                        {Type: 'Type_7', Value: 'In Testing'},
+                        {Type: 'Type_8', Value: 'Completed'},
+                        {Type: 'Type_9', Value: 'Closed'} ];
   _Contacts: any[] =  [];
   _Customers: any[] = [];
   _Machines: any[] = [];
+
+  _ShowEndDateTime: Boolean = false;
 
   Form: FormGroup;
   _Data: Object;
@@ -85,10 +88,12 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
          Company_Id: new FormControl(this.Company_Id),
          User_Id: new FormControl(this.User_Id),
       });
+
       setTimeout(() => {
          this.Form.controls['Machine'].setValue(this._Data['Machine']);
          this.Form.controls['Customer'].setValue(this._Data['Customer']);
       }, 500);
+
       const Data = { 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id, Customer_Id: this._Data['Customer']['_id'] };
       let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
       Info = Info.toString();
@@ -106,12 +111,83 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
             this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Customer Contacts Simple List Getting Error!, But not Identify!' });
          }
       });
+
+
+      if (this._Data['CurrentStatus'] && typeof this._Data['CurrentStatus'] === 'object' && Object.keys(this._Data['CurrentStatus']).length === 2) {
+         if (this._Data['CurrentStatus']['Type'] === 'Type_0') {
+            this._Statuses = this._Statuses.slice(0, 1);
+         } else {
+            this._Statuses.splice(0, 1);
+         }
+         if (this._Data['CurrentStatus']['Type'] === 'Type_3') {
+            this._Statuses = this._Statuses.slice(2, 3);
+         } else if (this._Data['CurrentStatus']['Type'] !== 'Type_4') {
+            this._Statuses.splice(2, 1);
+         }
+         if (this._Data['CurrentStatus']['Type'] === 'Type_4') {
+            this._Statuses = this._Statuses.slice(1, 4);
+            this._Statuses.splice(1, 1);
+         } else {
+            this._Statuses.splice(2, 1);
+         }
+      } else {
+         this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Technical Error!' });
+         this.onClose.next({Status: false});
+         this.bsModalRef.hide();
+      }
    }
 
    NotAllow(): boolean {return false; }
 
+   ChangeStatus() {
+      const Status = this.Form.controls['Status'].value;
+      if (Status !== null && typeof Status === 'object' && Object.keys(Status).length === 2) {
+         if (Status['Type'] === 'Type_2' || Status['Type'] === 'Type_6' || Status['Type'] === 'Type_7') {
+            this._ShowEndDateTime = true;
+         } else {
+            this._ShowEndDateTime = false;
+         }
+      } else {
+         this._ShowEndDateTime = false;
+         this.Form.controls['EndDate'].setValue(null);
+         this.Form.controls['EndTime'].setValue(null);
+      }
+   }
+
    Submit() {
+
+      function formatDate(date) {
+         const d = new Date(date);
+         let month = '' + (d.getMonth() + 1);
+         let day = '' + d.getDate();
+         const year = d.getFullYear();
+         if (month.length < 2) { month = '0' + month; }
+         if (day.length < 2) { day = '0' + day; }
+         return [year, month, day].join('-');
+      }
+
+      function convertTime12to24(time12h) {
+         if (time12h !== null && time12h !== '') {
+            const [time, modifier] = time12h.split(' ');
+            const newTime = time.split(':');
+            if (newTime[0] === '12') { newTime[0] = '00'; }
+            if (modifier === 'PM') { newTime[0] = parseInt(newTime[0], 10) + 12; }
+            return newTime[0] + ':' + newTime[1] + ':00';
+         } else {
+            return '00:00:00';
+         }
+      }
       if (this.Form.valid && !this.Uploading) {
+         const StartDate = this.Form.controls['StartDate'].value;
+         const StartTime = this.Form.controls['StartTime'].value;
+         this.Form.controls['StartDate'].setValue(new Date(formatDate(StartDate) + ' ' + convertTime12to24(StartTime)));
+         if (this._ShowEndDateTime) {
+            if (this.Form.controls['EndDate'].value !== null) {
+               const EndDate = this.Form.controls['EndDate'].value;
+               const EndTime = this.Form.controls['EndTime'].value;
+               this.Form.controls['StartDate'].setValue(new Date(formatDate(EndDate) + ' ' + convertTime12to24(EndTime)));
+            }
+         }
          this.Uploading = true;
          let Info = CryptoJS.AES.encrypt(JSON.stringify(this.Form.getRawValue()), 'SecretKeyIn@123');
          Info = Info.toString();

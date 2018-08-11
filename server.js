@@ -41,15 +41,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Every request Log Creation
-app.use('/API/', function (req, res, next) {
-   if (req.body.Info !== '' && req.body.Info){
-      LogManagement.LogHandling.LogCreation(req);
-      return next();
-   }else {
-      ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Security Error For Every Request Log Creation', 'Server.js');
-      return res.status(406).send({Status: false, Message: 'Invalid Arguments'});
-   }
-});
+// app.use('/API/', function (req, res, next) {
+//    if (req.body.Info !== '' && req.body.Info){
+//       LogManagement.LogHandling.LogCreation(req);
+//       return next();
+//    }else {
+//       ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Security Error For Every Request Log Creation', 'Server.js');
+//       return res.status(406).send({Status: false, Message: 'Invalid Arguments'});
+//    }
+// });
 
  require('./server/web/routes/Admin/RegisterAndLogin.routes.js')(app); // Without Company Id, User Id and Authorization
 
@@ -68,21 +68,21 @@ app.use('/API/', function (req, res, next) {
          });
    }
  // Every request Log Creation
-   app.use('/API/', function (req, res, next) {
-      if (req.headers.authorization) {
-         AuthorizationValidate(req.headers.authorization, function(callback){
-            if (callback) {
-               return next();
-            }else{
-               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Security Error For Request authorization Empty', 'Server.js');
-               return res.status(401).send({Status: false, Message: 'Invalid Authorization'});
-            }
-          });
-      }else {
-         ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Security Error For Request authorization Empty', 'Server.js');
-         return res.status(401).send({Status: false, Message: 'Invalid Authorization'});
-      }
-   });
+  //  app.use('/API/', function (req, res, next) {
+  //     if (req.headers.authorization) {
+  //        AuthorizationValidate(req.headers.authorization, function(callback){
+  //           if (callback) {
+  //              return next();
+  //           }else{
+  //              ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Security Error For Request authorization Empty', 'Server.js');
+  //              return res.status(401).send({Status: false, Message: 'Invalid Authorization'});
+  //           }
+  //         });
+  //     }else {
+  //        ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Security Error For Request authorization Empty', 'Server.js');
+  //        return res.status(401).send({Status: false, Message: 'Invalid Authorization'});
+  //     }
+  //  });
 
 // Admin
    require('./server/web/routes/Admin/AdminManagement.routes.js')(app);

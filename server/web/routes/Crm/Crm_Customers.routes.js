@@ -33,5 +33,8 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmTicketActivities_Create', Controller.CrmTicketActivities_Create);
    app.post('/API/CrmCustomers/CrmTicketActivities_List', Controller.CrmTicketActivities_List);
 
+   app.post('/API/CrmCustomers/CrmTicketActivities_Time', Controller.CrmTicketActivities_Time);
+   app.post('/API/CrmCustomers/CrmMachineMapData', Controller.CrmMachineMapData);
+
 
 };

@@ -18,7 +18,7 @@ export class MainCrmCustomersViewComponent implements OnInit {
 
    Loader: Boolean = true;
    Active_Tab = 'About';
-   _Data = {};
+   _Data;
    Customer_Id;
 
    constructor(

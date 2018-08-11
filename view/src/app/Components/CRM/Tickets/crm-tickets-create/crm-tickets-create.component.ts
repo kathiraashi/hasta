@@ -142,8 +142,33 @@ export class CrmTicketsCreateComponent implements OnInit {
       }
    }
 
+   formatDate(date) {
+      const d = new Date(date);
+      let month = '' + (d.getMonth() + 1);
+      let day = '' + d.getDate();
+      const year = d.getFullYear();
+      if (month.length < 2) { month = '0' + month; }
+      if (day.length < 2) { day = '0' + day; }
+      return [year, month, day].join('-');
+   }
+
+   convertTime12to24(time12h) {
+      if (time12h !== null && time12h !== '') {
+         const [time, modifier] = time12h.split(' ');
+         const newTime = time.split(':');
+         if (newTime[0] === '12') { newTime[0] = '00'; }
+         if (modifier === 'PM') { newTime[0] = parseInt(newTime[0], 10) + 12; }
+         return newTime[0] + ':' + newTime[1] + ':00';
+      } else {
+         return '00:00:00';
+      }
+   }
+
    Submit() {
       if (this.Form.valid) {
+         const OpenDate = this.Form.controls['TicketOpenDate'].value;
+         const OpenTime = this.Form.controls['TicketOpenTime'].value;
+         this.Form.controls['TicketOpenDate'].setValue(new Date(this.formatDate(OpenDate) + ' ' + this.convertTime12to24(OpenTime)));
          let Info = CryptoJS.AES.encrypt(JSON.stringify(this.Form.getRawValue()), 'SecretKeyIn@123');
          Info = Info.toString();
          this.Crm_Service.CrmTickets_Create({ 'Info': Info }).subscribe( response => {
