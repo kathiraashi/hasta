@@ -945,6 +945,7 @@ exports.CrmMachineMapData = function(req, res) {
       FromDate.setHours(FromDate.getHours() - 24, 0 , 0); // 24 hours back
       var ToDate = new Date();
       ToDate.setHours(ToDate.getHours(), 0, 0);
+      var TotalMilleSeconds = Math.abs( new Date(ToDate) -  new Date(FromDate));
 
       CrmCustomersModel.CrmTicketsSchema
          .find(
@@ -968,36 +969,73 @@ exports.CrmMachineMapData = function(req, res) {
                var Arr = [{ Status: 'UP', Percentage: 100, Hours: '24 Hrs', ColorCode: '#44AF5A' }];
                res.send(Arr);
             } else {
+               var StartActivity = 'UP';
+               var EndActivity = 'UP'; 
+               result.map( Tickets => { // Status of Chart Start And End Position
+                  if (Tickets.TicketOpenDate <= FromDate  ) { StartActivity = 'Down'; }
+                  if (Tickets.TicketCloseDate >= ToDate || !Tickets.TicketCloseDate || Tickets.TicketCloseDate === '' ) { EndActivity = 'Down'; }
+                  return Tickets;
+               } );
                Promise.all(
-                  result.map(object => {
+                  result.map(object => {  // Evert Ticket Activities List Find
                      return CrmCustomersModel.CrmTicketActivitiesSchema
                         .find({ 'Ticket': object._id},
                               { Status: 1, StartDate: 1 },
                               { sort: { StartDate: 1 } } ).exec();
                   })
                ).then(response => {
+                  var ReturnData = [];                     
                   var AllDate = [];
-                  var StartActivity = 'UP';
-                  Promise.all(
-                     response.map( object_1 => {
-                        object_1.map(object_2 => { 
-                           AllDate.push( new Date(object_2.StartDate));
-                           return object_2;
-                        });
-                        object_1.filter(value => value.StartDate > FromDate );
+                     response.map( object_1 => { // All Activities Time Concat to Single Array
+                        object_1.map(object_2 => {
+                           AllDate.push( new Date(object_2.StartDate)); 
+                           return object_2; });
                         return object_1;
-                     })
-                  ).then(response_1 => {
-                     res.send(response);
-                  }).catch( error_1 => {
-                     console.log(error_1);
-                   });
+                     });
+                  if (StartActivity === 'UP') {
+                     const diff = Math.abs( new Date(FromDate) -  new Date(AllDate[0]));
+                     const Percentage = (( diff * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                     const hh = Math.floor(diff / 1000 / 60 / 60);
+                     const mm = Math.ceil(( diff - hh * 3600000) / 1000 / 60);
+                     const Hour = ("0" + hh).slice(-2)+'hr '+("0" + mm).slice(-2)+'min';
+                     ReturnData.push({ Status: 'UP', Percentage: parseFloat(Percentage), Hours: Hour, ColorCode: '#44AF5A' });
+                  }
+
+                  if (EndActivity === 'UP') {
+                     const diff = Math.abs( new Date(ToDate) -  new Date(AllDate[AllDate.length - 1]));
+                     const Percentage = (( diff * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                     const hh = Math.floor(diff / 1000 / 60 / 60);
+                     const mm = Math.ceil((diff - hh * 3600000) / 1000 / 60);
+                     const Hour = ("0" + hh).slice(-2)+'hr '+("0" + mm).slice(-2)+'min';
+                     ReturnData.push({ Status: 'UP', Percentage: parseFloat(Percentage), Hours: Hour, ColorCode: '#44AF5A' });
+                  }
+                  res.send(ReturnData);
+                  // Promise.all(
+                  //    response.map( object_1 => {
+                  //        return object_1.reduce((acc, obj, i, arr) => {
+                  //          var SpareWait = false;
+                  //          console.log(arr.length);
+                  //          console.log(i);
+                  //          console.log(obj);
+                           
+                  //          return arr;
+                  //       }, []);
+                        
+                  //       // object_1.map(object_2 => {
+                  //       //    AllDate.push( new Date(object_2.StartDate));
+                  //       //    return object_2;
+                  //       // });
+                  //       // return object_1;
+                  //    })
+                  // ).then(response_1 => {
+                  //    res.send(AllDate);
+                  // }).catch( error_1 => {
+                  //    console.log(error_1);
+                  //  });
                }).catch(error => {
                   console.log(error);
                });
-              
             }
-           
          }
       });
    }
