@@ -20,6 +20,7 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmMachines_SimpleList', Controller.CrmMachines_SimpleList);
    app.post('/API/CrmCustomers/CrmCustomerBasedMachines_SimpleList', Controller.CrmCustomerBasedMachines_SimpleList);
    app.post('/API/CrmCustomers/CrmMachine_View', Controller.CrmMachine_View);
+   app.post('/API/CrmCustomers/CrmCustomerBasedMachine_ChartData', Controller.CrmCustomerBasedMachine_ChartData);
 
 
    app.post('/API/CrmCustomers/CrmTicketId_Search', Controller.CrmTicketId_Search);
@@ -33,7 +34,7 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmTicketActivities_Create', Controller.CrmTicketActivities_Create);
    app.post('/API/CrmCustomers/CrmTicketActivities_List', Controller.CrmTicketActivities_List);
 
-   app.post('/API/CrmCustomers/CrmMachineMapData', Controller.CrmMachineMapData);
+
 
 
 };

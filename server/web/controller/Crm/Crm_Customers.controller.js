@@ -510,6 +510,188 @@ exports.CrmMachine_View = function(req, res) {
       });
    }
 };
+exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Company Details can not be empty" });
+   }else {
+      var FromDate = new Date();
+      FromDate.setHours(FromDate.getHours() - 24); // 24 hours back
+      var ToDate = new Date();
+      ToDate.setHours(ToDate.getHours());
+      var TotalMilleSeconds = Math.abs( new Date(ToDate) -  new Date(FromDate));
+      CrmCustomersModel.CrmMachinesSchema
+         .find({'Company_Id': ReceivingData.Company_Id, 'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false }, {MachineName: 1 }, {sort: { updatedAt: -1 }})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Based Machines Simple List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Based Machines Simple List!."});
+         } else {
+            Promise.all(
+               result.map(SingleMachine => {  
+                  return CrmCustomersModel.CrmTicketsSchema
+                     .find({ 'Machine': SingleMachine._id, 
+                              $and: [  { $or: [ { TicketOpenDate: { $gte: FromDate } },
+                                                { TicketCloseDate: { $gt: FromDate } }  ]},
+                                       { TicketOpenDate: { $lt: ToDate } } ] },
+                           {},  {sort: { TicketOpenDate: 1 }} 
+                        ).exec()
+                        .then( MachineTicketsData => {
+                           if (MachineTicketsData.length === 0) {
+                              var Arr = [{ Status: 'UP', Percentage: 100, Hours: '24 Hrs', ColorCode: '#44AF5A', MilleSeconds: TotalMilleSeconds, From: FromDate, To: ToDate }];
+                              return { Machine : SingleMachine, ChartData: Arr, Stage: '1' };
+                           } else {
+                              var StartActivity = 'UP';
+                              var EndActivity = 'UP';
+                              MachineTicketsData.map( Tickets => { // Status of Chart Start And End Position
+                                 if (Tickets.TicketOpenDate <= FromDate  ) { StartActivity = 'Down'; }
+                                 if (Tickets.TicketCloseDate >= ToDate || !Tickets.TicketCloseDate || Tickets.TicketCloseDate === '' ) { EndActivity = 'Down'; }
+                                 return Tickets;
+                              } );
+                              return Promise.all(
+                                    MachineTicketsData.map(object => {  // Evert Ticket Activities List Find
+                                       return CrmCustomersModel.CrmTicketActivitiesSchema
+                                          .find({ 'Ticket': object._id},
+                                                { Status: 1, StartDate: 1 },
+                                                { sort: { StartDate: 1 } } ).exec();
+                                    })
+                                 ).then(response => {
+                                    if (response[0].length === 0) {
+                                       var Arr = [{ Status: 'UP', Percentage: 100, Hours: '24 Hrs', ColorCode: '#44AF5A', MilleSeconds: TotalMilleSeconds, From: FromDate, To: ToDate }];
+                                       return { Machine : SingleMachine, ChartData: Arr, Stage: '2' };
+                                    }else {
+                                       var ReturnData = [];                     
+                                       var AllDate = [];
+                                       var ActivityStart = new Date();
+                                       var IfWaiting = false;
+                                       var IfTicketComplete = false;
+                                       var TicketEndTime = new Date();
+
+                                       response.map( object_1 => { // All Activities Time Concat to Single Array
+                                          object_1.map(object_2 => {
+                                             AllDate.push( new Date(object_2.StartDate)); 
+                                             return object_2; });
+                                          return object_1;
+                                       });
+                                       if (StartActivity === 'UP') {
+                                          const diff = Math.abs( new Date(FromDate) -  new Date(AllDate[0]));
+                                          const Percentage = (( diff * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                                          const hh = Math.floor(diff / 1000 / 60 / 60);
+                                          const mm = Math.ceil(( diff - hh * 3600000) / 1000 / 60);
+                                          const Hour = ("0" + hh).slice(-2)+'hr '+("0" + mm).slice(-2)+'min';
+                                          if (Percentage > 0) {
+                                             ReturnData.push({ Status: 'UP', Percentage: parseFloat(Percentage), Hours: Hour, ColorCode: '#44AF5A', MilleSeconds: diff, From: FromDate, To: AllDate[0]  });
+                                          }
+                                       }
+                                       if (StartActivity === 'Down') {
+                                          response[0] = response[0].filter(Object_3 => Object_3.StartDate >  FromDate);
+                                          if (response[0][0].Status.Type === 'Type_3' || response[0][0].Status.Type === 'Type_4') {
+                                             response[0].splice(0, 0, { _id: '', StartDate: FromDate, Status: { Type: 'Type_1'} });
+                                          }else{
+                                             response[0][0].StartDate =  FromDate;
+                                          }
+                                       }
+                                       if (EndActivity === 'Down') {
+                                          const ResponseLength = response.length - 1;
+                                          response[ResponseLength] = response[ResponseLength].filter(Object_3 => Object_3.StartDate < ToDate);
+                                          const LastActivity = response[ResponseLength][response[ResponseLength].length - 1];
+                                          const BeforeLastActivity = response[ResponseLength][response[ResponseLength].length - 2];
+                                          if (LastActivity.Status.Type === 'Type_3' || LastActivity.Status.Type === 'Type_4' && BeforeLastActivity.Status.Type !== 'Type_5' ) {
+                                             response[ResponseLength].push({ _id: '', StartDate: ToDate, Status: { Type: 'Type_5'} });
+                                          }else if(LastActivity.Status.Type === 'Type_5'){
+                                             response[ResponseLength].push({ _id: '', StartDate: ToDate, Status: { Type: 'Type_6'} });
+                                          }else {
+                                             response[ResponseLength][response[ResponseLength].length - 1].StartDate =  ToDate;
+                                          }
+                                       }
+                                       response.map( object_1 => { // All Tickets Time Calculation
+                                          if (IfTicketComplete) {
+                                             const diff1 = Math.abs( new Date(TicketEndTime) -  new Date(object_1[0].StartDate));
+                                             const Percentage1 = (( diff1 * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                                             const hh1 = Math.floor(diff1 / 1000 / 60 / 60);
+                                             const mm1 = Math.ceil((diff1 - hh1 * 3600000) / 1000 / 60);
+                                             const Hour1 = ("0" + hh1).slice(-2)+'hr '+("0" + mm1).slice(-2)+'min';
+                                             if (Percentage1 > 0) {
+                                                ReturnData.push({ Status: 'UP', Percentage: parseFloat(Percentage1), Hours: Hour1, ColorCode: '#44AF5A', MilleSeconds: diff1, From: TicketEndTime, To: object_1[0].StartDate });
+                                             }
+                                             IfTicketComplete = false;
+                                          }
+                                          ActivityStart = object_1[0].StartDate;
+                                          IfWaiting = false;
+                                          return object_1.reduce((acc, obj, i, arr) => {
+                                                if (obj.Status.Type === 'Type_3' && !IfWaiting) {
+                                                   const diff2 = Math.abs( new Date(obj.StartDate) -  new Date(ActivityStart));
+                                                   const Percentage2 = (( diff2 * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                                                   const hh2 = Math.floor(diff2 / 1000 / 60 / 60);
+                                                   const mm2 = Math.ceil((diff2 - hh2 * 3600000) / 1000 / 60);
+                                                   const Hour2 = ("0" + hh2).slice(-2)+'hr '+("0" + mm2).slice(-2)+'min';
+                                                   if (Percentage2 > 0) {
+                                                      ReturnData.push({ Status: 'Down', Percentage: parseFloat(Percentage2), Hours: Hour2, ColorCode: '#DD171F',  MilleSeconds: diff2, From: ActivityStart, To: obj.StartDate });
+                                                   }
+                                                   ActivityStart = obj.StartDate;
+                                                   IfWaiting = true;
+                                                }
+                                                if (obj.Status.Type === 'Type_5') {
+                                                   const diff2 = Math.abs( new Date(obj.StartDate) -  new Date(ActivityStart));
+                                                   const Percentage2 = (( diff2 * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                                                   const hh2 = Math.floor(diff2 / 1000 / 60 / 60);
+                                                   const mm2 = Math.ceil((diff2 - hh2 * 3600000) / 1000 / 60);
+                                                   const Hour2 = ("0" + hh2).slice(-2)+'hr '+("0" + mm2).slice(-2)+'min';
+                                                   if ( Percentage2 > 0) {
+                                                      ReturnData.push({ Status: 'Waiting', Percentage: parseFloat(Percentage2), Hours: Hour2, ColorCode: '#ff9d0b',  MilleSeconds: diff2, From: ActivityStart, To: obj.StartDate });
+                                                   }
+                                                   ActivityStart = obj.StartDate;
+                                                   IfWaiting = false;
+                                                }
+                                                if (arr.length === i + 1) {
+                                                   const diff2 = Math.abs( new Date(obj.StartDate) -  new Date(ActivityStart));
+                                                   const Percentage2 = (( diff2 * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                                                   const hh2 = Math.floor(diff2 / 1000 / 60 / 60);
+                                                   const mm2 = Math.ceil((diff2 - hh2 * 3600000) / 1000 / 60);
+                                                   const Hour2 = ("0" + hh2).slice(-2)+'hr '+("0" + mm2).slice(-2)+'min';
+                                                   if (Percentage2 > 0) {
+                                                      ReturnData.push({ Status: 'Down', Percentage: parseFloat(Percentage2), Hours: Hour2, ColorCode: '#DD171F',  MilleSeconds: diff2, From: ActivityStart, To: obj.StartDate  });
+                                                   }
+                                                   IfTicketComplete = true;
+                                                   TicketEndTime = obj.StartDate;
+                                                }
+                                                return arr;
+                                          }, []);
+                                       });
+                                       if (EndActivity === 'UP') {
+                                          const diff = Math.abs( new Date(ToDate) -  new Date(AllDate[AllDate.length - 1]));
+                                          const Percentage = (( diff * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                                          const hh = Math.floor(diff / 1000 / 60 / 60);
+                                          const mm = Math.ceil((diff - hh * 3600000) / 1000 / 60);
+                                          const Hour = ("0" + hh).slice(-2)+'hr '+("0" + mm).slice(-2)+'min';
+                                          if (Percentage > 0) {
+                                             ReturnData.push({ Status: 'UP', Percentage: parseFloat(Percentage), Hours: Hour, ColorCode: '#44AF5A',  MilleSeconds: diff, From: AllDate[AllDate.length - 1], To: ToDate });
+                                          }
+                                       }
+                                       return { Machine : SingleMachine, ChartData: ReturnData, Stage: '3' };
+                                    }
+                                 });
+                           }
+                        }); 
+                  })
+            ).then(FinalResult => {
+               var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(FinalResult), 'SecretKeyOut@123');
+               ReturnData = ReturnData.toString();
+               res.status(200).send({Status: true, Response: ReturnData });
+            }).catch( SomeError => {
+               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Based Machines Chart Data Find Query Error', 'Crm_Customers.controller.js', SomeError);
+               res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Based Machines Chart Data !."});
+            });
+         }
+      });
+   }
+};
 
 
 
@@ -837,176 +1019,6 @@ exports.CrmTicketActivities_List = function(req, res) {
             var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
             ReturnData = ReturnData.toString();
             res.status(200).send({Status: true, Response: ReturnData });
-         }
-      });
-   }
-};
-
-
-exports.CrmMachineMapData = function(req, res) {
-   var ReceivingData = req.body;
-   if (!ReceivingData.Machine_Id || ReceivingData.Machine_Id === ''  ) {
-      res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
-   }else {
-
-      var FromDate = new Date();
-      FromDate.setHours(FromDate.getHours() - 24); // 24 hours back
-      var ToDate = new Date();
-      ToDate.setHours(ToDate.getHours());
-      
-      var TotalMilleSeconds = Math.abs( new Date(ToDate) -  new Date(FromDate));
-
-      CrmCustomersModel.CrmTicketsSchema
-         .find(
-            { 'Machine': ReceivingData.Machine_Id, 
-               $and: [
-                  { $or: [
-                     { TicketOpenDate: { $gte: FromDate } },
-                     { TicketCloseDate: { $gt: FromDate } }
-                  ]},
-                  { TicketOpenDate: { $lt: ToDate } }
-               ]
-            },
-            {},
-            {sort: { TicketOpenDate: 1 }}
-         ).exec(function(err, result) {
-         if(err) {
-            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Activity List Find Query Error', 'Crm_Customers.controller.js', err);
-            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Activity List!."});
-         } else {
-            
-            if (result.length === 0) {
-               var Arr = [{ Status: 'UP', Percentage: 100, Hours: '24 Hrs', ColorCode: '#44AF5A' }];
-               res.send(Arr);
-            } else {
-               var StartActivity = 'UP';
-               var EndActivity = 'UP';
-               result.map( Tickets => { // Status of Chart Start And End Position
-                  if (Tickets.TicketOpenDate <= FromDate  ) { StartActivity = 'Down'; }
-                  if (Tickets.TicketCloseDate >= ToDate || !Tickets.TicketCloseDate || Tickets.TicketCloseDate === '' ) { EndActivity = 'Down'; }
-                  return Tickets;
-               } );
-               Promise.all(
-                  result.map(object => {  // Evert Ticket Activities List Find
-                     return CrmCustomersModel.CrmTicketActivitiesSchema
-                        .find({ 'Ticket': object._id},
-                              { Status: 1, StartDate: 1 },
-                              { sort: { StartDate: 1 } } ).exec();
-                  })
-               ).then(response => {
-                  var ReturnData = [];                     
-                  var AllDate = [];
-                  var ActivityStart = new Date();
-                  var IfWaiting = false;
-                  var IfTicketComplete = false;
-                  var TicketEndTime = new Date();
-
-                  response.map( object_1 => { // All Activities Time Concat to Single Array
-                     object_1.map(object_2 => {
-                        AllDate.push( new Date(object_2.StartDate)); 
-                        return object_2; });
-                     return object_1;
-                  });
-                  if (StartActivity === 'UP') {
-                     const diff = Math.abs( new Date(FromDate) -  new Date(AllDate[0]));
-                     const Percentage = (( diff * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
-                     const hh = Math.floor(diff / 1000 / 60 / 60);
-                     const mm = Math.ceil(( diff - hh * 3600000) / 1000 / 60);
-                     const Hour = ("0" + hh).slice(-2)+'hr '+("0" + mm).slice(-2)+'min';
-                     if (Percentage > 0) {
-                        ReturnData.push({ Status: 'UP', Percentage: parseFloat(Percentage), Hours: Hour, ColorCode: '#44AF5A' });
-                     }
-                  }
-                  if (StartActivity === 'Down') {
-                     response[0] = response[0].filter(Object_3 => Object_3.StartDate >  FromDate);
-                     if (response[0][0].Status.Type === 'Type_3' || response[0][0].Status.Type === 'Type_4') {
-                        response[0].splice(0, 0, { _id: '', StartDate: FromDate, Status: { Type: 'Type_1'} });
-                     }else{
-                        response[0][0].StartDate =  FromDate;
-                     }
-                  }
-                  if (EndActivity === 'Down') {
-                     const ResponseLength = response.length - 1;
-                     response[ResponseLength] = response[ResponseLength].filter(Object_3 => Object_3.StartDate < ToDate);
-                     const LastActivity = response[ResponseLength][response[ResponseLength].length - 1];
-                     const BeforeLastActivity = response[ResponseLength][response[ResponseLength].length - 2];
-                     if (LastActivity.Status.Type === 'Type_3' || LastActivity.Status.Type === 'Type_4' && BeforeLastActivity.Status.Type !== 'Type_5' ) {
-                        response[ResponseLength].push({ _id: '', StartDate: ToDate, Status: { Type: 'Type_5'} });
-                     }else if(LastActivity.Status.Type === 'Type_5'){
-                        response[ResponseLength].push({ _id: '', StartDate: ToDate, Status: { Type: 'Type_6'} });
-                     }else {
-                        response[ResponseLength][response[ResponseLength].length - 1].StartDate =  ToDate;
-                     }
-                  }
-                  response.map( object_1 => { // All Tickets Time Calculation
-                     if (IfTicketComplete) {
-                        const diff1 = Math.abs( new Date(TicketEndTime) -  new Date(object_1[0].StartDate));
-                        const Percentage1 = (( diff1 * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
-                        const hh1 = Math.floor(diff1 / 1000 / 60 / 60);
-                        const mm1 = Math.ceil((diff1 - hh1 * 3600000) / 1000 / 60);
-                        const Hour1 = ("0" + hh1).slice(-2)+'hr '+("0" + mm1).slice(-2)+'min';
-                        if (Percentage1 > 0) {
-                           ReturnData.push({ Status: 'UP', Percentage: parseFloat(Percentage1), Hours: Hour1, ColorCode: '#44AF5A' });
-                        }
-                        IfTicketComplete = false;
-                     }
-                     ActivityStart = object_1[0].StartDate;
-                     IfWaiting = false;
-                     return object_1.reduce((acc, obj, i, arr) => {
-                           if (obj.Status.Type === 'Type_3' && !IfWaiting) {
-                              const diff2 = Math.abs( new Date(obj.StartDate) -  new Date(ActivityStart));
-                              const Percentage2 = (( diff2 * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
-                              const hh2 = Math.floor(diff2 / 1000 / 60 / 60);
-                              const mm2 = Math.ceil((diff2 - hh2 * 3600000) / 1000 / 60);
-                              const Hour2 = ("0" + hh2).slice(-2)+'hr '+("0" + mm2).slice(-2)+'min';
-                              if (Percentage2 > 0) {
-                                 ReturnData.push({ Status: 'Down', Percentage: parseFloat(Percentage2), Hours: Hour2, ColorCode: '#DD171F' });
-                              }
-                              ActivityStart = obj.StartDate;
-                              IfWaiting = true;
-                           }
-                           if (obj.Status.Type === 'Type_5') {
-                              const diff2 = Math.abs( new Date(obj.StartDate) -  new Date(ActivityStart));
-                              const Percentage2 = (( diff2 * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
-                              const hh2 = Math.floor(diff2 / 1000 / 60 / 60);
-                              const mm2 = Math.ceil((diff2 - hh2 * 3600000) / 1000 / 60);
-                              const Hour2 = ("0" + hh2).slice(-2)+'hr '+("0" + mm2).slice(-2)+'min';
-                              if ( Percentage2 > 0) {
-                                 ReturnData.push({ Status: 'Waiting', Percentage: parseFloat(Percentage2), Hours: Hour2, ColorCode: '#DD171F' });
-                              }
-                              ActivityStart = obj.StartDate;
-                              IfWaiting = false;
-                           }
-                           if (arr.length === i + 1) {
-                              const diff2 = Math.abs( new Date(obj.StartDate) -  new Date(ActivityStart));
-                              const Percentage2 = (( diff2 * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
-                              const hh2 = Math.floor(diff2 / 1000 / 60 / 60);
-                              const mm2 = Math.ceil((diff2 - hh2 * 3600000) / 1000 / 60);
-                              const Hour2 = ("0" + hh2).slice(-2)+'hr '+("0" + mm2).slice(-2)+'min';
-                              if (Percentage2 > 0) {
-                                 ReturnData.push({ Status: 'Down', Percentage: parseFloat(Percentage2), Hours: Hour2, ColorCode: '#DD171F' });
-                              }
-                              IfTicketComplete = true;
-                              TicketEndTime = obj.StartDate;
-                           }
-                           return arr;
-                     }, []);
-                  });
-                  if (EndActivity === 'UP') {
-                     const diff = Math.abs( new Date(ToDate) -  new Date(AllDate[AllDate.length - 1]));
-                     const Percentage = (( diff * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
-                     const hh = Math.floor(diff / 1000 / 60 / 60);
-                     const mm = Math.ceil((diff - hh * 3600000) / 1000 / 60);
-                     const Hour = ("0" + hh).slice(-2)+'hr '+("0" + mm).slice(-2)+'min';
-                     if (Percentage > 0) {
-                        ReturnData.push({ Status: 'UP', Percentage: parseFloat(Percentage), Hours: Hour, ColorCode: '#44AF5A' });
-                     }
-                  }
-                  res.send(ReturnData);
-               }).catch(error => {
-                  console.log(error);
-               });
-            }
          }
       });
    }
