@@ -1,130 +1,79 @@
-<!-- header part -->
-<!-- create and search section -->
-<div class="row header_part">
-   <div class="col-sm-6">
-      <button class="Create_Button" mat-button (click)="CreateEmployeeCategory()"> + Create </button>
-   </div>
-   <div class="col-sm-6">
-      <div class="Search_Section">
-         <input type="text" placeholder="Search.." name="search">
-         <i class="material-icons">search</i>
-      </div>
+<!-- Loader -->
+<div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+   <div class="Loading">
+         <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+            <div class="rect6"></div>
+         </div>
    </div>
 </div>
-<!-- Table Section -->
-<div class="Table_Section">
-   <table >
-      <thead>
-         <tr>
-            <th>S.no</th>
-            <th>Employee</th>
-            <th>Created By</th>
-            <th>Last Modification Date</th>
-            <th>Action</th>
-         </tr>
-      </thead>
-      <tbody>
-         <tr>
-            <td>
-               <span class="S_no"> 1 </span>
-            </td>
-            <td>
-               <span class="Style_1">12345</span>
-            </td>
-            <td>
-               <span class="Style_1">admin</span>
-            </td>
-            <td>
-               <span class="Style_1">28-9-2008</span>
-            </td>
-            <td>
-               <button (click)="ViewEmployeeCategory()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                  <i class="material-icons">zoom_in</i>
-               </button>
-               <button  (click)="CreateEmployeeCategory()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                  <i class="material-icons">edit</i>
-               </button>
-               <button (click)=" DeleteEmployeeCategory()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                  <i class="material-icons">delete_forever</i>
-               </button>
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <span class="S_no"> 2 </span>
-            </td>
-            <td>
-               <span class="Style_1">12345</span>
-            </td>
-            <td>
-               <span class="Style_1">admin</span>
-            </td>
-            <td>
-               <span class="Style_1">28-9-2008</span>
-            </td>
-            <td>
-               <button (click)="ViewEmployeeCategory()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                  <i class="material-icons">zoom_in</i>
-               </button>
-               <button  (click)="CreateEmployeeCategory()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                  <i class="material-icons">edit</i>
-               </button>
-               <button (click)=" DeleteEmployeeCategory()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                  <i class="material-icons">delete_forever</i>
-               </button>
-            </td>
-         </tr>
+<div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+   <!-- header part -->
+   <!-- create and search section -->
+   <div class="row header_part">
+      <div class="col-sm-6">
+         <button class="Create_Button" mat-button (click)="CreateEmployeeCategory()"> + Create </button>
+      </div>
+      <div class="col-sm-6">
+         <div class="Search_Section">
+            <input type="text" placeholder="Search.." name="search">
+            <i class="material-icons">search</i>
+         </div>
+      </div>
+   </div>
+   <!-- Table Section -->
+   <div class="Table_Section">
+      <table >
+         <thead>
             <tr>
-            <td>
-               <span class="S_no"> 3 </span>
-            </td>
-            <td>
-               <span class="Style_1">12345</span>
-            </td>
-            <td>
-               <span class="Style_1">admin</span>
-            </td>
-            <td>
-               <span class="Style_1">28-9-2008</span>
-            </td>
-            <td>
-               <button (click)="ViewEmployeeCategory()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                  <i class="material-icons">zoom_in</i>
-               </button>
-               <button  (click)="CreateEmployeeCategory()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                  <i class="material-icons">edit</i>
-               </button>
-               <button (click)=" DeleteEmployeeCategory()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                  <i class="material-icons">delete_forever</i>
-               </button>
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <span class="S_no"> 4 </span>
-            </td>
-            <td>
-               <span class="Style_1">12345</span>
-            </td>
-            <td>
-               <span class="Style_1">admin</span>
-            </td>
-            <td>
-               <span class="Style_1">28-9-2008</span>
-            </td>
-            <td>
-               <button (click)="ViewEmployeeCategory()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                  <i class="material-icons">zoom_in</i>
-               </button>
-               <button  (click)="CreateEmployeeCategory()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                  <i class="material-icons">edit</i>
-               </button>
-               <button (click)=" DeleteEmployeeCategory()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                  <i class="material-icons">delete_forever</i>
-               </button>
-            </td>
-         </tr>
-      </tbody>
-   </table>
+               <th>S.no</th>
+               <th>Employee</th>
+               <th>Created By</th>
+               <th>Last Modification Date</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let Item of _List; let i=index">
+               <td>
+                  <span class="S_no"> {{ i + 1}} </span>
+               </td>
+               <td>
+                  <span class="Style_1">{{Item.Employee_Category}}</span>
+               </td>
+               <td>
+                  <span class="Style_1"> {{Item.Created_By.Name}}
+                     <!-- <span class="Badge"> {{Item.Created_By.User_Type.User_Type}} </span> -->
+                     <br> 
+                     <span class="Time"> {{Item.createdAt | date:'medium'}}  </span>
+                  </span>
+               </td>
+               <td>
+                  <span class="Style_1"> 
+                     {{Item.Last_Modified_By.Name}} 
+                     <!-- <span class="Badge"> {{Item.Last_Modified_By.User_Type.User_Type}} </span>  -->
+                     <br> 
+                     <span class="Time"> {{Item.updatedAt | date:'medium'}}  </span>
+                  </span>
+               </td>
+               <td>
+                  <button *ngIf="_View" (click)="ViewEmployeeCategory(i)" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                     <i class="material-icons">zoom_in</i>
+                  </button>
+                  <button  *ngIf="_Edit" (click)="EditEmployeeCategory(i)" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                     <i class="material-icons">edit</i>
+                  </button>
+                  <button *ngIf="_Delete" (click)=" DeleteEmployeeCategory(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                     <i class="material-icons">delete_forever</i>
+                  </button>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
 </div>
 

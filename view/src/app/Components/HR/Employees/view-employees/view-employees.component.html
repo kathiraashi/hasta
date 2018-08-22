@@ -1,0 +1,190 @@
+<div class="page" style="margin-top:100px;">
+      <div class="container-fluid">
+        <!-- page Identity -->
+        <div class="Page_Identity">
+          <div class="Page_Track">
+            <ul>
+              <li class="HeaderName">HR</li>
+              <li class="arrow">>></li>
+              <li class="LinkName" [routerLink]="['/List_Employees']">Employees List</li>
+              <li class="arrow">>></li>
+              <li>Employees View</li>
+            </ul>
+          </div>
+        </div>
+        <form>
+          <div class="row">
+            <!-- Company details -->
+            <div class="Company_Details">
+              <br>
+              <div class="col-sm-12">
+                <div class="view_item">
+                  <div class="Static">Employee Name </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Employee Name</div>
+                </div>
+                <div class="view_item">
+                  <div class="Static">Code</div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Code</div>
+                </div>
+                <div class="view_item">
+                  <div class="Static">Branch </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Branch</div>
+                </div>
+                <div class="view_item">
+                  <div class="Static">Category </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Category </div>
+                </div>
+                <div class="view_item">
+                  <div class="Static">Department </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Department </div>
+                </div>
+                <div class="view_item">
+                  <div class="Static">Job Title </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Job Title </div>
+                </div>
+                <div class="view_item">
+                  <div class="Static">Manager </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Manager </div>
+                </div>
+                <div class="view_item">
+                  <div class="Static">Mobile No </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Mobile No </div>
+                </div>
+                <div class="view_item">
+                  <div class="Static">Date Of Joining </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Date Of Joining </div>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class="Company_Details">
+              <!-- Product Tab -->
+              <div class="Tabs">
+                <div class="Tab" [ngClass]="{'active': Active_Tab === 'personal_info'}" (click)="Active_Tab_Change('personal_info')">
+                  <span>Personal Info</span>
+                </div>
+                <div class="Tab" [ngClass]="{'active': Active_Tab === 'salary_details'}" (click)="Active_Tab_Change('salary_details')">
+                  <span>Salary Details</span>
+                </div>
+              </div>
+              <br>
+              <div class="page" *ngIf="Active_Tab === 'personal_info'">
+                <div class="container-fluid">
+                  <!-- Company Details -->
+                  <div class="row">
+                    <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Personal
+                      <span style="color:#516570;font-size:20px;font-weight: 600;">Info</span>
+                    </h5>
+                    <br>
+                    <div class="col-sm-12">
+                      <div class="view_item">
+                        <div class="Static">No/Street </div>
+                        <div class="dots"> : </div>
+                        <div class="Data">Gandhi Nager</div>
+                      </div>
+                      <div class="view_item">
+                        <div class="Static">Area </div>
+                        <div class="dots"> : </div>
+                        <div class="Data"> Ganapathy</div>
+                      </div>
+                      <div class="view_item">
+                        <div class="Static">Country </div>
+                        <div class="dots"> : </div>
+                        <div class="Data"> India</div>
+                      </div>
+                      <div class="view_item">
+                        <div class="Static">State </div>
+                        <div class="dots"> : </div>
+                        <div class="Data"> Tamil Nadu</div>
+                      </div>
+                      <div class="view_item">
+                        <div class="Static">City </div>
+                        <div class="dots"> : </div>
+                        <div class="Data"> Chennai</div>
+                      </div>
+                      <div class="view_item">
+                        <div class="Static">Marital Status </div>
+                        <div class="dots"> : </div>
+                        <div class="Data"> Married</div>
+                      </div>
+                      <div class="view_item">
+                        <div class="Static">Date Of Birth </div>
+                        <div class="dots"> : </div>
+                        <div class="Data"> 25.07.98</div>
+                      </div>
+                    </div>
+                </div>
+                 </div>
+              </div>
+              <div class="page" *ngIf="Active_Tab === 'salary_details'">
+                <div class="container-fluid">
+                  <!-- Company Details -->
+                  <div class="row">
+                   <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Earnings
+                      <span style="color:#516570;font-size:20px;font-weight: 600;">Table</span>
+                    </h5>
+                    <!-- table section -->
+                    <table class="table_section">
+                      <thead class="table_head">
+                        <tr>
+                          <th class="S_No">Earnings Type</th>
+                          <th>Based On</th>
+                          <th>Amount Or Percentage</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Basic Pay</td>
+                          <td>Fixed</td>
+                          <td >30000</td>
+                          <td>400000</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <br>
+                    <!-- Detection Table -->
+                    <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Detection
+                      <span style="color:#516570;font-size:20px;font-weight: 600;">Table</span>
+                    </h5>
+                    <table class="table_section">
+                      <thead class="table_head">
+                        <tr>
+                          <th class="S_No">Detection Type</th>
+                          <th>Based On</th>
+                          <th>Amount Or Percentage</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>ESI</td>
+                          <td >Percentage</td>
+                          <td >40000</td>
+                          <td >60000</td>
+                        </tr>
+                        <tr>
+                          <td>PF</td>
+                          <td>Fixed</td>
+                          <td>40000 </td>
+                          <td>2000</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </form>
+      </div>
+    </div>

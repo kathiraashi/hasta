@@ -1,34 +1,39 @@
 <div class="Modal_Content" *ngIf="Type && Type === 'Create'">
    <div class="Modal_Header">
-     <p>Attendance Report</p>
-     <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+      <p>Attendance Report</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
    </div>
    <div class="Model_Body">
-     <div class="row">
-      <div class="col-sm-6 Form_Input">
-         <label>Salary Method:</label>
-         <input type="text">
+      <div class="row">
+         <div class="col-sm-6 Form_Select">
+            <label>Salary Method:</label>
+            <select>
+               <option disabled> Salary Method</option>
+               <option> Hourly</option>
+               <option>Monthly </option>
+            </select>
+         </div>
+         <div class="col-sm-6 Form_Select">
+            <label>Category:</label>
+            <select>
+               <option disabled> Category</option>
+               <option> Category</option>
+               <option>Category </option>
+               <option> Category </option>
+            </select>
+         </div>
+         <div class="col-sm-6 Form_Input">
+            <label>From Date:</label>
+            <input type="text">
+         </div>
+         <div class="col-sm-6 Form_Input">
+            <label>To Date:</label>
+            <input type="text">
+         </div>
       </div>
-       <div class="col-sm-6 Form_Select">
-         <label>Category:</label>
-         <select>
-            <option disabled> Category</option>
-            <option> Category</option>
-            <option>Category </option>
-            <option> Category </option>
-          </select>
-       </div>
-       <div class="col-sm-6 Form_Input">
-         <label>From Date:</label>
-         <input type="text">
-       </div>
-       <div class="col-sm-6 Form_Input">
-         <label>To Date:</label>
-         <input type="text">
-       </div>
+      <div class="Model_Footer">
+         <button mat-raised-button color="primary"> Submit </button>
+      </div>
    </div>
-   <div class="Model_Footer">
-     <button mat-raised-button color="primary"> Submit </button>
-   </div>
- </div>
+</div>
  

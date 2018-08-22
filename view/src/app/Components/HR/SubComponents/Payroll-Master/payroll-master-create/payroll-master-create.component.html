@@ -1,105 +1,114 @@
 <div class="page" style="margin-top:100px;">
-  <div class="container-fluid">
-    <!-- Company Details -->
-    <div class="row">
-      
-        <div class="col-sm-12">
-          <div class="row">
-            <div class="col-sm-6 Form_Input">
-               <label>Name:</label>
-              <input type="text" >
-            </div>
-          </div>
-        </div>
-      
-    </div>
-   <div class="Product_Details">
-      <div class="Product_Tab">
-        <div class="Product_details">
-          <span [ngClass]="{'active': Active_Tab === 'Leaves'}" (click)="Active_Tab_Change('Leaves')">Leaves</span>
-        </div>
-        <div class="Quote_Terms">
-          <span [ngClass]="{'active': Active_Tab === 'weekly_holidays'}" (click)="Active_Tab_Change('weekly_holidays')">Weekly Holidays</span>
-        </div>
-        <div class="Quote_Terms">
-         <span [ngClass]="{'active': Active_Tab === 'working_days'}" (click)="Active_Tab_Change('working_days')">Working days</span>
+   <div class="container-fluid">
+      <!-- page Identity -->
+      <div class="Page_Identity">
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">HR</li>
+               <li class="arrow">>></li>
+               <li class="LinkName" [routerLink]="['/Main_Payroll_Master']">Payroll Master</li>
+               <li class="arrow">>></li>
+               <li>Payroll Master Create</li>
+            </ul>
          </div>
-         <div class="Quote_Terms">
-            <span [ngClass]="{'active': Active_Tab === 'others'}" (click)="Active_Tab_Change('others')">Others</span>
-            </div>
       </div>
-      <br>
-      <div class="page" *ngIf="Active_Tab === 'Leaves'">
-        <!-- Company Details -->
-        <div class="row">
-          <div class="Company_Details">
-            <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Lea
-              <span style="color:#516570;font-size:20px;font-weight: 600;">ves</span>
-            </h5>
-            <br>
-            <div class="col-sm-12">
-              <div class="row">
-                <div class="col-sm-4 Form_Input">
-                  <input type="text" placeholder="Total No of paid Leaves per year">
-                </div>
-                <div class="col-sm-4 Form_Input">
-                  <input type="text" placeholder="Maximum Leave allowed per Month">
-                </div>
-                <div class="col-sm-4 Form_Select">
-                  <select>
-                     <option checked>Paid Leaves applicable from</option>
-                     <option> From date of joining</option>
-                     <option> after probation</option>
-                     <option> Custom</option>
-                  </select>
-                </div>
-              </div>
+      <!-- Company Details -->
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="row">
+               <div class="col-sm-6 Form_Input">
+                  <label>Name:</label>
+                  <input type="text" >
+               </div>
             </div>
-          </div>
-        </div>
-        <div class="row" style="margin-top:20px;">
-          <div class="col-sm-12 text-right">
-            <button mat-raised-button color="primary"> Submit </button>
-          </div>
-        </div>
+         </div>
       </div>
-      <div class="page" *ngIf="Active_Tab === 'weekly_holidays'">
+      <div class="Product_Details">
+         <div class="Tabs">
+            <div class="Tab" [ngClass]="{'active': Active_Tab === 'Leaves'}" (click)="Active_Tab_Change('Leaves')">
+               <span >Leaves</span>
+            </div>
+            <div class="Tab" [ngClass]="{'active': Active_Tab === 'weekly_holidays'}" (click)="Active_Tab_Change('weekly_holidays')">
+               <span >weekly Holidays</span>
+            </div>
+            <div class="Tab" [ngClass]="{'active': Active_Tab === 'working_days'}" (click)="Active_Tab_Change('working_days')">
+               <span >working Days</span>
+            </div>
+            <div class="Tab" [ngClass]="{'active': Active_Tab === 'others'}" (click)="Active_Tab_Change('others')">
+               <span >others</span>
+            </div>
+         </div>
+         <br>
+         <div class="page" *ngIf="Active_Tab === 'Leaves'">
             <!-- Company Details -->
             <div class="row">
-              <div class="Company_Details">
-                <h5 style="color:#49B660;font-size:20px;font-weight: 600;">weekly
-                  <span style="color:#516570;font-size:20px;font-weight: 600;">holidays</span>
-                </h5>
-                <br>
-                <div class="col-sm-12">
-                  <div class="row">
-                    <div class="col-sm-4 Form_Select">
-                        <select>
-                           <option checked>fixed</option>
-                           <option> custom</option>
-                        </select>
-                    </div>
+               <div class="col-sm-12">
+                  <div class="Company_Details">
+                     <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Lea<span style="color:#516570;font-size:20px;font-weight: 600;">ves</span>
+                     </h5>
+                     <br>
+                     <div class="row">
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" placeholder="Total No of paid Leaves per year">
+                        </div>
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" placeholder="Maximum Leave allowed per Month">
+                        </div>
+                        <div class="col-sm-4 Form_Select">
+                           <select>
+                              <option checked>Paid Leaves applicable from</option>
+                              <option> From date of joining</option>
+                              <option> after probation</option>
+                              <option> Custom</option>
+                           </select>
+                        </div>
+                     </div>
                   </div>
-                </div>
-              </div>
+               </div>
             </div>
             <div class="row" style="margin-top:20px;">
-              <div class="col-sm-12 text-right">
-                <button mat-raised-button color="primary"> Submit </button>
-              </div>
+               <div class="col-sm-12 text-right">
+                  <button mat-raised-button color="primary"> Submit </button>
+               </div>
             </div>
-          </div>
-          <div class="page" *ngIf="Active_Tab === 'working_days'">
-               <!-- Company Details -->
-               <div class="row">
-                 <div class="Company_Details">
-                   <h5 style="color:#49B660;font-size:20px;font-weight: 600;">working
-                     <span style="color:#516570;font-size:20px;font-weight: 600;">days</span>
-                   </h5>
-                   <br>
-                   <div class="col-sm-12">
+         </div>
+         <div class="page" *ngIf="Active_Tab === 'weekly_holidays'">
+            <!-- Company Details -->
+            <div class="row">
+               <div class="Company_Details">
+                  <h5 style="color:#49B660;font-size:20px;font-weight: 600;">weekly
+                     <span style="color:#516570;font-size:20px;font-weight: 600;">holidays</span>
+                  </h5>
+                  <br>
+                  <div class="col-sm-12">
                      <div class="row">
-                       <div class="col-sm-4 Form_Select">
+                        <div class="col-sm-4 Form_Select">
+                           <select>
+                              <option checked>fixed</option>
+                              <option> custom</option>
+                           </select>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row" style="margin-top:20px;">
+               <div class="col-sm-12 text-right">
+                  <button mat-raised-button color="primary"> Submit </button>
+               </div>
+            </div>
+         </div>
+         <div class="page" *ngIf="Active_Tab === 'working_days'">
+            <!-- Company Details -->
+            <div class="row">
+               <div class="Company_Details">
+                  <h5 style="color:#49B660;font-size:20px;font-weight: 600;">working
+                     <span style="color:#516570;font-size:20px;font-weight: 600;">days</span>
+                  </h5>
+                  <br>
+                  <div class="col-sm-12">
+                     <div class="row">
+                        <div class="col-sm-4 Form_Select">
                            <select>
                               <option checked>payroll Statrt Date</option>
                               <option> 1</option>
@@ -110,8 +119,8 @@
                               <option> 6</option>
                               <option> 7</option>
                            </select>
-                       </div>
-                       <div class="col-sm-4 Form_Select">
+                        </div>
+                        <div class="col-sm-4 Form_Select">
                            <select>
                               <option checked>payroll end Date</option>
                               <option> 1</option>
@@ -122,8 +131,8 @@
                               <option> 6</option>
                               <option> 7</option>
                            </select>
-                       </div>
-                       <div class="col-sm-4 Form_Select">
+                        </div>   
+                        <div class="col-sm-4 Form_Select">
                            <select>
                               <option checked>pay For</option>
                               <option> Whole calendar day in a month</option>
@@ -131,66 +140,65 @@
                               <option> Exclude saturdays and sundays</option>
                               <option> Exclude all week off</option>
                            </select>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               </div>
-               <div class="row" style="margin-top:20px;">
-                 <div class="col-sm-12 text-right">
-                   <button mat-raised-button color="primary"> Submit </button>
-                 </div>
-               </div>
-             </div>
-             <div class="page" *ngIf="Active_Tab === 'others'">
-                  <!-- Company Details -->
-                  <div class="row">
-                    <div class="Company_Details">
-                      <h5 style="color:#49B660;font-size:20px;font-weight: 600;">oth
-                        <span style="color:#516570;font-size:20px;font-weight: 600;">ers</span>
-                      </h5>
-                      <br>
-                      <div class="col-sm-12">
-                        <div class="row">
-                          <div class="col-sm-4 Form_Select">
-                              <select>
-                                 <option checked>Payroll Calculation </option>
-                                 <option> Monthly</option>
-                                 <option> hourly</option>
-                              </select>
-                          </div>
-                          <div class="col-sm-4 Form_Select">
-                              <select>
-                                 <option checked>payslip Required</option>
-                                 <option> yes</option>
-                                 <option> no</option>
-                              </select>
-                          </div>
-                          <div class="col-sm-4 Form_Select">
-                              <select>
-                                 <option checked>Paymeny Method</option>
-                                 <option> Bank</option>
-                                 <option> Cash</option>
-                                 <option> Cheque</option>
-                              </select>
-                          </div>
-                          <div class="col-sm-4 Form_Select">
-                              <select>
-                                 <option checked>Tds Applicable</option>
-                                 <option> yes</option>
-                                 <option> No</option>
-                              </select>
-                          </div>
                         </div>
-                      </div>
-                    </div>
+                     </div>
                   </div>
-                  <div class="row" style="margin-top:20px;">
-                    <div class="col-sm-12 text-right">
-                      <button mat-raised-button color="primary"> Submit </button>
-                    </div>
+               </div>
+            </div>
+            <div class="row" style="margin-top:20px;">
+               <div class="col-sm-12 text-right">
+                  <button mat-raised-button color="primary"> Submit </button>
+               </div>
+            </div>
+         </div>
+         <div class="page" *ngIf="Active_Tab === 'others'">
+            <!-- Company Details -->
+            <div class="row">
+               <div class="Company_Details">
+                  <h5 style="color:#49B660;font-size:20px;font-weight: 600;">oth<span style="color:#516570;font-size:20px;font-weight: 600;">ers</span>
+                  </h5>
+                  <br>
+                  <div class="col-sm-12">
+                     <div class="row">
+                        <div class="col-sm-4 Form_Select">
+                           <select>
+                              <option checked>Payroll Calculation </option>
+                              <option> Monthly</option>
+                              <option> hourly</option>
+                           </select>
+                        </div>
+                        <div class="col-sm-4 Form_Select">
+                           <select>
+                              <option checked>payslip Required</option>
+                              <option> yes</option>
+                              <option> no</option>
+                           </select>
+                        </div>
+                        <div class="col-sm-4 Form_Select">
+                           <select>
+                              <option checked>Paymeny Method</option>
+                              <option> Bank</option>
+                              <option> Cash</option>
+                              <option> Cheque</option>
+                           </select>
+                        </div>
+                        <div class="col-sm-4 Form_Select">
+                           <select>
+                              <option checked>Tds Applicable</option>
+                              <option> yes</option>
+                              <option> No</option>
+                           </select>
+                        </div>
+                     </div>
                   </div>
-                </div>
-    </div>
-  </div>
+               </div>
+            </div>
+            <div class="row" style="margin-top:20px;">
+               <div class="col-sm-12 text-right">
+                  <button mat-raised-button color="primary"> Submit </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>

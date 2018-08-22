@@ -8,12 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payroll-master-create.component.css']
 })
 export class PayrollMasterCreateComponent implements OnInit {
-Active_Tab = 'Leaves';
-  constructor() { }
+   Active_Tab = 'Leaves';
+   constructor() { }
 
-  ngOnInit() {
-  }
-Active_Tab_Change(name) {
-  this.Active_Tab = name;
-}
+   ngOnInit() {
+   }
+   Active_Tab_Change(name) {
+      this.Active_Tab = name;
+   }
 }

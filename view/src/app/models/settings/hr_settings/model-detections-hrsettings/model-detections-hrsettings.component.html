@@ -1,34 +1,63 @@
-
-<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
-      <div class="Modal_Header">
-          <p>  Detections</p>
-          <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
-      </div>
+<!-- If Create Or Edit The Detection -->
+<div class="Modal_Content"*ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+   <div class="Modal_Header">
+      <p> {{ Type }} Detections</p>
+      <span *ngIf="!Uploading" data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <form [formGroup]="Form" (ngSubmit)="onSubmit()">
       <div class="Model_Body">
-        <div class="row">
-            <div class="col-sm-6 Form_Input">
-               <label>Detections Type:</label>
-               <input type="text">
-            </div>
+         <div class="col-sm-10 Form_Input" [ngClass]="{'Form_Err': Form.controls['Detections_Type'].errors && !Form.controls['Detections_Type'].pristine, 'Form_Success': Form.controls['Detections_Type'].valid && !Form.controls['Detections_Type'].pristine }">
+            <label>Detections Type:</label>
+            <input type="text" formControlName="Detections_Type">
+            <p class="error" *ngIf="Form.controls['Detections_Type'].errors && !Form.controls['Detections_Type'].pristine">
+               <span *ngIf="Form.controls['Detections_Type'].errors.required">Detections Type is required</span>
+               <span *ngIf="Form.controls['Detections_Type'].errors.Detections_NotAvailable"> Detections Type Already Exist </span>      
+            </p>
          </div>
       </div>
       <div class="Model_Footer">
-        <button mat-raised-button color="primary" > Submit </button>
+         <button type="submit"  [disabled]="Form.status !== 'VALID' || Uploading" mat-raised-button color="primary">
+            <span *ngIf="Type === 'Create' && !Uploading" >Submit</span>
+            <span *ngIf="Type === 'Edit' && !Uploading" >Update</span>
+            <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+         </button>
+      </div>
+   </form>
+</div>
+<!-- If View The Detection-->
+<div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+   <div class="Modal_Header">
+      <p> Detections</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="view_item">
+         <div class="Static">Detections Type </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{Data.Detections_Type}}</div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Created By </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{Data.Created_By.Name}}</div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Last Modified By </div>
+         <div class="dots"> : </div>
+         <div class="Data">{{Data.Last_Modified_By.Name}}</div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Created Date </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{Data.createdAt | date:'medium'}}</div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Last Modified Date  </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{Data.updatedAt | date:'medium'}}</div>
       </div>
    </div>
-    
-    <div class="Modal_Content" *ngIf=" Type && Type === 'View'">
-      <div class="Modal_Header">
-         <p> Detections</p>
-         <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
-     </div>
-     <div class="Model_Body">
-         <div class="row">
-            <div class="col-sm-6 text-right Static">Detections Type: </div>
-            <div class="col-sm-6 text-left Data">Type-11</div>
-         </div>
-      </div>
-   </div>
+</div>
     
     
     

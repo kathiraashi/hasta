@@ -28,12 +28,20 @@ import { CrmMachinesListComponent } from './Components/CRM/Machines/crm-machines
 import { CrmMachinesCreateComponent } from './Components/CRM/Machines/crm-machines-create/crm-machines-create.component';
 import { CrmTicketsListComponent } from './Components/CRM/Tickets/crm-tickets-list/crm-tickets-list.component';
 import { CrmTicketsCreateComponent } from './Components/CRM/Tickets/crm-tickets-create/crm-tickets-create.component';
-import { MainHrComponent } from './Components/HR/main-hr/main-hr.component';
-import { AttendanceReportViewComponent } from './Components/HR/SubComponents/Attendance-Report/attendance-report-view/attendance-report-view.component';
 import { PayrollViewComponent } from './Components/HR/SubComponents/Payroll/payroll-view/payroll-view.component';
 import { PayrollMasterCreateComponent } from './Components/HR/SubComponents/Payroll-Master/payroll-master-create/payroll-master-create.component';
 import { CrmTicketsViewComponent } from './Components/CRM/Tickets/crm-tickets-view/crm-tickets-view.component';
 import { CrmMachinesViewComponent } from './Components/CRM/Machines/crm-machines-view/crm-machines-view.component';
+import { ListEmployeesComponent } from './Components/HR/Employees/list-employees/list-employees.component';
+import { CreateEmployeesComponent } from './Components/HR/Employees/create-employees/create-employees.component';
+import { ViewEmployeesComponent } from './Components/HR/Employees/view-employees/view-employees.component';
+import { MainAttendanceComponent } from './Components/HR/Attendance/main-attendance/main-attendance.component';
+import { AttendanceReportViewComponent } from './Components/HR/Attendance/SubComponents/attendance-report-view/attendance-report-view.component';
+import { MainPayrollHrComponent } from './Components/HR/SubComponents/Payroll/main-payroll-hr/main-payroll-hr.component';
+import { MainPayrollMasterHrComponent } from './Components/HR/SubComponents/Payroll-Master/main-payroll-master-hr/main-payroll-master-hr.component';
+
+
+
 
 
 const appRoutes: Routes = [
@@ -195,12 +203,6 @@ const appRoutes: Routes = [
       data: {   animation: { value: 'crm_ticket_create'}   }
    },
    {
-      path: 'main_hr',
-      component: MainHrComponent,
-      canActivate: [AuthGuard],
-      data: {   animation: { value: 'main_hr'}   }
-   },
-   {
       path: 'Attendance_Report_View',
       component: AttendanceReportViewComponent,
       canActivate: [AuthGuard],
@@ -230,6 +232,50 @@ const appRoutes: Routes = [
       canActivate: [AuthGuard],
       data: {   animation: { value: 'Crm_Machines_View'}   }
    },
+   {
+      path: 'List_Employees',
+      component: ListEmployeesComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'List_Employees'}   }
+   },
+   {
+      path: 'Create_Employees',
+      component: CreateEmployeesComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Create_Employees'}   }
+   },
+   {
+      path: 'View_Employees',
+      component: ViewEmployeesComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'View_Employees'}   }
+   },
+   {
+      path: 'main_Attendance',
+      component: MainAttendanceComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'main_Attendance'}   }
+   },
+   {
+      path: 'Attendance_Report_View',
+      component: AttendanceReportViewComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Attendance_Report_View'}   }
+   },
+   {
+      path: 'Main_Payroll',
+      component: MainPayrollHrComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Main_Payroll'}   }
+   },
+   {
+      path: 'Main_Payroll_Master',
+      component: MainPayrollMasterHrComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Main_Payroll_Master'}   }
+   },
+
+
 
 
 ];

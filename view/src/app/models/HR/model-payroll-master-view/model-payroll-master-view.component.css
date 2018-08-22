@@ -114,11 +114,26 @@
    position: absolute;
    right: 0px;
 }
-.Static{
+/* ************************************ View Style ******************************* */
+.view_item {
+   display: grid;
+   grid-template-columns: 150px 15px auto;
+}
+.view_item .Static{
+   font-weight: 700;
+   color: #4f6a7a;
+   margin-bottom: 10px;
+   font-size: 15px;
+}
+.view_item .dots{
    font-weight: 800;
    color: #4f6a7a;
+   margin-bottom: 10px;
+   font-size: 15px;
 }
-.Data{
+.view_item .Data{
    font-weight: 500;
    color: #4f6a7a;
+   margin-bottom: 10px;
+   font-size: 14px;
 }

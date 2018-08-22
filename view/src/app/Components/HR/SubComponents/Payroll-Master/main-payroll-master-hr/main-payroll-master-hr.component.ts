@@ -14,22 +14,22 @@ import { DeleteConfirmationComponent } from '../../../../Common-Components/delet
 })
 export class MainPayrollMasterHrComponent implements OnInit {
 
-  bsModalRef: BsModalRef;
-constructor( private modalService: BsModalService) { }
+   bsModalRef: BsModalRef;
+   constructor( private modalService: BsModalService) { }
 
 
-  ngOnInit() {
-  }
-ViewPayrollMaster() {
-    const initialState = {
-      Type: 'View'
-    };
-    this.bsModalRef = this.modalService.show(ModelPayrollMasterViewComponent, Object.assign({initialState}, { class: 'modal-lg' }));
-  }
-  DeletePayrollMaster() {
-    const initialState = {
-      Text: 'PayrollMaster'
-    };
-    this.bsModalRef = this.modalService.show(DeleteConfirmationComponent, Object.assign({initialState}, { class: 'modal-sm' }));
-  }
+   ngOnInit() {
+   }
+   ViewPayrollMaster() {
+      const initialState = {
+         Type: 'View'
+      };
+      this.bsModalRef = this.modalService.show(ModelPayrollMasterViewComponent, Object.assign({initialState}, { class: 'modal-lg' }));
+   }
+   DeletePayrollMaster() {
+      const initialState = {
+         Text: 'PayrollMaster'
+      };
+      this.bsModalRef = this.modalService.show(DeleteConfirmationComponent, Object.assign({initialState}, { class: 'modal-sm' }));
+   }
 }

@@ -1,112 +1,135 @@
 <div class="Main_Section" style="margin-top:100px">
    <div class="container-fluid">
-      <div class="View_Section">
-         
-         
+      <!-- page Identity -->
+      <div class="Page_Identity">
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">HR</li>
+               <li class="arrow">>></li>
+               <li class="LinkName" [routerLink]="['/Main_Payroll']">Payroll</li>
+               <li class="arrow">>></li>
+               <li>Payroll View</li>
+            </ul>
+         </div>
+      </div>
+      <!-- Company Details -->
+      <div class="Company_Details">
+         <div class="View_Section">
             <div class="row">
-               <div class="col-sm-6 text-right Static">Employee: </div>
-               <div class="col-sm-6 text-left Data"> Employee</div>
+               <div class="col-sm-4">
+                  <div class="view_item">
+                     <div class="Static">Employee </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> Employee</div>
+                  </div>
+               </div>
+               <div class="col-sm-4">
+                  <div class="view_item">
+                     <div class="Static">Code </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> code</div>
+                  </div>
+               </div>
+               <div class="col-sm-4">
+                  <div class="view_item">
+                     <div class="Static">Payslip Month: </div>
+                     <div class="dots">  </div>
+                     <div class="Data">jan</div>
+                  </div>
+               </div>
             </div>
-            <div class="row">
-               <div class="col-sm-6 text-right Static">Code: </div>
-               <div class="col-sm-6 text-left Data"> code</div>
-            </div>
-            <div class="row">
-               <div class="col-sm-6 text-right Static">Payslip Month: </div>
-               <div class="col-sm-6 text-left Data">jan</div>
-            </div>
-         
+         </div>
       </div>
       <br>
       <!-- table section -->
       <div class="Table_Section">
          <div class="Table_Section1">
-         <table class="table_section">
-            <thead class="table_head">
-               <tr>
-               <th colspan="2" scope="colgroup">Earnings</th>
-               <th colspan="2" scope="colgroup">Detection</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td scope="col" style="color:#4E6A7A;">Basic Pay:</td>
-                  <td class="Form_Input" scope="col"><input type="text"></td>
-                  <td scope="col" style="color:#4E6A7A;">ESI:</td>
-                  <td scope="col" class="Form_Input"><input type="text"></td>
-               </tr>
-               <tr>
-                  <td scope="col"></td>
-                  <td class="Form_Input" scope="col"></td>
-                  <td scope="col" style="color:#4E6A7A;">PF:</td>
-                  <td scope="col" class="Form_Input"><input type="text"></td>  
-               </tr>
-            </tbody>
-         </table>
-         <br>
-         <div class="row">
-            <div class="col-sm-6">
-               <div class="row">
-                  <div class="col-sm-6 Form_Input">
-                     <label>Total Earnings:</label>
+            <table class="table_section">
+               <thead class="table_head">
+                  <tr>
+                     <th colspan="2" scope="colgroup">Earnings</th>
+                     <th colspan="2" scope="colgroup">Detection</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td scope="col" style="color:#4E6A7A;">Basic Pay:</td>
+                     <td class="Form_Input" scope="col">30000</td>
+                     <td scope="col" style="color:#4E6A7A;">ESI:</td>
+                     <td scope="col" class="Form_Input">4000</td>
+                  </tr>
+                  <tr>
+                     <td scope="col"></td>
+                     <td class="Form_Input" scope="col"></td>
+                     <td scope="col" style="color:#4E6A7A;">PF:</td>
+                     <td scope="col" class="Form_Input">2500</td>  
+                  </tr>
+               </tbody>
+            </table>
+            <br>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-6 Form_Input">
+                        <label>Total Earnings:</label>
+                     </div>
+                     <div class="col-sm-6 Form_Input">
+                        0
+                     </div>
                   </div>
-                  <div class="col-sm-6 Form_Input">
-                     <input type="text">
+               </div>
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-6 Form_Input" >
+                        0
+                     </div>
+                     <div class="col-sm-6 Form_Input">
+                        0
+                     </div>
                   </div>
                </div>
             </div>
-            <div class="col-sm-6">
-               <div class="row">
-                  <div class="col-sm-6 Form_Input" >
-                     <label>Total Detections:</label>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-6">
+                     </div>
+                     <div class="col-sm-6 ">
+                     </div>
                   </div>
-                  <div class="col-sm-6 Form_Input">
-                     <input type="text" style="margin-bottom: 20px">
+               </div>
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-6 Form_Input" >
+                        <label>Net Income:</label>
+                     </div>
+                     <div class="col-sm-6 Form_Input">
+                        200000
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-6">
+                     </div>
+                     <div class="col-sm-6 ">
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-6 Form_Input" >
+                        <label>Amount Payable:</label>
+                     </div>
+                     <div class="col-sm-6 Form_Input">
+                        100000
+                     </div>
                   </div>
                </div>
             </div>
          </div>
-         <div class="row">
-            <div class="col-sm-6">
-               <div class="row">
-                  <div class="col-sm-6">
-                  </div>
-                  <div class="col-sm-6 ">
-                  </div>
-               </div>
-            </div>
-            <div class="col-sm-6">
-               <div class="row">
-                  <div class="col-sm-6 Form_Input" >
-                     <label>Net Income:</label>
-                  </div>
-                  <div class="col-sm-6 Form_Input">
-                     <input type="text" style="margin-bottom: 20px">
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-sm-6">
-               <div class="row">
-                  <div class="col-sm-6">
-                  </div>
-                  <div class="col-sm-6 ">
-                  </div>
-               </div>
-            </div>
-            <div class="col-sm-6">
-               <div class="row">
-                  <div class="col-sm-6 Form_Input" >
-                     <label>Amount Payable:</label>
-                  </div>
-                  <div class="col-sm-6 Form_Input">
-                     <input type="text" style="margin-bottom: 20px">
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
       </div>
    </div>
 </div>

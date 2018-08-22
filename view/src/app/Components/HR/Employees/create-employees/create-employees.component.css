@@ -1,0 +1,205 @@
+/* --------------   Page Identity Section  ----------------- */
+.Page_Identity{
+   display: flex;
+   height:40px;
+   width: 100%;
+   margin-bottom: 5px;
+}
+.Page_Identity .Page_Track{
+   width:100%;
+   line-height: 35px;
+}
+.Page_Identity .Page_Track ul{
+   display: flex;
+   list-style-type: none;
+   padding: 0px;
+   margin: 0px;
+   align-items: center;
+   float: right;
+}
+.Page_Identity .Page_Track ul li {
+   font-size: 13px;
+   font-weight: 500;
+   margin-left: 5px;
+}
+.Page_Identity .Page_Track ul li.arrow{
+   letter-spacing: -4px;
+   font-size: 19px;
+   transform: scale(.6, 1);
+}
+.Page_Identity .Page_Track ul li.arrowGreen{
+   letter-spacing: -4px;
+   font-size: 19px;
+   transform: scale(.6, 1);
+   color: #4ab65f;
+}
+.Page_Identity .Page_Track ul li.HeaderName{
+   color: #4ab65f;
+}
+.Page_Identity .Page_Track ul li.LinkName{
+   color: #4ab65f;
+   cursor: pointer;
+}
+/* Form designs  */
+.Form_Input label {
+   font-size: 14px;
+   margin-bottom: 5px;
+   font-weight: 700;
+   color: #4e6a7a;
+}
+.Form_Input input {
+   padding: 4px 10px;
+   width: 100%;
+   height: 37px;
+   outline: none;
+   margin-bottom: 20px;
+   border: 1px solid #cac4c4;
+   color: rgb(79, 107, 123);
+   font-weight: 400;
+   font-size: 14px;
+   letter-spacing: 0.3px;
+}
+.Form_TextArea label {
+   font-size: 14px;
+   margin-bottom: 5px;
+   font-weight: 700;
+   color: #4e6a7a;
+}
+.Form_TextArea textarea {
+   padding: 4px 10px;
+   width: 100%;
+   outline: none;
+   margin-bottom: 20px;
+   border: 1px solid #cac4c4;
+   color: rgb(79, 107, 123);
+   font-weight: 400;
+   font-size: 14px;
+   letter-spacing: 0.3px;
+}
+.Form_Input input:-moz-placeholder{
+   color: #999999;
+   font-weight: 400;
+}
+.Form_Input input::-moz-placeholder{
+   color: #999999;
+   font-weight: 400;
+}
+.Form_Input input::-webkit-input-placeholder{
+   color: #999999;
+   font-weight: 400;
+}
+.Form_Input input:-ms-input-placeholder{
+   color: #999999;
+   font-weight: 400;
+}
+.Form_Select label {
+   font-size: 14px;
+   margin-bottom: 5px;
+   font-weight: 700;
+   color: #4e6a7a;
+}
+.Form_Select select{
+   width: 100%;
+   height: 37px;
+   outline: none;
+   padding: 0px 10px;
+   border: 1px solid #cac4c4;
+   color: rgb(79, 107, 123);
+   font-weight: 400;
+   font-size: 14px;
+   letter-spacing: 0.3px;
+}
+.Form_Select select option{
+   color: rgb(79, 107, 123);
+   width: 100%;
+}
+/* Company details */
+.Company_Details{
+   background-color: #fff;
+   margin: 10px;
+   padding: 20px;
+   width: 100%;
+   border-radius: 5px;
+   border-top: 2px solid #49B660;
+   box-shadow: 3px 2px 2px #b9b0b0;
+}
+/* Tabs */
+.Tabs{
+   display: flex;
+   width: 100%;
+}
+.Tabs .Tab{
+   color: #4d6a7a;
+   width: 14%;
+   line-height: 35px;
+   background-color: #80808038;
+   margin-top: -10px;
+   text-align: center;
+   margin-right: 5px;
+   font-size: 15px;
+   font-weight: 600;
+   letter-spacing: 0.4px;
+   cursor: pointer;
+}
+.Tabs .Tab:hover{
+  border-bottom: 2px solid #567180;
+  color: #516c7a;
+}
+.Tabs .Tab.active{
+   border-bottom: 2px solid #49B660;
+   color: #49B660;
+   cursor: default;
+}
+
+/* table section */
+.table_section{
+   border-collapse: collapse;
+   width: 100%;
+   table-layout: fixed;
+   box-shadow: 2px 2px 3px #b5aeae;
+}
+.table_section .table_head{
+   font-size:16px;
+   color:#7d7979;
+   cursor:pointer;
+   background-color:#e3e3e3;
+}
+.table_section tr{
+   border:1px solid #e3e3e3;
+   height:40px;
+}
+.table_section thead th{
+   text-align:center;
+}
+.table_section thead .S_No{
+   width:130px;
+}
+.table_section thead .Action{
+   width:60px;
+}
+.table_section tbody td{
+   width:100%;
+   text-align:center;
+   padding:0px 10px;
+
+}
+.table_section tbody tr{
+   border:1px solid #e3e3e3;
+   height:47px; 
+}
+.table_section tbody td span{
+   font-size:16px;
+   font-weight:400;
+   color:#6d6868;
+}
+
+/* Footer */
+ .Footer {
+   position: fixed;
+   bottom: 0px;
+   width: 100%;
+   padding: 0px 15px;
+   background-color: rgba(62, 59, 59, 0.13);
+   height: 45px;
+   text-align: right
+}
