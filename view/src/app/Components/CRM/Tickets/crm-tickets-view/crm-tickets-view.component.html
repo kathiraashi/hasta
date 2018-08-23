@@ -29,7 +29,7 @@
             </div>
          </div>
       </div>
-      <!-- Main Datas -->
+      <!-- Main Data -->
       <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
          <div class="Ticket_Info_Section">
             <div class="row">
@@ -42,7 +42,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Ticket_Details_Value">
-                           <h5>{{_Data.TicketId}}</h5>
+                           <h5>{{_Data['TicketId']}}</h5>
                         </div>
                      </div>
                   </div>
@@ -54,7 +54,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Ticket_Details_Value">
-                           <h5>{{_Data.Customer?.CompanyName}}</h5>
+                           <h5>{{_Data['Customer']?.CompanyName}}</h5>
                         </div>
                      </div>
                   </div>
@@ -66,7 +66,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Ticket_Details_Value">
-                           <h5>{{_Data.Machine?.MachineName}}</h5>
+                           <h5>{{_Data['Machine']?.MachineName}}</h5>
                         </div>
                      </div>
                   </div>
@@ -78,7 +78,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Ticket_Details_Value">
-                           <h5 >{{_Data.TicketType?.Ticket_Type}}</h5>
+                           <h5 >{{_Data['TicketType']?.Ticket_Type}}</h5>
                         </div>
                      </div>
                   </div>
@@ -90,7 +90,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Ticket_Details_Value">
-                           <h5>{{_Data.TicketOpenDate | date:'d-M-y'}}, {{_Data.TicketOpenTime}}</h5>
+                           <h5>{{_Data['TicketOpenDate'] | date:'d-M-y'}}, {{_Data['TicketOpenTime']}}</h5>
                         </div>
                      </div>
                   </div>
@@ -102,7 +102,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Ticket_Details_Value">
-                           <h5> {{_Data.CurrentStatus?.Value}} </h5>
+                           <h5> {{_Data['CurrentStatus']?.Value}} </h5>
                         </div>
                      </div>
                   </div>
@@ -114,7 +114,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Ticket_Details_Value">
-                           <h5>{{_Data.TicketCloseDate | date:'d-M-y'}}, {{_Data.TicketCloseTime }}</h5>
+                           <h5>{{_Data['TicketCloseDate'] | date:'d-M-y'}}, {{_Data['TicketCloseTime'] }}</h5>
                         </div>
                      </div>
                   </div>
@@ -128,7 +128,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Ticket_Details_Value">
-                           <h5 >{{_Data.Created_By?.Name}} <span> ( {{_Data.createdAt | date:'medium'}} ) </span> </h5>
+                           <h5 >{{_Data['Created_By']?.Name}} <span> ( {{_Data['createdAt'] | date:'medium'}} ) </span> </h5>
                         </div>
                      </div>
                   </div>
@@ -140,7 +140,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Ticket_Details_Value">
-                           <h5 >{{_Data.Last_Modified_By?.Name}} <span> ( {{_Data.updatedAt | date:'medium'}} ) </span> </h5>
+                           <h5 >{{_Data['Last_Modified_By']?.Name}} <span> ( {{_Data['updatedAt'] | date:'medium'}} ) </span> </h5>
                         </div>
                      </div>
                   </div>
@@ -152,7 +152,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Ticket_Details_Value">
-                           <h5> {{_Data.Issue}}</h5>
+                           <h5> {{_Data['Issue']}}</h5>
                         </div>
                      </div>
                   </div>
@@ -164,7 +164,7 @@
       <!-- Create and search Section -->
       <div class="row Activity_Header">
          <div class="col-sm-3">
-            <button *ngIf="_Data.CurrentStatus?.Value !== 'Closed'" class="Create_Button" mat-raised-button color="primary" (click)="CreateTicketsActivity()"> + Create </button>
+            <button *ngIf="_Data['CurrentStatus']?.Type !== 'Type_6'" class="Create_Button" mat-raised-button color="primary" (click)="CreateTicketsActivity()"> + Create </button>
          </div>
          <div class="col-sm-6">
             <h5>Activities</h5>
@@ -179,7 +179,7 @@
                <th style="width: 150px;"> Contact Person </th>
                <th style="width: 150px;"> Employee Name </th>
                <th style="width: 160px;"> Activity Start </th>
-               <th style="width: 160px;"> Activity End </th>
+               <!-- <th style="width: 160px;"> Activity End </th> -->
                <th style="width: 170px;"> Last Modified </th>
                <th> Status </th>
                <th> Description </th>
@@ -191,27 +191,27 @@
                      <span class="S_no"> {{i + 1}} </span>
                   </td>
                   <td>
-                      <span class="Style_1"> {{Activity.Contact?.Name}} </span>
+                      <span class="Style_1"> {{Activity['Contact']?.Name}} </span>
                    </td>
                   <td>
-                     <span class="Style_1"> {{Activity.Employee}} </span>
+                     <span class="Style_1"> {{Activity['Employee']}} </span>
                   </td>
                   <td>
-                     <span class="Style_1"> {{Activity.StartDate | date:'d-M-y'}}, {{Activity.StartTime}} </span>
+                     <span class="Style_1"> {{Activity['StartDate'] | date:'d-M-y'}}, {{Activity['StartTime']}} </span>
                   </td>
+                  <!-- <td>
+                        <span class="Style_1"> {{Activity['EndDate'] | date:'d-M-y'}}, {{Activity['EndTime']}} </span>
+                  </td> -->
                   <td>
-                        <span class="Style_1"> {{Activity.EndDate | date:'d-M-y'}}, {{Activity.EndTime}} </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">{{_Data.Last_Modified_By?.Name}}
-                        <br> <span class="Time">{{_Data.updatedAt | date:'medium'}}</span>
+                     <span class="Style_1">{{_Data['Last_Modified_By']?.Name}}
+                        <br> <span class="Time">{{_Data['updatedAt'] | date:'medium'}}</span>
                      </span>
                   </td>
                   <td>
-                     <span class="Style_1"> {{Activity.Status?.Value}} </span>
+                     <span class="Style_1"> {{Activity['Status']?.Value}} </span>
                   </td>
                   <td>
-                     <span class="Style_1"> {{Activity.Description}} </span>
+                     <span class="Style_1"> {{Activity['Description']}} </span>
                   </td>
                </tr>
             </tbody>

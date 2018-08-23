@@ -87,7 +87,6 @@ export class CrmTicketsCreateComponent implements OnInit {
          Customer: new FormControl(null, Validators.required),
          Machine: new FormControl({value : null, disabled: true}, Validators.required),
          TicketType: new FormControl(null, Validators.required),
-         TicketId: new FormControl({value : '', disabled: true}, Validators.required),
          TicketOpenDate: new FormControl(new Date(), Validators.required),
          TicketOpenTime: new FormControl(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), Validators.required),
          Issue: new FormControl('', Validators.required),
@@ -95,21 +94,6 @@ export class CrmTicketsCreateComponent implements OnInit {
          User_Id: new FormControl(this.User_Id),
       });
 
-      const Data = { 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
-      let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
-      Info = Info.toString();
-      this.Crm_Service.CrmTicketId_Search({'Info': Info}).subscribe( response => {
-         const ResponseData = JSON.parse(response['_body']);
-         if (response['status'] === 200 && ResponseData['Status'] ) {
-            this.Form.controls['TicketId'].setValue(ResponseData['TicketId']);
-         } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
-            this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
-         } else if (response['status'] === 401 && !ResponseData['Status']) {
-            this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
-         } else {
-            this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Ticket ResponseData Getting Error!, But not Identify!' });
-         }
-      });
    }
 
    NotAllow(): boolean {return false; }
@@ -174,7 +158,7 @@ export class CrmTicketsCreateComponent implements OnInit {
          this.Crm_Service.CrmTickets_Create({ 'Info': Info }).subscribe( response => {
             const ResponseData = JSON.parse(response['_body']);
             if (response['status'] === 200 && ResponseData['Status'] ) {
-                this.Toastr.NewToastrMessage({ Type: 'Success', Message: 'New Ticket Successfully Created' });
+               this.Toastr.NewToastrMessage({ Type: 'Success', Message: ResponseData['Message'] });
                this.router.navigate(['/crm_ticket_list']);
             } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });

@@ -38,12 +38,6 @@
                            <span *ngIf="Form.controls['Machine'].errors.required"> Machine is required</span>
                         </p>
                      </div>
-                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['TicketId'].pristine && Form.controls['TicketId'].errors, 'Form_Success': Form.controls['TicketId'].valid && !Form.controls['TicketId'].pristine }">
-                        <input type="text" formControlName="TicketId" placeholder="Ticket Id">
-                        <p class="error" *ngIf="Form.controls['TicketId'].errors && !Form.controls['TicketId'].pristine">
-                           <span *ngIf="Form.controls['TicketId'].errors.required"> Ticket Id is required</span>
-                        </p>
-                     </div>
                      <div class="col-sm-4 Form_Input" >
                         <ng-select class="NgSelect ValueBold" formControlName="TicketType" [searchable]="true" placeholder="Ticket Type">
                            <ng-option *ngFor="let Ticket_Type of _Tickets_Types" [value]="Ticket_Type">{{ Ticket_Type.Ticket_Type }}</ng-option>

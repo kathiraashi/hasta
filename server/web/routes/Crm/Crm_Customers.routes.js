@@ -23,7 +23,6 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmCustomerBasedMachine_ChartData', Controller.CrmCustomerBasedMachine_ChartData);
 
 
-   app.post('/API/CrmCustomers/CrmTicketId_Search', Controller.CrmTicketId_Search);
    app.post('/API/CrmCustomers/CrmTickets_Create', Controller.CrmTickets_Create);
    app.post('/API/CrmCustomers/CrmTickets_List', Controller.CrmTickets_List);
    app.post('/API/CrmCustomers/CrmCustomerBasedTickets_List', Controller.CrmCustomerBasedTickets_List);

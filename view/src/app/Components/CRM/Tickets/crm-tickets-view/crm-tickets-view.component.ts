@@ -70,13 +70,26 @@ export class CrmTicketsViewComponent implements OnInit {
                      }
                   });
                });
-              }
+            }
 
    ngOnInit() {
    }
 
    CreateTicketsActivity() {
+      let MinDate = this._Data['TicketOpenDate'];
+      let MinTime = this._Data['TicketOpenTime'];
+      if (this._ActivityList.length > 0) {
+         MinDate = this._ActivityList[0]['StartDate'];
+         MinTime = this._ActivityList[0]['StartTime'];
+      }
+      let Contact = null;
+      if (this._ActivityList.length > 0) {
+         Contact = this._ActivityList[0].Contact;
+      }
       const initialState = {
+         MinDate: new Date(MinDate),
+         MinTime: MinTime.toLowerCase(),
+         _Contact: Contact,
          _Data: this._Data,
          Type: 'Create'
       };

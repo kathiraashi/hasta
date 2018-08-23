@@ -42,7 +42,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5>{{_Data.MachineName}}</h5>
+                           <h5>{{_Data['MachineName']}}</h5>
                         </div>
                      </div>
                   </div>
@@ -54,7 +54,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5>{{_Data.Customer?.CompanyName}}</h5>
+                           <h5>{{_Data['Customer']?.CompanyName}}</h5>
                         </div>
                      </div>
                   </div>
@@ -66,7 +66,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5>{{_Data.MachineMake}}</h5>
+                           <h5>{{_Data['MachineMake']}}</h5>
                         </div>
                      </div>
                   </div>
@@ -78,7 +78,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5 >{{_Data.MachineModel}}</h5>
+                           <h5 >{{_Data['MachineModel']}}</h5>
                         </div>
                      </div>
                   </div>
@@ -90,7 +90,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5>{{_Data.MfgSerialNo}}</h5>
+                           <h5>{{_Data['MfgSerialNo']}}</h5>
                         </div>
                      </div>
                   </div>
@@ -102,7 +102,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5 >{{_Data.MfgYear}} </h5>
+                           <h5 >{{_Data['MfgYear']}} </h5>
                         </div>
                      </div>
                   </div>
@@ -114,7 +114,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5> {{_Data.MachineId}} </h5>
+                           <h5> {{_Data['MachineId']}} </h5>
                         </div>
                      </div>
                   </div>
@@ -128,7 +128,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5 >{{_Data.MachineType?.Machine_Type}} </h5>
+                           <h5 >{{_Data['MachineType']?.Machine_Type}} </h5>
                         </div>
                      </div>
                   </div>
@@ -140,7 +140,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5 >{{_Data.ControllerType?.Controller_Type}} </h5>
+                           <h5 >{{_Data['ControllerType']?.Controller_Type}} </h5>
                         </div>
                      </div>
                   </div>
@@ -152,7 +152,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5 >{{_Data.ControllerModelNo}} </h5>
+                           <h5 >{{_Data['ControllerModelNo']}} </h5>
                         </div>
                      </div>
                   </div>
@@ -164,7 +164,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5 >{{_Data.Created_By?.Name}} <span> ( {{_Data.createdAt | date:'medium'}} ) </span> </h5>
+                           <h5 >{{_Data['Created_By']?.Name}} <span> ( {{_Data['createdAt'] | date:'medium'}} ) </span> </h5>
                         </div>
                      </div>
                   </div>
@@ -176,7 +176,7 @@
                      </div>
                      <div class="col-sm-8">
                         <div class="Machine_Details_Value">
-                           <h5 >{{_Data.Last_Modified_By?.Name}} <span> ( {{_Data.updatedAt | date:'medium'}} ) </span> </h5>
+                           <h5 >{{_Data['Last_Modified_By']?.Name}} <span> ( {{_Data['updatedAt'] | date:'medium'}} ) </span> </h5>
                         </div>
                      </div>
                   </div>
@@ -188,7 +188,7 @@
       <!-- Create and search Section -->
       <div class="row Activity_Header">
          <div class="col-sm-3">
-            <button *ngIf="_Data.CurrentStatus !== 'Closed'" class="Create_Button" mat-raised-button color="primary" (click)="CreateTicketsActivity()"> + Create </button>
+            <button *ngIf="_Data['CurrentStatus'] !== 'Closed'" class="Create_Button" mat-raised-button color="primary" (click)="CreateTickets()"> + Create </button>
          </div>
          <div class="col-sm-6">
             <h5>TICKETS</h5>
@@ -231,7 +231,7 @@
                      </span>
                   </td>
                   <td>
-                     <span class="Style_1"> {{Ticket.CurrentStatus}} </span>
+                     <span class="Style_1"> {{Ticket.CurrentStatus?.Value}} </span>
                   </td>
                   <td>
                      <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View', Ticket._id]"> Action </button>

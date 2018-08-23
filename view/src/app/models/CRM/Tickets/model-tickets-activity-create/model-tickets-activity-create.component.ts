@@ -8,10 +8,10 @@ import {NativeDateAdapter} from '@angular/material';
 import {DateAdapter} from '@angular/material/core';
 export class MyDateAdapter extends NativeDateAdapter {
    format(date: Date, displayFormat: Object): string {
-        const day = date.getDate();
-       const month = date.getMonth() + 1;
-       const year = date.getFullYear();
-       return `${day}-${month}-${year}`;
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
    }
 }
 
@@ -24,39 +24,41 @@ import { CrmService } from './../../../../services/Crm/crm.service';
 
 
 @Component({
-  selector: 'app-model-tickets-activity-create',
-  templateUrl: './model-tickets-activity-create.component.html',
-  styleUrls: ['./model-tickets-activity-create.component.css'],
-  providers: [{provide: DateAdapter, useClass: MyDateAdapter}],
+   selector: 'app-model-tickets-activity-create',
+   templateUrl: './model-tickets-activity-create.component.html',
+   styleUrls: ['./model-tickets-activity-create.component.css'],
+   providers: [{provide: DateAdapter, useClass: MyDateAdapter}],
 })
 export class ModelTicketsActivityCreateComponent implements OnInit {
 
-  _TicketData: String;
+   _TicketData: String;
 
-  _Statuses: any[] = [  {Type: 'Type_1', Value: 'Opened'},
-                        {Type: 'Type_2', Value: 'Problem Identified'},
-                        {Type: 'Type_3', Value: 'Spare Ordered / Waiting for Spare'},
-                        {Type: 'Type_4', Value: 'Spare Received'},
-                        {Type: 'Type_5', Value: 'Work Started'},
-                        {Type: 'Type_6', Value: 'In Progress'},
-                        {Type: 'Type_7', Value: 'In Testing'},
-                        {Type: 'Type_8', Value: 'Completed'},
-                        {Type: 'Type_9', Value: 'Closed'} ];
-  _Contacts: any[] =  [];
-  _Customers: any[] = [];
-  _Machines: any[] = [];
+   _Statuses: any[] = [  {Type: 'Type_1', Value: 'Opened'},
+                           {Type: 'Type_2', Value: 'Problem Identified'},
+                           {Type: 'Type_3', Value: 'Spare Ordered / Waiting for Spare'},
+                           {Type: 'Type_4', Value: 'Spare Received'},
+                           {Type: 'Type_5', Value: 'In Progress'},
+                           {Type: 'Type_6', Value: 'Closed'} ];
+   _Contacts: any[] =  [];
+   _Customers: any[] = [];
+   _Machines: any[] = [];
 
-  _ShowEndDateTime: Boolean = false;
+   _ShowEndDateTime: Boolean = false;
 
-  Form: FormGroup;
-  _Data: Object;
-  Type: String;
+   Form: FormGroup;
+   _Data: Object;
+   Type: any;
+   MinDate: Date;
+   MaxDate: Date = new Date();
+   MinTime: string;
+   SetMinTime: string;
+   _Contact: Object;
 
-  Uploading: Boolean = false;
-  onClose: Subject<any>;
+   Uploading: Boolean = false;
+   onClose: Subject<any>;
 
-  Company_Id = '5b3c66d01dd3ff14589602fe';
-  User_Id = '5b530ef333fc40064c0db31e';
+   Company_Id = '5b3c66d01dd3ff14589602fe';
+   User_Id = '5b530ef333fc40064c0db31e';
 
 
    constructor(
@@ -72,6 +74,16 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
 
       this._Customers.push(this._Data['Customer']);
       this._Machines.push(this._Data['Machine']);
+
+      const ti = this.MinTime.split(' ');
+      const hr_mi = ti[0].split(':');
+      const hr = ('0' + hr_mi[0]).slice(-2);
+      const mi = ('0' + hr_mi[1]).slice(-2);
+      this.MinTime = hr + ':' + mi + ' ' + ti[1].toLowerCase();
+      this.SetMinTime = this.MinTimeCalculate(this.MinTime);
+
+      console.log(this.MinTime, this.SetMinTime);
+
       this.Form = new FormGroup({
          Ticket_Id: new FormControl({value : this._Data['TicketId'], disabled: true}, Validators.required),
          TicketId: new FormControl({value : this._Data['_id'], disabled: true}, Validators.required),
@@ -79,15 +91,14 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
          Customer: new FormControl({value: null, disabled: true}, Validators.required),
          Contact: new FormControl(null),
          Employee: new FormControl(null),
-         StartDate: new FormControl(new Date(), Validators.required),
-         StartTime: new FormControl(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), Validators.required),
-         EndDate: new FormControl(),
-         EndTime: new FormControl(null),
+         StartDate: new FormControl(this.MinDate, Validators.required),
+         StartTime: new FormControl(this.MinTime, Validators.required),
          Status: new FormControl(null, Validators.required),
          Description: new FormControl(''),
          Company_Id: new FormControl(this.Company_Id),
          User_Id: new FormControl(this.User_Id),
       });
+
 
       setTimeout(() => {
          this.Form.controls['Machine'].setValue(this._Data['Machine']);
@@ -103,6 +114,11 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
             const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
             const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
             this._Contacts = DecryptedData;
+            if (this._Contact !== null) {
+               setTimeout(() => {
+                  this.Form.controls['Contact'].setValue(this._Contact);
+               }, 500);
+            }
          } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
             this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
          } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -121,12 +137,6 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
          }
          if (this._Data['CurrentStatus']['Type'] === 'Type_3') {
             this._Statuses = this._Statuses.slice(2, 3);
-         } else if (this._Data['CurrentStatus']['Type'] !== 'Type_4') {
-            this._Statuses.splice(2, 1);
-         }
-         if (this._Data['CurrentStatus']['Type'] === 'Type_4') {
-            this._Statuses = this._Statuses.slice(1, 4);
-            this._Statuses.splice(1, 1);
          } else {
             this._Statuses.splice(2, 1);
          }
@@ -137,22 +147,35 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
       }
    }
 
-   NotAllow(): boolean {return false; }
-
-   ChangeStatus() {
-      const Status = this.Form.controls['Status'].value;
-      if (Status !== null && typeof Status === 'object' && Object.keys(Status).length === 2) {
-         if (Status['Type'] === 'Type_2' || Status['Type'] === 'Type_6' || Status['Type'] === 'Type_7') {
-            this._ShowEndDateTime = true;
-         } else {
-            this._ShowEndDateTime = false;
-         }
+   MinTimeCalculate(value) {
+      if (value === '12:00 am') {
+         return null;
       } else {
-         this._ShowEndDateTime = false;
-         this.Form.controls['EndDate'].setValue(null);
-         this.Form.controls['EndTime'].setValue(null);
+         const Dummy = new Date('01/01/2000 ' + value );
+         Dummy.setMinutes(Dummy.getMinutes() - 1);
+         let hours = Dummy.getHours();
+         const minutes = Dummy.getMinutes();
+         const AmPm = hours >= 12 ? 'pm' : 'am';
+         hours = hours % 12;
+         hours = hours ? hours : 12; // the hour '0' should be '12'
+         const strTime = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ' ' + AmPm;
+         return strTime;
       }
    }
+
+   DateChange(value) {
+      console.log(this.MinDate);
+      const DetectDate = new Date(value.setHours(0, 0, 0, 0 )).getTime();
+      const GetMinDate = new Date(this.MinDate.setHours(0, 0, 0, 0 )).getTime();
+      if (DetectDate > GetMinDate ) {
+         this.SetMinTime = null;
+      } else {
+         this.Form.controls['StartTime'].setValue(this.MinTime);
+         this.SetMinTime = this.MinTimeCalculate(this.MinTime);
+      }
+   }
+
+   NotAllow(): boolean {return false; }
 
    Submit() {
 
@@ -171,7 +194,7 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
             const [time, modifier] = time12h.split(' ');
             const newTime = time.split(':');
             if (newTime[0] === '12') { newTime[0] = '00'; }
-            if (modifier === 'PM') { newTime[0] = parseInt(newTime[0], 10) + 12; }
+            if (modifier === 'pm') { newTime[0] = parseInt(newTime[0], 10) + 12; }
             return newTime[0] + ':' + newTime[1] + ':00';
          } else {
             return '00:00:00';
@@ -181,13 +204,6 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
          const StartDate = this.Form.controls['StartDate'].value;
          const StartTime = this.Form.controls['StartTime'].value;
          this.Form.controls['StartDate'].setValue(new Date(formatDate(StartDate) + ' ' + convertTime12to24(StartTime)));
-         if (this._ShowEndDateTime) {
-            if (this.Form.controls['EndDate'].value !== null) {
-               const EndDate = this.Form.controls['EndDate'].value;
-               const EndTime = this.Form.controls['EndTime'].value;
-               this.Form.controls['StartDate'].setValue(new Date(formatDate(EndDate) + ' ' + convertTime12to24(EndTime)));
-            }
-         }
          this.Uploading = true;
          let Info = CryptoJS.AES.encrypt(JSON.stringify(this.Form.getRawValue()), 'SecretKeyIn@123');
          Info = Info.toString();

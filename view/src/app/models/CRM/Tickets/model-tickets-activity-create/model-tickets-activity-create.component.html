@@ -41,7 +41,7 @@
             </div>
             <div class="col-sm-6 Form_Input">
                <label> Status:</label>
-               <ng-select class="NgSelect ValueBold" formControlName="Status" [searchable]="true" (ngModelChange)="ChangeStatus()">
+               <ng-select class="NgSelect ValueBold" formControlName="Status" [searchable]="true">
                   <ng-option *ngFor="let Status of _Statuses" [value]="Status">{{ Status.Value }}</ng-option>
                </ng-select>
                <p class="error" *ngIf="Form.controls['Status'].errors && !Form.controls['Status'].pristine">
@@ -50,7 +50,7 @@
             </div>
             <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': !Form.controls['StartDate'].pristine && Form.controls['StartDate'].errors, 'Form_Success': Form.controls['StartDate'].valid && !Form.controls['StartDate'].pristine }">
                <label> <span *ngIf="_ShowEndDateTime"> Start </span> Date:</label>
-               <input type="text" formControlName="StartDate" [matDatepicker]="StartDatepicker" (click)="StartDatepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()">
+               <input type="text" formControlName="StartDate" [min]="MinDate" [max]="MaxDate" [matDatepicker]="StartDatepicker" (dateChange)="DateChange($event.value)" (click)="StartDatepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()">
                <mat-datepicker touchUi #StartDatepicker></mat-datepicker>
                <p class="error" *ngIf="Form.controls['StartDate'].errors && !Form.controls['StartDate'].pristine">
                   <span *ngIf="Form.controls['StartDate'].errors.required">Activity <span *ngIf="_ShowEndDateTime"> Start </span> Date is required</span>
@@ -58,21 +58,11 @@
             </div>
             <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': !Form.controls['StartTime'].pristine && Form.controls['StartTime'].errors, 'Form_Success': Form.controls['StartTime'].valid && !Form.controls['StartTime'].pristine }">
                <label> <span *ngIf="_ShowEndDateTime"> Start </span> Time:</label>
-               <input type="text" formControlName="StartTime" [ngxTimepicker]="StartTimePicker" (keypress)="NotAllow()" (keydown)="NotAllow()">
+               <input type="text" formControlName="StartTime" [ngxTimepicker]="StartTimePicker" [min]="SetMinTime" (keypress)="NotAllow()" (keydown)="NotAllow()">
                <ngx-material-timepicker #StartTimePicker></ngx-material-timepicker>
                <p class="error" *ngIf="Form.controls['StartTime'].errors && !Form.controls['StartTime'].pristine">
                   <span *ngIf="Form.controls['StartTime'].errors.required">Activity <span *ngIf="_ShowEndDateTime"> Start </span>  Time is required</span>
                </p>
-            </div>
-            <div *ngIf="_ShowEndDateTime" class="col-sm-6 Form_Input">
-               <label> End Date:</label>
-               <input type="text" formControlName="EndDate" [matDatepicker]="EndDatepicker" (click)="EndDatepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()">
-               <mat-datepicker touchUi #EndDatepicker></mat-datepicker>
-            </div>
-            <div *ngIf="_ShowEndDateTime" class="col-sm-6 Form_Input">
-               <label> End Time:</label>
-               <input type="text" formControlName="EndTime" [ngxTimepicker]="EndTimePicker" (keypress)="NotAllow()" (keydown)="NotAllow()">
-               <ngx-material-timepicker #EndTimePicker></ngx-material-timepicker>
             </div>
             <div class="col-sm-6 Form_TextArea">
                <label> Description: </label>
@@ -88,63 +78,4 @@
          </button>
       </div>
    </form>
- </div>
- 
- <!-- If View The Controller Type -->
- <!-- <div class="Modal_Content" *ngIf=" _Data?.Type && _Data?.Type === 'View'">
-    <div class="Modal_Header">
-       <p>View Activity</p>
-       <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
-    </div>
-    <div class="Model_Body">
-       <div class="view_item">
-          <div class="Static"> Customer </div>
-          <div class="dots"> : </div>
-          <div class="Data"> {{ .Customer?.CompanyName}} </div>
-       </div>
-       <div class="view_item">
-          <div class="Static"> Machine </div>
-          <div class="dots"> : </div>
-          <div class="Data">  {{_Activity_Info.Email}} </div>
-       </div>
-       <div class="view_item">
-          <div class="Static"> Mobile </div>
-          <div class="dots"> : </div>
-          <div class="Data">  {{_Activity_Info.Mobile}} </div>
-       </div>
-       <div class="view_item">
-          <div class="Static"> Contact Role </div>
-          <div class="dots"> : </div>
-          <div class="Data">  {{_Activity_Info.ContactRole?.Contact_Role}} </div>
-       </div>
-       <div class="view_item">
-          <div class="Static"> Job Position </div>
-          <div class="dots"> : </div>
-          <div class="Data">  {{_Activity_Info.JobPosition}}  </div>
-       </div>
-       <div class="view_item">
-          <div class="Static">Created By </div>
-          <div class="dots"> : </div>
-          <div class="Data"> {{_Activity_Info.Created_By?.Name}}
-            <span class="Badge"> {{Data.Created_By.User_Type.User_Type}} </span>
-          </div>
-       </div>
-       <div class="view_item">
-          <div class="Static">Last Modified By </div>
-          <div class="dots"> : </div>
-          <div class="Data">  {{_Activity_Info.Last_Modified_By?.Name}}
-            <span class="Badge"> {{Data.Last_Modified_By.User_Type.User_Type}} </span>
-          </div>
-       </div>
-       <div class="view_item">
-          <div class="Static"> Created Date </div>
-          <div class="dots"> : </div>
-          <div class="Data"> {{_Activity_Info.createdAt | date:'medium' }} </div>
-       </div>
-       <div class="view_item">
-          <div class="Static">Last Modified Date  </div>
-          <div class="dots"> : </div>
-          <div class="Data"> {{_Activity_Info.updatedAt | date:'medium' }} </div>
-       </div>
-    </div>
- </div> -->
+</div>

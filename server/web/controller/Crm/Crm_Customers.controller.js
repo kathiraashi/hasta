@@ -359,6 +359,7 @@ exports.CrmMachines_Create = function(req, res) {
          Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
          Company_Id : mongoose.Types.ObjectId(ReceivingData.Company_Id),
          Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+         Open_Ticket : false,
          If_Deleted: false,
          Active_Status : ReceivingData.Active_Status || true,
       });
@@ -414,7 +415,7 @@ exports.CrmCustomerBasedMachines_List = function(req, res) {
       res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
    }else {
       CrmCustomersModel.CrmMachinesSchema
-         .find({'Company_Id': ReceivingData.Company_Id, 'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+         .find({'Company_Id': ReceivingData.Company_Id, 'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false}, {}, {sort: { updatedAt: -1 }})
          .populate({ path: 'Customer', select: ['CompanyName'] })
          .populate({ path: 'MachineType', select: ['Machine_Type'] })
          .populate({ path: 'ControllerType', select: ['Controller_Type'] })
@@ -467,7 +468,7 @@ exports.CrmCustomerBasedMachines_SimpleList = function(req, res) {
       res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
    }else {
       CrmCustomersModel.CrmMachinesSchema
-         .find({'Company_Id': ReceivingData.Company_Id, 'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false }, {MachineName: 1 }, {sort: { updatedAt: -1 }})
+         .find({'Company_Id': ReceivingData.Company_Id, 'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false, 'Open_Ticket': false  }, {MachineName: 1 }, {sort: { updatedAt: -1 }})
          .exec(function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Based Machines Simple List Find Query Error', 'Crm_Customers.controller.js', err);
@@ -591,7 +592,7 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                                        }
                                        if (StartActivity === 'Down') {
                                           response[0] = response[0].filter(Object_3 => Object_3.StartDate >  FromDate);
-                                          if (response[0][0].Status.Type === 'Type_3' || response[0][0].Status.Type === 'Type_4') {
+                                          if (response[0][0].Status.Type === 'Type_3') {
                                              response[0].splice(0, 0, { _id: '', StartDate: FromDate, Status: { Type: 'Type_1'} });
                                           }else{
                                              response[0][0].StartDate =  FromDate;
@@ -602,14 +603,17 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                                           response[ResponseLength] = response[ResponseLength].filter(Object_3 => Object_3.StartDate < ToDate);
                                           const LastActivity = response[ResponseLength][response[ResponseLength].length - 1];
                                           const BeforeLastActivity = response[ResponseLength][response[ResponseLength].length - 2];
-                                          if (LastActivity.Status.Type === 'Type_3' || LastActivity.Status.Type === 'Type_4' && BeforeLastActivity.Status.Type !== 'Type_5' ) {
+                                          if (LastActivity.Status.Type === 'Type_3' && BeforeLastActivity.Status.Type !== 'Type_4' ) {
+                                             response[ResponseLength].push({ _id: '', StartDate: ToDate, Status: { Type: 'Type_4'} });
+                                          }else if(LastActivity.Status.Type === 'Type_4'){
                                              response[ResponseLength].push({ _id: '', StartDate: ToDate, Status: { Type: 'Type_5'} });
-                                          }else if(LastActivity.Status.Type === 'Type_5'){
-                                             response[ResponseLength].push({ _id: '', StartDate: ToDate, Status: { Type: 'Type_6'} });
+                                          }else if(LastActivity.Status.Type === 'Type_1'){
+                                             response[ResponseLength].push({ _id: '', StartDate: ToDate, Status: { Type: 'Type_2'} });
                                           }else {
                                              response[ResponseLength][response[ResponseLength].length - 1].StartDate =  ToDate;
                                           }
                                        }
+                                       
                                        response.map( object_1 => { // All Tickets Time Calculation
                                           if (IfTicketComplete) {
                                              const diff1 = Math.abs( new Date(TicketEndTime) -  new Date(object_1[0].StartDate));
@@ -637,7 +641,7 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                                                    ActivityStart = obj.StartDate;
                                                    IfWaiting = true;
                                                 }
-                                                if (obj.Status.Type === 'Type_5') {
+                                                if (obj.Status.Type === 'Type_4') {
                                                    const diff2 = Math.abs( new Date(obj.StartDate) -  new Date(ActivityStart));
                                                    const Percentage2 = (( diff2 * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
                                                    const hh2 = Math.floor(diff2 / 1000 / 60 / 60);
@@ -698,32 +702,6 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
 
 
 // -------------------------------------------------- Crm Tickets Create -----------------------------------------------
-exports.CrmTicketId_Search = function(req, res) {
-   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
-   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-
-   if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-      res.status(400).send({Status: false, Message: "Industry Type Id can not be empty" });
-   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
-      res.status(400).send({Status: false, Message: "User Details can not be empty" });
-   }else {
-      CrmCustomersModel.CrmTicketsSchema
-         .find({}, {NumberOfTicketId: 1}, {sort:{ NumberOfTicketId: -1 }, limit: 1 }).exec(function(err, result) {
-         if(err) {
-            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Id Search Find Query Error', 'Crm_Customers.controller.js', err);
-            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Id Search!."});
-         } else {
-            var number = 1;
-            if(result.length > 0){ 
-               number = result[0].NumberOfTicketId + 1;
-            }
-            const length = number.toString().padStart(7, 0);
-            const TicketId = "TID" + length;
-            res.status(200).send({Status: true, TicketId: TicketId });
-         }
-      });
-   }
-};
 exports.CrmTickets_Create = function(req, res) {
 
    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
@@ -733,8 +711,6 @@ exports.CrmTickets_Create = function(req, res) {
       res.status(400).send({Status: false, Message: "Company Details can not be empty" });
    } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
-   } else if(!ReceivingData.TicketId || ReceivingData.TicketId === '' ) {
-      res.status(400).send({Status: false, Message: "Ticket Id can not be empty" });
    } else if(!ReceivingData.TicketOpenDate || ReceivingData.TicketOpenDate === '' ) {
       res.status(400).send({Status: false, Message: "Date can not be empty" });
    } else if(!ReceivingData.Issue || ReceivingData.Issue === '' ) {
@@ -755,31 +731,48 @@ exports.CrmTickets_Create = function(req, res) {
       if (ReceivingData.TicketType && typeof ReceivingData.TicketType === 'object' && Object.keys(ReceivingData.TicketType).length > 0 ) {
          ReceivingData.TicketType = mongoose.Types.ObjectId(ReceivingData.TicketType._id);
       }
-      const NumberOfTicketId = parseInt(ReceivingData.TicketId.slice(3));
-      var Crm_Tickets = new CrmCustomersModel.CrmTicketsSchema({
-         Machine: ReceivingData.Machine,
-         Customer: ReceivingData.Customer,
-         TicketType: ReceivingData.TicketType,
-         TicketId: ReceivingData.TicketId,
-         NumberOfTicketId: NumberOfTicketId,
-         TicketOpenDate: ReceivingData.TicketOpenDate,
-         TicketOpenTime: ReceivingData.TicketOpenTime,
-         Issue: ReceivingData.Issue,
-         CurrentStatus: {Type: 'Type_0', Value: 'Waiting'},
-         Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-         Company_Id : mongoose.Types.ObjectId(ReceivingData.Company_Id),
-         Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-         If_Deleted: false,
-         Active_Status : ReceivingData.Active_Status || true,
-      });
-      Crm_Tickets.save(function(err, result) {
+      CrmCustomersModel.CrmTicketsSchema.find( {}, {NumberOfTicketId: 1}, {sort:{ NumberOfTicketId: -1 }, limit: 1 })
+      .exec(function(err, result) {
          if(err) {
-            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Tickets Creation Query Error', 'AdminManagement.controller.js', err);
-            res.status(400).send({Status: false, Message: "Some error occurred while creating the Crm Tickets!."});
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Id Search Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Id Search!."});
          } else {
-            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
-               ReturnData = ReturnData.toString();
-            res.status(200).send({Status: true, Message: 'New Machine Successfully Created' });
+            var number = 1;
+            if(result.length > 0){ 
+               number = result[0].NumberOfTicketId + 1;
+            }
+            const length = number.toString().padStart(7, 0);
+            const TicketId = "TID" + length;
+            var Crm_Tickets = new CrmCustomersModel.CrmTicketsSchema({
+               Machine: ReceivingData.Machine,
+               Customer: ReceivingData.Customer,
+               TicketType: ReceivingData.TicketType,
+               TicketId: TicketId,
+               NumberOfTicketId: length,
+               TicketOpenDate: ReceivingData.TicketOpenDate,
+               TicketOpenTime: ReceivingData.TicketOpenTime,
+               Issue: ReceivingData.Issue,
+               CurrentStatus: {Type: 'Type_0', Value: 'Waiting'},
+               Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+               Company_Id : mongoose.Types.ObjectId(ReceivingData.Company_Id),
+               Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+               If_Deleted: false,
+               Active_Status : ReceivingData.Active_Status || true,
+            });
+            Crm_Tickets.save(function(err_1, result_1) {
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Tickets Creation Query Error', 'AdminManagement.controller.js', err_1);
+                  res.status(400).send({Status: false, Message: "Some error occurred while creating the Crm Tickets!."});
+               } else {
+                  CrmCustomersModel.CrmMachinesSchema.update(
+                     { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
+                     {$set: {Open_Ticket : true } }
+                  ).exec();
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
+                     ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Message:'Ticket "(' + result_1.TicketId + ')" Successfully Created' });
+               }
+            });
          }
       });
    }
@@ -964,10 +957,14 @@ exports.CrmTicketActivities_Create = function(req, res) {
                { _id : mongoose.Types.ObjectId(ReceivingData.TicketId)  },
                {$set: {CurrentStatus : result.Status } }
             ).exec();
-            if (ReceivingData.Status.Type === 'Type_9') {
+            if (ReceivingData.Status.Type === 'Type_6') {
                CrmCustomersModel.CrmTicketsSchema.update(
                   { _id : mongoose.Types.ObjectId(ReceivingData.TicketId)  },
                   {$set: {TicketCloseDate : ReceivingData.StartDate, TicketCloseTime: ReceivingData.StartTime } }
+               ).exec();
+               CrmCustomersModel.CrmMachinesSchema.update(
+                  { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
+                  {$set: {Open_Ticket : false } }
                ).exec();
             }
             CrmCustomersModel.CrmTicketActivitiesSchema
