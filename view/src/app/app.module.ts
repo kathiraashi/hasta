@@ -151,14 +151,8 @@ import { DetectionsHrSettingsComponent } from './Components/Settings/HR-Settings
 import { ModelEarningsHrsettingsComponent } from './models/settings/hr_settings/model-earnings-hrsettings/model-earnings-hrsettings.component';
 import { ModelDetectionsHrsettingsComponent } from './models/settings/hr_settings/model-detections-hrsettings/model-detections-hrsettings.component';
 import { ModelContactCrmCustomersViewComponent } from './models/CRM/Customers/model-contact-crm-customers-view/model-contact-crm-customers-view.component';
-import { MainHrComponent } from './Components/HR/main-hr/main-hr.component';
-import { AttendanceLogHrComponent } from './Components/HR/SubComponents/attendance-log-hr/attendance-log-hr.component';
-import { MainEmployeesHrComponent } from './Components/HR/SubComponents/Employees/main-employees-hr/main-employees-hr.component';
-import { ModelEmployeesCreateComponent } from './models/HR/model-employees-create/model-employees-create.component';
 import { ModelAttendanceLogCreateComponent } from './models/HR/model-attendance-log-create/model-attendance-log-create.component';
 import { ModelAttendanceReportCreateComponent } from './models/HR/model-attendance-report-create/model-attendance-report-create.component';
-import { MainAttendanceReportHrComponent } from './Components/HR/SubComponents/Attendance-Report/main-attendance-report-hr/main-attendance-report-hr.component';
-import { AttendanceReportViewComponent } from './Components/HR/SubComponents/Attendance-Report/attendance-report-view/attendance-report-view.component';
 import { MainPayrollHrComponent } from './Components/HR/SubComponents/Payroll/main-payroll-hr/main-payroll-hr.component';
 import { PayrollViewComponent } from './Components/HR/SubComponents/Payroll/payroll-view/payroll-view.component';
 import { MainPayrollMasterHrComponent } from './Components/HR/SubComponents/Payroll-Master/main-payroll-master-hr/main-payroll-master-hr.component';
@@ -177,8 +171,13 @@ import { ModelControllertypeCrmsettingsComponent } from './models/settings/crm_s
 import { ModelMachinetypeCrmsettingsComponent } from './models/settings/crm_settings/model-machinetype-crmsettings/model-machinetype-crmsettings.component';
 import { ModelMachinesStatusCrmCustomersComponent } from './models/CRM/Customers/model-machines-status-crm-customers/model-machines-status-crm-customers.component';
 import { MachineStatusCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/machine-status-crm-customers-view/machine-status-crm-customers-view.component';
-
-
+import { CreateEmployeesComponent } from './Components/HR/Employees/create-employees/create-employees.component';
+import { ListEmployeesComponent } from './Components/HR/Employees/list-employees/list-employees.component';
+import { ViewEmployeesComponent } from './Components/HR/Employees/view-employees/view-employees.component';
+import { MainAttendanceComponent } from './Components/HR/Attendance/main-attendance/main-attendance.component';
+import { AttendanceLogHrComponent } from './Components/HR/Attendance/SubComponents/attendance-log-hr/attendance-log-hr.component';
+import { AttendanceReportListComponent } from './Components/HR/Attendance/SubComponents/attendance-report-list/attendance-report-list.component';
+import { AttendanceReportViewComponent } from './Components/HR/Attendance/SubComponents/attendance-report-view/attendance-report-view.component';
 @NgModule({
    declarations: [
       // Default Components
@@ -311,14 +310,8 @@ import { MachineStatusCrmCustomersViewComponent } from './Components/CRM/Custome
             ModelEarningsHrsettingsComponent,
             ModelDetectionsHrsettingsComponent,
             ModelContactCrmCustomersViewComponent,
-            MainHrComponent,
-            AttendanceLogHrComponent,
-            MainEmployeesHrComponent,
-            ModelEmployeesCreateComponent,
             ModelAttendanceLogCreateComponent,
             ModelAttendanceReportCreateComponent,
-            MainAttendanceReportHrComponent,
-            AttendanceReportViewComponent,
             MainPayrollHrComponent,
             PayrollViewComponent,
             MainPayrollMasterHrComponent,
@@ -337,6 +330,13 @@ import { MachineStatusCrmCustomersViewComponent } from './Components/CRM/Custome
             ModelMachinetypeCrmsettingsComponent,
             ModelMachinesStatusCrmCustomersComponent,
             MachineStatusCrmCustomersViewComponent,
+            CreateEmployeesComponent,
+            ListEmployeesComponent,
+            ViewEmployeesComponent,
+            MainAttendanceComponent,
+           AttendanceLogHrComponent,
+           AttendanceReportListComponent,
+           AttendanceReportViewComponent
 
 
 
@@ -415,7 +415,6 @@ import { MachineStatusCrmCustomersViewComponent } from './Components/CRM/Custome
     ModelTickettypeCrmsettingsComponent,
     ModelEarningsHrsettingsComponent,
     ModelDetectionsHrsettingsComponent,
-    ModelEmployeesCreateComponent,
     ModelAttendanceLogCreateComponent,
     ModelAttendanceReportCreateComponent,
     ModelPayrollMasterViewComponent,

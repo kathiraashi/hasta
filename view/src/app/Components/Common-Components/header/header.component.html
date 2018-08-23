@@ -83,8 +83,8 @@
                   <ul class="Menu_Tree_View">
                      <!-- <li class="Menu_Tree_List" [routerLink]="['/company_settings']"><a> Company Settings </a></li> -->
                      <li class="Menu_Tree_List" [routerLink]="['/CRM_Settings']"><a> CRM Settings </a></li>
-                     <!-- <li class="Menu_Tree_List" [routerLink]="['/Hrms_Settings']" ><a> HRMS Settings  </a></li>
-                     <li class="Menu_Tree_List" [routerLink]="['/Hr_Settings']" ><a> HR Settings </a></li> -->
+                     <!-- <li class="Menu_Tree_List" [routerLink]="['/Hrms_Settings']" ><a> HRMS Settings  </a></li>-->
+                     <li class="Menu_Tree_List" [routerLink]="['/Hr_Settings']" ><a> HR Settings </a></li> 
                      <li class="Menu_Tree_List" [routerLink]="['/User_Management']"><a> User Management  </a></li>
                      <li class="Menu_Tree_List" [routerLink]="['/User_Permissions']"><a> User Permissions </a></li>
                      <!-- <li class="Menu_Tree_List" [routerLink]="['/Account_Settings']"><a> Account Settings </a></li> -->
@@ -92,12 +92,20 @@
                </span>
             </li>
             <!-- HR -->
-            <!-- <li class="Menu_List"  [routerLink]="['/main_hr']" style="outline:none;">
-               <span class="Menu">
-                  <i class="material-icons">people</i>
-                  <span > &nbsp; HR </span> 
+             <li class="Menu_List" >
+               <span class="Menu_Tree">
+                  <span class="Menu">
+                     <i class="material-icons">people</i>
+                     <span> &nbsp; HR </span> 
+                  </span>
+                  <ul class="Menu_Tree_View">
+                     <li class="Menu_Tree_List"  [routerLink]="['/List_Employees']"><a> Employees </a></li>
+                     <li class="Menu_Tree_List"  [routerLink]="['/main_Attendance']"><a> Attendance </a></li>
+                     <li class="Menu_Tree_List"  [routerLink]="['/Main_Payroll']"><a> Payroll </a></li>
+                     <li class="Menu_Tree_List"  [routerLink]="['/Main_Payroll_Master']"><a> Payroll Master</a></li>
+                  </ul>
                </span>
-            </li> -->
+            </li>
          </ul>
       </div>
    </div>

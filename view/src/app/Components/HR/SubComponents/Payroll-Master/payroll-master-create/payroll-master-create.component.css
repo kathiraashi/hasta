@@ -1,219 +1,193 @@
- /* --------------   Page Identity Section  ----------------- */
- .Page_Identity{
-    display: flex;
-    height:40px;
-    width: 100%;
-    margin-bottom: 5px;
-    }
-    .Page_Identity .Page_Name{
-    width:50%;
-    }
-    .Page_Identity .Page_Name h5{
-    color: #4f6a7a;
-    line-height: 35px;
-    font-size: 18px;
-    margin: 0px;
-    font-weight: 700;
-    }
-    /* Form style */
-    .Form_Input input {
-       padding: 10px;
-       width: 100%;
-       height: 37px;
-       outline: none;
-       margin-bottom: 25px;
-       border: 1px solid gainsboro;
-       color: #484848;
-       font-weight: 500;
-       font-size: 14px;
-    }
-    .Form_Input label {
-        font-size: 14px;
-        margin-bottom: 5px;
-        font-weight: 700;
-        color: #4e6a7a;
-    }
-    .Form_Input input:-moz-placeholder{
-       color: #999999;
-       font-weight: 400;
-    }
-    .Form_Input input::-moz-placeholder{
-       color: #999999;
-       font-weight: 400;
-    }
-    .Form_Input input::-webkit-input-placeholder{
-       color: #999999;
-       font-weight: 400;
-    }
-    .Form_Input input:-ms-input-placeholder{
-       color: #999999;
-       font-weight: 400;
-    }
-    .Form_Select select{
-       width: 100%;
-       height: 37px;
-       color: #999;
-       outline: none;
-       padding: 0px 10px;
-       border: 1px solid #dcdcdc;
-       margin-bottom: 25px;
-       
-    }
-    .Form_Select select option{
-       color: #999999;
-       width: 100%;
-    }
+/* --------------   Page Identity Section  ----------------- */
+   .Page_Identity{
+      display: flex;
+      height:40px;
+      width: 100%;
+      margin-bottom: 5px;
+   }
+   .Page_Identity .Page_Track{
+      width:100%;
+      line-height: 35px;
+   }
+   .Page_Identity .Page_Track ul{
+      display: flex;
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px;
+      align-items: center;
+      float: right;
+   }
+   .Page_Identity .Page_Track ul li {
+      font-size: 13px;
+      font-weight: 500;
+      margin-left: 5px;
+   }
+   .Page_Identity .Page_Track ul li.arrow{
+      letter-spacing: -4px;
+      font-size: 19px;
+      transform: scale(.6, 1);
+   }
+   .Page_Identity .Page_Track ul li.arrowGreen{
+      letter-spacing: -4px;
+      font-size: 19px;
+      transform: scale(.6, 1);
+      color: #4ab65f;
+   }
+   .Page_Identity .Page_Track ul li.HeaderName{
+      color: #4ab65f;
+   }
+   .Page_Identity .Page_Track ul li.LinkName{
+      color: #4ab65f;
+      cursor: pointer;
+   }
+/* Form style */
+   .Form_Input input {
+      padding: 10px;
+      width: 100%;
+      height: 37px;
+      outline: none;
+      margin-bottom: 25px;
+      border: 1px solid gainsboro;
+      color: #484848;
+      font-weight: 500;
+      font-size: 14px;
+   }
+   .Form_Input label {
+      font-size: 14px;
+      margin-bottom: 5px;
+      font-weight: 700;
+      color: #4e6a7a;
+   }
+   .Form_Input input:-moz-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_Input input::-moz-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_Input input::-webkit-input-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_Input input:-ms-input-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_Select select{
+      width: 100%;
+      height: 37px;
+      color: #999;
+      outline: none;
+      padding: 0px 10px;
+      border: 1px solid #dcdcdc;
+      margin-bottom: 25px;
+      
+   }
+   .Form_Select select option{
+      color: #999999;
+      width: 100%;
+   }
    .Form_TextArea textarea {
-       padding: 10px;
-       width: 100%;
-       outline: none;
-       margin-bottom: 25px;
-       border: 1px solid gainsboro;
-       color: #484848;
-       font-weight: 500;
-       font-size: 14px;
-    }
-    .Form_TextArea textarea:-moz-placeholder{
-       color: #999999;
-       font-weight: 400;
-    }
-    .Form_TextArea textarea::-moz-placeholder{
-       color: #999999;
-       font-weight: 400;
-    }
-    .Form_TextArea textarea::-webkit-input-placeholder{
-       color: #999999;
-       font-weight: 400;
-    }
-    .Form_TextArea textarea:-ms-input-placeholder{
-       color: #999999;
-       font-weight: 400;
-    }
-    .button_submit{
-       background-color: #49B660;
-       border: 1px solid #49B660; 
-       color:#fff;
-       outline: none;
-    }
-    /* Company Details */
-    .Company_Details{
-       background-color: #fff;
-       margin: 10px;
-       padding: 20px;
-       margin-left: 15px;
-       width: 100%;
-       border-radius: 5px;
-       border-top: 2px solid #49B660;
-    }
- .table_section{
-       border-collapse: collapse;
-       width: 100%;
-       table-layout: fixed;
-      }
-     .table_section .table_head{
-       font-size:16px;
-       color:#483737;
-       cursor:pointer;
-     }
-     .table_section tr{
-      border:1px solid #bdb5b5;
-      height:50px;
-     }
-     .table_section thead th{
-     text-align:center;
-     }
-     .table_section thead .S_No{
-       width:130px;
-     }
-     .table_section thead .Action{
-       width:60px;
-     }
-     .table_section tbody td{
-       background-color:#F5F5F5;
-       width:100%;
-       text-align:center;
-       padding:0px 10px;
-     
-     }
-     .table_section tbody td span{
+      padding: 10px;
+      width: 100%;
+      outline: none;
+      margin-bottom: 25px;
+      border: 1px solid gainsboro;
+      color: #484848;
+      font-weight: 500;
+      font-size: 14px;
+   }
+   .Form_TextArea textarea:-moz-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_TextArea textarea::-moz-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_TextArea textarea::-webkit-input-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+   .Form_TextArea textarea:-ms-input-placeholder{
+      color: #999999;
+      font-weight: 400;
+   }
+/* Company Details */
+   .Company_Details{
+      background-color: #fff;
+      margin: 10px;
+      padding: 20px;
+      width: 100%;
+      border-radius: 5px;
+      border-top: 2px solid #49B660;
+      box-shadow: 3px 2px 2px #b9b0b0;
+   }
+   .table_section{
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+   }
+   .table_section .table_head{
       font-size:16px;
-      font-weight:400;
-      color:#6d6868;
-     }
-     .Table_Section table tbody tr td .Action_Section{
-       color: #ffffff;
-       height: 35px;
-       width: 35px;
-       line-height: 30px;
-       display: flex;
-       border-radius: 5px;
-       cursor: pointer;
-       float: right;
-       margin-right: 10px;
+      color:#483737;
+      cursor:pointer;
    }
-   .Table_Section table tbody tr td .Action_Section i {
-       width: 100%;
-       line-height: 35px;
+   .table_section tr{
+   border:1px solid #bdb5b5;
+   height:50px;
    }
-
-   .Product_Tab{
-    display:flex;
-  }
-  .Product_Tab .Product_details span{
-   width: 50%;
-   height: 50px;
-   font-size: 16px;
-   font-weight: 600;
-   padding: 5px 10px; 
+   .table_section thead th{
+   text-align:center;
+   }
+   .table_section thead .S_No{
+      width:130px;
+   }
+   .table_section thead .Action{
+      width:60px;
+   }
+   .table_section tbody td{
+      background-color:#F5F5F5;
+      width:100%;
+      text-align:center;
+      padding:0px 10px;
+   
+   }
+   .table_section tbody td span{
+   font-size:16px;
+   font-weight:400;
+   color:#6d6868;
+   }
+/* Tabs */
+.Tabs{
+   display: flex;
+   width: 100%;
+}
+.Tabs .Tab{
+   color: #4d6a7a;
+   width: 14%;
+   line-height: 35px;
+   background-color: #80808038;
+   margin-top: -10px;
+   text-align: center;
    margin-right: 5px;
-   letter-spacing: 0.8px;
-   border-radius: 3px;
-  }
-  .Product_Tab .Product_details span.active{
-  width: 50%;
-  height: 50px;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 5px 10px;
-  border: 1px solid #49b660;
-  background-color: #49b660;
-  color: #fff;
-  margin-right: 5px;
-  letter-spacing: 0.8px;
-  border-radius: 3px;
-  }
-   .Product_Tab .Product_details span:hover{
-  cursor:pointer;
-  box-shadow: 2px 2px 2px rgb(16, 26, 18);
-  }
-   .Product_Tab .Quote_Terms span{
-  width: 50%;
-  height: 50px;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 5px 10px;
-  margin-right: 5px;
-  letter-spacing: 0.8px;
-  border-radius: 3px;
-  
-  }
-   .Product_Tab .Quote_Terms span.active{
-  width: 50%;
-  height: 50px;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 5px 10px;
-  border: 1px solid #49b660;
-  background-color: #49b660;
-  color: #fff;
-  margin-right: 5px;
-  letter-spacing: 0.8px;
-  border-radius: 3px;
-  }
-  .Product_Tab .Quote_Terms span:hover{
-  cursor:pointer;
-  box-shadow: 2px 2px 2px rgb(16, 26, 18);
-  }
+   font-size: 15px;
+   font-weight: 600;
+   letter-spacing: 0.4px;
+   cursor: pointer;
+}
+.Tabs .Tab:hover{
+   border-bottom: 2px solid #567180;
+   color: #516c7a;
+}
+
+.Tabs .Tab.active{
+   border-bottom: 2px solid #49B660;
+   color: #49B660;
+   cursor: default;
+}
+
    
    
   

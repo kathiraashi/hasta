@@ -18,7 +18,7 @@ export class ModelIndustrytypeCrmsettingsComponent implements OnInit {
 
    onClose: Subject<any>;
 
-   Type: String;
+   Type: string;
    Data;
 
    Uploading: Boolean = false;

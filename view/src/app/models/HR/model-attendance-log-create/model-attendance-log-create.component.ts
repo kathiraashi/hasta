@@ -9,10 +9,10 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 })
 export class ModelAttendanceLogCreateComponent implements OnInit {
 
-  Type: String;
-  constructor(public bsModalRef: BsModalRef) {}
+   Type: string;
+   constructor(public bsModalRef: BsModalRef) {}
 
-  ngOnInit() {
-  }
+   ngOnInit() {
+   }
 
 }

@@ -1,49 +1,47 @@
-
+<!-- Page Section -->
 <div class="Page_Section">
-    <div class="container-fluid">
-       <div class="Page_Identity">
-       <div class="Page_Name">
-         <h5>HR SETTINGS</h5>
-         </div>
+   <div class="container-fluid">
+      <div class="Page_Identity">
          <div class="Page_Track">
-            <ul >
-              <li class="HeaderName">Settings</li>
-              <li class="arrow">>></li>
-              <li>HR Settings</li>
-              </ul>
-            </div>
+            <ul>
+               <li class="HeaderName">Settings</li>
+               <li class="arrow">>></li>
+               <li>HR Settings</li>
+            </ul>
+         </div>
       </div>
-       <div class="Page_Content HR_Settings">
-          <div class="Main_Section">
-             <div class="Left_Section">
-                <ul class="Tabs">
-                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Employee_Category'}" (click)="Active_Tab_Change('Employee_Category')"><span class="Tab_Content">Employee Category</span></li>     
-                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Department'}" (click)="Active_Tab_Change('Department')"><span class="Tab_Content">Department</span></li>  
-                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Designation'}" (click)="Active_Tab_Change('Designation')"><span class="Tab_Content">Designation</span></li>    
-                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'earnings'}" (click)="Active_Tab_Change('earnings')"><span class="Tab_Content">Earnings</span></li>  
-                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'detections'}" (click)="Active_Tab_Change('detections')"><span class="Tab_Content">Detections</span></li>            
-                </ul>
-             </div>
-             <div class="Right_Section">
-                <div *ngIf="Active_Tab === 'Employee_Category'">
-                  <app-employee-category-hr-settings></app-employee-category-hr-settings>
-                </div> 
-                <div *ngIf="Active_Tab === 'Department'">
-                     <app-department-hr-settings></app-department-hr-settings>
-                </div> 
-                <div *ngIf="Active_Tab === 'Designation'">
-                     <app-designation-hr-settings></app-designation-hr-settings>
-                  </div>         
-                  <div *ngIf="Active_Tab === 'earnings'">
-                     <app-earnings-hr-settings></app-earnings-hr-settings>
-                  </div>   
-                  <div *ngIf="Active_Tab === 'detections'">
-                     <app-detections-hr-settings></app-detections-hr-settings>
-                  </div>          
-             </div>
-          </div>
-       </div>
-    </div>
- </div>
+      <!-- page Content -->
+      <div class="Page_Content HR_Settings">
+         <div class="Main_Section">
+            <div class="Left_Section">
+               <ul class="Tabs">
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Employee_Category'}" (click)="Active_Tab_Change('Employee_Category')"><span class="Tab_Content">Employee Category</span></li>     
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Department'}" (click)="Active_Tab_Change('Department')"><span class="Tab_Content">Department</span></li>  
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Designation'}" (click)="Active_Tab_Change('Designation')"><span class="Tab_Content">Designation</span></li>    
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'earnings'}" (click)="Active_Tab_Change('earnings')"><span class="Tab_Content">Earnings</span></li>  
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'detections'}" (click)="Active_Tab_Change('detections')"><span class="Tab_Content">Detections</span></li>            
+               </ul>
+            </div>
+            <div class="Right_Section">
+               <div *ngIf="Active_Tab === 'Employee_Category'">
+               <app-employee-category-hr-settings></app-employee-category-hr-settings>
+               </div> 
+               <div *ngIf="Active_Tab === 'Department'">
+                  <app-department-hr-settings></app-department-hr-settings>
+               </div> 
+               <div *ngIf="Active_Tab === 'Designation'">
+                  <app-designation-hr-settings></app-designation-hr-settings>
+               </div>         
+               <div *ngIf="Active_Tab === 'earnings'">
+                  <app-earnings-hr-settings></app-earnings-hr-settings>
+               </div>   
+               <div *ngIf="Active_Tab === 'detections'">
+                  <app-detections-hr-settings></app-detections-hr-settings>
+               </div>          
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
    
  

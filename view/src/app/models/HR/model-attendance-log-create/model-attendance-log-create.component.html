@@ -1,82 +1,92 @@
+<!-- If create Attendance Log -->
 <div class="Modal_Content" *ngIf="Type && Type === 'Create'">
-  <div class="Modal_Header">
-    <p> Create Attendance Log</p>
-    <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
-  </div>
-  <div class="Model_Body">
-    <div class="row">
-      <div class="col-sm-6 Form_Input">
-        <label>Employee Name:</label>
-        <input type="text">
+   <div class="Modal_Header">
+      <p> Create Attendance Log</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="row">
+         <div class="col-sm-6 Form_Select">
+            <label>Employee Name:</label>
+            <select>
+               <option disabled> Employee Name</option>
+               <option>Name</option>
+               <option>Name </option>
+               <option>Name </option>
+            </select>
+         </div>
+         <div class="col-sm-6 Form_Input">
+            <label>Code:</label>
+            <input type="text">
+         </div>
+         <div class="col-sm-6 Form_Input">
+            <label>Date:</label>
+            <input type="text">
+         </div>
+         <div class="col-sm-6 Form_Input">
+            <label>In Time:</label>
+            <input type="text">
+         </div>
+         <div class="col-sm-6 Form_Input">
+            <label>Out Time:</label>
+            <input type="text">
+         </div>
+         <div class="col-sm-6 Form_Select">
+            <label>Attendance Code:</label>
+            <select>
+               <option disabled> A</option>
+               <option> P</option>
+               <option>H </option>
+               <option> W </option>
+            </select>
+         </div>
       </div>
-      <div class="col-sm-6 Form_Input">
-        <label>Code:</label>
-        <input type="text">
-      </div>
-      <div class="col-sm-6 Form_Input">
-        <label>Date:</label>
-        <input type="text">
-      </div>
-      <div class="col-sm-6 Form_Input">
-        <label>In Time:</label>
-        <input type="text">
-      </div>
-      <div class="col-sm-6 Form_Input">
-        <label>Out Time:</label>
-        <input type="text">
-      </div>
-      <div class="col-sm-6 Form_Select">
-        <label>Attendance Code:</label>
-        <select>
-         <option disabled> A</option>
-         <option> P</option>
-         <option>H </option>
-         <option> W </option>
-       </select>
-      </div>
-     <div class="col-sm-6 Form_Input">
-        <label>OT Hours:</label>
-        <input type="text">
-      </div>
-     </div>
-  </div>
-  <div class="Model_Footer">
-    <button mat-raised-button color="primary"> Submit </button>
-  </div>
+   </div>
+   <div class="Model_Footer">
+      <button mat-raised-button color="primary"> Submit </button>
+   </div>
 </div>
+<!-- If View Attendance Log -->
 <div class="Modal_Content" *ngIf=" Type && Type === 'View'">
-  <div class="Modal_Header">
-    <p>View Employees</p>
-    <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
-  </div>
-  <div class="Model_Body">
-    <div class="row">
-      <div class="col-sm-6 text-right Static">Employee Name: </div>
-      <div class="col-sm-6 text-left Data"> Employee Name</div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 text-right Static">Code: </div>
-      <div class="col-sm-6 text-left Data"> Code</div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 text-right Static">Date: </div>
-      <div class="col-sm-6 text-left Data"> 28.08.18</div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 text-right Static">In Time: </div>
-      <div class="col-sm-6 text-left Data"> 9am</div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 text-right Static">Out Time: </div>
-      <div class="col-sm-6 text-left Data"> 5pm</div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 text-right Static">Attendance Code: </div>
-      <div class="col-sm-6 text-left Data"> P</div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 text-right Static">OT Hours: </div>
-      <div class="col-sm-6 text-left Data"> 2hrs</div>
-    </div>
-  </div>
+   <div class="Modal_Header">
+      <p>View Employees</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="view_item">
+         <div class=" Static">Employee Name </div>
+         <div class="dots"> : </div>
+         <div class=" Data"> Employee Name</div>
+      </div>
+      <div class="view_item">
+         <div class=" Static">Code </div>
+         <div class="dots"> : </div>
+         <div class=" Data"> Code</div>
+      </div>
+      <div class="view_item">
+         <div class=" Static">Date </div>
+         <div class="dots"> : </div>
+         <div class=" Data"> 28.08.18</div>
+      </div>
+      <div class="view_item">
+         <div class="Static">In Time </div>
+         <div class="dots"> : </div>
+         <div class="Data"> 9am</div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Out Time </div>
+         <div class="dots"> : </div>
+         <div class=" Data"> 5pm</div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Attendance Code </div>
+         <div class="dots"> : </div>
+         <div class="Data"> P</div>
+      </div>
+      <div class="view_item">
+         <div class="Static">OT Hours </div>
+         <div class="dots"> : </div>
+         <div class="Data"> 2hrs</div>
+      </div>
+   </div>
 </div>
