@@ -20,6 +20,8 @@
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Ownership_Type'}" (click)="Active_Tab_Change('Ownership_Type')"><span class="Tab_Content"> Ownership Type </span> </li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Machine_Type'}" (click)="Active_Tab_Change('Machine_Type')"><span class="Tab_Content"> Machine Type </span> </li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Controller_Type'}" (click)="Active_Tab_Change('Controller_Type')"><span class="Tab_Content"> Controller Type </span> </li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Machine_Maintenance_Parts'}" (click)="Active_Tab_Change('Machine_Maintenance_Parts')"><span class="Tab_Content"> Maintenance Parts </span> </li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Machine_Schedule_Activity'}" (click)="Active_Tab_Change('Machine_Schedule_Activity')"><span class="Tab_Content"> Schedule Activity </span> </li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_type'}" (click)="Active_Tab_Change('Activity_type')"><span class="Tab_Content">Activity type </span> </li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_status'}" (click)="Active_Tab_Change('Activity_status')"><span class="Tab_Content">Activity status </span></li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Activity_priority'}" (click)="Active_Tab_Change('Activity_priority')"><span class="Tab_Content">Activity priority</span> </li>
@@ -39,6 +41,12 @@
                </div>
                <div *ngIf="Active_Tab === 'Controller_Type'">
                   <app-controller-type-crm-settings></app-controller-type-crm-settings>
+               </div>
+               <div *ngIf="Active_Tab === 'Machine_Maintenance_Parts'">
+                  <app-machine-maintenance-parts></app-machine-maintenance-parts>
+               </div>
+               <div *ngIf="Active_Tab === 'Machine_Schedule_Activity'">
+                  <app-machine-schedule-activity></app-machine-schedule-activity>
                </div>
                <div *ngIf="Active_Tab === 'Activity_status'">
                   <app-activity-status-type-crm-settings></app-activity-status-type-crm-settings>

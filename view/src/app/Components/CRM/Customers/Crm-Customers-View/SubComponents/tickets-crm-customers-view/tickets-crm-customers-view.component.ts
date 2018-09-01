@@ -10,7 +10,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { ModelTicketsCrmCustomersComponent } from '../../../../../../models/CRM/Customers/model-tickets-crm-customers/model-tickets-crm-customers.component';
 import { DeleteConfirmationComponent } from '../../../../../Common-Components/delete-confirmation/delete-confirmation.component';
-
+import { LoginService } from './../../../../../../services/LoginService/login.service';
 
 @Component({
   selector: 'app-tickets-crm-customers-view',
@@ -21,8 +21,7 @@ export class TicketsCrmCustomersViewComponent implements OnInit {
 
    @Input() CustomerData: Object;
 
-   Company_Id = '5b3c66d01dd3ff14589602fe';
-   User_Id = '5b3c7268f838b31bc89e7c8c';
+   User_Id;
 
    Loader: Boolean = true;
 
@@ -33,11 +32,14 @@ export class TicketsCrmCustomersViewComponent implements OnInit {
    constructor(
                private modalService: BsModalService,
                private Toastr: ToastrService,
-               public Crm_Service: CrmService
-            ) { }
+               public Crm_Service: CrmService,
+               public Login_Service: LoginService
+            ) {
+               this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+            }
 
    ngOnInit() {
-      const Data = {Customer_Id: this.CustomerData['_id'],  'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
+      const Data = {Customer_Id: this.CustomerData['_id'], 'User_Id' : this.User_Id };
       let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
       Info = Info.toString();
       this.Crm_Service.CrmCustomerBasedTickets_List({ 'Info': Info }).subscribe( response => {

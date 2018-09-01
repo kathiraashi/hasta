@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 import { CrmSettingsService } from './../../../../services/settings/crmSettings/crm-settings.service';
 import { ToastrService } from './../../../../services/common-services/toastr-service/toastr.service';
-
+import { LoginService } from './../../../../services/LoginService/login.service';
 
 @Component({
   selector: 'app-model-controllertype-crmsettings',
@@ -24,13 +24,15 @@ export class ModelControllertypeCrmsettingsComponent implements OnInit {
 
    Uploading: Boolean = false;
    Form: FormGroup;
-   Company_Id = '5b3c66d01dd3ff14589602fe';
-   User_Id = '5b530ef333fc40064c0db31e';
+   User_Id;
 
    constructor( public bsModalRef: BsModalRef,
                 public Service: CrmSettingsService,
-                private Toastr: ToastrService
-            ) {}
+                private Toastr: ToastrService,
+                public Login_Service: LoginService
+            ) {
+               this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+            }
 
    ngOnInit() {
       this.onClose = new Subject();
@@ -41,7 +43,6 @@ export class ModelControllertypeCrmsettingsComponent implements OnInit {
                Controller_Type: new FormControl( '', {  validators: Validators.required,
                                                       asyncValidators: [this.ControllerType_AsyncValidate.bind(this)],
                                                       updateOn: 'blur' } ),
-               Company_Id: new FormControl( this.Company_Id, Validators.required ),
                Created_By: new FormControl( this.User_Id, Validators.required ),
             });
          }
@@ -67,7 +68,7 @@ export class ModelControllertypeCrmsettingsComponent implements OnInit {
       }
 
       ControllerType_AsyncValidate( control: AbstractControl ) {
-         const Data = { Controller_Type: control.value, Company_Id: this.Company_Id, User_Id: this.User_Id  };
+         const Data = { Controller_Type: control.value, User_Id: this.User_Id  };
          let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
          Info = Info.toString();
          return this.Service.ControllerType_AsyncValidate({'Info': Info}).pipe(map( response => {

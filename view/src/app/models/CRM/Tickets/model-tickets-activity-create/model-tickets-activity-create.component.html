@@ -13,20 +13,29 @@
             </div>
             <div class="col-sm-6 Form_Input">
                <label> Customer:</label>
-               <ng-select class="NgSelect ValueBold" formControlName="Customer" [searchable]="true">
-                  <ng-option *ngFor="let Customer of _Customers" [value]="Customer">{{ Customer?.CompanyName }}</ng-option>
+               <ng-select class="NgSelect ValueBold" 
+                        [items]="_Customers" 
+                        bindLabel="CompanyName" 
+                        formControlName="Customer" 
+                        [searchable]="true">
                </ng-select>
             </div>
             <div class="col-sm-6 Form_Input">
                <label> Machine:</label>
-               <ng-select class="NgSelect ValueBold" formControlName="Machine" [searchable]="true">
-                  <ng-option *ngFor="let Machine of _Machines" [value]="Machine">{{ Machine?.MachineName }}</ng-option>
+               <ng-select class="NgSelect ValueBold" 
+                        [items]="_Machines" 
+                        bindLabel="MachineName" 
+                        formControlName="Machine" 
+                        [searchable]="true">
                </ng-select>
             </div>
             <div class="col-sm-6 Form_Input">
                <label> Contact Person :</label>
-               <ng-select class="NgSelect ValueBold" formControlName="Contact" [searchable]="true">
-                  <ng-option *ngFor="let Contact of _Contacts" [value]="Contact">{{ Contact?.Name }}</ng-option>
+               <ng-select class="NgSelect ValueBold" 
+                        [items]="_Contacts" 
+                        bindLabel="Name" 
+                        formControlName="Contact" 
+                        [searchable]="true">
                </ng-select>
                <p class="error" *ngIf="Form.controls['Contact'].errors && !Form.controls['Contact'].pristine">
                   <span *ngIf="Form.controls['Contact'].errors.required"> Contact Person is required</span>
@@ -41,8 +50,11 @@
             </div>
             <div class="col-sm-6 Form_Input">
                <label> Status:</label>
-               <ng-select class="NgSelect ValueBold" formControlName="Status" [searchable]="true">
-                  <ng-option *ngFor="let Status of _Statuses" [value]="Status">{{ Status.Value }}</ng-option>
+               <ng-select class="NgSelect ValueBold"
+                        [items]="_Statuses" 
+                        bindLabel="Value" 
+                        formControlName="Status" 
+                        [searchable]="true">
                </ng-select>
                <p class="error" *ngIf="Form.controls['Status'].errors && !Form.controls['Status'].pristine">
                   <span *ngIf="Form.controls['Status'].errors.required"> Activity Status is required</span>

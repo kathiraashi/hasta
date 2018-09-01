@@ -13,8 +13,6 @@ import { CrmCustomersCreateComponent } from './Components/CRM/Customers/crm-cust
 import { CrmInvoiceListComponent } from './Components/CRM/Invoice/crm-invoice-list/crm-invoice-list.component';
 import { CrmInvoiceCreateComponent } from './Components/CRM/Invoice/crm-invoice-create/crm-invoice-create.component';
 import { UserManagementListComponent } from './Components/Settings/UserManagement/user-management-list/user-management-list.component';
-import { UserPermissionsComponent } from './Components/Settings/UserPermissions/user-permissions/user-permissions.component';
-import { UserPermissionsGroupCreateComponent } from './Components/Settings/UserPermissions/user-permissions-group-create/user-permissions-group-create.component';
 import { MainHrmsComponentsComponent } from './Components/HRMS/main-hrms-components/main-hrms-components.component';
 import { CrmInvoiceViewComponent } from './Components/CRM/Invoice/crm-invoice-view/crm-invoice-view.component';
 import { AccountsCustomerListComponent } from './Components/Accounts/Customer/accounts-customer-list/accounts-customer-list.component';
@@ -78,18 +76,6 @@ const appRoutes: Routes = [
       component: UserManagementListComponent,
       canActivate: [AuthGuard],
       data: {   animation: { value: 'User_Management'}   }
-   },
-   {
-      path: 'User_Permissions',
-      component: UserPermissionsComponent,
-      canActivate: [AuthGuard],
-      data: {   animation: { value: 'User_Permissions'}   }
-   },
-   {
-      path: 'User_Permissions_Group_Create',
-      component: UserPermissionsGroupCreateComponent,
-      canActivate: [AuthGuard],
-      data: {   animation: { value: 'User_Permissions_Group_Create'}   }
    },
    {
       path: 'Crm_Customers_List',

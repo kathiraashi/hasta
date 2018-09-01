@@ -66,7 +66,6 @@ export class MachineStatusCrmCustomersViewComponent implements OnInit {
             return Obj;
          });
          this._List = DecryptedData;
-         console.log(DecryptedData);
          setTimeout(() => {
             this._List.map( (Obj, index ) => {
                this.drawChart(Obj, index);

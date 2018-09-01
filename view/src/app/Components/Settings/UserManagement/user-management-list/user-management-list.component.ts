@@ -4,10 +4,11 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { ModelUserCreateUserManagementComponent } from './../../../../models/settings/user_management/model-user-create-user-management/model-user-create-user-management.component';
-import { DeleteConfirmationComponent } from '../../../Common-Components/delete-confirmation/delete-confirmation.component';
 
 import { AdminService } from './../../../../services/Admin/admin.service';
+import { LoginService } from './../../../../services/LoginService/login.service';
 import { ToastrService } from './../../../../services/common-services/toastr-service/toastr.service';
+
 import * as CryptoJS from 'crypto-js';
 
 @Component({
@@ -20,14 +21,20 @@ export class UserManagementListComponent implements OnInit {
    bsModalRef: BsModalRef;
 
    _List: any[] = [];
+   User_Id;
+   User_Type;
 
    constructor(
                private modalService: BsModalService,
                private Service: AdminService,
+               private Login_Service: LoginService,
                private Toastr: ToastrService
             ) {
-               //  Get Industry Type List
-               const Data = { 'Company_Id' : '5b3c66d01dd3ff14589602fe' };
+               //  Get Users List
+               this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+               this.User_Type = this.Login_Service.LoginUser_Info()['User_Type'];
+
+               const Data = { User_Id : this.User_Id };
                let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
                Info = Info.toString();
                this.Service.Users_List({'Info': Info}).subscribe( response => {
@@ -59,8 +66,4 @@ export class UserManagementListComponent implements OnInit {
       });
    }
 
-   DeleteUser() {
-      const initialState = { Type: 'Delete' };
-      this.bsModalRef = this.modalService.show(DeleteConfirmationComponent, Object.assign({initialState}, {ignoreBackdropClick: true, class: 'modal-sm' }));
-   }
 }

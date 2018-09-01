@@ -9,6 +9,7 @@ import * as CryptoJS from 'crypto-js';
 
 import { HrSettingsService } from './../../../../services/settings/HrSettings/hr-settings.service';
 import { ToastrService } from './../../../../services/common-services/toastr-service/toastr.service';
+import { LoginService } from './../../../../services/LoginService/login.service';
 
 @Component({
   selector: 'app-model-department-hrsettings',
@@ -22,13 +23,15 @@ export class ModelDepartmentHrsettingsComponent implements OnInit {
    Type: string;
    Data;
    Uploading: Boolean = false;
-   Company_Id = '5b3c66d01dd3ff14589602fe';
-   User_Id = '5b530ef333fc40064c0db31e';
+   User_Id;
    Form: FormGroup;
    constructor (  public bsModalRef: BsModalRef,
       public Service: HrSettingsService,
-      public Toastr: ToastrService
-   ) {}
+      public Toastr: ToastrService,
+      public Login_Service: LoginService
+   ) {
+      this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+   }
   ngOnInit() {
    this.onClose = new Subject();
 
@@ -39,7 +42,6 @@ export class ModelDepartmentHrsettingsComponent implements OnInit {
                                              validators: Validators.required,
                                              asyncValidators: [ this.Department_AsyncValidate.bind(this) ],
                                              updateOn: 'blur' } ),
-            Company_Id: new FormControl(this.Company_Id, Validators.required),
             Created_By: new FormControl(this.User_Id, Validators.required),
          });
       }
@@ -64,7 +66,7 @@ export class ModelDepartmentHrsettingsComponent implements OnInit {
    }
 }
    Department_AsyncValidate( control: AbstractControl ) {
-      const Data = { Department: control.value, Company_Id: this.Company_Id, User_Id: this.User_Id  };
+      const Data = { Department: control.value, User_Id: this.User_Id  };
       let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
       Info = Info.toString();
       return this.Service.Department_AsyncValidate({'Info': Info}).pipe(map( response => {

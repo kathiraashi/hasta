@@ -20,6 +20,7 @@ import { map } from 'rxjs/operators';
 import { CrmSettingsService } from './../../../../services/settings/crmSettings/crm-settings.service';
 import { ToastrService } from './../../../../services/common-services/toastr-service/toastr.service';
 import { CrmService } from './../../../../services/Crm/crm.service';
+import { LoginService } from './../../../../services/LoginService/login.service';
 
 @Component({
   selector: 'app-crm-tickets-create',
@@ -37,17 +38,18 @@ export class CrmTicketsCreateComponent implements OnInit {
 
    Form: FormGroup;
 
-   Company_Id = '5b3c66d01dd3ff14589602fe';
-   User_Id = '5b530ef333fc40064c0db31e';
+   User_Id;
 
 
    constructor(
             private Toastr: ToastrService,
             public SettingsService: CrmSettingsService,
             public Crm_Service: CrmService,
-            public router: Router
+            public router: Router,
+            public Login_Service: LoginService
          ) {
-            const Data = { 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
+            this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+            const Data = { 'User_Id' : this.User_Id };
             let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
             Info = Info.toString();
             // Get Customers List
@@ -90,7 +92,6 @@ export class CrmTicketsCreateComponent implements OnInit {
          TicketOpenDate: new FormControl(new Date(), Validators.required),
          TicketOpenTime: new FormControl(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), Validators.required),
          Issue: new FormControl('', Validators.required),
-         Company_Id: new FormControl(this.Company_Id),
          User_Id: new FormControl(this.User_Id),
       });
 
@@ -105,7 +106,7 @@ export class CrmTicketsCreateComponent implements OnInit {
       this.Form.controls['Machine'].disable();
       this._Machines = [];
       if ( Customer !== null && typeof Customer === 'object' && Object.keys(Customer).length > 0) {
-         const Data = { 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id, 'Customer_Id': Customer._id };
+         const Data = {'User_Id' : this.User_Id, 'Customer_Id': Customer._id };
          let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
          Info = Info.toString();
          this.Crm_Service.CrmCustomerBasedMachines_SimpleList({'Info': Info}).subscribe( response => {

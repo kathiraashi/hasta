@@ -10,7 +10,7 @@ import { DeleteConfirmationComponent } from '../../../../../Components/Common-Co
 import { HrSettingsService } from './../../../../../services/settings/HrSettings/hr-settings.service';
 import * as CryptoJS from 'crypto-js';
 import { ToastrService } from '../../../../../services/common-services/toastr-service/toastr.service';
-import { PermissionsCheckService } from './../../../../../services/PermissionsCheck/permissions-check.service';
+import { LoginService } from './../../../../../services/LoginService/login.service';
 
 @Component({
   selector: 'app-earnings-hr-settings',
@@ -20,30 +20,20 @@ import { PermissionsCheckService } from './../../../../../services/PermissionsCh
 export class EarningsHrSettingsComponent implements OnInit {
 
    bsModalRef: BsModalRef;
-   _Create: Boolean = false;
-   _View: Boolean = false;
-   _Edit: Boolean = false;
-   _Delete: Boolean = false;
    Loader: Boolean = true;
    _List: any[] = [];
-   Company_Id = '5b3c66d01dd3ff14589602fe';
-   User_Id = '5b530ef333fc40064c0db31e';
+
+   User_Id;
 
    constructor (  private modalService: BsModalService,
                   private Service: HrSettingsService,
                   private Toastr: ToastrService,
-                  public PermissionCheck: PermissionsCheckService
+                  public Login_Service: LoginService
                )  {
-                     // SubModule Permissions
-                     const Permissions = this.PermissionCheck.SubModulePermissionValidate('Settings_Hr_Settings');
-                     if (Permissions['Status']) {
-                        this._Create = Permissions['Create_Permission'];
-                        this._View = Permissions['View_Permission'];
-                        this._Edit = Permissions['Edit_Permission'];
-                        this._Delete = Permissions['Delete_Permission'];
-                     }
+                  this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+
                      // Get Earnings List
-                     const Data = { 'Company_Id' : this.Company_Id, 'User_Id' : this.User_Id, };
+                     const Data = { 'User_Id' : this.User_Id, };
                      let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
                      Info = Info.toString();
                      this.Service.Earnings_List({'Info': Info}).subscribe( response => {
@@ -53,7 +43,6 @@ export class EarningsHrSettingsComponent implements OnInit {
                            const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                            const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                            this._List = DecryptedData;
-                           console.log(this._List);
                         } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                            this.Toastr.NewToastrMessage({Type: 'Error', Message: response['Message']});
                         } else if (response['status'] === 401 && !ResponseData['Status']) {

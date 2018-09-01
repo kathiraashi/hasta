@@ -11,20 +11,7 @@
    </div>
 </div>
 <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
-   <!-- Create and search section -->
-   <div class="row header_part">
-      <div class="col-sm-6">
-         <button class="Create_Button" mat-raised-button color="primary" > + Create </button>
-      </div>
-      <div class="col-sm-6">
-         <div class="Search_Section">
-            <input type="text" placeholder="Search.." name="search">
-            <i class="material-icons">search</i>
-         </div>
-      </div>
-   </div>
-
-
+   
    <div class="Charts">
       <div *ngFor="let item of _List; let i=index" class="widget" [ngStyle]="{'background-color' : item.Machine?.ColorBg }" >
          <div class="header" [ngStyle]="{'background-color' : item.Machine?.Color }">{{item.Machine?.MachineName}} </div>

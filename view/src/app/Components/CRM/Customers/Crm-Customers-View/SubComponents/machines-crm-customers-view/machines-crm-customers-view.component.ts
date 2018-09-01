@@ -10,7 +10,7 @@ import { CrmService } from './../../../../../../services/Crm/crm.service';
 
 import { ModelMachinesCrmCustomersComponent } from '../../../../../../models/CRM/Customers/model-machines-crm-customers/model-machines-crm-customers.component';
 import { DeleteConfirmationComponent } from '../../../../../Common-Components/delete-confirmation/delete-confirmation.component';
-
+import { LoginService } from './../../../../../../services/LoginService/login.service';
 
 @Component({
   selector: 'app-machines-crm-customers-view',
@@ -21,9 +21,9 @@ export class MachinesCrmCustomersViewComponent implements OnInit {
 
    @Input() CustomerData: Object;
 
-   Company_Id = '5b3c66d01dd3ff14589602fe';
-   User_Id = '5b3c7268f838b31bc89e7c8c';
 
+   User_Id;
+   User_Type;
    Loader: Boolean = true;
 
    _List: any[] = [];
@@ -33,12 +33,16 @@ export class MachinesCrmCustomersViewComponent implements OnInit {
   constructor(
                private modalService: BsModalService,
                private Toastr: ToastrService,
-               public Crm_Service: CrmService
-            ) { }
+               public Crm_Service: CrmService,
+               public Login_Service: LoginService
+            ) {
+               this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+               this.User_Type = this.Login_Service.LoginUser_Info()['User_Type'];
+             }
 
 
   ngOnInit() {
-   const Data = {Customer_Id: this.CustomerData['_id'],  'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
+   const Data = {Customer_Id: this.CustomerData['_id'], 'User_Id' : this.User_Id };
    let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
    Info = Info.toString();
    this.Crm_Service.CrmCustomerBasedMachines_List({ 'Info': Info }).subscribe( response => {
@@ -48,7 +52,6 @@ export class MachinesCrmCustomersViewComponent implements OnInit {
          const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
          const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
          this._List = DecryptedData;
-         console.log(DecryptedData);
       } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
          this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
       } else if (response['status'] === 401 && !ResponseData['Status']) {

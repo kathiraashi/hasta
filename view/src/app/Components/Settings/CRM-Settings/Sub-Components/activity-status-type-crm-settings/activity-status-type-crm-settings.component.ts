@@ -10,7 +10,8 @@ import { DeleteConfirmationComponent } from '../../../../Common-Components/delet
 import { CrmSettingsService } from './../../../../../services/settings/crmSettings/crm-settings.service';
 import * as CryptoJS from 'crypto-js';
 import { ToastrService } from '../../../../../services/common-services/toastr-service/toastr.service';
-import { PermissionsCheckService } from './../../../../../services/PermissionsCheck/permissions-check.service';
+import { LoginService } from './../../../../../services/LoginService/login.service';
+
 @Component({
   selector: 'app-activity-status-type-crm-settings',
   templateUrl: './activity-status-type-crm-settings.component.html',
@@ -19,30 +20,19 @@ import { PermissionsCheckService } from './../../../../../services/PermissionsCh
 export class ActivityStatusTypeCrmSettingsComponent implements OnInit {
 
   bsModalRef: BsModalRef;
-  _Create: Boolean = false;
-  _View: Boolean = false;
-  _Edit: Boolean = false;
-  _Delete: Boolean = false;
   Loader: Boolean = true;
   _List: any[] = [];
-  Company_Id = '5b3c66d01dd3ff14589602fe';
-  User_Id = '5b530ef333fc40064c0db31e';
+
+  User_Id;
+
   constructor  (  private modalService: BsModalService,
                   private Service: CrmSettingsService,
                   private Toastr: ToastrService,
-                  public PermissionCheck: PermissionsCheckService
+                  public Login_Service: LoginService
                ) {
-
-                 // SubModule Permissions
-                 const Permissions = this.PermissionCheck.SubModulePermissionValidate('Settings_Crm_Settings');
-                 if (Permissions['Status']) {
-                   this._Create = Permissions['Create_Permission'];
-                   this._View = Permissions['View_Permission'];
-                   this._Edit = Permissions['Edit_Permission'];
-                   this._Delete = Permissions['Delete_Permission'];
-                 }
+                  this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
                   // Get Activity Status List
-                     const Data = { 'Company_Id' : this.Company_Id, 'User_Id' : this.User_Id, };
+                     const Data = {'User_Id' : this.User_Id, };
                      let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
                      Info = Info.toString();
                      this.Service.Activity_Status_List({'Info': Info}).subscribe( response => {

@@ -41,19 +41,19 @@
                   <span class="S_no"> {{i + 1}} </span>
                </td>
                <td>
-                  <span class="Style_1"> {{item.Name}} </span>
+                  <span class="Style_1"> {{item['Name']}} </span>
                </td>
                <td>
-                  <span class="Style_1"> {{item.Email}} </span>
+                  <span class="Style_1"> {{item['Email']}} </span>
                </td>
                <td>
-                  <span class="Style_1"> {{item.Phone}} </span>
+                  <span class="Style_1"> {{item['Phone']}} </span>
                </td>
                <td>
-                  <span class="Style_1"> {{item.User_Type.User_Type}}  </span>
+                  <span class="Style_1"> {{item['User_Type']}}  </span>
                </td>
                <td>
-                  <span class="Style_1"> {{item.updatedAt | date:'medium'}} </span>
+                  <span class="Style_1"> {{item['updatedAt'] | date:'medium'}} </span>
                </td>
                <td>
                   <span class="Style_1" *ngIf="item.Active_Status"> Active </span>

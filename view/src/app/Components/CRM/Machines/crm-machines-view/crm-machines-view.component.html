@@ -29,7 +29,7 @@
             </div>
          </div>
       </div>
-      <!-- Main Datas -->
+      <!-- Main Data -->
       <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
          <div class="Machine_Info_Section">
             <div class="row">
@@ -185,61 +185,270 @@
          </div>
       </div>
       <br>
-      <!-- Create and search Section -->
-      <div class="row Activity_Header">
-         <div class="col-sm-3">
-            <button *ngIf="_Data['CurrentStatus'] !== 'Closed'" class="Create_Button" mat-raised-button color="primary" (click)="CreateTickets()"> + Create </button>
+
+      <div class=SectionTwo>
+         <!-- Tabs -->
+         <div class="row">
+            <div class="col-sm-12">
+               <div class="Tabs">
+                  <div class="Tab" [ngClass]="{'active': Active_Tab === 'Tickets'}" (click)="Active_Tab_Change('Tickets')">
+                     <span > Tickets </span>
+                  </div>
+                  <div class="Tab" [ngClass]="{'active': Active_Tab === 'Maintenance'}" (click)="Active_Tab_Change('Maintenance')">
+                     <span > Maintenance </span>
+                  </div>
+                  <div class="Tab" [ngClass]="{'active': Active_Tab === 'Schedules'}" (click)="Active_Tab_Change('Schedules')">
+                     <span > Schedules </span>
+                  </div>
+                  <!-- <div class="Tab" [ngClass]="{'active': Active_Tab === 'Idle'}" (click)="Active_Tab_Change('Idle')">
+                     <span > Idle Times </span>
+                  </div> -->
+               </div>
+            </div>
          </div>
-         <div class="col-sm-6">
-            <h5>TICKETS</h5>
+         <div class="TabSection" *ngIf="Active_Tab === 'Tickets'">
+            <!-- Create and search Section -->
+            <div class="row Activity_Header">
+               <div class="col-sm-3">
+                  <button *ngIf="_Data['CurrentStatus'] !== 'Closed'" class="Create_Button" mat-raised-button color="primary" (click)="CreateTickets()"> + Create </button>
+               </div>
+               <div class="col-sm-6">
+                  <h5> TICKETS </h5>
+               </div>
+            </div>
+            <!-- Table Section -->
+            <div class="Table_Section">
+               <table>
+                  <thead>
+                     <tr>
+                        <th style="width: 50px"> S.no </th>
+                        <th style="width: 135px"> Ticket Id </th>
+                        <th style="width: 130px"> Ticket Type </th>
+                        <th style="width: 150px"> Date and Time </th>
+                        <th> Issue </th>
+                        <th style="width: 150px"> Last Modified By </th>
+                        <th style="width: 150px"> Status </th>
+                        <th style="width: 100px"> Action </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let Ticket of _TicketsList; let i=index">
+                        <td>
+                           <span class="S_no"> {{i + 1}} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{Ticket.TicketId}} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{Ticket.TicketType?.Ticket_Type}} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{Ticket.TicketOpenDate | date:'d-M-y'}}, {{Ticket.TicketOpenTime}}</span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{Ticket.Issue}}</span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{Ticket.Last_Modified_By?.Name}}
+                              <br> <span class="Time">{{Ticket.updatedAt | date:'medium'}}</span>
+                           </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{Ticket.CurrentStatus?.Value}} </span>
+                        </td>
+                        <td>
+                           <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View', Ticket._id]"> Action </button>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
          </div>
+         <div class="TabSection" *ngIf="Active_Tab === 'Maintenance'">
+            <!-- Create and search Section -->
+            <div class="row Activity_Header">
+               <div class="col-sm-12">
+                  <h5> MAINTENANCE </h5>
+               </div>
+            </div>
+            <!-- Table Section -->
+            <div class="Table_Section">
+               <form [formGroup]="MaintenanceForm">
+                  <table>
+                     <thead>
+                        <tr>
+                           <th style="width: 50px"> S.no </th>
+                           <th> Maintenance Part:</th>
+                           <th> {{ Today | date:'d-M-y'}} </th>
+                           <th> Description </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <ng-container formArrayName="EachMaintenance">
+                           <tr class="edu_table_body" *ngFor="let Maintenance of MaintenanceForm['controls'].EachMaintenance['controls']; let i = index;">
+                              <ng-container [formGroupName]="i" class="row" style="margin-bottom:15px;">
+                                 <td>
+                                    <span class="S_no"> {{i + 1}} </span>
+                                 </td>
+                                 <td>
+                                    <span class="Style_1">{{MaintenanceForm['controls'].EachMaintenance['controls'][i]['controls'].MachineMaintenancePart.value}}</span>
+                                 </td>
+                                 <td>
+                                    <span class="Style_1"> 
+                                       <mat-checkbox formControlName="Status"> Checked </mat-checkbox>
+                                    </span>
+                                 </td>
+                                 <td>
+                                    <span class="Style_1"> 
+                                       <textarea  formControlName="Description"></textarea>
+                                    </span>
+                                 </td>
+                              </ng-container>
+                           </tr>
+                        </ng-container>
+                     </tbody>
+                     <tfoot *ngIf="_MaintenanceList.length > 0">
+                        <tr>
+                           <td colspan="4">
+                              <div class="row">
+                                 <div class="col-sm-12 text-right">
+                                    <input type="text" class="Input_Style" formControlName="Update_Person" placeholder="Update Person">
+                                    <button style="margin-right: 20px;" class="Create_Button" mat-raised-button color="primary" [disabled]="DisableBtn" (click)="Submit()"> Submit </button>
+                                 </div>
+                              </div>
+                           </td>
+                        </tr>
+                     </tfoot>
+                  </table>
+               </form>
+            </div>
+         </div>
+         <div class="TabSection" *ngIf="Active_Tab === 'Schedules'">
+            <!-- Create and search Section -->
+            <div class="row Activity_Header">
+               <div class="col-sm-3">
+                  <button class="Create_Button" mat-raised-button color="primary" (click)="CreateSchedule()" > + Create </button>
+               </div>
+               <div class="col-sm-6">
+                  <h5> SCHEDULES </h5>
+               </div>
+            </div>
+            <!-- Table Section -->
+            <div class="Table_Section">
+               <table>
+                  <thead>
+                     <tr>
+                        <th style="width: 50px"> S.no </th>
+                        <th> Activity Name </th>
+                        <th> Schedule Date </th>
+                        <th> Last Activity </th>
+                        <th> Description </th>
+                        <th style="width: 180px"> Action </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let Schedule of _ScheduleList; let i=index">
+                        <td>
+                           <span class="S_no"> {{i + 1}} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{Schedule['Schedule_Activity']?.Activity_Name}} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{Schedule['Schedule_Date'] | date:'d-M-y'}} </span>
+                        </td>
+                        <td>
+                           <span *ngIf="Schedule['Last_Activity_Id'] !== null" class="Style_1">
+                              {{Schedule['Last_Activity_Id']?.Activity_By}}
+                              <span class="Time"> {{Schedule['Last_Activity_Id']?.Schedule_Date | date:'d-M-y'}} </span>
+                           </span>
+                           <span *ngIf="Schedule['Last_Activity_Id'] === null" class="Style_1"> - </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{Schedule['Description']}} </span>
+                        </td>
+                        <td>
+                           <button (click)="ViewSchedule(i)" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                              <i class="material-icons">zoom_in</i>
+                           </button>
+                           <button (click)="ReSchedule(i)" class="Table_Action_mini Bg_Success" mat-mini-fab color="primary">
+                              <i class="material-icons">update</i>
+                           </button>
+                           <button (click)="EditSchedule(i)" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                              <i class="material-icons">edit</i>
+                           </button>
+                           <button (click)="DeleteSchedule(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                              <i class="material-icons">delete_forever</i>
+                           </button>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <!-- <div class="TabSection" *ngIf="Active_Tab === 'Idle'">
+            <div class="row Activity_Header">
+               <div class="col-sm-3">
+                  <button class="Create_Button" mat-raised-button color="primary" (click)="CreateSchedule()" > + Create </button>
+               </div>
+               <div class="col-sm-6">
+                  <h5> Idle Times </h5>
+               </div>
+            </div>
+            <div class="Table_Section">
+               <table>
+                  <thead>
+                     <tr>
+                        <th style="width: 50px"> S.no </th>
+                        <th> Activity Name </th>
+                        <th> Schedule Date </th>
+                        <th> Last Activity </th>
+                        <th> Description </th>
+                        <th style="width: 180px"> Action </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let Schedule of _ScheduleList; let i=index">
+                        <td>
+                           <span class="S_no"> {{i + 1}} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{Schedule['Schedule_Activity']?.Activity_Name}} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{Schedule['Schedule_Date'] | date:'d-M-y'}} </span>
+                        </td>
+                        <td>
+                           <span *ngIf="Schedule['Last_Activity_Id'] !== null" class="Style_1">
+                              {{Schedule['Last_Activity_Id']?.Activity_By}}
+                              <span class="Time"> {{Schedule['Last_Activity_Id']?.Schedule_Date | date:'d-M-y'}} </span>
+                           </span>
+                           <span *ngIf="Schedule['Last_Activity_Id'] === null" class="Style_1"> - </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{Schedule['Description']}} </span>
+                        </td>
+                        <td>
+                           <button (click)="ViewSchedule(i)" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                              <i class="material-icons">zoom_in</i>
+                           </button>
+                           <button (click)="ReSchedule(i)" class="Table_Action_mini Bg_Success" mat-mini-fab color="primary">
+                              <i class="material-icons">update</i>
+                           </button>
+                           <button (click)="EditSchedule(i)" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                              <i class="material-icons">edit</i>
+                           </button>
+                           <button (click)="DeleteSchedule(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                              <i class="material-icons">delete_forever</i>
+                           </button>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div> -->
       </div>
-      <div class="Table_Section">
-         <table>
-            <thead>
-               <tr>
-                  <th style="width: 50px"> S.no </th>
-                  <th style="width: 135px"> Ticket Id </th>
-                  <th style="width: 130px"> Ticket Type </th>
-                  <th style="width: 150px"> Date and Time </th>
-                  <th> Issue </th>
-                  <th style="width: 150px"> Last Modified By </th>
-                  <th style="width: 150px"> Status </th>
-                  <th style="width: 100px"> Action </th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr *ngFor="let Ticket of _TicketsList; let i=index">
-                  <td>
-                     <span class="S_no"> {{i + 1}} </span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> {{Ticket.TicketId}} </span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> {{Ticket.TicketType?.Ticket_Type}} </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">{{Ticket.TicketOpenDate | date:'d-M-y'}}, {{Ticket.TicketOpenTime}}</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">{{Ticket.Issue}}</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">{{Ticket.Last_Modified_By?.Name}}
-                        <br> <span class="Time">{{Ticket.updatedAt | date:'medium'}}</span>
-                     </span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> {{Ticket.CurrentStatus?.Value}} </span>
-                  </td>
-                  <td>
-                     <button mat-raised-button color="primary" [routerLink]="['/Crm_Tickets_View', Ticket._id]"> Action </button>
-                  </td>
-               </tr>
-            </tbody>
-         </table>
-      </div>
+
    </div>
 </div>
         

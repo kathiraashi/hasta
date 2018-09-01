@@ -42,29 +42,11 @@
             </div>
             <div class="col-sm-6 Form_Select">
                <label>User Type :</label>
-               <ng-select class="NgSelect" [searchable]="true" formControlName="User_Type" (ngModelChange)="UserType_Change()">
-                  <ng-option *ngFor="let Type of _UserTypes" [value]="Type">{{Type.User_Type}}</ng-option>
+               <ng-select class="NgSelect" [searchable]="true" formControlName="User_Type">
+                  <ng-option *ngFor="let Type of _UserTypes" [value]="Type">{{Type}}</ng-option>
                </ng-select>
                <p class="error" *ngIf="Form.controls['User_Type'].errors && !Form.controls['User_Type'].pristine">
                   <span *ngIf="Form.controls['User_Type'].errors.required"> User Type is required</span>
-               </p>
-            </div>
-            <div class="col-sm-6 Form_Select" *ngIf="ShowReportsTo">
-               <label>Report To :</label>
-               <ng-select class="NgSelect" [searchable]="true" formControlName="Reports_To">
-                  <ng-option *ngFor="let User of _ReportUsers" [value]="User">{{User.Name}}</ng-option>
-               </ng-select>
-               <p class="error" *ngIf="Form.controls['Reports_To'].errors && !Form.controls['Reports_To'].pristine">
-                  <span *ngIf="Form.controls['Reports_To'].errors.required"> Reporting User is required</span>
-               </p>
-            </div>
-            <div class="col-sm-6 Form_Select" *ngIf="Form.controls['User_Type'].value !== null">
-               <label> Permissions :</label>
-               <ng-select class="NgSelect" [multiple]="true" [hideSelected]="true" [searchable]="true" formControlName="AccessPermissions_Groups">
-                  <ng-option *ngFor="let Group of _Permissions" [value]="Group">{{Group.Group_Name}}</ng-option>
-               </ng-select>
-               <p class="error" *ngIf="Form.controls['AccessPermissions_Groups'].errors && !Form.controls['AccessPermissions_Groups'].pristine">
-                  <span *ngIf="Form.controls['AccessPermissions_Groups'].errors.required"> User Access Permissions is required</span>
                </p>
             </div>
          </div>

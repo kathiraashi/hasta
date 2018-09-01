@@ -67,7 +67,22 @@ module.exports = function(app) {
       app.post('/API/CRM_Settings/Controller_Type_Update', Controller.Controller_Type_Update);
       app.post('/API/CRM_Settings/Controller_Type_Delete', Controller.Controller_Type_Delete);
 
-      
+   // Machine Maintenance Part -----------------------------------------------
+      app.post('/API/CRM_Settings/MachineMaintenancePart_AsyncValidate', Controller.Machine_MaintenancePart_AsyncValidate);
+      app.post('/API/CRM_Settings/MachineMaintenancePart_Create', Controller.Machine_MaintenancePart_Create);
+      app.post('/API/CRM_Settings/MachineMaintenancePart_List', Controller.Machine_MaintenancePart_List);
+      app.post('/API/CRM_Settings/MachineMaintenancePart_SimpleList', Controller.Machine_MaintenancePart_SimpleList);
+      app.post('/API/CRM_Settings/MachineMaintenancePart_Update', Controller.Machine_MaintenancePart_Update);
+      app.post('/API/CRM_Settings/MachineMaintenancePart_Delete', Controller.Machine_MaintenancePart_Delete);
+
+   // Machine Schedule Activity -----------------------------------------------
+      app.post('/API/CRM_Settings/MachineScheduleActivity_AsyncValidate', Controller.Machine_ScheduleActivity_AsyncValidate);
+      app.post('/API/CRM_Settings/MachineScheduleActivity_Create', Controller.Machine_ScheduleActivity_Create);
+      app.post('/API/CRM_Settings/MachineScheduleActivity_List', Controller.Machine_ScheduleActivity_List);
+      app.post('/API/CRM_Settings/MachineScheduleActivity_SimpleList', Controller.Machine_ScheduleActivity_SimpleList);
+      app.post('/API/CRM_Settings/MachineScheduleActivity_Update', Controller.Machine_ScheduleActivity_Update);
+      app.post('/API/CRM_Settings/MachineScheduleActivity_Delete', Controller.Machine_ScheduleActivity_Delete);
+
    // Ticket Type -----------------------------------------------
       app.post('/API/CRM_Settings/TicketType_AsyncValidate', Controller.TicketType_AsyncValidate);
       app.post('/API/CRM_Settings/Ticket_Type_Create', Controller.Ticket_Type_Create);

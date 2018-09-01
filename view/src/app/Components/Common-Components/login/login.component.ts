@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
             this.service.User_Login_Validate({'Info': Info}).subscribe( response => {
                const ReceivingData = JSON.parse(response['_body']);
                if (response['status'] === 200 && ReceivingData.Status) {
-                  this.router.navigate(['/CRM_Settings']);
+                  this.router.navigate(['/Crm_Customers_List']);
                } else if (response['status'] === 200 && !ReceivingData.Status) {
                   alert(ReceivingData.Message + '-1');
                } else if (response['status'] === 400 && !ReceivingData.Status) {

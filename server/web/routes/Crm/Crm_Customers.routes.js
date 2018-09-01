@@ -8,10 +8,16 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmCustomers_View', Controller.CrmCustomers_View);
  
 
+
+
    app.post('/API/CrmCustomers/CrmCustomerContact_Create', Controller.CrmCustomerContact_Create);
    app.post('/API/CrmCustomers/CrmCustomerContact_List', Controller.CrmCustomerContact_List);
    app.post('/API/CrmCustomers/CrmCustomerContact_SimpleList', Controller.CrmCustomerContact_SimpleList);
    app.post('/API/CrmCustomers/CrmCustomerContact_View', Controller.CrmCustomerContact_View);
+   app.post('/API/CrmCustomers/CrmCustomerContact_Update', Controller.CrmCustomerContact_Update);
+   app.post('/API/CrmCustomers/CrmCustomerContact_Delete', Controller.CrmCustomerContact_Delete);
+
+
 
 
    app.post('/API/CrmCustomers/CrmMachines_Create', Controller.CrmMachines_Create);
@@ -20,7 +26,24 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmMachines_SimpleList', Controller.CrmMachines_SimpleList);
    app.post('/API/CrmCustomers/CrmCustomerBasedMachines_SimpleList', Controller.CrmCustomerBasedMachines_SimpleList);
    app.post('/API/CrmCustomers/CrmMachine_View', Controller.CrmMachine_View);
+
+   app.post('/API/CrmCustomers/CrmMachine_MaintenanceSchedule_Today', Controller.CrmMachine_MaintenanceSchedule_Today);
+   app.post('/API/CrmCustomers/CrmMachine_MaintenanceSchedule_UpdateToday', Controller.CrmMachine_MaintenanceSchedule_UpdateToday);
+   
+   app.post('/API/CrmCustomers/ScheduleActivity_AsyncValidate', Controller.ScheduleActivity_AsyncValidate);
+   app.post('/API/CrmCustomers/CrmMachine_ScheduleActivity_Create', Controller.CrmMachine_ScheduleActivity_Create);
+   app.post('/API/CrmCustomers/CrmMachine_ScheduleActivity_List', Controller.CrmMachine_ScheduleActivity_List);
+   app.post('/API/CrmCustomers/CrmMachine_ScheduleActivity_Update', Controller.CrmMachine_ScheduleActivity_Update);
+   app.post('/API/CrmCustomers/CrmMachine_ScheduleActivity_ReSchedule', Controller.CrmMachine_ScheduleActivity_ReSchedule);
+   app.post('/API/CrmCustomers/CrmMachine_ScheduleActivity_Delete', Controller.CrmMachine_ScheduleActivity_Delete);
+
+   app.post('/API/CrmCustomers/CrmMachine_IdleTime_Create', Controller.CrmMachine_IdleTime_Create);
+   app.post('/API/CrmCustomers/CrmMachine_IdleTime_List', Controller.CrmMachine_IdleTime_List);
+   app.post('/API/CrmCustomers/CrmMachine_IdleTime_Update', Controller.CrmMachine_IdleTime_Update);
+
    app.post('/API/CrmCustomers/CrmCustomerBasedMachine_ChartData', Controller.CrmCustomerBasedMachine_ChartData);
+
+
 
 
    app.post('/API/CrmCustomers/CrmTickets_Create', Controller.CrmTickets_Create);

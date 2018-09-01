@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { LoginService } from '../../../services/LoginService/login.service';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,7 +10,11 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public router: Router) { }
+   Type;
+
+  constructor(public router: Router, public Login_Service: LoginService) {
+     this.Type = this.Login_Service.LoginUser_Info()['User_Type'];
+  }
 
   ngOnInit() {
   }

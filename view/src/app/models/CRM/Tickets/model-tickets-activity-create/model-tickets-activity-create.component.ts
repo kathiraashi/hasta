@@ -21,7 +21,7 @@ import * as CryptoJS from 'crypto-js';
 import { CrmSettingsService } from './../../../../services/settings/crmSettings/crm-settings.service';
 import { ToastrService } from './../../../../services/common-services/toastr-service/toastr.service';
 import { CrmService } from './../../../../services/Crm/crm.service';
-
+import { LoginService } from './../../../../services/LoginService/login.service';
 
 @Component({
    selector: 'app-model-tickets-activity-create',
@@ -57,16 +57,17 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
    Uploading: Boolean = false;
    onClose: Subject<any>;
 
-   Company_Id = '5b3c66d01dd3ff14589602fe';
-   User_Id = '5b530ef333fc40064c0db31e';
+   User_Id;
 
 
    constructor(
                public bsModalRef: BsModalRef,
                private Toastr: ToastrService,
                public SettingsService: CrmSettingsService,
-               public Crm_Service: CrmService
+               public Crm_Service: CrmService,
+               public Login_Service: LoginService
             ) {
+               this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
             }
 
    ngOnInit() {
@@ -82,8 +83,6 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
       this.MinTime = hr + ':' + mi + ' ' + ti[1].toLowerCase();
       this.SetMinTime = this.MinTimeCalculate(this.MinTime);
 
-      console.log(this.MinTime, this.SetMinTime);
-
       this.Form = new FormGroup({
          Ticket_Id: new FormControl({value : this._Data['TicketId'], disabled: true}, Validators.required),
          TicketId: new FormControl({value : this._Data['_id'], disabled: true}, Validators.required),
@@ -95,7 +94,6 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
          StartTime: new FormControl(this.MinTime, Validators.required),
          Status: new FormControl(null, Validators.required),
          Description: new FormControl(''),
-         Company_Id: new FormControl(this.Company_Id),
          User_Id: new FormControl(this.User_Id),
       });
 
@@ -105,7 +103,7 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
          this.Form.controls['Customer'].setValue(this._Data['Customer']);
       }, 500);
 
-      const Data = { 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id, Customer_Id: this._Data['Customer']['_id'] };
+      const Data = { 'User_Id' : this.User_Id, Customer_Id: this._Data['Customer']['_id'] };
       let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
       Info = Info.toString();
       this.Crm_Service.CrmCustomerContact_SimpleList({'Info': Info}).subscribe( response => {
@@ -164,7 +162,6 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
    }
 
    DateChange(value) {
-      console.log(this.MinDate);
       const DetectDate = new Date(value.setHours(0, 0, 0, 0 )).getTime();
       const GetMinDate = new Date(this.MinDate.setHours(0, 0, 0, 0 )).getTime();
       if (DetectDate > GetMinDate ) {

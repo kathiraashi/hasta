@@ -3,37 +3,12 @@
       <div class="Header_One">
          <!-- Logo -->
          <img src="assets/images/basic/Hasta.png" alt="Logo" class="Header_Logo"> 
-         <!-- Header Button -->
-         <span class="Header_Button">
-            <span class="Button_Tree">
-               <span class="Menu">
-                  <span class="header_button">+Create</span>
-               </span>
-               <ul class="Button_Tree_View">
-                  <li class="Button_Tree_List" [routerLink]="['/crm_ticket_list']"><a> Ticket </a></li>
-                  <li class="Button_Tree_List"><a> Activity </a></li>
-                  <li class="Button_Tree_List" [routerLink]="['/crm_machine_list']"><a> Machine </a></li>
-               </ul>
-            </span>
-         </span>
-         <!-- Search Section -->
-         <span class="search_section">
-            <input type="text" placeholder="search">
-            <i class="material-icons">search </i>
-         </span>
          <!-- Logout Button -->
          <span class="Logout_Btn"> <span (click)="LogOut()"> Logout </span></span>
       </div>
    <!-- Header Two -->
       <div class="Header_Two">
-         <ul class="Menus">
-            <!-- Dashboard -->
-            <!-- <li class="Menu_List" [routerLink]="['/dashboard']" style="outline:none;">
-               <span class="Menu">
-                  <i class="material-icons">dashboard</i>
-                  <span> &nbsp; Dashboard </span> 
-               </span>
-            </li> -->
+         <ul class="Menus" *ngIf="Type === 'Admin'" >
             <!-- CRM -->
             <li class="Menu_List">
                <span class="Menu_Tree">
@@ -45,34 +20,9 @@
                      <li class="Menu_Tree_List" [routerLink]="['/Crm_Customers_List']"><a> Customers </a></li>
                      <li class="Menu_Tree_List" [routerLink]="['/crm_machine_list']"><a> Machines </a></li>
                      <li class="Menu_Tree_List" [routerLink]="['/crm_ticket_list']"><a> Tickets </a></li>
-                     <!-- <li class="Menu_Tree_List" [routerLink]="['/crm_invoice_list']"><a> Invoice  </a></li> -->
                   </ul>
                </span>
             </li>
-            <!-- HRMS -->
-            <!-- <li class="Menu_List"  [routerLink]="['/main_hrms']" style="outline:none;">
-               <span class="Menu">
-                  <i class="material-icons">people</i>
-                  <span > &nbsp; HRMS </span> 
-               </span>
-            </li> -->
-            <!-- Accounts -->
-            <!-- <li class="Menu_List" >
-               <span class="Menu_Tree">
-                  <span class="Menu">
-                     <i class="material-icons">people</i>
-                     <span> &nbsp; Accounts </span> 
-                  </span>
-                  <ul class="Menu_Tree_View">
-                     <li class="Menu_Tree_List"  [routerLink]="['/account_customer_list']"><a> Customer </a></li>
-                     <li class="Menu_Tree_List"  [routerLink]="['/account_customer_invoice_list']"><a> CustomerInvoice </a></li>
-                     <li class="Menu_Tree_List"  [routerLink]="['/account_customer_payments_list']"><a> CustomerPayments </a></li>
-                     <li class="Menu_Tree_List"  [routerLink]="['/account_vendor_list']"><a>Vendor</a></li>
-                     <li class="Menu_Tree_List"  [routerLink]="['/account_vendor_bills_list']"><a>Vendor Bills</a></li>
-                     <li class="Menu_Tree_List"  [routerLink]="['/vendor_payment_list']"><a>Vendor Payments</a></li>
-                  </ul>
-               </span>
-            </li> -->
             <!-- Settings -->
             <li class="Menu_List" >
                <span class="Menu_Tree">
@@ -81,13 +31,9 @@
                      <span> &nbsp; Settings </span> 
                   </span>
                   <ul class="Menu_Tree_View">
-                     <!-- <li class="Menu_Tree_List" [routerLink]="['/company_settings']"><a> Company Settings </a></li> -->
                      <li class="Menu_Tree_List" [routerLink]="['/CRM_Settings']"><a> CRM Settings </a></li>
-                     <!-- <li class="Menu_Tree_List" [routerLink]="['/Hrms_Settings']" ><a> HRMS Settings  </a></li>-->
                      <li class="Menu_Tree_List" [routerLink]="['/Hr_Settings']" ><a> HR Settings </a></li> 
                      <li class="Menu_Tree_List" [routerLink]="['/User_Management']"><a> User Management  </a></li>
-                     <li class="Menu_Tree_List" [routerLink]="['/User_Permissions']"><a> User Permissions </a></li>
-                     <!-- <li class="Menu_Tree_List" [routerLink]="['/Account_Settings']"><a> Account Settings </a></li> -->
                   </ul>
                </span>
             </li>
@@ -100,10 +46,30 @@
                   </span>
                   <ul class="Menu_Tree_View">
                      <li class="Menu_Tree_List"  [routerLink]="['/List_Employees']"><a> Employees </a></li>
-                     <li class="Menu_Tree_List"  [routerLink]="['/main_Attendance']"><a> Attendance </a></li>
+                     <!-- <li class="Menu_Tree_List"  [routerLink]="['/main_Attendance']"><a> Attendance </a></li>
                      <li class="Menu_Tree_List"  [routerLink]="['/Main_Payroll']"><a> Payroll </a></li>
-                     <li class="Menu_Tree_List"  [routerLink]="['/Main_Payroll_Master']"><a> Payroll Master</a></li>
+                     <li class="Menu_Tree_List"  [routerLink]="['/Main_Payroll_Master']"><a> Payroll Master</a></li> -->
                   </ul>
+               </span>
+            </li>
+         </ul>
+         <ul *ngIf="Type !== 'Admin'" class="Menus">
+            <li class="Menu_List" routerLinkActive="active" [routerLink]="['/Crm_Customers_List']" style="outline:none;">
+               <span class="Menu">
+                  <i class="material-icons">people</i>
+                  <span> &nbsp; Customers </span> 
+               </span>
+            </li>
+            <li class="Menu_List" routerLinkActive="active" [routerLink]="['/crm_machine_list']" style="outline:none;">
+               <span class="Menu">
+                  <i class="material-icons">people</i>
+                  <span> &nbsp; Machines </span> 
+               </span>
+            </li>
+            <li class="Menu_List" routerLinkActive="active" [routerLink]="['/crm_ticket_list']" style="outline:none;">
+               <span class="Menu">
+                  <i class="material-icons">people</i>
+                  <span> &nbsp; Tickets </span> 
                </span>
             </li>
          </ul>

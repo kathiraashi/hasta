@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import { map } from 'rxjs/operators';
 
+import { LoginService } from './../../../../services/LoginService/login.service';
 import { AdminService } from './../../../../services/Admin/admin.service';
 import { CrmSettingsService } from './../../../../services/settings/crmSettings/crm-settings.service';
 import { ToastrService } from './../../../../services/common-services/toastr-service/toastr.service';
@@ -33,18 +34,18 @@ export class CrmCustomersCreateComponent implements OnInit {
 
    Form: FormGroup;
 
-   Company_Id = '5b3c66d01dd3ff14589602fe';
-   User_Id = '5b530ef333fc40064c0db31e';
+   User_Id;
 
    constructor(
       public Service: AdminService,
       private Toastr: ToastrService,
       public SettingsService: CrmSettingsService,
       public Crm_Service: CrmService,
+      public Login_Service: LoginService,
       public router: Router
    ) {
-
-          const Data = { 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
+         this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+          const Data = { 'User_Id' : this.User_Id };
           let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
           Info = Info.toString();
           // Get Industry Type List
@@ -97,7 +98,6 @@ export class CrmCustomersCreateComponent implements OnInit {
 
    ngOnInit() {
       this.Form = new FormGroup({
-         Company_Id: new FormControl(this.Company_Id),
          User_Id: new FormControl(this.User_Id),
          CompanyName: new FormControl('', Validators.required),
          PhoneNumber: new FormControl('', Validators.required),
@@ -129,7 +129,7 @@ export class CrmCustomersCreateComponent implements OnInit {
    BillingCountry_Change() {
       const SelectedCountry = this.Form.controls['BillingCountry'].value;
       if (SelectedCountry !== null && typeof SelectedCountry === 'object' && Object.keys(SelectedCountry).length > 0) {
-         const Data = {Country_Id: SelectedCountry._id, 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
+         const Data = {Country_Id: SelectedCountry._id, 'User_Id' : this.User_Id };
           let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
           Info = Info.toString();
           // Get State List
@@ -155,7 +155,7 @@ export class CrmCustomersCreateComponent implements OnInit {
    BillingState_Change() {
       const SelectedState = this.Form.controls['BillingState'].value;
       if ( SelectedState !== null && typeof SelectedState === 'object' && Object.keys(SelectedState).length > 0) {
-         const Data = {State_Id: SelectedState._id, 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
+         const Data = {State_Id: SelectedState._id, 'User_Id' : this.User_Id };
           let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
           Info = Info.toString();
           // Get City List
@@ -180,7 +180,7 @@ export class CrmCustomersCreateComponent implements OnInit {
    ShopFloorCountry_Change() {
       const SelectedCountry = this.Form.controls['ShopFloorCountry'].value;
       if (!this.Form.controls['SameAddresses'].value && SelectedCountry !== null && typeof SelectedCountry === 'object' && Object.keys(SelectedCountry).length > 0) {
-         const Data = {Country_Id: SelectedCountry._id, 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
+         const Data = {Country_Id: SelectedCountry._id, 'User_Id' : this.User_Id };
           let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
           Info = Info.toString();
           // Get State List
@@ -208,7 +208,7 @@ export class CrmCustomersCreateComponent implements OnInit {
    ShopFloorState_Change() {
       const SelectedState = this.Form.controls['ShopFloorState'].value;
       if ( !this.Form.controls['SameAddresses'].value && SelectedState !== null && typeof SelectedState === 'object' && Object.keys(SelectedState).length > 0) {
-         const Data = {State_Id: SelectedState._id, 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
+         const Data = {State_Id: SelectedState._id, 'User_Id' : this.User_Id };
           let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
           Info = Info.toString();
           // Get City List

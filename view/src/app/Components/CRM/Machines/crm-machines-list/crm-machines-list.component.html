@@ -32,7 +32,7 @@
             <!-- Create and search section -->
             <div class="row header_part">
                <div class="col-sm-6">
-                  <button class="Create_Button" mat-raised-button color="primary" [routerLink]="['/crm_machine_create']"> + Create </button>
+                  <button *ngIf="User_Type === 'Admin'" class="Create_Button" mat-raised-button color="primary" [routerLink]="['/crm_machine_create']"> + Create </button>
                </div>
                <div class="col-sm-6">
                   <div class="Search_Section">
@@ -52,6 +52,7 @@
                         <th>Machine Type</th>
                         <th>Machine Details</th>
                         <th>Machine Model</th>
+                        <th>No.of Maintenance</th>
                         <th>Last Modified By</th>
                         <th>Action</th>
                      </tr>
@@ -79,12 +80,15 @@
                            <span class="Style_1">{{Machine.MachineModel}}</span>
                         </td>
                         <td>
+                           <span class="Style_1">{{Machine['Maintenance_Parts'].length}} </span>
+                        </td>
+                        <td>
                            <span class="Style_1">{{Machine.Last_Modified_By?.Name}}
                               <br> <span class="Time">{{Machine.updatedAt | date:'medium'}}</span>
                            </span>
                         </td>
                         <td>
-                           <button mat-raised-button color="primary" [routerLink]="['/Crm_Machines_View', Machine._id]"> Action </button>
+                           <button mat-raised-button color="primary" [routerLink]="['/Crm_Machines_View', Machine._id]"> View </button>
                         </td>
                      </tr>
                   </tbody>

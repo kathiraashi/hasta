@@ -5,6 +5,7 @@ import * as CryptoJS from 'crypto-js';
 
 import { ToastrService } from './../../../../../services/common-services/toastr-service/toastr.service';
 import { CrmService } from './../../../../../services/Crm/crm.service';
+import { LoginService } from './../../../../../services/LoginService/login.service';
 
 @Component({
   selector: 'app-main-crm-customers-view',
@@ -13,8 +14,7 @@ import { CrmService } from './../../../../../services/Crm/crm.service';
 })
 export class MainCrmCustomersViewComponent implements OnInit {
 
-   Company_Id = '5b3c66d01dd3ff14589602fe';
-   User_Id = '5b3c7268f838b31bc89e7c8c';
+   User_Id;
 
    Loader: Boolean = true;
    Active_Tab = 'About';
@@ -25,11 +25,13 @@ export class MainCrmCustomersViewComponent implements OnInit {
          private Toastr: ToastrService,
          public Crm_Service: CrmService,
          public router: Router,
+         public Login_Service: LoginService,
          private active_route: ActivatedRoute,
       ) {
+            this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
             this.active_route.url.subscribe((u) => {
                this.Customer_Id = this.active_route.snapshot.params['Customer_Id'];
-               const Data = { 'Customer_Id': this.Customer_Id,  'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
+               const Data = { 'Customer_Id': this.Customer_Id,  'User_Id' : this.User_Id };
                let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
                Info = Info.toString();
                this.Crm_Service.CrmCustomers_View({ 'Info': Info }).subscribe( response => {

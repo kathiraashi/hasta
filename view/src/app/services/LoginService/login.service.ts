@@ -24,7 +24,7 @@ export class LoginService {
             const encData = (ReceivingData['Response'].slice(0, -34));
             const CryptoBytes  = CryptoJS.AES.decrypt(encData, Security);
             const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-            sessionStorage.setItem('Token', ReceivingData['Response']);
+            sessionStorage.setItem('Token', btoa(JSON.stringify(DecryptedData)));
             sessionStorage.setItem('SessionToken', btoa(DecryptedData._id + Security));
             sessionStorage.setItem('SessionKey', btoa(Date()));
          }
@@ -47,6 +47,10 @@ export class LoginService {
             return false;
          }
       } else { sessionStorage.clear(); return false;  }
+   }
+
+   public LoginUser_Info() {
+      return JSON.parse(atob(sessionStorage.getItem('Token')));
    }
 
 }

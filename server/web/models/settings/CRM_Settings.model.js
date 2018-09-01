@@ -4,7 +4,6 @@ var Schema = mongoose.Schema;
 // Industry Type Schema
    var IndustryTypeSchema = mongoose.Schema({
       Industry_Type: { type : String , required : true},
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -18,7 +17,6 @@ var Schema = mongoose.Schema;
 // Ownership Type Schema
    var OwnershipTypeSchema = mongoose.Schema({
       Ownership_Type: { type : String , required : true},
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -31,7 +29,6 @@ var Schema = mongoose.Schema;
 // Activity Type
    var ActivityTypeSchema = mongoose.Schema({
       Activity_Type: { type : String , required : true},
-      Company_Id: { type : Schema.Types.ObjectId,ref: 'Company_Management' , required: true },
       Created_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Last_Modified_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Active_Status: { type : Boolean , required : true },
@@ -45,7 +42,6 @@ var Schema = mongoose.Schema;
 // Activity Status
    var ActivityStatusSchema = mongoose.Schema({
       Activity_Status: { type : String , required : true},
-      Company_Id: { type : Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Last_Modified_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Active_Status: { type : Boolean , required : true },
@@ -59,7 +55,6 @@ var Schema = mongoose.Schema;
 // Activity Priority
    var ActivityPrioritySchema = mongoose.Schema({
       Activity_Priority: { type : String , required : true},
-      Company_Id: { type : Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Last_Modified_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Active_Status: { type : Boolean , required : true },
@@ -73,7 +68,6 @@ var Schema = mongoose.Schema;
 // Contact Role
    var ContactRoleSchema = mongoose.Schema({
       Contact_Role: { type : String , require : true },
-      Company_Id: { type : Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Last_Modified_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Active_Status: { type : Boolean , require : true },
@@ -87,7 +81,6 @@ var Schema = mongoose.Schema;
 // Machine Type Schema
    var MachineTypeSchema = mongoose.Schema({
       Machine_Type: { type : String , required : true},
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -101,7 +94,6 @@ var Schema = mongoose.Schema;
 // Controller Type Schema
    var ControllerTypeSchema = mongoose.Schema({
       Controller_Type: { type : String , required : true},
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -111,10 +103,36 @@ var Schema = mongoose.Schema;
    );
    var VarControllerType = mongoose.model('ControllerType', ControllerTypeSchema, 'CRM_Controller_Type');
 
+
+   // Machine Maintenance Part Schema
+   var MachineMaintenancePartSchema = mongoose.Schema({
+      Part_Name: { type : String , required : true},
+      Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Active_Status: { type : Boolean , required : true},
+      If_Deleted: { type : Boolean , required : true }
+      },
+      { timestamps: true }
+   );
+   var VarMachineMaintenancePart = mongoose.model('MachineMaintenancePart', MachineMaintenancePartSchema, 'CRM_Machine_Maintenance_Part');
+
+
+   // Machine Type Schema
+   var MachineScheduleActivitySchema = mongoose.Schema({
+      Activity_Name: { type : String , required : true},
+      Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Active_Status: { type : Boolean , required : true},
+      If_Deleted: { type : Boolean , required : true }
+      },
+      { timestamps: true }
+   );
+   var VarMachineScheduleActivity = mongoose.model('MachineScheduleActivity', MachineScheduleActivitySchema, 'CRM_Machine_Schedule_Activity');
+
+
 // Ticket Type Schema
    var TicketTypeSchema = mongoose.Schema({
       Ticket_Type: { type : String , required : true},
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -136,5 +154,7 @@ module.exports = {
    ContactRoleSchema : VarContactRole,
    MachineTypeSchema : VarMachineType,
    ControllerTypeSchema : VarControllerType,
+   MachineMaintenancePartSchema : VarMachineMaintenancePart,
+   MachineScheduleActivitySchema : VarMachineScheduleActivity,
    TicketTypeSchema : VarTicketType
 };

@@ -5,6 +5,7 @@ import * as CryptoJS from 'crypto-js';
 
 import { ToastrService } from './../../../../services/common-services/toastr-service/toastr.service';
 import { CrmService } from './../../../../services/Crm/crm.service';
+import { LoginService } from './../../../../services/LoginService/login.service';
 
 @Component({
   selector: 'app-crm-customers-list',
@@ -13,9 +14,8 @@ import { CrmService } from './../../../../services/Crm/crm.service';
 })
 export class CrmCustomersListComponent implements OnInit {
 
-  Company_Id = '5b3c66d01dd3ff14589602fe';
-  User_Id = '5b3c7268f838b31bc89e7c8c';
-
+  User_Id;
+  User_Type;
   Loader: Boolean = true;
 
   _List: any[] = [];
@@ -23,9 +23,12 @@ export class CrmCustomersListComponent implements OnInit {
   constructor(
          private Toastr: ToastrService,
          public Crm_Service: CrmService,
+         public Login_Service: LoginService,
          public router: Router
       ) {
-         const Data = { 'Company_Id': this.Company_Id, 'User_Id' : this.User_Id };
+         this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+         this.User_Type = this.Login_Service.LoginUser_Info()['User_Type'];
+         const Data = {'User_Id' : this.User_Id };
          let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
          Info = Info.toString();
          this.Crm_Service.CrmCustomers_List({ 'Info': Info }).subscribe( response => {

@@ -14,8 +14,8 @@
 
 // Future Modules
 import { ModalModule, AccordionModule, BsDropdownModule} from 'ngx-bootstrap';
-import {CalendarModule} from 'primeng/calendar';
-import {MatButtonModule, MatDatepickerModule, MatNativeDateModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatMenuModule} from '@angular/material';
+import { CalendarModule} from 'primeng/calendar';
+import { MatButtonModule, MatDatepickerModule, MatNativeDateModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatMenuModule} from '@angular/material';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -55,9 +55,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
                import { DesignationHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/designation-hr-settings/designation-hr-settings.component';
          // User Management And Permissions
             import { UserManagementListComponent } from './Components/Settings/UserManagement/user-management-list/user-management-list.component';
-            import { UserPermissionsComponent } from './Components/Settings/UserPermissions/user-permissions/user-permissions.component';
             import { ModelUserCreateUserManagementComponent } from './models/settings/user_management/model-user-create-user-management/model-user-create-user-management.component';
-            import { UserPermissionsGroupCreateComponent } from './Components/Settings/UserPermissions/user-permissions-group-create/user-permissions-group-create.component';
       // CRM Folder
          // Customers
             // crm-customers-list
@@ -178,6 +176,13 @@ import { MainAttendanceComponent } from './Components/HR/Attendance/main-attenda
 import { AttendanceLogHrComponent } from './Components/HR/Attendance/SubComponents/attendance-log-hr/attendance-log-hr.component';
 import { AttendanceReportListComponent } from './Components/HR/Attendance/SubComponents/attendance-report-list/attendance-report-list.component';
 import { AttendanceReportViewComponent } from './Components/HR/Attendance/SubComponents/attendance-report-view/attendance-report-view.component';
+import { MachineMaintenancePartsComponent } from './Components/Settings/CRM-Settings/Sub-Components/machine-maintenance-parts/machine-maintenance-parts.component';
+import { MachineScheduleActivityComponent } from './Components/Settings/CRM-Settings/Sub-Components/machine-schedule-activity/machine-schedule-activity.component';
+import { ModelMachineScheduleActivityCrmsettingsComponent } from './models/settings/crm_settings/model-machine-schedule-activity-crmsettings/model-machine-schedule-activity-crmsettings.component';
+import { ModelMachineMaintenancePartCrmsettingsComponent } from './models/settings/crm_settings/model-machine-maintenance-part-crmsettings/model-machine-maintenance-part-crmsettings.component';
+import { ModelScheduleActivityCreateComponent } from './models/CRM/Machines/model-schedule-activity-create/model-schedule-activity-create.component';
+
+
 @NgModule({
    declarations: [
       // Default Components
@@ -242,9 +247,7 @@ import { AttendanceReportViewComponent } from './Components/HR/Attendance/SubCom
             ModelPaymenttermsAccountsettingsComponent,
       // User Management and User Permissions
       UserManagementListComponent,
-      UserPermissionsComponent,
       ModelUserCreateUserManagementComponent,
-      UserPermissionsGroupCreateComponent,
    // Components
     // Common-Components
         // delete-confirmation
@@ -336,7 +339,12 @@ import { AttendanceReportViewComponent } from './Components/HR/Attendance/SubCom
             MainAttendanceComponent,
            AttendanceLogHrComponent,
            AttendanceReportListComponent,
-           AttendanceReportViewComponent
+           AttendanceReportViewComponent,
+           MachineMaintenancePartsComponent,
+           MachineScheduleActivityComponent,
+           ModelMachineScheduleActivityCrmsettingsComponent,
+           ModelMachineMaintenancePartCrmsettingsComponent,
+           ModelScheduleActivityCreateComponent
 
 
 
@@ -424,7 +432,11 @@ import { AttendanceReportViewComponent } from './Components/HR/Attendance/SubCom
     ModelActivitiesCrmCustomersComponent,
     ModelMachinesCrmCustomersComponent,
     ModelMachinesStatusCrmCustomersComponent,
-    ModelTicketsCrmCustomersComponent],
+    ModelTicketsCrmCustomersComponent,
+    ModelMachineScheduleActivityCrmsettingsComponent,
+    ModelMachineMaintenancePartCrmsettingsComponent,
+    ModelScheduleActivityCreateComponent
+    ],
    bootstrap: [AppComponent]
 })
 export class AppModule { }

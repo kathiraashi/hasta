@@ -28,8 +28,12 @@
                         </p>
                      </div>
                      <div class="col-sm-4 Form_Input" >
-                        <ng-select class="NgSelect ValueBold" formControlName="Customer" [searchable]="true" placeholder="Customer">
-                           <ng-option *ngFor="let Customer of _Customers" [value]="Customer">{{ Customer.CompanyName }}</ng-option>
+                        <ng-select class="NgSelect ValueBold"
+                                 [items]="_Customers"
+                                 bindLabel="CompanyName"
+                                 formControlName="Customer"
+                                 [searchable]="true" 
+                                 placeholder="Customer">
                         </ng-select>
                         <p class="error" *ngIf="Form.controls['Customer'].errors && !Form.controls['Customer'].pristine">
                            <span *ngIf="Form.controls['Customer'].errors.required"> Customer is required</span>
@@ -48,13 +52,21 @@
                         <input type="text" formControlName="MachineId" placeholder="Machine Id">
                      </div>
                      <div class="col-sm-4 Form_Select" >
-                        <ng-select class="NgSelect ValueBold" formControlName="MachineType" [searchable]="true" placeholder="Machine Type">
-                           <ng-option *ngFor="let Machine_Type of _Machine_Types" [value]="Machine_Type">{{ Machine_Type.Machine_Type }}</ng-option>
+                        <ng-select class="NgSelect ValueBold"
+                                 [items]="_Machine_Types"
+                                 bindLabel="Machine_Type" 
+                                 formControlName="MachineType"
+                                 [searchable]="true" 
+                                 placeholder="Machine Type">
                         </ng-select>
                      </div>
                      <div class="col-sm-4 Form_Select" >
-                        <ng-select class="NgSelect ValueBold" formControlName="ControllerType" [searchable]="true" placeholder="Controller Type">
-                           <ng-option *ngFor="let Controller_Type of _Controller_Types" [value]="Controller_Type">{{ Controller_Type.Controller_Type }}</ng-option>
+                        <ng-select class="NgSelect ValueBold"
+                                 [items]="_Controller_Types"
+                                 bindLabel="Controller_Type" 
+                                 formControlName="ControllerType" 
+                                 [searchable]="true" 
+                                 placeholder="Controller Type">
                         </ng-select>
                      </div>
                      <div class="col-sm-4 Form_Input" >
@@ -64,9 +76,9 @@
                         <input type="text" formControlName="MfgYear" placeholder="Mfg Year"> 
                      </div>
                   </div>
-                  <div class="row" > 
+                  <div class="row" style="margin-top: 20px;" > 
                      <div class="col-sm-12 text-right">
-                        <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="Submit()"> Submit </button>
+                        <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="OpenModel(MaintenancePartsInsetModel)"> Next </button>
                      </div>
                   </div>
                </form>
@@ -75,5 +87,43 @@
       </div>
    </div>
 </div>
+
+<ng-template #MaintenancePartsInsetModel>
+   <form [formGroup]="Form">
+      <div style="padding: 0px 10px">
+         <div class="Modal_Header">
+            <p> Add Machine Maintenance Parts</p>
+            <span data-dismiss="modal" (click)="modalRef.hide()">&times;</span>
+         </div>
+         <div class="Model_Body">
+            <div class="row">
+               <div class="col-sm-12 Form_Select">
+                  <ng-select class="NgSelect ValueBold"
+                           [multiple]="true"
+                           [hideSelected]="true"
+                           [items]="_Maintenance_Parts"
+                           bindLabel="Part_Name"
+                           bindValue="_id"
+                           formControlName="Maintenance_Parts"
+                           [searchable]="true"
+                           placeholder="Add Maintenance Parts">
+                  </ng-select>
+               </div>
+            </div>
+         </div>
+         <div class="Model_Footer">
+            <div class="row" > 
+               <div class="col-sm-6 ">
+                  <button mat-raised-button (click)="modalRef.hide()"> Back </button>
+               </div>
+               <div class="col-sm-6 text-right">
+                  <button mat-raised-button color="primary" (click)="Submit()"> Submit </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </form>
+</ng-template>
+
  
  

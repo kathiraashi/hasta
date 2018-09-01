@@ -14,12 +14,10 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Industry_Type || ReceivingData.Industry_Type === '' ) {
             res.status(400).send({Status: false, Message: "Industry Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.IndustryTypeSchema.findOne({'Company_Id': ReceivingData.Company_Id, 'Industry_Type': { $regex : new RegExp("^" + ReceivingData.Industry_Type + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
+            CRMSettingsModel.IndustryTypeSchema.findOne({'Industry_Type': { $regex : new RegExp("^" + ReceivingData.Industry_Type + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Industry Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Message: "Some error occurred while Find Industry Type!."});
@@ -40,14 +38,11 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Industry_Type || ReceivingData.Industry_Type === '' ) {
             res.status(400).send({Status: false, Message: "Industry Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
-         } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
+         }else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
             res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
          }else {
             var Create_IndustryType = new CRMSettingsModel.IndustryTypeSchema({
-               Industry_Type: ReceivingData.Industry_Type, 
-               Company_Id: mongoose.Types.ObjectId(ReceivingData.Company_Id),
+               Industry_Type: ReceivingData.Industry_Type,
                Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Active_Status: true,
@@ -55,6 +50,7 @@ var mongoose = require('mongoose');
             });
             Create_IndustryType.save(function(err, result) { // Industry Type Save Query
                if(err) {
+                  console.log(err);
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Industry Type Creation Query Error', 'CRM_Settings.controller.js');
                   res.status(417).send({Status: false, Message: "Some error occurred while creating the Industry Type!."});
                } else {
@@ -81,13 +77,11 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Industry Type Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
             CRMSettingsModel.IndustryTypeSchema
-               .find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+               .find({'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
                .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
                .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
                .exec(function(err, result) { // Industry Type FindOne Query
@@ -107,12 +101,10 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Industry Type Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.IndustryTypeSchema.find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, { Industry_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Industry Type FindOne Query
+            CRMSettingsModel.IndustryTypeSchema.find({ 'If_Deleted': false }, { Industry_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Industry Type FindOne Query
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Industry Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Industry Types!."});
@@ -218,12 +210,10 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Ownership_Type || ReceivingData.Ownership_Type === '' ) {
             res.status(400).send({Status: false, Message: "Ownership Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.OwnershipTypeSchema.findOne({'Company_Id': ReceivingData.Company_Id, 'Ownership_Type': { $regex : new RegExp("^" + ReceivingData.Ownership_Type + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
+            CRMSettingsModel.OwnershipTypeSchema.findOne({ 'Ownership_Type': { $regex : new RegExp("^" + ReceivingData.Ownership_Type + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Ownership Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Message: "Some error occurred while Find Ownership Type!."});
@@ -244,14 +234,11 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Ownership_Type || ReceivingData.Ownership_Type === '' ) {
             res.status(400).send({Status: false, Message: "Ownership Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
             res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
          }else {
             var Create_OwnershipType = new CRMSettingsModel.OwnershipTypeSchema({
                Ownership_Type: ReceivingData.Ownership_Type, 
-               Company_Id: mongoose.Types.ObjectId(ReceivingData.Company_Id),
                Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Active_Status: true,
@@ -288,13 +275,11 @@ var mongoose = require('mongoose');
          var CryptoBytes = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '') {
-               res.status(400).send({status: false ,Message: "Ownership Type Id can not be empty" });
-         } else if(!ReceivingData.User_Id || ReceivingData.User_Id === ''){
+         if(!ReceivingData.User_Id || ReceivingData.User_Id === ''){
             res.status(400).send({Status: false, Message: "User Details Can not be Empty" });
          } else {
             CRMSettingsModel.OwnershipTypeSchema
-               .find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+               .find({ 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
                .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
                .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
                .exec(function(err, result) { // Ownership Type FindOne Query
@@ -314,12 +299,10 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Ownership Type Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.OwnershipTypeSchema.find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, { Ownership_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Ownership Type FindOne Query
+            CRMSettingsModel.OwnershipTypeSchema.find({ 'If_Deleted': false }, { Ownership_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Ownership Type FindOne Query
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Ownership Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Ownership Types!."});
@@ -427,12 +410,10 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Activity_Type || ReceivingData.Activity_Type === ''){
             res.status(400).send({ Status: false, Message: "Activity Type Cannot be empty"});
-         } else if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '') {
-            res.status(400).send({ Status: false, Message: "Company Details Cannot be empty"}); 
          } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '') {
             res.status(400).send({ Status: false, Message: "Creator Details Cannot be empty"}); 
          } else{
-            CRMSettingsModel.ActivityTypeSchema.findOne({'Company_Id': ReceivingData.Company_Id, 'Activity_Type': {$regex : new RegExp("^" + ReceivingData.Activity_Type + "$", "i")}, 'If_Deleted' : false}, {},{}, function(err, result) {
+            CRMSettingsModel.ActivityTypeSchema.findOne({'Activity_Type': {$regex : new RegExp("^" + ReceivingData.Activity_Type + "$", "i")}, 'If_Deleted' : false}, {},{}, function(err, result) {
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Activity Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Message: "Some error occurred while Find Activity Type!."});
@@ -453,14 +434,11 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Activity_Type || ReceivingData.Activity_Type === '' ) {
             res.status(400).send({Status: false, Message: "Activity Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
             res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
          }else {
             var Create_ActivityType = new CRMSettingsModel.ActivityTypeSchema({
                Activity_Type: ReceivingData.Activity_Type, 
-               Company_Id: mongoose.Types.ObjectId(ReceivingData.Company_Id),
                Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Active_Status: true,
@@ -497,13 +475,11 @@ var mongoose = require('mongoose');
          var CryptoBytes = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '') {
-               res.status(400).send({status: false ,Message: "Activity Type Id can not be empty" });
-         } else if(!ReceivingData.User_Id || ReceivingData.User_Id === ''){
+         if(!ReceivingData.User_Id || ReceivingData.User_Id === ''){
             res.status(400).send({Status: false, Message: "User Details Can not be Empty" });
          } else {
             CRMSettingsModel.ActivityTypeSchema
-               .find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+               .find({ 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
                .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
                .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
                .exec(function(err, result) { // Activity Type FindOne Query
@@ -523,12 +499,10 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Activity Type Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.ActivityTypeSchema.find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, { Industry_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Activity Type FindOne Query
+            CRMSettingsModel.ActivityTypeSchema.find({'If_Deleted': false }, { Industry_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Activity Type FindOne Query
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Activity Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Activity Types!."});
@@ -634,12 +608,10 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Activity_Status || ReceivingData.Activity_Status === ''){
             res.status(400).send({ Status: false, Message: "Activity Status Cannot be empty"});
-         } else if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '') {
-            res.status(400).send({ Status: false, Message: "Company Details Cannot be empty"}); 
          } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '') {
             res.status(400).send({ Status: false, Message: "Creator Details Cannot be empty"}); 
          } else{
-            CRMSettingsModel.ActivityStatusSchema.findOne({'Company_Id': ReceivingData.Company_Id, 'Activity_Status': {$regex : new RegExp("^" + ReceivingData.Activity_Status + "$", "i")}, 'If_Deleted' : false}, {},{}, function(err, result) {
+            CRMSettingsModel.ActivityStatusSchema.findOne({ 'Activity_Status': {$regex : new RegExp("^" + ReceivingData.Activity_Status + "$", "i")}, 'If_Deleted' : false}, {},{}, function(err, result) {
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Activity Status Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Message: "Some error occurred while Find Activity Status!."});
@@ -660,14 +632,11 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Activity_Status || ReceivingData.Activity_Status === '' ) {
             res.status(400).send({Status: false, Message: "Activity Status can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
             res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
          }else {
             var Create_ActivityStatus = new CRMSettingsModel.ActivityStatusSchema({
                Activity_Status: ReceivingData.Activity_Status, 
-               Company_Id: mongoose.Types.ObjectId(ReceivingData.Company_Id),
                Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Active_Status: true,
@@ -704,13 +673,11 @@ var mongoose = require('mongoose');
          var CryptoBytes = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '') {
-               res.status(400).send({status: false ,Message: "Activity Status Id can not be empty" });
-         } else if(!ReceivingData.User_Id || ReceivingData.User_Id === ''){
+         if(!ReceivingData.User_Id || ReceivingData.User_Id === ''){
             res.status(400).send({Status: false, Message: "User Details Can not be Empty" });
          } else {
             CRMSettingsModel.ActivityStatusSchema
-               .find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+               .find({ 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
                .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
                .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
                .exec(function(err, result) { // Activity Status FindOne Query
@@ -730,12 +697,10 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Activity Status Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.ActivityStatusSchema.find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, { Industry_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Activity Status FindOne Query
+            CRMSettingsModel.ActivityStatusSchema.find({ 'If_Deleted': false }, { Industry_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Activity Status FindOne Query
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Activity Status Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Activity Status!."});
@@ -841,12 +806,10 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Activity_Priority || ReceivingData.Activity_Priority === ''){
             res.status(400).send({ Status: false, Message: "Activity Priority Cannot be empty"});
-         } else if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '') {
-            res.status(400).send({ Status: false, Message: "Company Details Cannot be empty"}); 
          } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '') {
             res.status(400).send({ Status: false, Message: "Creator Details Cannot be empty"}); 
          } else{
-            CRMSettingsModel.ActivityPrioritySchema.findOne({'Company_Id': ReceivingData.Company_Id, 'Activity_Priority': {$regex : new RegExp("^" + ReceivingData.Activity_Priority + "$", "i")}, 'If_Deleted' : false}, {},{}, function(err, result) {
+            CRMSettingsModel.ActivityPrioritySchema.findOne({'Activity_Priority': {$regex : new RegExp("^" + ReceivingData.Activity_Priority + "$", "i")}, 'If_Deleted' : false}, {},{}, function(err, result) {
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Activity Priority Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Message: "Some error occurred while Find Activity Priority!."});
@@ -867,14 +830,11 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Activity_Priority || ReceivingData.Activity_Priority === '' ) {
             res.status(400).send({Status: false, Message: "Activity Priority can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
             res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
          }else {
             var Create_ActivityPriority  = new CRMSettingsModel.ActivityPrioritySchema({
-               Activity_Priority: ReceivingData.Activity_Priority, 
-               Company_Id: mongoose.Types.ObjectId(ReceivingData.Company_Id),
+               Activity_Priority: ReceivingData.Activity_Priority,
                Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Active_Status: true,
@@ -911,13 +871,11 @@ var mongoose = require('mongoose');
          var CryptoBytes = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '') {
-               res.status(400).send({status: false ,Message: "Activity Priority Id can not be empty" });
-         } else if(!ReceivingData.User_Id || ReceivingData.User_Id === ''){
+         if(!ReceivingData.User_Id || ReceivingData.User_Id === ''){
             res.status(400).send({Status: false, Message: "User Details Can not be Empty" });
          } else {
             CRMSettingsModel.ActivityPrioritySchema
-               .find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+               .find({'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
                .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
                .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
                .exec(function(err, result) { // Activity Priority FindOne Query
@@ -937,12 +895,10 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Activity Priority Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.ActivityPrioritySchema.find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, { Industry_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Activity Priority FindOne Query
+            CRMSettingsModel.ActivityPrioritySchema.find({ 'If_Deleted': false }, { Industry_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Activity Priority FindOne Query
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Activity Priority Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Activity Priority!."});
@@ -1048,12 +1004,10 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Contact_Role || ReceivingData.Contact_Role === ''){
             res.status(400).send({ Status: false, Message: "Contact Role Cannot be empty"});
-         } else if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '') {
-            res.status(400).send({ Status: false, Message: "Company Details Cannot be empty"}); 
          } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '') {
             res.status(400).send({ Status: false, Message: "Creator Details Cannot be empty"}); 
          } else{
-            CRMSettingsModel.ContactRoleSchema.findOne({'Company_Id': ReceivingData.Company_Id, 'Contact_Role': {$regex : new RegExp("^" + ReceivingData.Contact_Role + "$", "i")}, 'If_Deleted' : false}, {},{}, function(err, result) {
+            CRMSettingsModel.ContactRoleSchema.findOne({'Contact_Role': {$regex : new RegExp("^" + ReceivingData.Contact_Role + "$", "i")}, 'If_Deleted' : false}, {},{}, function(err, result) {
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Contact Role Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Message: "Some error occurred while Find Contact Role!."});
@@ -1074,14 +1028,11 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Contact_Role || ReceivingData.Contact_Role === '' ) {
             res.status(400).send({Status: false, Message: "Contact Role can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
             res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
          }else {
             var Create_ContactRole = new CRMSettingsModel.ContactRoleSchema({
-               Contact_Role: ReceivingData.Contact_Role, 
-               Company_Id: mongoose.Types.ObjectId(ReceivingData.Company_Id),
+               Contact_Role: ReceivingData.Contact_Role,
                Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Active_Status: true,
@@ -1118,13 +1069,11 @@ var mongoose = require('mongoose');
          var CryptoBytes = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '') {
-               res.status(400).send({status: false ,Message: "Contact Role Id can not be empty" });
-         } else if(!ReceivingData.User_Id || ReceivingData.User_Id === ''){
+         if(!ReceivingData.User_Id || ReceivingData.User_Id === ''){
             res.status(400).send({Status: false, Message: "User Details Can not be Empty" });
          } else {
             CRMSettingsModel.ContactRoleSchema
-            .find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+            .find({'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
             .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
             .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
             .exec(function(err, result) { // Contact Role FindOne Query
@@ -1144,12 +1093,10 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Contact Role Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.ContactRoleSchema.find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {Contact_Role: 1}, {sort: { updatedAt: -1 }}, function(err, result) { // Contact Role FindOne Query
+            CRMSettingsModel.ContactRoleSchema.find({'If_Deleted': false }, {Contact_Role: 1}, {sort: { updatedAt: -1 }}, function(err, result) { // Contact Role FindOne Query
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Contact Role Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Contact Role!."});
@@ -1255,12 +1202,10 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Machine_Type || ReceivingData.Machine_Type === '' ) {
             res.status(400).send({Status: false, Message: "Machine Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.MachineTypeSchema.findOne({'Company_Id': ReceivingData.Company_Id, 'Machine_Type': { $regex : new RegExp("^" + ReceivingData.Machine_Type + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
+            CRMSettingsModel.MachineTypeSchema.findOne({'Machine_Type': { $regex : new RegExp("^" + ReceivingData.Machine_Type + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Machine Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Message: "Some error occurred while Find Machine Type!."});
@@ -1281,14 +1226,11 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Machine_Type || ReceivingData.Machine_Type === '' ) {
             res.status(400).send({Status: false, Message: "Machine Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
             res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
          }else {
             var Create_MachineType = new CRMSettingsModel.MachineTypeSchema({
-               Machine_Type: ReceivingData.Machine_Type, 
-               Company_Id: mongoose.Types.ObjectId(ReceivingData.Company_Id),
+               Machine_Type: ReceivingData.Machine_Type,
                Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Active_Status: true,
@@ -1322,13 +1264,11 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Machine Type Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
             CRMSettingsModel.MachineTypeSchema
-               .find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+               .find({'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
                .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
                .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
                .exec(function(err, result) { // Machine Type FindOne Query
@@ -1348,12 +1288,10 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Machine Type Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.MachineTypeSchema.find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, { Machine_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Machine Type FindOne Query
+            CRMSettingsModel.MachineTypeSchema.find({'If_Deleted': false }, { Machine_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Machine Type FindOne Query
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Machine Types!."});
@@ -1459,12 +1397,10 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Controller_Type || ReceivingData.Controller_Type === '' ) {
             res.status(400).send({Status: false, Message: "Controller Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.ControllerTypeSchema.findOne({'Company_Id': ReceivingData.Company_Id, 'Controller_Type': { $regex : new RegExp("^" + ReceivingData.Controller_Type + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
+            CRMSettingsModel.ControllerTypeSchema.findOne({ 'Controller_Type': { $regex : new RegExp("^" + ReceivingData.Controller_Type + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Controller Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Message: "Some error occurred while Find Controller Type!."});
@@ -1485,14 +1421,11 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Controller_Type || ReceivingData.Controller_Type === '' ) {
             res.status(400).send({Status: false, Message: "Controller Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
             res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
          }else {
             var Create_ControllerType = new CRMSettingsModel.ControllerTypeSchema({
-               Controller_Type: ReceivingData.Controller_Type, 
-               Company_Id: mongoose.Types.ObjectId(ReceivingData.Company_Id),
+               Controller_Type: ReceivingData.Controller_Type,
                Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Active_Status: true,
@@ -1526,13 +1459,11 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Controller Type Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
             CRMSettingsModel.ControllerTypeSchema
-               .find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+               .find({ 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
                .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
                .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
                .exec(function(err, result) { // Controller Type FindOne Query
@@ -1552,12 +1483,10 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Controller Type Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.ControllerTypeSchema.find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, { Controller_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Controller Type FindOne Query
+            CRMSettingsModel.ControllerTypeSchema.find({ 'If_Deleted': false }, { Controller_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Controller Type FindOne Query
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Controller Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Controller Types!."});
@@ -1653,6 +1582,396 @@ var mongoose = require('mongoose');
 
 
 
+      
+
+// ************************************************** Machine Maintenance Part  *****************************************************
+   // Machine Maintenance Part Async Validate -----------------------------------------------
+      exports.Machine_MaintenancePart_AsyncValidate = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if(!ReceivingData.Part_Name || ReceivingData.Part_Name === '' ) {
+            res.status(400).send({Status: false, Message: "Machine Maintenance Part Name can not be empty" });
+         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+            res.status(400).send({Status: false, Message: "User Details can not be empty" });
+         }else {
+            CRMSettingsModel.MachineMaintenancePartSchema.findOne({ 'Part_Name': { $regex : new RegExp("^" + ReceivingData.Part_Name + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Machine Maintenance Part Name Find Query Error', 'CRM_Settings.controller.js', err);
+                  res.status(417).send({status: false, Message: "Some error occurred while Find Maintenance Part Name!."});
+               } else {
+                  if ( result !== null) {
+                     res.status(200).send({Status: true, Available: false });
+                  } else {
+                     res.status(200).send({Status: true, Available: true });
+                  }
+               }
+            });
+         }
+      };   
+   // Machine Maintenance Part Create -----------------------------------------------
+      exports.Machine_MaintenancePart_Create = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if(!ReceivingData.Part_Name || ReceivingData.Part_Name === '' ) {
+            res.status(400).send({Status: false, Message: "Machine Maintenance Part Name can not be empty" });
+         } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
+            res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
+         }else {
+            var Create_MachineMaintenancePart = new CRMSettingsModel.MachineMaintenancePartSchema({
+               Part_Name: ReceivingData.Part_Name,
+               Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
+               Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
+               Active_Status: true,
+               If_Deleted: false
+            });
+            Create_MachineMaintenancePart.save(function(err, result) { // Machine Maintenance Part Save Query
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Maintenance Part Creation Query Error', 'CRM_Settings.controller.js');
+                  res.status(417).send({Status: false, Message: "Some error occurred while creating the Machine Maintenance Part!."});
+               } else {
+                  CRMSettingsModel.MachineMaintenancePartSchema
+                     .findOne({'_id': result._id})
+                     .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+                     .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+                     .exec(function(err_1, result_1) { // Machine Maintenance Part FindOne Query
+                     if(err_1) {
+                        ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Maintenance Part Find Query Error', 'CRM_Settings.controller.js', err_1);
+                        res.status(417).send({status: false, Message: "Some error occurred while Find The Machine Maintenance Part!."});
+                     } else {
+                        var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
+                           ReturnData = ReturnData.toString();
+                        res.status(200).send({Status: true, Response: ReturnData });
+                     }
+                  });
+               }
+            });
+         }
+      };
+   // Machine Maintenance Part List -----------------------------------------------
+      exports.Machine_MaintenancePart_List = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+            res.status(400).send({Status: false, Message: "User Details can not be empty" });
+         }else {
+            CRMSettingsModel.MachineMaintenancePartSchema
+               .find({'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+               .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+               .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+               .exec(function(err, result) { // Machine Maintenance Part Find Query
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Maintenance Parts Find Query Error', 'CRM_Settings.controller.js', err);
+                  res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Machine Maintenance Parts!."});
+               } else {
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+                  ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Response: ReturnData });
+               }
+            });
+         }
+      };
+   // Machine Maintenance Part Simple List -----------------------------------------------
+      exports.Machine_MaintenancePart_SimpleList = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+            res.status(400).send({Status: false, Message: "User Details can not be empty" });
+         }else {
+            CRMSettingsModel.MachineMaintenancePartSchema.find({ 'If_Deleted': false }, { Part_Name : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Machine Type FindOne Query
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Maintenance Parts Find Query Error', 'CRM_Settings.controller.js', err);
+                  res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Machine Maintenance Parts!."});
+               } else {
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+                  ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Response: ReturnData });
+               }
+            });
+         }
+      };
+   // Machine Maintenance Part Update -----------------------------------------------
+      exports.Machine_MaintenancePart_Update = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if(!ReceivingData.Machine_Maintenance_Part_Id || ReceivingData.Machine_Maintenance_Part_Id === '' ) {
+            res.status(400).send({Status: false, Message: "Machine Maintenance Part Id can not be empty" });
+         }else if(!ReceivingData.Part_Name || ReceivingData.Part_Name === '' ) {
+            res.status(400).send({Status: false, Message: "Machine Maintenance Part Name can not be empty" });
+         } else if (!ReceivingData.Modified_By || ReceivingData.Modified_By === ''  ) {
+            res.status(400).send({Status: false, Message: "Modified User Details can not be empty" });
+         }else {
+            CRMSettingsModel.MachineMaintenancePartSchema.findOne({'_id': ReceivingData.Machine_Maintenance_Part_Id}, {}, {}, function(err, result) { // Machine Type FindOne Query
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Maintenance Part FindOne Query Error', 'CRM_Settings.controller.js', err);
+                  res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Machine Maintenance Part!."});
+               } else {
+                  if (result !== null) {
+                     result.Part_Name = ReceivingData.Part_Name;
+                     result.Last_Modified_By = mongoose.Types.ObjectId(ReceivingData.Modified_By);
+                     result.save(function(err_1, result_1) { // Machine Type Update Query
+                        if(err_1) {
+                           ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Maintenance Part Update Query Error', 'CRM_Settings.controller.js');
+                           res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Update the Machine Maintenance Part!."});
+                        } else {
+                           CRMSettingsModel.MachineMaintenancePartSchema
+                              .findOne({'_id': result_1._id})
+                              .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+                              .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+                              .exec(function(err_2, result_2) { // Machine Type FindOne Query
+                              if(err_2) {
+                                 ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Maintenance Part Find Query Error', 'CRM_Settings.controller.js', err_2);
+                                 res.status(417).send({status: false, Message: "Some error occurred while Find The Machine Maintenance Part!."});
+                              } else {
+                                 var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_2), 'SecretKeyOut@123');
+                                    ReturnData = ReturnData.toString();
+                                 res.status(200).send({Status: true, Response: ReturnData });
+                              }
+                           });
+                        }
+                     });
+                  } else {
+                     res.status(400).send({Status: false, Message: "Machine Maintenance Part Id can not be valid!" });
+                  }
+               }
+            });
+         }
+      };
+   // Machine Maintenance Part Delete -----------------------------------------------
+      exports.Machine_MaintenancePart_Delete = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if(!ReceivingData.Machine_Maintenance_Part_Id || ReceivingData.Machine_Maintenance_Part_Id === '' ) {
+            res.status(400).send({Status: false, Message: "Machine Maintenance Part Id can not be empty" });
+         } else if (!ReceivingData.Modified_By || ReceivingData.Modified_By === ''  ) {
+            res.status(400).send({Status: false, Message: "Modified User Details can not be empty" });
+         }else {
+            CRMSettingsModel.MachineMaintenancePartSchema.findOne({'_id': ReceivingData.Machine_Maintenance_Part_Id}, {}, {}, function(err, result) { // Machine Maintenance Part FindOne Query
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Maintenance Part FindOne Query Error', 'CRM_Settings.controller.js', err);
+                  res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Machine Maintenance Part!."});
+               } else {
+                  if (result !== null) {
+                     result.If_Deleted = true;
+                     result.Last_Modified_By = mongoose.Types.ObjectId(ReceivingData.Modified_By);
+                     result.save(function(err_1, result_1) { // Machine Maintenance Part Delete Query
+                        if(err_1) {
+                           ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Maintenance Part Delete Query Error', 'CRM_Settings.controller.js');
+                           res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Delete the Machine Maintenance Part!."});
+                        } else {
+                           res.status(200).send({Status: true, Message: 'Successfully Deleted' });
+                        }
+                     });
+                  } else {
+                     res.status(400).send({Status: false, Message: "Machine Maintenance Part Id can not be valid!" });
+                  }
+               }
+            });
+         }
+      };
+
+
+
+
+   
+// ************************************************** Machine Schedule Activity *****************************************************
+   // Machine Schedule Activity Async Validate -----------------------------------------------
+      exports.Machine_ScheduleActivity_AsyncValidate = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if(!ReceivingData.Activity_Name || ReceivingData.Activity_Name === '' ) {
+            res.status(400).send({Status: false, Message: "Machine Schedule Activity Name can not be empty" });
+         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+            res.status(400).send({Status: false, Message: "User Details can not be empty" });
+         }else {
+            CRMSettingsModel.MachineScheduleActivitySchema.findOne({ 'Activity_Name': { $regex : new RegExp("^" + ReceivingData.Activity_Name + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Machine Schedule Activity Find Query Error', 'CRM_Settings.controller.js', err);
+                  res.status(417).send({status: false, Message: "Some error occurred while Find Machine Schedule Activity!."});
+               } else {
+                  if ( result !== null) {
+                     res.status(200).send({Status: true, Available: false });
+                  } else {
+                     res.status(200).send({Status: true, Available: true });
+                  }
+               }
+            });
+         }
+      };   
+   // Machine Schedule Activity Create -----------------------------------------------
+      exports.Machine_ScheduleActivity_Create = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if(!ReceivingData.Activity_Name || ReceivingData.Activity_Name === '' ) {
+            res.status(400).send({Status: false, Message: "Machine Schedule Activity Name can not be empty" });
+         } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
+            res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
+         }else {
+            var Create_MachineScheduleActivity = new CRMSettingsModel.MachineScheduleActivitySchema({
+               Activity_Name: ReceivingData.Activity_Name,
+               Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
+               Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
+               Active_Status: true,
+               If_Deleted: false
+            });
+            Create_MachineScheduleActivity.save(function(err, result) { // Machine Type Save Query
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Schedule Activity Creation Query Error', 'CRM_Settings.controller.js');
+                  res.status(417).send({Status: false, Message: "Some error occurred while creating the Machine Schedule Activity!."});
+               } else {
+                  CRMSettingsModel.MachineScheduleActivitySchema
+                     .findOne({'_id': result._id})
+                     .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+                     .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+                     .exec(function(err_1, result_1) { // Machine Type FindOne Query
+                     if(err_1) {
+                        ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Schedule Activity Find Query Error', 'CRM_Settings.controller.js', err_1);
+                        res.status(417).send({status: false, Message: "Some error occurred while Find The Machine Schedule Activity!."});
+                     } else {
+                        var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
+                           ReturnData = ReturnData.toString();
+                        res.status(200).send({Status: true, Response: ReturnData });
+                     }
+                  });
+               }
+            });
+         }
+      };
+   // Machine Schedule Activity List -----------------------------------------------
+      exports.Machine_ScheduleActivity_List = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+            res.status(400).send({Status: false, Message: "User Details can not be empty" });
+         }else {
+            CRMSettingsModel.MachineScheduleActivitySchema
+               .find({'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+               .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+               .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+               .exec(function(err, result) { // Machine Type FindOne Query
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Schedule Activity Find Query Error', 'CRM_Settings.controller.js', err);
+                  res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Machine Schedule Activity!."});
+               } else {
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+                  ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Response: ReturnData });
+               }
+            });
+         }
+      };
+   // Machine Schedule Activity Simple List -----------------------------------------------
+      exports.Machine_ScheduleActivity_SimpleList = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+            res.status(400).send({Status: false, Message: "User Details can not be empty" });
+         }else {
+            CRMSettingsModel.MachineScheduleActivitySchema.find({'If_Deleted': false }, { Activity_Name : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Machine Type FindOne Query
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Schedule Activity Find Query Error', 'CRM_Settings.controller.js', err);
+                  res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Machine Schedule Activity!."});
+               } else {
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+                  ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Response: ReturnData });
+               }
+            });
+         }
+      };
+   // Machine Schedule Activity Update -----------------------------------------------
+      exports.Machine_ScheduleActivity_Update = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if(!ReceivingData.Machine_Schedule_Activity_Id || ReceivingData.Machine_Schedule_Activity_Id === '' ) {
+            res.status(400).send({Status: false, Message: "Machine Schedule Activity Id can not be empty" });
+         }else if(!ReceivingData.Activity_Name || ReceivingData.Activity_Name === '' ) {
+            res.status(400).send({Status: false, Message: "Machine Schedule Activity Name can not be empty" });
+         } else if (!ReceivingData.Modified_By || ReceivingData.Modified_By === ''  ) {
+            res.status(400).send({Status: false, Message: "Modified User Details can not be empty" });
+         }else {
+            CRMSettingsModel.MachineScheduleActivitySchema.findOne({'_id': ReceivingData.Machine_Schedule_Activity_Id}, {}, {}, function(err, result) { // Machine Schedule Activity FindOne Query
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Type FindOne Query Error', 'CRM_Settings.controller.js', err);
+                  res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Machine Type!."});
+               } else {
+                  if (result !== null) {
+                     result.Activity_Name = ReceivingData.Activity_Name;
+                     result.Last_Modified_By = mongoose.Types.ObjectId(ReceivingData.Modified_By);
+                     result.save(function(err_1, result_1) { // Machine Schedule Activity Update Query
+                        if(err_1) {
+                           ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Schedule Activity Update Query Error', 'CRM_Settings.controller.js');
+                           res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Update the Machine Schedule Activity!."});
+                        } else {
+                           CRMSettingsModel.MachineScheduleActivitySchema
+                              .findOne({'_id': result_1._id})
+                              .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+                              .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+                              .exec(function(err_2, result_2) { // Machine Schedule Activity FindOne Query
+                              if(err_2) {
+                                 ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Schedule Activity Find Query Error', 'CRM_Settings.controller.js', err_2);
+                                 res.status(417).send({status: false, Message: "Some error occurred while Find The Machine Schedule Activity!."});
+                              } else {
+                                 var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_2), 'SecretKeyOut@123');
+                                    ReturnData = ReturnData.toString();
+                                 res.status(200).send({Status: true, Response: ReturnData });
+                              }
+                           });
+                        }
+                     });
+                  } else {
+                     res.status(400).send({Status: false, Message: "Machine Schedule Activity Id can not be valid!" });
+                  }
+               }
+            });
+         }
+      };
+   // Machine Schedule Activity Delete -----------------------------------------------
+      exports.Machine_ScheduleActivity_Delete = function(req, res) {
+         var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+         var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+         if(!ReceivingData.Machine_Schedule_Activity_Id || ReceivingData.Machine_Schedule_Activity_Id === '' ) {
+            res.status(400).send({Status: false, Message: "Machine Type Id can not be empty" });
+         } else if (!ReceivingData.Modified_By || ReceivingData.Modified_By === ''  ) {
+            res.status(400).send({Status: false, Message: "Modified User Details can not be empty" });
+         }else {
+            CRMSettingsModel.MachineScheduleActivitySchema.findOne({'_id': ReceivingData.Machine_Schedule_Activity_Id}, {}, {}, function(err, result) { // Machine Schedule Activity FindOne Query
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Schedule Activity FindOne Query Error', 'CRM_Settings.controller.js', err);
+                  res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Machine Schedule Activity!."});
+               } else {
+                  if (result !== null) {
+                     result.If_Deleted = true;
+                     result.Last_Modified_By = mongoose.Types.ObjectId(ReceivingData.Modified_By);
+                     result.save(function(err_1, result_1) { // Machine Schedule Activity Delete Query
+                        if(err_1) {
+                           ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Machine Schedule Activity Delete Query Error', 'CRM_Settings.controller.js');
+                           res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Delete the Machine Schedule Activity!."});
+                        } else {
+                           res.status(200).send({Status: true, Message: 'Successfully Deleted' });
+                        }
+                     });
+                  } else {
+                     res.status(400).send({Status: false, Message: "Machine Schedule Activity Id can not be valid!" });
+                  }
+               }
+            });
+         }
+      };
+
+
+
 
 
 // ************************************************** Ticket Type *****************************************************
@@ -1663,12 +1982,10 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Ticket_Type || ReceivingData.Ticket_Type === '' ) {
             res.status(400).send({Status: false, Message: "Ticket Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.TicketTypeSchema.findOne({'Company_Id': ReceivingData.Company_Id, 'Ticket_Type': { $regex : new RegExp("^" + ReceivingData.Ticket_Type + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
+            CRMSettingsModel.TicketTypeSchema.findOne({ 'Ticket_Type': { $regex : new RegExp("^" + ReceivingData.Ticket_Type + "$", "i") }, 'If_Deleted': false }, {}, {}, function(err, result) {
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Ticket Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Message: "Some error occurred while Find Ticket Type!."});
@@ -1689,14 +2006,11 @@ var mongoose = require('mongoose');
 
          if(!ReceivingData.Ticket_Type || ReceivingData.Ticket_Type === '' ) {
             res.status(400).send({Status: false, Message: "Ticket Type can not be empty" });
-         } else if (!ReceivingData.Company_Id || ReceivingData.Company_Id === ''  ) {
-            res.status(400).send({Status: false, Message: "Company Details can not be empty" });
          } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
             res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
          }else {
             var Create_TicketType = new CRMSettingsModel.TicketTypeSchema({
-               Ticket_Type: ReceivingData.Ticket_Type, 
-               Company_Id: mongoose.Types.ObjectId(ReceivingData.Company_Id),
+               Ticket_Type: ReceivingData.Ticket_Type,
                Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
                Active_Status: true,
@@ -1730,13 +2044,11 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Ticket Type Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
             CRMSettingsModel.TicketTypeSchema
-               .find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+               .find({ 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
                .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
                .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
                .exec(function(err, result) { // Ticket Type FindOne Query
@@ -1756,12 +2068,10 @@ var mongoose = require('mongoose');
          var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
          var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-         if(!ReceivingData.Company_Id || ReceivingData.Company_Id === '' ) {
-            res.status(400).send({Status: false, Message: "Ticket Type Id can not be empty" });
-         } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.TicketTypeSchema.find({'Company_Id': ReceivingData.Company_Id, 'If_Deleted': false }, { Ticket_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Ticket Type FindOne Query
+            CRMSettingsModel.TicketTypeSchema.find({ 'If_Deleted': false }, { Ticket_Type : 1 }, {sort: { updatedAt: -1 }}, function(err, result) { // Ticket Type FindOne Query
                if(err) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Ticket Type Find Query Error', 'CRM_Settings.controller.js', err);
                   res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Ticket Types!."});

@@ -5,7 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { HrSettingsService } from './../../../../../services/settings/HrSettings/hr-settings.service';
 import * as CryptoJS from 'crypto-js';
 import { ToastrService } from '../../../../../services/common-services/toastr-service/toastr.service';
-import { PermissionsCheckService } from './../../../../../services/PermissionsCheck/permissions-check.service';
+import { LoginService } from './../../../../../services/LoginService/login.service';
 
 import { ModelDesignationHrsettingsComponent } from '../../../../../models/settings/hr_settings/model-designation-hrsettings/model-designation-hrsettings.component';
 import { DeleteConfirmationComponent } from '../../../../Common-Components/delete-confirmation/delete-confirmation.component';
@@ -19,30 +19,20 @@ import { DeleteConfirmationComponent } from '../../../../Common-Components/delet
 export class DesignationHrSettingsComponent implements OnInit {
 
    bsModalRef: BsModalRef;
-   _Create: Boolean = false;
-   _View: Boolean = false;
-   _Edit: Boolean = false;
-   _Delete: Boolean = false;
+
    Loader: Boolean = true;
    _List: any[] = [];
-   Company_Id = '5b3c66d01dd3ff14589602fe';
-   User_Id = '5b530ef333fc40064c0db31e';
+   User_Id;
 
    constructor (  private modalService: BsModalService,
                   private Service: HrSettingsService,
                   private Toastr: ToastrService,
-                  public PermissionCheck: PermissionsCheckService
+                  public Login_Service: LoginService
                )  {
-                     // SubModule Permissions
-                     const Permissions = this.PermissionCheck.SubModulePermissionValidate('Settings_Hr_Settings');
-                     if (Permissions['Status']) {
-                     this._Create = Permissions['Create_Permission'];
-                     this._View = Permissions['View_Permission'];
-                     this._Edit = Permissions['Edit_Permission'];
-                     this._Delete = Permissions['Delete_Permission'];
-                     }
+                  this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+
                      // Get Department List
-                        const Data = { 'Company_Id' : this.Company_Id, 'User_Id' : this.User_Id, };
+                        const Data = { 'User_Id' : this.User_Id, };
                         let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
                         Info = Info.toString();
                         this.Service.Designation_List({'Info': Info}).subscribe( response => {

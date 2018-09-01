@@ -1,0 +1,158 @@
+<!-- If Create Or Edit The Controller Type -->
+<div class="Modal_Content" *ngIf="_Data['Type'] && ( _Data['Type'] === 'Create' || _Data['Type'] === 'Edit')">
+   <div class="Modal_Header">
+      <p> {{_Data['Type']}} Schedule </p>
+      <span *ngIf="!Uploading" data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+      <div class="Model_Body">
+         <div class="row">
+            <div class="col-sm-6 Form_Input">
+               <label> Schedule Activity:</label>
+               <ng-select class="NgSelect ValueBold" 
+                        [items]="_Schedule_Activities"
+                        bindLabel="Activity_Name"
+                        formControlName="Schedule_Activity" 
+                        [searchable]="true" 
+                        placeholder="Schedule Activity">
+               </ng-select>
+               <p class="error" *ngIf="Form.controls['Schedule_Activity'].errors && !Form.controls['Schedule_Activity'].pristine">
+                  <span *ngIf="Form.controls['Schedule_Activity'].errors.required"> Schedule Activity is required</span>
+                  <span *ngIf="Form.controls['Schedule_Activity'].errors.scheduleActivity_NotAvailable"> This Schedule Activity Already Added! </span>
+               </p>
+            </div>
+            <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': !Form.controls['Schedule_Date'].pristine && Form.controls['Schedule_Date'].errors, 'Form_Success': Form.controls['Schedule_Date'].valid && !Form.controls['Schedule_Date'].pristine }">
+               <label> Schedule Date:</label>
+               <input type="text" formControlName="Schedule_Date" [min]="_Today" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()">
+               <mat-datepicker touchUi #Datepicker></mat-datepicker>
+               <p class="error" *ngIf="Form.controls['Schedule_Date'].errors && !Form.controls['Schedule_Date'].pristine">
+                  <span *ngIf="Form.controls['Schedule_Date'].errors.required">  Schedule Date is required</span>
+               </p>
+            </div>
+            <div class="col-sm-6 Form_TextArea">
+               <label> Description:</label>
+               <textarea formControlName="Description"></textarea>
+            </div>
+         </div>
+      </div>
+      <div class="Model_Footer">
+         <button type="submit" [disabled]="Form.status !== 'VALID' || Uploading" mat-raised-button color="primary">
+            <span *ngIf="_Data['Type'] !== 'Edit' && !Uploading">Submit</span>
+            <span *ngIf="_Data['Type'] === 'Edit' && !Uploading">Update</span>
+            <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+         </button>
+      </div>
+   </form>
+</div>
+
+
+<!-- If Create Or Edit The Controller Type -->
+<div class="Modal_Content" *ngIf="_Data['Type'] && _Data['Type'] === 'ReSchedule'">
+   <div class="Modal_Header">
+      <p> Re Schedule </p>
+      <span *ngIf="!Uploading" data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+      <div class="Model_Body">
+         <div class="row">
+            <div class="col-sm-6 Form_Input">
+               <label> Schedule Activity:</label>
+               <ng-select class="NgSelect ValueBold" 
+                        [items]="_Schedule_Activities"
+                        bindLabel="Activity_Name"
+                        formControlName="Schedule_Activity" 
+                        [searchable]="true" 
+                        placeholder="Schedule Activity">
+               </ng-select>
+               <p class="error" *ngIf="Form.controls['Schedule_Activity'].errors && !Form.controls['Schedule_Activity'].pristine">
+                  <span *ngIf="Form.controls['Schedule_Activity'].errors.required"> Schedule Activity is required</span>
+               </p>
+            </div>
+            <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': !Form.controls['Schedule_Date'].pristine && Form.controls['Schedule_Date'].errors, 'Form_Success': Form.controls['Schedule_Date'].valid && !Form.controls['Schedule_Date'].pristine }">
+               <label> Schedule Completed Date:</label>
+               <input type="text" formControlName="Schedule_Date" [max]="_Today" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()">
+               <mat-datepicker touchUi #Datepicker></mat-datepicker>
+               <p class="error" *ngIf="Form.controls['Schedule_Date'].errors && !Form.controls['Schedule_Date'].pristine">
+                  <span *ngIf="Form.controls['Schedule_Date'].errors.required">  Schedule Date is required</span>
+               </p>
+            </div>
+            <div class="col-sm-6 Form_Input">
+               <label> Schedule Completed By:</label>
+               <input type="text" formControlName="Activity_By">
+            </div>
+            <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': !Form.controls['New_Schedule_Date'].pristine && Form.controls['New_Schedule_Date'].errors, 'Form_Success': Form.controls['New_Schedule_Date'].valid && !Form.controls['New_Schedule_Date'].pristine }">
+               <label> New Schedule Date:</label>
+               <input type="text" formControlName="New_Schedule_Date" [min]="_Today" [matDatepicker]="Datepicker_One" (click)="Datepicker_One.open()" (keypress)="NotAllow()" (keydown)="NotAllow()">
+               <mat-datepicker touchUi #Datepicker_One></mat-datepicker>
+               <p class="error" *ngIf="Form.controls['New_Schedule_Date'].errors && !Form.controls['New_Schedule_Date'].pristine">
+                  <span *ngIf="Form.controls['New_Schedule_Date'].errors.required"> New Schedule Date is required</span>
+               </p>
+            </div>
+            <div class="col-sm-6 Form_TextArea">
+               <label> New Schedule Description: </label>
+               <textarea formControlName="Description"></textarea>
+            </div>
+         </div>
+      </div>
+      <div class="Model_Footer">
+         <button type="submit" [disabled]="Form.status !== 'VALID' || Uploading" mat-raised-button color="primary">
+            <span *ngIf="!Uploading">Update</span>
+            <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+         </button>
+      </div>
+   </form>
+</div>
+
+
+
+
+
+
+<div class="Modal_Content" *ngIf="_Data['Type'] && _Data['Type'] === 'View'">
+  <div class="Modal_Header">
+      <p> Schedule Info</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="view_item">
+         <div class="Static">Schedule Activity </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Schedule_Info']?.Schedule_Activity?.Activity_Name}}</div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Schedule Date </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Schedule_Info']?.Schedule_Date | date:'d-M-y'}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Description </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Schedule_Info']?.Description}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Last Schedule Completed By </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Schedule_Info']?.Last_Activity_Id?.Activity_By}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Last Schedule Completed Date </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Schedule_Info']?.Last_Activity_Id?.Schedule_Date | date:'d-M-y'}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Last Schedule Description </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Schedule_Info']?.Last_Activity_Id?.Description }} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Last Modified Date </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Schedule_Info']?.updatedAt | date:'medium'}}</div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Last Modified By  </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Schedule_Info']?.Last_Modified_By?.Name }}</div>
+      </div>
+   </div>
+</div>

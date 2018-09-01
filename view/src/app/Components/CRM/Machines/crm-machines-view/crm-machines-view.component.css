@@ -112,6 +112,52 @@
    text-transform: uppercase;
    text-decoration: underline;
 }
+
+
+
+.SectionTwo{
+   background-color: #fff;
+   border: 1px solid #fff;
+   padding: 15px;
+   box-shadow: 3px 3px 4px #bfb6b6;
+   margin: 0px;
+}
+
+    
+/* ********************************************** Tabs *********************************** */
+.Tabs{
+   display: flex;
+   width: 100%;
+}
+.Tabs .Tab{
+   color: #4d6a7a;
+   width: 14%;
+   line-height: 35px;
+   background-color: #80808038;
+   margin-top: -10px;
+   text-align: center;
+   margin-right: 5px;
+   font-size: 15px;
+   font-weight: 600;
+   letter-spacing: 0.4px;
+   cursor: pointer;
+}
+.Tabs .Tab:hover{
+   background-color: #80808048;
+   border-bottom: 2px solid #80808068;
+}
+
+.Tabs .Tab.active{
+   border-bottom: 2px solid #4ab65f;
+   color: #4ab65f;
+   cursor: default;
+}
+
+
+
+
+
+
 /* ********************************************** Table Main *********************************** */
 .Table_Section table {
     border: 1px solid lightgray;
@@ -165,9 +211,12 @@
         border: 1px solid #4ab65f;
     }
     .Table_Section table tbody tr td .Style_1 .Time{
-        font-size: 12px;
-        font-weight: 500;
-        color: #8ca5b3;
+      font-size: 13px;
+      font-weight: 500;
+      color: #8ca5b3;
+      line-height: 15px;
+      margin-bottom: 3px;
+      display: block;
     }
     .Table_Section table tbody tr td .Action_Section{
         color: #ffffff;
@@ -183,4 +232,41 @@
     .Table_Section table tbody tr td .Action_Section i {
         width: 100%;
         line-height: 35px;
+    }
+    .Table_Section table tbody tr td .Style_1 input{
+      padding: 4px 10px;
+      width: 96%;
+      height: 37px;
+      outline: none;
+      border: 1px solid #dcdcdc;
+      color: rgb(79, 107, 123);
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+    }
+    .Table_Section table tbody tr td .Style_1 textarea{
+      margin-top: 5px;
+      padding: 4px 10px;
+      width: 96%;
+      height: 37px;
+      outline: none;
+      border: 1px solid #dcdcdc;
+      color: rgb(79, 107, 123);
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+    }
+    .Table_Section table tfoot .Input_Style{
+      padding: 4px 10px;
+      width: 400px;
+      height: 37px;
+      outline: none;
+      border: 1px solid #dcdcdc;
+      color: rgb(79, 107, 123);
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      margin-right: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }

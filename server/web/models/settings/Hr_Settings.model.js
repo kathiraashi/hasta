@@ -4,7 +4,6 @@ var Schema = mongoose.Schema;
 // Employee Category schema
    var EmployeeCategorySchema = mongoose.Schema({
       Employee_Category: { type : String , require : true},
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -16,7 +15,6 @@ var Schema = mongoose.Schema;
 // Department schema
    var DepartmentSchema = mongoose.Schema({
       Department: { type : String , require : true},
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -28,7 +26,6 @@ var Schema = mongoose.Schema;
 // Designation schema
    var DesignationSchema = mongoose.Schema({
       Designation: { type : String , require : true},
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -40,7 +37,6 @@ var Schema = mongoose.Schema;
 // Earnings schema
    var EarningsSchema = mongoose.Schema({
       Earnings_Type: { type : String , require : true},
-      Company_Id: { type : Schema.Types.ObjectId,ref: 'Company_Management' , required: true },
       Created_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Last_Modified_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Active_Status: { type : Boolean , required : true},
@@ -52,7 +48,6 @@ var Schema = mongoose.Schema;
 // Detections schema
    var DetectionsSchema = mongoose.Schema({
       Detections_Type: { type : String , require : true},
-      Company_Id: { type : Schema.Types.ObjectId,ref: 'Company_Management' , required: true },
       Created_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Last_Modified_By: { type : Schema.Types.ObjectId, ref: 'User_Management' , required : true },
       Active_Status: { type : Boolean , required : true},

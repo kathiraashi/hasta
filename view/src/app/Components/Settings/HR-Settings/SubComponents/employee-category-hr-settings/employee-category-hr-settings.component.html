@@ -61,13 +61,13 @@
                   </span>
                </td>
                <td>
-                  <button *ngIf="_View" (click)="ViewEmployeeCategory(i)" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                  <button (click)="ViewEmployeeCategory(i)" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
                      <i class="material-icons">zoom_in</i>
                   </button>
-                  <button  *ngIf="_Edit" (click)="EditEmployeeCategory(i)" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                  <button (click)="EditEmployeeCategory(i)" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
                      <i class="material-icons">edit</i>
                   </button>
-                  <button *ngIf="_Delete" (click)=" DeleteEmployeeCategory(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <button (click)=" DeleteEmployeeCategory(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
                      <i class="material-icons">delete_forever</i>
                   </button>
                </td>

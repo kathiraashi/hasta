@@ -34,7 +34,6 @@ var Schema = mongoose.Schema;
                                     State_Name: { type : String } },
                            City: {  _id: { type: Schema.Types.ObjectId, ref: 'Global_City' },
                                     City_Name: { type : String } } },
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -53,7 +52,6 @@ var Schema = mongoose.Schema;
       Email: { type : String },
       Mobile: { type : String },
       JobPosition: { type : String },
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -76,7 +74,7 @@ var Schema = mongoose.Schema;
       MachineType: { type: Schema.Types.ObjectId, ref: 'MachineType' },
       ControllerType: { type: Schema.Types.ObjectId, ref: 'ControllerType' },
       ControllerModelNo: { type : String },
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
+      Maintenance_Parts: [ {type: Schema.Types.ObjectId, ref: 'MachineMaintenancePart'} ],
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Open_Ticket: { type : Boolean , required : true},
@@ -86,6 +84,58 @@ var Schema = mongoose.Schema;
       { timestamps : true }
    );
    var VarCrmMachines = mongoose.model( 'CrmMachines' ,CrmMachinesSchema, 'Crm_Machines');
+
+
+   // Machine Maintenance schema
+   var CrmMachinesMaintenanceSchema = mongoose.Schema({
+      Machine: { type : Schema.Types.ObjectId, ref: 'CrmMachines', require : true },
+      MachineMaintenancePart: { type: Schema.Types.ObjectId, ref: 'MachineMaintenancePart', required : true },
+      Status: { type : Boolean, required : true },
+      MaintenanceDate: { type : Date, required : true },
+      Description: { type : String },
+      Updated_By: { type: String },
+      If_Updated: { type : Boolean , required : true  },
+      If_Deleted: { type : Boolean , required : true }
+      },
+      { timestamps : true }
+   );
+   var VarCrmMachinesMaintenance = mongoose.model( 'CrmMachinesMaintenance' ,CrmMachinesMaintenanceSchema, 'Crm_Machines_Maintenance');
+
+
+   // Machine Schedule Activity schema
+   var CrmMachinesScheduleActivitySchema = mongoose.Schema({
+      Machine: { type : Schema.Types.ObjectId, ref: 'CrmMachines', require : true },
+      Schedule_Activity: { type: Schema.Types.ObjectId, ref: 'MachineScheduleActivity', required : true },
+      Schedule_Date: { type : Date, required : true },
+      Description: { type : String},
+      Activity_By: { type: String },
+      Last_Activity_Id: { type : Schema.Types.ObjectId, ref: 'CrmMachinesScheduleActivity' },
+      Active_Status: { type : Boolean , required : true },
+      If_Deleted: { type : Boolean , required : true },
+      Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      },
+      { timestamps : true }
+   );
+   var VarCrmMachinesScheduleActivity = mongoose.model( 'CrmMachinesScheduleActivity' ,CrmMachinesScheduleActivitySchema, 'Crm_Machines_Schedule');
+
+   // Machine Idle Time Create
+   var CrmMachinesIdleTimeSchema = mongoose.Schema({
+      Machine: { type : Schema.Types.ObjectId, ref: 'CrmMachines', require : true },
+      Idle_Date: { type : Date, required : true },
+      Idle_Time: { type : String, required : true },
+      Description: { type : String},
+      Idle_CloseDate: { type : Date},
+      Idle_CloseTime: { type : String},
+      Active_Status: { type : Boolean , required : true },
+      If_Deleted: { type : Boolean , required : true },
+      Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      },
+      { timestamps : true }
+   );
+   var VarCrmMachinesIdleTime = mongoose.model( 'CrmMachinesIdleTime' ,CrmMachinesIdleTimeSchema, 'Crm_Machines_IdleTime');
+
 
 
 // Ticket schema
@@ -101,7 +151,6 @@ var Schema = mongoose.Schema;
       CurrentStatus: { type : Object, required: true },
       Issue: { type : String, required: true, },
       TicketType: { type: Schema.Types.ObjectId, ref: 'TicketType' },
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -126,7 +175,6 @@ var Schema = mongoose.Schema;
       EndTime: { type : String },
       Status: { type : Object, required: true },
       Description: { type : String},
-      Company_Id: { type: Schema.Types.ObjectId, ref: 'Company_Management', required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -142,5 +190,8 @@ module.exports = {
    CrmMachinesSchema : VarCrmMachines,
    CrmTicketsSchema : VarCrmTickets,
    CrmCustomerContactsSchema : VarCrmCustomerContacts,
-   CrmTicketActivitiesSchema : VarCrmTicketActivities
+   CrmTicketActivitiesSchema : VarCrmTicketActivities,
+   CrmMachinesMaintenanceSchema : VarCrmMachinesMaintenance,
+   CrmMachinesScheduleActivitySchema: VarCrmMachinesScheduleActivity,
+   CrmMachinesIdleTimeSchema: VarCrmMachinesIdleTime
 };
