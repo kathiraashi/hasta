@@ -66,9 +66,22 @@ export class MachineStatusCrmCustomersViewComponent implements OnInit {
                Obj.Machine.ColorBg = 'rgba(255, 157, 11, 0.63)';
                Obj.Machine.Color = 'rgba(255, 157, 11, 1)';
             }
+            if (Obj.ChartData[Obj.ChartData.length - 1].Status === 'Idle') {
+                  Obj.Machine.ColorBg = 'rgb(154, 156, 156, 0.63);';
+                  Obj.Machine.Color = 'rgba(154, 156, 156, 1)';
+            }
             return Obj;
          });
+         DecryptedData.map(Obj => {
+            Obj.ChartData.map(Obj_1 => {
+                  if (Obj_1.Status === 'Up') { Obj_1.ColorCode = '#44AF5A'; }
+                  if (Obj_1.Status === 'Down') { Obj_1.ColorCode = '#DD171F'; }
+                  if (Obj_1.Status === 'Waiting') { Obj_1.ColorCode = '#ff9d0b'; }
+                  if (Obj_1.Status === 'Idle') { Obj_1.ColorCode = '#9a9c9c'; }
+            });
+         });
          this._List = DecryptedData;
+         console.log(this._List);
          setTimeout(() => {
             this._List.map( (Obj, index ) => {
                this.drawChart(Obj, index);
