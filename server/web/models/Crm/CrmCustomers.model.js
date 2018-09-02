@@ -77,6 +77,7 @@ var Schema = mongoose.Schema;
       Maintenance_Parts: [ {type: Schema.Types.ObjectId, ref: 'MachineMaintenancePart'} ],
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Current_Status: { type : String , required : true},
       Open_Ticket: { type : Boolean , required : true},
       Active_Status: { type : Boolean , required : true},
       If_Deleted: { type : Boolean , required : true }
@@ -100,6 +101,26 @@ var Schema = mongoose.Schema;
       { timestamps : true }
    );
    var VarCrmMachinesMaintenance = mongoose.model( 'CrmMachinesMaintenance' ,CrmMachinesMaintenanceSchema, 'Crm_Machines_Maintenance');
+
+
+   
+   // Machine Idle And Ticket Activity schema
+   var CrmMachinesIdleAndTicketActivitySchema = mongoose.Schema({
+      Machine: { type : Schema.Types.ObjectId, ref: 'CrmMachines', require : true },
+      Activity: { type : String, required : true },
+      Activity_Status: { type : String, required : true },
+      Activity_Date: { type : Date, required : true },
+      Activity_Time: { type : String },
+      Idle_DbId: { type : Schema.Types.ObjectId, ref: 'CrmMachinesIdleTime' },
+      Ticket_DbId: { type : Schema.Types.ObjectId, ref: 'Crm_Tickets' },
+      Ticket_Activity_DbId: { type : Schema.Types.ObjectId, ref: 'CrmTicket_Activities' },
+      If_Deleted: { type : Boolean , required : true },
+      Created_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      },
+      { timestamps : true }
+   );
+   var VarCrmMachinesIdleAndTicketActivity = mongoose.model( 'CrmMachinesIdleAndTicketActivity' ,CrmMachinesIdleAndTicketActivitySchema, 'Crm_Machines_IdleAndTicket_Activity');
+
 
 
    // Machine Schedule Activity schema
@@ -150,6 +171,7 @@ var Schema = mongoose.Schema;
       TicketCloseTime: { type : String },
       CurrentStatus: { type : Object, required: true },
       Issue: { type : String, required: true, },
+      If_Idle: { type : Boolean , required : true },
       TicketType: { type: Schema.Types.ObjectId, ref: 'TicketType' },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
@@ -175,6 +197,7 @@ var Schema = mongoose.Schema;
       EndTime: { type : String },
       Status: { type : Object, required: true },
       Description: { type : String},
+      If_Idle: { type : Boolean , required : true },
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
@@ -193,5 +216,6 @@ module.exports = {
    CrmTicketActivitiesSchema : VarCrmTicketActivities,
    CrmMachinesMaintenanceSchema : VarCrmMachinesMaintenance,
    CrmMachinesScheduleActivitySchema: VarCrmMachinesScheduleActivity,
-   CrmMachinesIdleTimeSchema: VarCrmMachinesIdleTime
-};
+   CrmMachinesIdleTimeSchema: VarCrmMachinesIdleTime,
+   CrmMachinesIdleAndTicketActivitySchema: VarCrmMachinesIdleAndTicketActivity
+}; 

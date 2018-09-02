@@ -45,3 +45,16 @@
 .clock-face__number > span.active{
    background-color: #4ab65f !important;
 }
+.timepicker-overlay{
+   top: 25px !important;
+   align-items: unset !important;
+}
+.timepicker-overlay .timepicker{
+   position: absolute !important;
+}
+.timepicker-backdrop-overlay{
+   z-index: 1006 !important;
+}
+.timepicker-overlay{
+   z-index: 1007 !important;
+}

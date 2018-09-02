@@ -18,8 +18,9 @@ export class MainCrmCustomersViewComponent implements OnInit {
 
    Loader: Boolean = true;
    Active_Tab = 'About';
-   _Data;
+   _Data:Object = {};
    Customer_Id;
+   _List: any[] = [];
 
    constructor(
          private Toastr: ToastrService,
@@ -47,6 +48,35 @@ export class MainCrmCustomersViewComponent implements OnInit {
                      this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                   } else {
                      this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Data Getting Error!, But not Identify!' });
+                  }
+               });
+               this.Crm_Service.CrmCustomerBasedMachine_ChartData({ 'Info': Info }).subscribe( response => {
+                  const ResponseData = JSON.parse(response['_body']);
+                  if (response['status'] === 200 && ResponseData['Status'] ) {
+                     const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
+                     const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+                     DecryptedData.map(Obj => {
+                        if (Obj.ChartData[Obj.ChartData.length - 1].Status === 'UP') {
+                           Obj.Machine.Status = 'UP';
+                           Obj.Machine.Color = 'rgba(68, 175, 91, 1)';
+                        }
+                        if (Obj.ChartData[Obj.ChartData.length - 1].Status === 'Down') {
+                           Obj.Machine.Status = 'Down';
+                           Obj.Machine.Color = 'rgba(227, 28, 19, 1)';
+                        }
+                        if (Obj.ChartData[Obj.ChartData.length - 1].Status === 'Waiting') {
+                           Obj.Machine.Status = 'Waiting for Spare';
+                           Obj.Machine.Color = 'rgba(255, 157, 11, 1)';
+                        }
+                        return Obj;
+                     });
+                     this._List = DecryptedData;
+                  } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+                     this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+                  } else if (response['status'] === 401 && !ResponseData['Status']) {
+                     this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+                  } else {
+                     this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Machiine Status List Getting Error!, But not Identify!' });
                   }
                });
             });

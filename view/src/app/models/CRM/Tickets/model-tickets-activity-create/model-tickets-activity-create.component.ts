@@ -90,6 +90,7 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
          Customer: new FormControl({value: null, disabled: true}, Validators.required),
          Contact: new FormControl(null),
          Employee: new FormControl(null),
+         If_Idle: new FormControl(this._Data['If_Idle']),
          StartDate: new FormControl(this.MinDate, Validators.required),
          StartTime: new FormControl(this.MinTime, Validators.required),
          Status: new FormControl(null, Validators.required),
@@ -198,6 +199,7 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
          }
       }
       if (this.Form.valid && !this.Uploading) {
+         this.Form.controls['StartTime'].setValue(this.Form.controls['StartTime'].value.toLowerCase());
          const StartDate = this.Form.controls['StartDate'].value;
          const StartTime = this.Form.controls['StartTime'].value;
          this.Form.controls['StartDate'].setValue(new Date(formatDate(StartDate) + ' ' + convertTime12to24(StartTime)));

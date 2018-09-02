@@ -51,9 +51,9 @@
                         <th>Customer Name</th>
                         <th>Machine Type</th>
                         <th>Machine Details</th>
-                        <th>Machine Model</th>
                         <th>No.of Maintenance</th>
                         <th>Last Modified By</th>
+                        <th>Status </th>
                         <th>Action</th>
                      </tr>
                   </thead>
@@ -77,15 +77,15 @@
                            </span>
                         </td>
                         <td>
-                           <span class="Style_1">{{Machine.MachineModel}}</span>
-                        </td>
-                        <td>
                            <span class="Style_1">{{Machine['Maintenance_Parts'].length}} </span>
                         </td>
                         <td>
-                           <span class="Style_1">{{Machine.Last_Modified_By?.Name}}
-                              <br> <span class="Time">{{Machine.updatedAt | date:'medium'}}</span>
+                           <span class="Style_1">{{Machine['Last_Modified_By']?.Name}}
+                              <br> <span class="Time">{{Machine['updatedAt'] | date:'medium'}}</span>
                            </span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{Machine['Current_Status']}}</span>
                         </td>
                         <td>
                            <button mat-raised-button color="primary" [routerLink]="['/Crm_Machines_View', Machine._id]"> View </button>

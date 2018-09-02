@@ -92,6 +92,7 @@ export class CrmTicketsCreateComponent implements OnInit {
          TicketOpenDate: new FormControl(new Date(), Validators.required),
          TicketOpenTime: new FormControl(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), Validators.required),
          Issue: new FormControl('', Validators.required),
+         If_Idle: new FormControl({value : false, disabled: true}),
          User_Id: new FormControl(this.User_Id),
       });
 
@@ -127,6 +128,14 @@ export class CrmTicketsCreateComponent implements OnInit {
       }
    }
 
+   Machine_Change() {
+      if (this.Form.controls['Machine'].value !== null && this.Form.controls['Machine'].value['Current_Status'] === 'Idle' ) {
+         this.Form.controls['If_Idle'].setValue(true);
+      } else {
+         this.Form.controls['If_Idle'].setValue(false);
+      }
+   }
+
    formatDate(date) {
       const d = new Date(date);
       let month = '' + (d.getMonth() + 1);
@@ -151,6 +160,7 @@ export class CrmTicketsCreateComponent implements OnInit {
 
    Submit() {
       if (this.Form.valid) {
+         this.Form.controls['TicketOpenTime'].setValue(this.Form.controls['TicketOpenTime'].value.toLowerCase());
          const OpenDate = this.Form.controls['TicketOpenDate'].value;
          const OpenTime = this.Form.controls['TicketOpenTime'].value;
          this.Form.controls['TicketOpenDate'].setValue(new Date(this.formatDate(OpenDate) + ' ' + this.convertTime12to24(OpenTime)));

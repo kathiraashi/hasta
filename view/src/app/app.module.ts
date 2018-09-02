@@ -181,6 +181,7 @@ import { MachineScheduleActivityComponent } from './Components/Settings/CRM-Sett
 import { ModelMachineScheduleActivityCrmsettingsComponent } from './models/settings/crm_settings/model-machine-schedule-activity-crmsettings/model-machine-schedule-activity-crmsettings.component';
 import { ModelMachineMaintenancePartCrmsettingsComponent } from './models/settings/crm_settings/model-machine-maintenance-part-crmsettings/model-machine-maintenance-part-crmsettings.component';
 import { ModelScheduleActivityCreateComponent } from './models/CRM/Machines/model-schedule-activity-create/model-schedule-activity-create.component';
+import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-idle/model-machine-idle.component';
 
 
 @NgModule({
@@ -344,7 +345,8 @@ import { ModelScheduleActivityCreateComponent } from './models/CRM/Machines/mode
            MachineScheduleActivityComponent,
            ModelMachineScheduleActivityCrmsettingsComponent,
            ModelMachineMaintenancePartCrmsettingsComponent,
-           ModelScheduleActivityCreateComponent
+           ModelScheduleActivityCreateComponent,
+           ModelMachineIdleComponent
 
 
 
@@ -435,7 +437,8 @@ import { ModelScheduleActivityCreateComponent } from './models/CRM/Machines/mode
     ModelTicketsCrmCustomersComponent,
     ModelMachineScheduleActivityCrmsettingsComponent,
     ModelMachineMaintenancePartCrmsettingsComponent,
-    ModelScheduleActivityCreateComponent
+    ModelScheduleActivityCreateComponent,
+    ModelMachineIdleComponent
     ],
    bootstrap: [AppComponent]
 })

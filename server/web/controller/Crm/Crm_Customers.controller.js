@@ -442,6 +442,7 @@ exports.CrmMachines_Create = function(req, res) {
          Maintenance_Parts: ReceivingData.Maintenance_Parts,
          Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
          Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+         Current_Status: 'Up',
          Open_Ticket : false,
          If_Deleted: false,
          Active_Status : ReceivingData.Active_Status || true,
@@ -479,7 +480,7 @@ exports.CrmMachines_List = function(req, res) {
          } else {
             var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
             ReturnData = ReturnData.toString();
-            res.status(200).send({Status: true, Response: ReturnData, result: result });
+            res.status(200).send({Status: true, Response: ReturnData });
          }
       });
    }
@@ -520,7 +521,7 @@ exports.CrmMachines_SimpleList = function(req, res) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
    }else {
       CrmCustomersModel.CrmMachinesSchema
-         .find({'If_Deleted': false }, {MachineName: 1 }, {sort: { updatedAt: -1 }})
+         .find({'If_Deleted': false }, {MachineName: 1, Current_Status: 1 }, {sort: { updatedAt: -1 }})
          .exec(function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machines Simple List Find Query Error', 'Crm_Customers.controller.js', err);
@@ -543,7 +544,7 @@ exports.CrmCustomerBasedMachines_SimpleList = function(req, res) {
       res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
    }else {
       CrmCustomersModel.CrmMachinesSchema
-         .find({'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false, 'Open_Ticket': false  }, {MachineName: 1 }, {sort: { updatedAt: -1 }})
+         .find({'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false, 'Open_Ticket': false  }, {MachineName: 1, Current_Status: 1 }, {sort: { updatedAt: -1 }})
          .exec(function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Based Machines Simple List Find Query Error', 'Crm_Customers.controller.js', err);
@@ -913,7 +914,7 @@ exports.CrmMachine_IdleTime_Create = function(req, res) {
       res.status(400).send({Status: false, Message: "Idle Time can not be empty" });
    } else {
         var Crm_Machines_IdleTime= new CrmCustomersModel.CrmMachinesIdleTimeSchema({
-         Machine: ReceivingData.Machine_Id,
+         Machine: mongoose.Types.ObjectId(ReceivingData.Machine_Id),
          Idle_Date: ReceivingData.Idle_Date,
          Idle_Time: ReceivingData.Idle_Time,
          Description: ReceivingData.Description,
@@ -927,6 +928,22 @@ exports.CrmMachine_IdleTime_Create = function(req, res) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Machine Idle Creation Query Error', 'Crm_Customers.controller.js', err);
             res.status(400).send({Status: false, Message: "Some error occurred while creating the Crm Machine Idle!."});
          } else {
+            CrmCustomersModel.CrmMachinesSchema.update(
+               { _id : mongoose.Types.ObjectId(ReceivingData.Machine_Id)  },
+               {$set: { Current_Status: 'Idle' } }
+            ).exec();
+            new CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema({
+               Machine: mongoose.Types.ObjectId(ReceivingData.Machine_Id),
+               Activity: 'Idle',
+               Activity_Status: 'Open',
+               Activity_Date:  ReceivingData.Idle_Date,
+               Activity_Time:  ReceivingData.Idle_Time,
+               Idle_DbId: result._id,
+               Ticket_DbId: null,
+               Ticket_Activity_DbId: null,
+               If_Deleted: false,
+               Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+            }).save();
             CrmCustomersModel.CrmMachinesIdleTimeSchema
                .findOne({'_id': mongoose.Types.ObjectId(result._id), 'If_Deleted': false }, {}, {})
                .populate({ path: 'Created_By', select: ['Name'] })
@@ -955,7 +972,7 @@ exports.CrmMachine_IdleTime_List = function(req, res) {
       res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
    }else {
       CrmCustomersModel.CrmMachinesIdleTimeSchema
-         .find({'Machine': mongoose.Types.ObjectId(ReceivingData.Machine_Id), 'If_Deleted': false, 'Active_Status': true}, {}, {sort: { updatedAt: 1 }})
+         .find({'Machine': mongoose.Types.ObjectId(ReceivingData.Machine_Id), 'If_Deleted': false, 'Active_Status': true}, {}, {sort: { updatedAt: -1 }})
          .populate({ path: 'Created_By', select: ['Name'] })
          .populate({ path: 'Last_Modified_By', select: ['Name'] })
          .exec(function(err, result) {
@@ -997,7 +1014,7 @@ exports.CrmMachine_IdleTime_Update = function(req, res) {
             res.status(400).send({Status: false, Message: "Some error occurred while Updating the Crm Machine Idle!."});
          } else {
             CrmCustomersModel.CrmMachinesIdleTimeSchema
-               .findOne({'_id': mongoose.Types.ObjectId(ReceivingData.Schedule_Id), 'If_Deleted': false }, {}, {})
+               .findOne({'_id': mongoose.Types.ObjectId(ReceivingData.IdleTime_Id), 'If_Deleted': false }, {}, {})
                .populate({ path: 'Created_By', select: ['Name'] })
                .populate({ path: 'Last_Modified_By', select: ['Name'] })
                .exec(function(err_1, result_1) {
@@ -1005,6 +1022,22 @@ exports.CrmMachine_IdleTime_Update = function(req, res) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machine Idle Find Query Error', 'Crm_Customers.controller.js', err_1);
                   res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Machine Idle!."});
                } else {
+                  CrmCustomersModel.CrmMachinesSchema.update(
+                     { _id : mongoose.Types.ObjectId(result_1.Machine._id)  },
+                     {$set: { Current_Status: 'Up' } }
+                  ).exec();
+                  new CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema({
+                     Machine: mongoose.Types.ObjectId(result_1.Machine._id),
+                     Activity: 'Idle',
+                     Activity_Status: 'Close',
+                     Activity_Date:  ReceivingData.Idle_CloseDate,
+                     Activity_Time:  ReceivingData.Idle_CloseTime,
+                     Idle_DbId: mongoose.Types.ObjectId(ReceivingData.IdleTime_Id),
+                     Ticket_DbId: null,
+                     Ticket_Activity_DbId: null,
+                     If_Deleted: false,
+                     Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                  }).save();
                   var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
                   ReturnData = ReturnData.toString();
                   res.status(200).send({Status: true, Response: ReturnData });
@@ -1202,6 +1235,91 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
    }
 };
 
+// exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
+//    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+//    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+//    if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
+//       res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+//    } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+//       res.status(400).send({Status: false, Message: "User Details can not be empty" });
+//    }else {
+//       var FromDate = new Date();
+//       FromDate.setHours(FromDate.getHours() - 24);
+//       var ToDate = new Date();
+//       ToDate.setHours(ToDate.getHours());
+//       var TotalMilleSeconds = Math.abs( new Date(ToDate) -  new Date(FromDate));
+//       CrmCustomersModel.CrmMachinesSchema
+//          .find({'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false }, {MachineName: 1 }, {sort: { updatedAt: -1 }})
+//          .exec(function(err, result) {
+//          if(err) {
+//             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Based Machines Simple List Find Query Error', 'Crm_Customers.controller.js', err);
+//             res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Based Machines Simple List!."});
+//          } else {
+//             Promise.all(
+//                result.map(SingleMachine => { 
+//                   return CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema
+//                      .find({ 'Machine': SingleMachine._id, 
+//                               $and: [{  Activity_Date : { $lt: ToDate } },
+//                                      { Activity_Date: { $gte: FromDate } } ]
+//                            }, {},  {sort: { Activity_Date: 1 }} 
+//                         ).exec()
+//                         .then( MachineTicketsData => {
+//                            if (MachineTicketsData.length === 0) {
+//                               var Arr = [{ Status: 'UP', Percentage: 100, Hours: '24 Hrs', MilleSeconds: TotalMilleSeconds, From: FromDate, To: ToDate }];
+//                               return { Machine : SingleMachine, ChartData: Arr, Stage: '1' };
+//                            } else {
+//                               var ResArray = [];
+//                               // First Activity Calculate Start
+//                                  const diff_F = Math.abs( new Date(MachineTicketsData[0].Activity_Date) -  new Date(FromDate));
+//                                  const Percentage_F = (( diff_F * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+//                                  const hh_F = Math.floor(diff_F / 1000 / 60 / 60);
+//                                  const mm_F = Math.ceil((diff_F - hh_F * 3600000) / 1000 / 60);
+//                                  const Hour_F = ("0" + hh_F).slice(-2)+'hr '+("0" + mm_F).slice(-2)+'min';
+//                                  if (Percentage_F > 0 && MachineTicketsData[0].Activity === 'Waiting' && MachineTicketsData[0].Activity_Status !== 'Close') {
+//                                     ResArray.push({ Status: 'Waiting', Percentage: Percentage_F, Hours: Hour_F, MilleSeconds: diff_F, From: FromDate, To: MachineTicketsData[0].Activity_Date });
+//                                  }
+//                                  else if (Percentage_F > 0 && MachineTicketsData[0].Activity !== 'Waiting' && MachineTicketsData[0].Activity_Status !== 'Close') {
+//                                     ResArray.push({ Status: 'Up', Percentage: Percentage_F, Hours: Hour_F, MilleSeconds: diff_F, From: FromDate, To: MachineTicketsData[0].Activity_Date });
+//                                  }else {
+//                                     if (Percentage_F > 0) {
+//                                        ResArray.push({ Status: MachineTicketsData[0].Activity, Percentage: Percentage_F, Hours: Hour_F, MilleSeconds: diff_F, From: FromDate, To: MachineTicketsData[0].Activity_Date });
+//                                     }
+//                                  }
+//                               // First Activity Calculate End
+
+
+
+//                               // Last Activity Calculate Start
+//                                  const diff_L = Math.abs( new Date(ToDate) -  new Date(MachineTicketsData[MachineTicketsData.length - 1].Activity_Date));
+//                                  const Percentage_L  = (( diff_L  * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+//                                  const hh_L  = Math.floor(diff_L  / 1000 / 60 / 60);
+//                                  const mm_L  = Math.ceil((diff_L  - hh_L  * 3600000) / 1000 / 60);
+//                                  const Hour_L  = ("0" + hh_L ).slice(-2)+'hr '+("0" + mm_L ).slice(-2)+'min';
+//                                  if (MachineTicketsData[MachineTicketsData.length - 1].Activity_Status === 'Open' && Percentage_L > 0) {
+//                                     ResArray.push({ Status: MachineTicketsData[MachineTicketsData.length - 1].Activity, Percentage: Percentage_L, Hours: Hour_L, MilleSeconds: diff_L, From: MachineTicketsData[MachineTicketsData.length - 1].Activity_Date, To: ToDate });
+//                                  }else {
+//                                     if (Percentage_L > 0) {
+//                                        ResArray.push({ Status: 'Up', Percentage: Percentage_L, Hours: Hour_L, MilleSeconds: diff_L, From: MachineTicketsData[MachineTicketsData.length - 1].Activity_Date, To: ToDate });
+//                                     }
+//                                  }
+//                               // Last Activity Calculate End
+//                               return { Machine : SingleMachine, ChartData: ResArray, Stage: '2' };
+//                            }
+//                         }).catch( err_1 => {
+//                            console.log(err_1);
+//                         });
+//                   })
+//             ).then(FinalResult =>  {
+//                res.status(200).send({Status: true, Response: FinalResult });
+//             }).catch(err_2 => {
+//                console.log(err_2);
+//             });
+//          }
+//       });
+//    }
+// };
+
 
 
 
@@ -1255,6 +1373,7 @@ exports.CrmTickets_Create = function(req, res) {
                TicketOpenDate: ReceivingData.TicketOpenDate,
                TicketOpenTime: ReceivingData.TicketOpenTime,
                Issue: ReceivingData.Issue,
+               If_Idle: ReceivingData.If_Idle,
                CurrentStatus: {Type: 'Type_0', Value: 'Waiting'},
                Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
                Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
@@ -1268,7 +1387,7 @@ exports.CrmTickets_Create = function(req, res) {
                } else {
                   CrmCustomersModel.CrmMachinesSchema.update(
                      { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
-                     {$set: {Open_Ticket : true } }
+                     { $set: { Open_Ticket : true } }
                   ).exec();
                   var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
                      ReturnData = ReturnData.toString();
@@ -1434,6 +1553,7 @@ exports.CrmTicketActivities_Create = function(req, res) {
          EndTime: ReceivingData.EndTime,
          Status: ReceivingData.Status,
          Description: ReceivingData.Description,
+         If_Idle: ReceivingData.If_Idle,
          Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
          Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
          If_Deleted: false,
@@ -1446,16 +1566,60 @@ exports.CrmTicketActivities_Create = function(req, res) {
          } else {
             CrmCustomersModel.CrmTicketsSchema.update(
                { _id : mongoose.Types.ObjectId(ReceivingData.TicketId)  },
-               {$set: {CurrentStatus : result.Status } }
+               { $set: {CurrentStatus : result.Status } }
             ).exec();
+
+            let Current_Status = '';
+            let Activity = '';
+            let Activity_Status = '';
+
+            if (ReceivingData.Status.Type === 'Type_1' && !ReceivingData.If_Idle) {
+               Current_Status = 'Down';
+               Activity = 'Down';
+               Activity_Status = 'Open';
+            }
+            if (ReceivingData.Status.Type === 'Type_3' && !ReceivingData.If_Idle) {
+               Activity = 'Waiting';
+               Activity_Status = 'Open';
+            }
+            if (ReceivingData.Status.Type === 'Type_4' && !ReceivingData.If_Idle) {
+               Activity = 'Waiting';
+               Activity_Status = 'Close';
+            }
+            if (ReceivingData.Status.Type === 'Type_6' && !ReceivingData.If_Idle) {
+               Current_Status = 'Up';
+               Activity = 'Down';
+               Activity_Status = 'Close';
+            }
+
+            if ( !ReceivingData.If_Idle && ( ReceivingData.Status.Type === 'Type_6' || ReceivingData.Status.Type === 'Type_1')) {
+               CrmCustomersModel.CrmMachinesSchema.update(
+                  { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
+                  {$set: { Current_Status: Current_Status } }
+               ).exec();
+            }
+            if (ReceivingData.Status.Type !== 'Type_2' && ReceivingData.Status.Type !== 'Type_5' && !ReceivingData.If_Idle) {
+               new CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema({
+                  Machine: mongoose.Types.ObjectId(ReceivingData.Machine_Id),
+                  Activity: Activity,
+                  Activity_Status: Activity_Status,
+                  Activity_Date: ReceivingData.StartDate,
+                  Activity_Time: ReceivingData.StartTime,
+                  Idle_DbId: null,
+                  Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
+                  Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
+                  If_Deleted: false,
+                  Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+               }).save();
+            }
             if (ReceivingData.Status.Type === 'Type_6') {
                CrmCustomersModel.CrmTicketsSchema.update(
                   { _id : mongoose.Types.ObjectId(ReceivingData.TicketId)  },
-                  {$set: {TicketCloseDate : ReceivingData.StartDate, TicketCloseTime: ReceivingData.StartTime } }
+                  { $set: { TicketCloseDate : ReceivingData.StartDate, TicketCloseTime: ReceivingData.StartTime } }
                ).exec();
                CrmCustomersModel.CrmMachinesSchema.update(
                   { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
-                  {$set: {Open_Ticket : false } }
+                  { $set: { Open_Ticket : false } }
                ).exec();
             }
             CrmCustomersModel.CrmTicketActivitiesSchema

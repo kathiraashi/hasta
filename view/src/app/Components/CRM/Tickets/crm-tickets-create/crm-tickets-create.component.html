@@ -31,7 +31,7 @@
                         </p>
                      </div>
                      <div class="col-sm-4 Form_Input" >
-                        <ng-select class="NgSelect ValueBold" formControlName="Machine" [searchable]="true" placeholder="Machine">
+                        <ng-select class="NgSelect ValueBold" formControlName="Machine" [searchable]="true" placeholder="Machine" (ngModelChange)="Machine_Change()">
                            <ng-option *ngFor="let Machine of _Machines" [value]="Machine">{{ Machine.MachineName }}</ng-option>
                         </ng-select>
                         <p class="error" *ngIf="Form.controls['Machine'].errors && !Form.controls['Machine'].pristine">
@@ -69,6 +69,7 @@
                   </div>
                   <div class="row" > 
                      <div class="col-sm-12 text-right">
+                        <mat-checkbox formControlName="If_Idle" [labelPosition]="'before'"> Idle Ticket </mat-checkbox> &nbsp; &nbsp;
                         <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="Submit()"> Submit </button>
                      </div>
                   </div>

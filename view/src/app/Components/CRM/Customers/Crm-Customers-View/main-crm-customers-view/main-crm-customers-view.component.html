@@ -41,7 +41,7 @@
                      <div class="col-sm-10 ">
                         <div class="row">
                            <div class="col-sm-12">
-                              <h5 class="customer_name">{{_Data?.CompanyName}} 
+                              <h5 class="customer_name">{{_Data['CompanyName']}} 
                               <!-- <span><i class="material-icons"> border_color</i></span> -->
                               <span class="Create_Button"> +Create</span>
                            </h5>
@@ -170,17 +170,8 @@
                         <h5> Machines Status</h5>
                      </div>
                      <div class="Machine_Statuses">
-                        <div class="Machine Tooltip">
-                           <div class="machineName "> Machine One  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
-                        </div>
-                        <div class="Machine Tooltip Inactive">
-                           <div class="machineName "> Machine Two  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
-                        </div>
-                        <div class="Machine Tooltip" style="background-color: orange;">
-                           <div class="machineName "> Machine Three  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
-                        </div>
-                        <div class="Machine Tooltip " >
-                           <div class="machineName "> Machine Four  <span class="TooltipText"> <span class="LevelOne"> Machine Name </span> <span class="LevelTwo"> More Machine Details </span>  </span></div>
+                        <div *ngFor="let item of _List; let i=index" class="Machine Tooltip" [ngStyle]="{'background-color' : item.Machine?.Color }">
+                           <div class="machineName "> {{item.Machine?.MachineName | slice:0:15}}{{item.Machine.MachineName?.length > 15 ? '...' : ' ' }}  <span class="TooltipText"> <span class="LevelOne"> {{item.Machine?.MachineName}} </span> <span class="LevelTwo"> {{item.Machine?.Status}}</span>   </span></div>
                         </div>
                      </div>
                   </div>

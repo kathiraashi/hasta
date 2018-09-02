@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 const API_URL = 'http://localhost:4000/API/Hrms_Settings/';
+const Live_API_URL = 'http://159.89.163.252:4000/API/Hrms_Settings/';
 
 @Injectable({
   providedIn: 'root'

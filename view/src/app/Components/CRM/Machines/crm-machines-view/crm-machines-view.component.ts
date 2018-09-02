@@ -13,6 +13,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ModelTicketsCreateComponent } from '../../../../models/CRM/Machines/model-tickets-create/model-tickets-create.component';
 import { DeleteConfirmationComponent } from '../../../../Components/Common-Components/delete-confirmation/delete-confirmation.component';
 import { ModelScheduleActivityCreateComponent } from '../../../../models/CRM/Machines/model-schedule-activity-create/model-schedule-activity-create.component';
+import { ModelMachineIdleComponent } from '../../../../models/CRM/Machines/model-machine-idle/model-machine-idle.component';
 import { LoginService } from './../../../../services/LoginService/login.service';
 
 @Component({
@@ -33,6 +34,7 @@ export class CrmMachinesViewComponent implements OnInit {
    _TicketsList: any[] = [];
    _MaintenanceList: any[] = [];
    _ScheduleList: any[] = [];
+   _IdleList: any[] = [];
 
    bsModalRef: BsModalRef;
 
@@ -112,7 +114,21 @@ export class CrmMachinesViewComponent implements OnInit {
                         const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                         const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                         this._ScheduleList = DecryptedData;
-                        console.log(DecryptedData);
+                     } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+                     } else if (response['status'] === 401 && !ResponseData['Status']) {
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+                     } else {
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Data Getting Error!, But not Identify!' });
+                     }
+                  });
+                  this.Crm_Service.CrmMachine_IdleTime_List({ 'Info': Info }).subscribe( response => {
+                     const ResponseData = JSON.parse(response['_body']);
+                     this.Loader = false;
+                     if (response['status'] === 200 && ResponseData['Status'] ) {
+                        const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
+                        const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+                        this._IdleList = DecryptedData;
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -248,5 +264,34 @@ export class CrmMachinesViewComponent implements OnInit {
       });
    }
 
+
+
+
+   // ********************************* Idle ***************************************
+   CreateIdle() {
+      const initialState = {
+         _Data: { Type: 'Create', Machine_Id: this.Machine_Id, Last_Idle_Info: this._IdleList[0] }
+      };
+      this.bsModalRef = this.modalService.show(ModelMachineIdleComponent, Object.assign({initialState}, { ignoreBackdropClick: true,  class: 'modal-lg' }));
+      this.bsModalRef.content.onClose.subscribe(response => {
+         if (response['Status']) {
+            this._IdleList.splice(0, 0, response['Response']);
+            this._Data['Current_Status'] = 'Idle';
+         }
+      });
+   }
+
+   UpdateIdle(_index) {
+      const initialState = {
+         _Data: { Type: 'Edit', Machine_Id: this.Machine_Id, Idle_Info: this._IdleList[_index]  }
+      };
+      this.bsModalRef = this.modalService.show(ModelMachineIdleComponent, Object.assign({initialState}, { ignoreBackdropClick: true,  class: 'modal-lg' }));
+      this.bsModalRef.content.onClose.subscribe(response => {
+         if (response['Status']) {
+            this._Data['Current_Status'] = 'Up';
+            this._IdleList[_index] = response['Response'];
+         }
+      });
+   }
 
 }

@@ -180,6 +180,18 @@
                         </div>
                      </div>
                   </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Machine_Details_Title">
+                           <h5> Current Status <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Machine_Details_Value">
+                           <h5 >{{_Data['Current_Status']}} </h5>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
@@ -200,9 +212,9 @@
                   <div class="Tab" [ngClass]="{'active': Active_Tab === 'Schedules'}" (click)="Active_Tab_Change('Schedules')">
                      <span > Schedules </span>
                   </div>
-                  <!-- <div class="Tab" [ngClass]="{'active': Active_Tab === 'Idle'}" (click)="Active_Tab_Change('Idle')">
+                  <div class="Tab" [ngClass]="{'active': Active_Tab === 'Idle'}" (click)="Active_Tab_Change('Idle')">
                      <span > Idle Times </span>
-                  </div> -->
+                  </div>
                </div>
             </div>
          </div>
@@ -210,7 +222,7 @@
             <!-- Create and search Section -->
             <div class="row Activity_Header">
                <div class="col-sm-3">
-                  <button *ngIf="_Data['CurrentStatus'] !== 'Closed'" class="Create_Button" mat-raised-button color="primary" (click)="CreateTickets()"> + Create </button>
+                  <button *ngIf="false" class="Create_Button" mat-raised-button color="primary" (click)="CreateTickets()"> + Create </button>
                </div>
                <div class="col-sm-6">
                   <h5> TICKETS </h5>
@@ -386,10 +398,10 @@
                </table>
             </div>
          </div>
-         <!-- <div class="TabSection" *ngIf="Active_Tab === 'Idle'">
+         <div class="TabSection" *ngIf="Active_Tab === 'Idle'">
             <div class="row Activity_Header">
                <div class="col-sm-3">
-                  <button class="Create_Button" mat-raised-button color="primary" (click)="CreateSchedule()" > + Create </button>
+                  <button *ngIf="_Data['Current_Status'] === 'Up'" class="Create_Button" mat-raised-button color="primary" (click)="CreateIdle()" > + Create </button>
                </div>
                <div class="col-sm-6">
                   <h5> Idle Times </h5>
@@ -400,53 +412,43 @@
                   <thead>
                      <tr>
                         <th style="width: 50px"> S.no </th>
-                        <th> Activity Name </th>
-                        <th> Schedule Date </th>
-                        <th> Last Activity </th>
+                        <th> Idle Start Time </th>
+                        <th> Idle End Time </th>
                         <th> Description </th>
+                        <th> Last Modified By </th>
                         <th style="width: 180px"> Action </th>
                      </tr>
                   </thead>
                   <tbody>
-                     <tr *ngFor="let Schedule of _ScheduleList; let i=index">
+                     <tr *ngFor="let Idle of _IdleList; let i=index">
                         <td>
                            <span class="S_no"> {{i + 1}} </span>
                         </td>
                         <td>
-                           <span class="Style_1"> {{Schedule['Schedule_Activity']?.Activity_Name}} </span>
+                           <span class="Style_1"> {{Idle['Idle_Date'] | date:'d-M-y'}} - {{Idle['Idle_Time']}}</span>
                         </td>
                         <td>
-                           <span class="Style_1">{{Schedule['Schedule_Date'] | date:'d-M-y'}} </span>
+                           <span class="Style_1">{{Idle['Idle_CloseDate'] | date:'d-M-y'}} - {{Idle['Idle_CloseTime']}} </span>
                         </td>
                         <td>
-                           <span *ngIf="Schedule['Last_Activity_Id'] !== null" class="Style_1">
-                              {{Schedule['Last_Activity_Id']?.Activity_By}}
-                              <span class="Time"> {{Schedule['Last_Activity_Id']?.Schedule_Date | date:'d-M-y'}} </span>
+                           <span class="Style_1"> {{Idle['Description']}} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1">
+                              {{Idle['Last_Modified_By']?.Name}}
+                              <span class="Time"> {{Idle['updatedAt'] | date:'d-M-y'}} </span>
                            </span>
-                           <span *ngIf="Schedule['Last_Activity_Id'] === null" class="Style_1"> - </span>
                         </td>
                         <td>
-                           <span class="Style_1"> {{Schedule['Description']}} </span>
-                        </td>
-                        <td>
-                           <button (click)="ViewSchedule(i)" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                              <i class="material-icons">zoom_in</i>
-                           </button>
-                           <button (click)="ReSchedule(i)" class="Table_Action_mini Bg_Success" mat-mini-fab color="primary">
-                              <i class="material-icons">update</i>
-                           </button>
-                           <button (click)="EditSchedule(i)" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                           <button *ngIf="Idle['Idle_CloseDate'] === null || Idle['Idle_CloseDate'] === undefined" (click)="UpdateIdle(i)" class="Table_Action_mini Bg_warning" mat-raised-button color="primary">
                               <i class="material-icons">edit</i>
-                           </button>
-                           <button (click)="DeleteSchedule(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                              <i class="material-icons">delete_forever</i>
                            </button>
                         </td>
                      </tr>
                   </tbody>
                </table>
             </div>
-         </div> -->
+         </div>
       </div>
 
    </div>
