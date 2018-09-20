@@ -18,9 +18,12 @@ export class MainCrmCustomersViewComponent implements OnInit {
 
    Loader: Boolean = true;
    Active_Tab = 'About';
-   _Data:Object = {};
+   _Data: Object = {};
    Customer_Id;
    _List: any[] = [];
+   _ActivityList: any[] = [];
+   From: Date = new Date(new Date().setHours(new Date().getHours() - 24));
+   To: Date = new Date();
 
    constructor(
          private Toastr: ToastrService,
@@ -50,7 +53,10 @@ export class MainCrmCustomersViewComponent implements OnInit {
                      this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Data Getting Error!, But not Identify!' });
                   }
                });
-               this.Crm_Service.CrmCustomerBasedMachine_ChartData({ 'Info': Info }).subscribe( response => {
+               const DataOne = { 'Customer_Id': this.Customer_Id,  'User_Id' : this.User_Id, From: this.From, To: this.To };
+               let InfoOne = CryptoJS.AES.encrypt(JSON.stringify(DataOne), 'SecretKeyIn@123');
+               InfoOne = InfoOne.toString();
+               this.Crm_Service.CrmCustomerBasedMachine_ChartData({ 'Info': InfoOne }).subscribe( response => {
                   const ResponseData = JSON.parse(response['_body']);
                   if (response['status'] === 200 && ResponseData['Status'] ) {
                      const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
@@ -68,6 +74,10 @@ export class MainCrmCustomersViewComponent implements OnInit {
                            Obj.Machine.Status = 'Waiting for Spare';
                            Obj.Machine.Color = 'rgba(255, 157, 11, 1)';
                         }
+                        if (Obj.ChartData[Obj.ChartData.length - 1].Status === 'Idle') {
+                           Obj.Machine.Status = 'Idle';
+                           Obj.Machine.Color = '#889196';
+                        }
                         return Obj;
                      });
                      this._List = DecryptedData;
@@ -76,7 +86,22 @@ export class MainCrmCustomersViewComponent implements OnInit {
                   } else if (response['status'] === 401 && !ResponseData['Status']) {
                      this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                   } else {
-                     this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Machiine Status List Getting Error!, But not Identify!' });
+                     this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Machine Status List Getting Error!, But not Identify!' });
+                  }
+               });
+               this.Crm_Service.CrmCustomerBased_ActivitiesList({ 'Info': Info }).subscribe( response => {
+                  const ResponseData = JSON.parse(response['_body']);
+                  this.Loader = false;
+                  if (response['status'] === 200 && ResponseData['Status'] ) {
+                     const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
+                     const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+                     this._ActivityList = DecryptedData;
+                  } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+                     this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+                  } else if (response['status'] === 401 && !ResponseData['Status']) {
+                     this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+                  } else {
+                     this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Data Getting Error!, But not Identify!' });
                   }
                });
             });

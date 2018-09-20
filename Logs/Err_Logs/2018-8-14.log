@@ -1,3 +1,0 @@
-[2018-08-14T11:20:00.996] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"TypeError: Cannot read property 'TicketOpenDate' of undefined"}
-[2018-08-14T17:47:53.237] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"Error: Route.post() requires a callback function but got a [object Undefined]"}
-[2018-08-14T17:58:52.329] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"Error: Route.post() requires a callback function but got a [object Undefined]"}

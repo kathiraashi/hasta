@@ -11,13 +11,105 @@
    </div>
 </div>
 <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
-   
-   <div class="Charts">
-      <div *ngFor="let item of _List; let i=index" class="widget" [ngStyle]="{'background-color' : item.Machine?.ColorBg }" >
-         <div class="header" [ngStyle]="{'background-color' : item.Machine?.Color }">{{item.Machine?.MachineName}} </div>
-         <div id="{{ 'Chart' + i }}" class="chart-container"></div>
+   <div class="Filter">
+      <div class="Applied">
+         <span class="span-1"> Date Time Duration :  </span>
+         <span class="span-2"> {{From | date:'d/M/yyyy h:mm a'}} </span>
+         <span  class="span-3"> - </span>
+         <span class="span-2">  {{To | date:'d/M/yyyy h:mm a'}} </span>
+      </div>
+      <div class="FilterBtn">
+         <button mat-raised-button color="primary" (click)="openModal(template)"> Change Duration </button>
       </div>
    </div>
-
+   <div class="Charts">
+      <ng-container *ngFor="let item of _List; let i=index" >
+         <div class="widget" [ngStyle]="{'background-color' : item.Machine?.Color }">
+            <div class="header">
+               <h6> {{item.Machine?.MachineName}} </h6>
+            </div>
+            <div id="{{ 'Chart' + i }}" class="chart-container"></div>
+            <div class="footer_One">
+               <div> MTBF : <span> {{item.MTBF}} </span> <span> ({{item.MTBF_Waiting}})</span> </div>
+               <div> MTTR : <span> {{item.MTTR}} </span> <span> ({{item.MTTR_Waiting}})</span> </div>
+               <div> Availability :  <span> {{item.Avail}} %</span> <span> ({{item.Avail_Waiting}} %)</span> </div>
+            </div>
+            <div class="FromTo"> <span> {{From | date:'d/M/yyyy h:mm a'}} </span> - <span> {{To | date:'d/M/yyyy h:mm a'}} </span></div>
+         </div>
+      </ng-container>
+   </div>
 
 </div>
+
+
+<ng-template #template>
+   <div class="Modal_Content">
+      <div class="Modal_Header">
+         <p>  Duration Change </p>
+         <span  *ngIf="!Uploading" data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+      </div>
+      <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+         <div class="Model_Body">
+            <div class="row">
+               <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': Form.controls['FromDate'].errors && !Form.controls['FromDate'].pristine, 'Form_Success': Form.controls['FromDate'].valid && !Form.controls['FromDate'].pristine }">
+                  <label>From Date:</label>
+                  <input type="text"
+                        formControlName="FromDate"
+                        [matDatepicker]="DatepickerOne" 
+                        (click)="DatepickerOne.open()" 
+                        (keypress)="NotAllow()" 
+                        (keydown)="NotAllow()">
+                  <mat-datepicker touchUi #DatepickerOne></mat-datepicker>
+                  <p class="error" *ngIf="Form.controls['FromDate'].errors && !Form.controls['FromDate'].pristine">
+                     <span *ngIf="Form.controls['FromDate'].errors.required">From Date is required</span>
+                  </p>
+               </div>
+               <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': Form.controls['FromTime'].errors && !Form.controls['FromTime'].pristine, 'Form_Success': Form.controls['FromTime'].valid && !Form.controls['FromTime'].pristine }">
+                  <label>From Time :</label>
+                  <input type="text" 
+                              formControlName="FromTime"
+                              [ngxTimepicker]="TimePickerOne" 
+                              (keypress)="NotAllow()" 
+                              (keydown)="NotAllow()">
+                  <ngx-material-timepicker #TimePickerOne></ngx-material-timepicker>
+                  <p class="error" *ngIf="Form.controls['FromTime'].errors && !Form.controls['FromTime'].pristine">
+                     <span *ngIf="Form.controls['FromTime'].errors.required"> Time is required</span>
+                  </p>
+               </div>
+               <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': Form.controls['ToDate'].errors && !Form.controls['ToDate'].pristine, 'Form_Success': Form.controls['ToDate'].valid && !Form.controls['ToDate'].pristine }">
+                  <label>To Date:</label>
+                  <input type="text" 
+                        formControlName="ToDate"
+                        [matDatepicker]="DatepickerTwo" 
+                        (click)="DatepickerTwo.open()" 
+                        (keypress)="NotAllow()" 
+                        (keydown)="NotAllow()">
+                  <mat-datepicker touchUi #DatepickerTwo></mat-datepicker>
+                  <p class="error" *ngIf="Form.controls['ToDate'].errors && !Form.controls['ToDate'].pristine">
+                     <span *ngIf="Form.controls['ToDate'].errors.required"> Date is required</span>
+                  </p>
+               </div>
+               <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': Form.controls['ToTime'].errors && !Form.controls['ToTime'].pristine, 'Form_Success': Form.controls['ToTime'].valid && !Form.controls['ToTime'].pristine }">
+                  <label>To Time:</label>
+                  <input type="text" 
+                        formControlName="ToTime"
+                        [ngxTimepicker]="TimePickerTwo" 
+                        (keypress)="NotAllow()" 
+                        (keydown)="NotAllow()">
+                  <ngx-material-timepicker #TimePickerTwo></ngx-material-timepicker>
+                  <p class="error" *ngIf="Form.controls['ToTime'].errors && !Form.controls['ToTime'].pristine">
+                     <span *ngIf="Form.controls['ToTime'].errors.required">Time is required</span>
+                  </p>
+               </div>
+            </div>
+         </div>
+         <div class="Model_Footer">
+            <button type="submit" [disabled]="Form.status !== 'VALID' || Uploading" mat-raised-button color="primary">
+               <span *ngIf=" !Uploading"> Apply </span>
+               <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+            </button>
+         </div>
+      </form>
+   </div>
+
+</ng-template>

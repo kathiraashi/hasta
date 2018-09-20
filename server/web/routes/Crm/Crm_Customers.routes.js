@@ -58,5 +58,7 @@ module.exports = function(app) {
 
 
 
+   app.post('/API/CrmCustomers/CrmCustomerBased_ActivitiesList', Controller.CrmCustomerBased_ActivitiesList);
+
 
 };

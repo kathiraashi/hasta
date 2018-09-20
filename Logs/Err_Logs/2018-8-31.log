@@ -1,2 +1,0 @@
-[2018-08-31T20:24:06.057] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"Error: Cannot find module './server/web/routes/settings/Leads_Settings.routes.js'"}
-[2018-08-31T20:34:45.248] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"ReferenceError: result_1 is not defined"}

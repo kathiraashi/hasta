@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
+var path = require('path');
 
 var ErrorManagement = require('./server/handling/ErrorHandling.js');
 var LogManagement = require('./server/handling/LogHandling.js');
@@ -29,8 +30,8 @@ var app = express();
 
 // DB Connection
 
-  mongoose.connect('mongodb://kathiraashi:kathir143@ds249311.mlab.com:49311/hasta');
-//   mongoose.connect('mongodb://aashiHasta:aashiHasta123@localhost/hasta');
+   mongoose.connect('mongodb://kathiraashi:kathir143@ds249311.mlab.com:49311/hasta');
+   // mongoose.connect('mongodb://aashiHasta:aashiHasta123@localhost/hasta');
    mongoose.connection.on('error', function(err) {
       ErrorManagement.ErrorHandling.ErrorLogCreation('', 'Mongodb Connection Error', 'Server.js', err);
    });
@@ -100,9 +101,9 @@ app.use('/API/', function (req, res, next) {
 
    app.use(express.static(__dirname + '/view/dist/view/'));
 
-app.use(function(req, res) {
-     res.sendFile(path.join(__dirname, '/view/dist/view', 'index.html'));
-});
+   app.use(function(req, res) {
+      res.sendFile(path.join(__dirname, '/view/dist/view', 'index.html'));
+   });
 
 
 app.get('*', function(req, res){

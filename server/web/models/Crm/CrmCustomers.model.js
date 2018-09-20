@@ -115,6 +115,7 @@ var Schema = mongoose.Schema;
       Ticket_DbId: { type : Schema.Types.ObjectId, ref: 'Crm_Tickets' },
       Ticket_Activity_DbId: { type : Schema.Types.ObjectId, ref: 'CrmTicket_Activities' },
       If_Deleted: { type : Boolean , required : true },
+      If_Hidden: { type : Boolean , required : true },
       Created_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       },
       { timestamps : true }

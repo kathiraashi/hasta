@@ -40,6 +40,13 @@ export class CrmMachinesListComponent implements OnInit {
             const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
             const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
             this._List = DecryptedData;
+            this._List = this._List.map(obj => {
+               obj.MaintenanceLength = 0;
+               if (obj.Maintenance_Parts !== null) {
+                  obj.MaintenanceLength = obj.Maintenance_Parts.length;
+               }
+               return obj;
+            });
          } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
             this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
          } else if (response['status'] === 401 && !ResponseData['Status']) {

@@ -5,7 +5,7 @@
          <!-- Page Identity -->
          <div class="Page_Identity">
             <div class="Page_Name">
-               <h5> CUSTOMER VIEW</h5>
+               <h5 style="text-transform: uppercase;"> {{_Data['CompanyName']}} </h5>
             </div>
             <div class="Page_Track">
                <ul >
@@ -34,7 +34,7 @@
          <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
             <div class="row">
                <div class="col-sm-9">
-                  <div class="row">
+                  <!-- <div class="row">
                      <div class="col-sm-2 Image_Section">
                         <img src="../../../../../assets/images/basic/company.png">
                      </div>
@@ -42,7 +42,7 @@
                         <div class="row">
                            <div class="col-sm-12">
                               <h5 class="customer_name">{{_Data['CompanyName']}} 
-                              <!-- <span><i class="material-icons"> border_color</i></span> -->
+                              <span><i class="material-icons"> border_color</i></span>
                               <span class="Create_Button"> +Create</span>
                            </h5>
                            </div>
@@ -112,7 +112,7 @@
                            </div>
                         </div><br>
                      </div>
-                  </div>              
+                  </div>               -->
                   <div class="row">
                      <div class="col-sm-12">
                         <div class="Menu_Bar">
@@ -183,37 +183,17 @@
                      </div>
                      <div class="Log_List">
                         <ul>
-                           <li>
-                              <h5>New Machine Added</h5>
-                              <h6> ( 21/08/2018 02:32-PM ) </h6>
-                           </li>
-                           <li>
-                              <h5>New Ticket Created</h5>
-                              <h6> ( 21/08/2018 02:22-PM ) </h6>
-                           </li>
-                           <li>
-                              <h5>One Ticket Closed</h5>
-                              <h6> ( 21/08/2018 02:12-PM ) </h6>
-                           </li>
-                           <li>
-                              <h5>New Ticket Created</h5>
-                              <h6> ( 21/08/2018 02:12-PM ) </h6>
-                           </li>
-                           <li>
-                              <h5>New Machine Added</h5>
-                              <h6> ( 21/08/2018 02:32-PM ) </h6>
-                           </li>
-                           <li>
-                              <h5>New Ticket Created</h5>
-                              <h6> ( 21/08/2018 02:22-PM ) </h6>
-                           </li>
-                           <li>
-                              <h5>One Ticket Closed</h5>
-                              <h6> ( 21/08/2018 02:12-PM ) </h6>
-                           </li>
-                           <li>
-                              <h5>New Ticket Created</h5>
-                              <h6> ( 21/08/2018 02:12-PM ) </h6>
+                           <li *ngFor="let item of _ActivityList; let i=index">
+                              <h5> 
+                                 {{item.Machine?.MachineName}} 
+                                 Stage to 
+                                 <span *ngIf="item.Activity_Status === 'Open'"> {{item.Activity}} </span>
+                                 <span *ngIf="item.Activity_Status === 'Close'">
+                                    <span *ngIf="item.Activity === 'Waiting'"> Down </span>
+                                    <span *ngIf="item.Activity !== 'Waiting'"> Up  </span>
+                                 </span> 
+                              </h5>
+                              <h6> ( {{item.Activity_Date | date:'medium'}} ) </h6>
                            </li>
                         </ul>
                      </div>

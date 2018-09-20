@@ -72,8 +72,8 @@ export class ModelMachineIdleComponent implements OnInit {
          });
          if (this.formatDate(this.DefaultMinDate) === this.formatDate(new Date())) {
             this._MinTime = this.DefaultMinTime;
+            this._MaxTime = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
          }
-         this._MaxTime = this.DefaultMinTime;
       }
       if (this._Data['Type'] === 'Edit' ) {
          this.DefaultMinDate = this._Data['Idle_Info']['Idle_Date'];
