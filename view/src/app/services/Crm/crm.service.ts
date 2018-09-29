@@ -13,6 +13,7 @@ const Live_API_URL = 'http://159.89.163.252:4000/API/CrmCustomers/';
 export class CrmService {
 
    headers;
+
    constructor(private http: Http, private Service: LoginService) {
       this.headers = new Headers();
    }
@@ -50,7 +51,12 @@ export class CrmService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmCustomers_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            const User_Type = this.Service.LoginUser_Info()['User_Type'];
+            if (User_Type === 'Employee') {
+               return this.http.post(API_URL + 'CrmCustomersList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            } else {
+               return this.http.post(API_URL + 'CrmCustomers_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            }
          } else {
             return this.ValidateEveryRequest();
          }
@@ -59,7 +65,12 @@ export class CrmService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmCustomers_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            const User_Type = this.Service.LoginUser_Info()['User_Type'];
+            if (User_Type === 'Employee') {
+               return this.http.post(API_URL + 'CrmCustomers_SimpleList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            } else {
+               return this.http.post(API_URL + 'CrmCustomers_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            }
          } else {
             return this.ValidateEveryRequest();
          }
@@ -155,7 +166,12 @@ export class CrmService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmMachines_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            const User_Type = this.Service.LoginUser_Info()['User_Type'];
+            if (User_Type === 'Employee') {
+               return this.http.post(API_URL + 'CrmMachinesList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            } else {
+               return this.http.post(API_URL + 'CrmMachines_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            }
          } else {
             return this.ValidateEveryRequest();
          }
@@ -173,7 +189,12 @@ export class CrmService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmMachines_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            const User_Type = this.Service.LoginUser_Info()['User_Type'];
+            if (User_Type === 'Employee') {
+               return this.http.post(API_URL + 'CrmMachines_SimpleList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            } else {
+               return this.http.post(API_URL + 'CrmMachines_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            }
          } else {
             return this.ValidateEveryRequest();
          }
@@ -311,6 +332,15 @@ export class CrmService {
          }
       }
 
+      public CrmSingleMachine_ChartData(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'CrmSingleMachine_ChartData', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
 
 
    // Crm Tickets
@@ -327,7 +357,12 @@ export class CrmService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmTickets_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            const User_Type = this.Service.LoginUser_Info()['User_Type'];
+            if (User_Type === 'Employee') {
+               return this.http.post(API_URL + 'CrmTicketsList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            } else {
+               return this.http.post(API_URL + 'CrmTickets_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            }
          } else {
             return this.ValidateEveryRequest();
          }

@@ -1,5 +1,6 @@
 var CryptoJS = require("crypto-js");
 var AdminModel = require('./../../models/Admin/AdminManagement.model.js');
+var HrModel = require('./../../models/Hr/Employee.model.js');
 var ErrorManagement = require('./../../../handling/ErrorHandling.js');
 var mongoose = require('mongoose');
 var crypto = require("crypto");
@@ -40,7 +41,9 @@ var crypto = require("crypto");
       } else if (!ReceivingData.User_Password || ReceivingData.User_Password === ''  ) {
          res.status(400).send({Status: false, Message: "User Password can not be empty" });
       } else {
-         AdminModel.User_Management.findOne({'User_Name': { $regex : new RegExp("^" + ReceivingData.User_Name + "$", "i") }, 'User_Password': ReceivingData.User_Password, 'Active_Status': true}, { User_Password: 0 }, {}, function(err, result) {
+         AdminModel.User_Management.findOne({'User_Name': { $regex : new RegExp("^" + ReceivingData.User_Name + "$", "i") }, 'User_Password': ReceivingData.User_Password, 'Active_Status': true, 'User_Type': {$in: ['Admin', 'Employee']}  }, { User_Password: 0 }, {})
+         .populate({path:'Employee', select:['EmployeeName', 'Customers']})
+         .exec(function(err, result) {
             if(err) {
                ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'User Details Validate Query Error', 'RegisterAndLogin.controller.js', err);
                res.status(417).send({status: false, Error:err, Message: "Some error occurred while Validate The User Details!."});
@@ -98,6 +101,9 @@ var crypto = require("crypto");
       } else if(!ReceivingData.User_Type || ReceivingData.User_Type === '' ) {
          res.status(400).send({Status: false, Message: "User Type can not be empty " });
       } else {
+         if (ReceivingData.User_Type === 'Employee' && ReceivingData.Employee !== undefined && ReceivingData.Employee !== '') {
+            ReceivingData.Employee = mongoose.Types.ObjectId(ReceivingData.Employee);
+         }
          var CreateUser_Management = new AdminModel.User_Management({
             User_Name : ReceivingData.User_Name,
             User_Password : ReceivingData.User_Password,
@@ -105,19 +111,31 @@ var crypto = require("crypto");
             Phone : ReceivingData.Phone || '',
             Email : ReceivingData.Email,
             User_Type: ReceivingData.User_Type,
+            Employee: ReceivingData.Employee || null,
             Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
             Last_ModifiedBy : mongoose.Types.ObjectId(ReceivingData.User_Id),
             Active_Status : ReceivingData.Active_Status || true,
          });
-         
          CreateUser_Management.save(function(err, result) {
             if(err) {
                ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'User Creation Query Error', 'AdminManagement.controller.js', err);
                res.status(400).send({Status: false, Message: "Some error occurred while creating the User!."});
             } else {
-               var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
-                  ReturnData = ReturnData.toString();
-                  res.status(200).send({Status: true, Response: ReturnData });
+               if (ReceivingData.User_Type === 'Employee' && ReceivingData.Employee !== undefined && ReceivingData.Employee !== '') {
+                  HrModel.EmployeeSchema.update({_id: ReceivingData.Employee}, { $set: { If_UserManage: true }}).exec();
+               }
+               AdminModel.User_Management.findOne({_id: result._id }, {}, {})
+                  .populate({path:'Employee', select:'EmployeeName'})
+                  .exec(function(err_1, result_1) { // Users Find Query
+                     if(err) {
+                        ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'User List Find Query Error', 'AdminManagement.controller.js', err);
+                        res.status(417).send({status: false, Message: "Some error occurred while Find Users List!."});
+                     } else {
+                        var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
+                           ReturnData = ReturnData.toString();
+                        res.status(200).send({Status: true, Response: ReturnData });
+                     }
+                  });
             }
          });
    }
@@ -133,7 +151,9 @@ var crypto = require("crypto");
       if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
          res.status(400).send({Status: false, Message: "User Details can not be empty" });
       }else {
-         AdminModel.User_Management.find({'Active_Status': true }, {}, {sort: { updatedAt: -1 }}, function(err, result) { // Users Find Query
+         AdminModel.User_Management.find({'Active_Status': true }, {}, {sort: { updatedAt: -1 }})
+         .populate({path:'Employee', select:'EmployeeName'})
+         .exec(function(err, result) { // Users Find Query
             if(err) {
                ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'User List Find Query Error', 'AdminManagement.controller.js', err);
                res.status(417).send({status: false, Message: "Some error occurred while Find Users List!."});

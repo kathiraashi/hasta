@@ -1,183 +1,95 @@
-<div class="Main_section" style="margin-top:100px;">
-   <div class="container-fluid">
-      <!-- page Identity -->
-      <div class="Page_Identity">
-         <div class="Page_Track">
-               <ul >
-                  <li class="HeaderName">HR</li>
-                  <li class="arrow">>></li>
-                  <li>Employees List</li>
-               </ul>
-            </div>
+<div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+   <div class="Loading">
+      <div class="spinner">
+         <div class="rect1"></div>
+         <div class="rect2"></div>
+         <div class="rect3"></div>
+         <div class="rect4"></div>
+         <div class="rect5"></div>
+         <div class="rect6"></div>
       </div>
-      <!--  Header Part -->
-      <!-- Create and search Section -->
-      <div class="row header_part">
-         <div class="col-sm-6">
-            <button class="Create_Button" mat-button [routerLink]="['/Create_Employees']"> + Create </button>
+   </div>
+</div>
+<div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+   <div class="Main_section" style="margin-top:100px;">
+      <div class="container-fluid">
+         <!-- page Identity -->
+         <div class="Page_Identity">
+            <div class="Page_Track">
+                  <ul >
+                     <li class="HeaderName">HR</li>
+                     <li class="arrow">>></li>
+                     <li>Employees List</li>
+                  </ul>
+               </div>
          </div>
-         <div class="col-sm-6">
-            <div class="Search_Section">
-               <input type="text" placeholder="Search.." name="search">
-               <i class="material-icons">search</i>
+         <!--  Header Part -->
+         <!-- Create and search Section -->
+         <div class="row header_part">
+            <div class="col-sm-6">
+               <button class="Create_Button" mat-raised-button  color="primary" [routerLink]="['/Create_Employees']"> + Create </button>
+            </div>
+            <div class="col-sm-6">
+               <div class="Search_Section">
+                  <input type="text" placeholder="Search.." name="search">
+                  <i class="material-icons">search</i>
+               </div>
             </div>
          </div>
+         <!-- Table Section -->
+         <div class="Table_Section">
+            <table>
+               <thead>
+                  <tr>
+                  <th>S.no</th>
+                  <th>Employee Name</th>
+                  <th>Code</th>
+                  <th>Phone No</th>
+                  <th>Department</th>
+                  <th>Job Title</th>
+                  <th>Join Date</th>
+                  <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let item of _List; let i=index">
+                     <td>
+                        <span class="S_no"> {{ i + 1 }} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{item.EmployeeName}} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{item.EmployeeCode}} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{item.MobileNo}} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{item.Department?.Department}} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{item.JobTitle}} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{item.JoiningDate | date:'d/M/yyyy'}} </span>
+                     </td>
+                     <td>
+                        <button  [routerLink]="['/View_Employees', item._id]" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                           <i class="material-icons">zoom_in</i>
+                        </button>
+                        <button  [routerLink]="['/Edit_Employees', item._id]" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                           <i class="material-icons">edit</i>
+                        </button>
+                        <!-- <button  class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                           <i class="material-icons">delete_forever</i>
+                        </button> -->
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <br>
       </div>
-      <!-- Table Section -->
-      <div class="Table_Section">
-         <table>
-            <thead>
-               <tr>
-               <th>S.no</th>
-               <th>Employee Name</th>
-               <th>Code</th>
-               <th>Phone No</th>
-               <th>Department</th>
-               <th>Job Title</th>
-               <th>Manager</th>
-               <th>Action</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>
-                     <span class="S_no"> 1 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">+4546546547</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Department</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Job Title</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Manager</span>
-                  </td>
-                  <td>
-                     <button  [routerLink]="['/View_Employees']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
-                     </button>
-                     <button  [routerLink]="['/Create_Employees']" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                        <i class="material-icons">edit</i>
-                     </button>
-                     <button  class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                        <i class="material-icons">delete_forever</i>
-                     </button>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 2 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">+4546546547</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Department</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Job Title</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Manager</span>
-                  </td>
-                  <td>
-                     <button  [routerLink]="['/View_Employees']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
-                     </button>
-                     <button  [routerLink]="['/Create_Employees']" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                        <i class="material-icons">edit</i>
-                     </button>
-                     <button  class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                        <i class="material-icons">delete_forever</i>
-                     </button>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 3 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">+4546546547</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Department</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Job Title</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Manager</span>
-                  </td>
-                  <td>
-                     <button  [routerLink]="['/View_Employees']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
-                     </button>
-                     <button  [routerLink]="['/Create_Employees']" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                        <i class="material-icons">edit</i>
-                     </button>
-                     <button  class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                        <i class="material-icons">delete_forever</i>
-                     </button>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 4 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">+4546546547</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Department</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Job Title</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Manager</span>
-                  </td>
-                  <td>
-                     <button  [routerLink]="['/View_Employees']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
-                     </button>
-                     <button  [routerLink]="['/Create_Employees']" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                        <i class="material-icons">edit</i>
-                     </button>
-                     <button  class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                        <i class="material-icons">delete_forever</i>
-                     </button>
-                  </td>
-               </tr>
-            </tbody>
-         </table>
-      </div>
-      <br>
    </div>
 </div>

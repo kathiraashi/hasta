@@ -1,245 +1,123 @@
-<div class="page" style="margin-top:100px;margin-bottom:100px">
+<div class="Page_Section">
    <div class="container-fluid">
-      <!-- page identity -->
+      <!-- page Identity -->
       <div class="Page_Identity">
+         <div class="Page_Name">
+            <h5>EMPLOYEE CREATE</h5>
+         </div>
          <div class="Page_Track">
-            <ul>
-               <li class="HeaderName">HR</li>
+            <ul >
+               <li class="HeaderName">Hr</li>
                <li class="arrow">>></li>
-               <li class="LinkName"  [routerLink]="['/List_Employees']">Employees List</li>
+               <li class="LinkName" [routerLink]="['/List_Employees']">Employee List</li>
                <li class="arrow">>></li>
-               <li>Employees Create</li>
+               <li> Employee Create</li>
             </ul>
          </div>
       </div>
+      <!-- Company Details -->
       <div class="row">
-         <!-- Company details -->
-         <div class="Company_Details">
-            <div class="row">
-               <div class="col-sm-4 Form_Input">
-                  <label>Employee Name:</label>
-                  <input type="text">
-               </div>
-               <div class="col-sm-4 Form_Input">
-                  <label>Code:</label>
-                  <input type="text">
-               </div>
-               <div class="col-sm-4 Form_Select">
-                  <label>Branch:</label>
-                  <select>
-                     <option disabled> Branch</option>
-                     <option>Branch </option>
-                     <option> Branch </option>
-                     <option> Branch </option>
-                     <option> Branch </option>
-                     <option> Branch </option>
-                  </select>
-               </div>
-               <div class="col-sm-4 Form_Select">
-                  <label>Category:</label>
-                  <select>
-                     <option disabled> Category</option>
-                     <option>Category </option>
-                     <option> Category </option>
-                     <option> Category </option>
-                     <option> Category </option>
-                     <option> Category </option>
-                  </select>
-               </div>
-               <div class="col-sm-4 Form_Select">
-                  <label>Department:</label>
-                  <select>
-                     <option disabled> Department</option>
-                     <option>Department </option>
-                     <option> Department </option>
-                     <option> Department </option>
-                     <option> Department </option>
-                     <option> Department </option>
-                  </select>
-               </div>
-               <div class="col-sm-4 Form_Input">
-                  <label>Job Title:</label>
-                  <input type="text">
-               </div>
-               <div class="col-sm-4 Form_Select">
-                  <label>Manager:</label>
-                  <select>
-                     <option disabled> Manager</option>
-                     <option>Manager </option>
-                     <option> Manager </option>
-                     <option> Manager </option>
-                     <option> Manager </option>
-                     <option> Manager </option>
-                  </select>
-               </div>
-               <div class="col-sm-4 Form_Input">
-                  <label>Mobile No:</label>
-                  <input type="text">
-               </div>
-               <div class="col-sm-4 Form_Input">
-                  <label>Date Of Joining:</label>
-                  <input type="text">
-               </div>
-               <div class="col-sm-4 ">
-                  <input type="checkbox" style="margin-top:35px">Is a Manager
-               </div>
-            </div>
-         </div>
-      </div>
-      <br>
-      <div class="Company_Details">
-         <!-- Tabs -->
-         <div class="Tabs">
-            <div class="Tab" [ngClass]="{'active': Active_Tab === 'personal_info'}" (click)="Active_Tab_Change('personal_info')">
-               <span >Personal Info</span>
-            </div>
-            <div class="Tab" [ngClass]="{'active': Active_Tab === 'salary_details'}" (click)="Active_Tab_Change('salary_details')">
-               <span >Salary Details</span>
-            </div>
-         </div>
-         <br>
-         <div class="page" *ngIf="Active_Tab === 'personal_info'">
-            <div class="container-fluid">
-               <!-- Company Details -->
-               <div class="row">
-                  <div class="col-sm-12">
-                     <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Personal <span style="color:#516570;font-size:20px;font-weight: 600;">Info</span></h5><br>
-                     <div class="row">
-                        <div class="col-sm-4 Form_Input" >
-                           <input type="text" placeholder="No/Street">
-                        </div>
-                        <div class="col-sm-4 Form_Input" >
-                           <input type="text" placeholder="Area">
-                        </div>
-                        <div class="col-sm-4 Form_Input" >
-                           <input type="text" placeholder="Country">
-                        </div>
-                        <div class="col-sm-4 Form_Input" >
-                           <input type="text" placeholder="State">
-                        </div>
-                        <div class="col-sm-4 Form_Input" >
-                           <input type="text" placeholder="City">
-                        </div>
-                        <div class="col-sm-4 Form_Select" >
-                           <select>
-                              <option checked>Marital Status</option>
-                              <option> yes</option>
-                              <option> No</option>
-                           </select>
-                        </div>
-                        <div class="col-sm-4 Form_Input" >
-                           <input type="text" placeholder="Date Of Birth"> 
-                        </div>
+         <div class="col-sm-12">
+            <div class="BoxStyle_1">
+               <form [formGroup]="Form">
+                  <div class="row">
+                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['EmployeeName'].pristine && Form.controls['EmployeeName'].errors, 'Form_Success': Form.controls['EmployeeName'].valid && !Form.controls['EmployeeName'].pristine }">
+                        <input type="text" formControlName="EmployeeName" placeholder="Employee Name" >
+                        <p class="error" *ngIf="Form.controls['EmployeeName'].errors && !Form.controls['EmployeeName'].pristine">
+                           <span *ngIf="Form.controls['EmployeeName'].errors.required"> Employee Name is required</span>
+                        </p>
+                     </div>
+                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['MobileNo'].pristine && Form.controls['MobileNo'].errors, 'Form_Success': Form.controls['MobileNo'].valid && !Form.controls['MobileNo'].pristine }">
+                        <input type="text" formControlName="MobileNo" (keypress)="onlyNumber($event)" placeholder="Mobile Number" >
+                        <p class="error" *ngIf="Form.controls['MobileNo'].errors && !Form.controls['MobileNo'].pristine">
+                           <span *ngIf="Form.controls['MobileNo'].errors.required"> Mobile Number is required</span>
+                           <span *ngIf="Form.controls['MobileNo'].errors.MobileNo_NotAvailable"> Mobile Number is Already Exist!</span>
+                        </p>
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="EmployeeCode" placeholder="Employee Code">
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <ng-select class="NgSelect ValueBold"
+                                 [items]="_Departments"
+                                 bindLabel="Department"
+                                 bindValue="_id"
+                                 formControlName="Department"
+                                 [searchable]="true" 
+                                 placeholder="Department">
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="JobTitle" placeholder="Job Title">
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="JoiningDate" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Joining Date">
+                        <mat-datepicker touchUi #Datepicker></mat-datepicker>
+                     </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="DateOfBirth" [matDatepicker]="DatepickerOne" (click)="DatepickerOne.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date Of Birth">
+                        <mat-datepicker touchUi #DatepickerOne></mat-datepicker>
+                     </div>
+                     <div class="col-sm-4 Form_Select" >
+                        <ng-select class="NgSelect ValueBold"
+                                 [items]="_MaritalStatus"
+                                 formControlName="MaritalStatus"
+                                 [searchable]="true" 
+                                 placeholder="Marital Status">
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_TextArea" >
+                        <textarea formControlName="Address" placeholder="Address"></textarea>
                      </div>
                   </div>
-               </div>
-            </div>
-         </div>
-         <div class="page" *ngIf="Active_Tab === 'salary_details'">
-            <div class="container-fluid">
-               <!-- Company Details -->
-               <div class="row">
-                  <div class="col-sm-12">
-                     <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Salary <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5>
-                     <div class="row">
-                        <div class="col-sm-4 Form_Select" >
-                           <select>
-                              <option checked>Select an option</option>
-                              <option> Monthly</option>
-                              <option> Hours</option>
-                           </select>
-                        </div>
+                  <div class="row" style="margin-top: 20px;" > 
+                     <div class="col-sm-12 text-right">
+                        <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="OpenModel(CustomersAddModel)"> Next </button>
                      </div>
                   </div>
-                  <br>
-                  <br>
-                  <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Earnings
-                     <span style="color:#516570;font-size:20px;font-weight: 600;">Table</span>
-                  </h5>
-                  <!-- table section -->
-                  <table class="table_section">
-                     <thead class="table_head">
-                        <tr>
-                        <th class="S_No">Earnings Type</th>
-                        <th>Based On</th>
-                        <th>Amount Or Percentage</th>
-                        <th>Total</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td >Basic Pay</td>
-                           <td class="Form_Select">
-                              <select>
-                                 <option checked>Select an option</option>
-                                 <option> Fixed</option>
-                                 <option> Percentage</option>
-                              </select>
-                           </td>
-                           <td class="Form_Input" >
-                              <input type="text" style="margin-bottom:0px;">
-                           </td>
-                           <td class="Form_Input">
-                              <input type="text" style="margin-bottom:0px;">
-                           </td>
-                        </tr>
-                     </tbody>
-                  </table>
-                  <!-- Detection Table -->
-                  <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Detection
-                     <span style="color:#516570;font-size:20px;font-weight: 600;">Table</span>
-                  </h5>
-                  <table class="table_section">
-                     <thead class="table_head">
-                        <tr>
-                           <th class="S_No">Detection Type</th>
-                           <th>Based On</th>
-                           <th>Amount Or Percentage</th>
-                           <th>Total</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td >ESI</td>
-                           <td class="Form_Select">
-                              <select>
-                                 <option checked>Select an option</option>
-                                 <option> Fixed</option>
-                                 <option> Percentage</option>
-                              </select>
-                           </td>
-                           <td class="Form_Input" >
-                              <input type="text" style="margin-bottom:0px;">
-                           </td>
-                           <td class="Form_Input">
-                              <input type="text" style="margin-bottom:0px;">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td >PF</td>
-                           <td class="Form_Select">
-                              <select>
-                                 <option checked>Select an option</option>
-                                 <option> Fixed</option>
-                                 <option> Percentage</option>
-                              </select>
-                           </td>
-                           <td class="Form_Input" >
-                              <input type="text" style="margin-bottom:0px;">
-                           </td>
-                           <td class="Form_Input">
-                              <input type="text" style="margin-bottom:0px;">
-                           </td>
-                        </tr>
-                     </tbody>
-                  </table>
-                  </div>
-               </div>
+               </form>
             </div>
          </div>
       </div>
    </div>
-<!-- Footer -->
-<div class="Footer">
-   <button mat-raised-button color="primary" style = "top: 5px;"> Submit </button>
 </div>
+
+
+
+
+
+<ng-template #CustomersAddModel>
+   <form [formGroup]="Form">
+      <div style="padding: 0px 10px">
+         <div class="Modal_Header">
+            <p> Access Customers </p>
+            <span data-dismiss="modal" (click)="modalRefHide()">&times;</span>
+         </div>
+         <div class="Model_Body">
+            <div class="row">
+               <div class="col-sm-12 Form_Select">
+                  <ng-select class="NgSelect ValueBold"
+                           [multiple]="true"
+                           [hideSelected]="true"
+                           [items]="_Customers"
+                           bindLabel="CompanyName"
+                           bindValue="_id"
+                           formControlName="Customers"
+                           [searchable]="true"
+                           placeholder="Access Customers">
+                  </ng-select>
+               </div>
+            </div>
+         </div>
+         <div class="Model_Footer">
+            <div class="row" > 
+               <div class="col-sm-6 ">
+               </div>
+               <div class="col-sm-6 text-right">
+                  <button mat-raised-button [disabled]="!Form.valid && Form.invalid" color="primary" (click)="Submit()"> Submit </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </form>
+</ng-template>

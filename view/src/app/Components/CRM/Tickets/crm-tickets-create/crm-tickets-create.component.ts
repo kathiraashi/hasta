@@ -35,7 +35,8 @@ export class CrmTicketsCreateComponent implements OnInit {
    _Machines: any[] =  [];
    _Tickets_Types: any[] =  [];
 
-
+   User_Type;
+   If_Employee;
    Form: FormGroup;
 
    User_Id;
@@ -49,7 +50,12 @@ export class CrmTicketsCreateComponent implements OnInit {
             public Login_Service: LoginService
          ) {
             this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
-            const Data = { 'User_Id' : this.User_Id };
+            this.User_Type = this.Login_Service.LoginUser_Info()['User_Type'];
+            this.If_Employee = this.Login_Service.LoginUser_Info()['Employee'];
+            const Data = {'User_Id' : this.User_Id, Customers: this.If_Employee };
+            if (this.User_Type === 'Employee') {
+               Data.Customers = this.If_Employee['Customers'];
+            }
             let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
             Info = Info.toString();
             // Get Customers List

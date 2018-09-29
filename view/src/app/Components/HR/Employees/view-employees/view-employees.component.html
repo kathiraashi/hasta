@@ -1,190 +1,165 @@
-<div class="page" style="margin-top:100px;">
-      <div class="container-fluid">
-        <!-- page Identity -->
-        <div class="Page_Identity">
-          <div class="Page_Track">
-            <ul>
-              <li class="HeaderName">HR</li>
-              <li class="arrow">>></li>
-              <li class="LinkName" [routerLink]="['/List_Employees']">Employees List</li>
-              <li class="arrow">>></li>
-              <li>Employees View</li>
+<div class="Page_Section">
+  <div class="container-fluid">
+      <!-- Page Identity -->
+      <div class="Page_Identity">
+         <div class="Page_Name">
+            <h5> EMPLOYEE VIEW</h5>
+         </div>
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">HR</li>
+               <li class="arrow">>></li>
+               <li class="LinkName" [routerLink]="['/List_Employees']">Employee List</li>
+               <li class="arrow">>></li>
+               <li> Employee View</li>
             </ul>
-          </div>
-        </div>
-        <form>
-          <div class="row">
-            <!-- Company details -->
-            <div class="Company_Details">
-              <br>
-              <div class="col-sm-12">
-                <div class="view_item">
-                  <div class="Static">Employee Name </div>
-                  <div class="dots"> : </div>
-                  <div class="Data"> Employee Name</div>
-                </div>
-                <div class="view_item">
-                  <div class="Static">Code</div>
-                  <div class="dots"> : </div>
-                  <div class="Data"> Code</div>
-                </div>
-                <div class="view_item">
-                  <div class="Static">Branch </div>
-                  <div class="dots"> : </div>
-                  <div class="Data"> Branch</div>
-                </div>
-                <div class="view_item">
-                  <div class="Static">Category </div>
-                  <div class="dots"> : </div>
-                  <div class="Data"> Category </div>
-                </div>
-                <div class="view_item">
-                  <div class="Static">Department </div>
-                  <div class="dots"> : </div>
-                  <div class="Data"> Department </div>
-                </div>
-                <div class="view_item">
-                  <div class="Static">Job Title </div>
-                  <div class="dots"> : </div>
-                  <div class="Data"> Job Title </div>
-                </div>
-                <div class="view_item">
-                  <div class="Static">Manager </div>
-                  <div class="dots"> : </div>
-                  <div class="Data"> Manager </div>
-                </div>
-                <div class="view_item">
-                  <div class="Static">Mobile No </div>
-                  <div class="dots"> : </div>
-                  <div class="Data"> Mobile No </div>
-                </div>
-                <div class="view_item">
-                  <div class="Static">Date Of Joining </div>
-                  <div class="dots"> : </div>
-                  <div class="Data"> Date Of Joining </div>
-                </div>
-              </div>
-              <br>
-            </div>
-            <div class="Company_Details">
-              <!-- Product Tab -->
-              <div class="Tabs">
-                <div class="Tab" [ngClass]="{'active': Active_Tab === 'personal_info'}" (click)="Active_Tab_Change('personal_info')">
-                  <span>Personal Info</span>
-                </div>
-                <div class="Tab" [ngClass]="{'active': Active_Tab === 'salary_details'}" (click)="Active_Tab_Change('salary_details')">
-                  <span>Salary Details</span>
-                </div>
-              </div>
-              <br>
-              <div class="page" *ngIf="Active_Tab === 'personal_info'">
-                <div class="container-fluid">
-                  <!-- Company Details -->
-                  <div class="row">
-                    <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Personal
-                      <span style="color:#516570;font-size:20px;font-weight: 600;">Info</span>
-                    </h5>
-                    <br>
-                    <div class="col-sm-12">
-                      <div class="view_item">
-                        <div class="Static">No/Street </div>
-                        <div class="dots"> : </div>
-                        <div class="Data">Gandhi Nager</div>
-                      </div>
-                      <div class="view_item">
-                        <div class="Static">Area </div>
-                        <div class="dots"> : </div>
-                        <div class="Data"> Ganapathy</div>
-                      </div>
-                      <div class="view_item">
-                        <div class="Static">Country </div>
-                        <div class="dots"> : </div>
-                        <div class="Data"> India</div>
-                      </div>
-                      <div class="view_item">
-                        <div class="Static">State </div>
-                        <div class="dots"> : </div>
-                        <div class="Data"> Tamil Nadu</div>
-                      </div>
-                      <div class="view_item">
-                        <div class="Static">City </div>
-                        <div class="dots"> : </div>
-                        <div class="Data"> Chennai</div>
-                      </div>
-                      <div class="view_item">
-                        <div class="Static">Marital Status </div>
-                        <div class="dots"> : </div>
-                        <div class="Data"> Married</div>
-                      </div>
-                      <div class="view_item">
-                        <div class="Static">Date Of Birth </div>
-                        <div class="dots"> : </div>
-                        <div class="Data"> 25.07.98</div>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-              </div>
-              <div class="page" *ngIf="Active_Tab === 'salary_details'">
-                <div class="container-fluid">
-                  <!-- Company Details -->
-                  <div class="row">
-                   <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Earnings
-                      <span style="color:#516570;font-size:20px;font-weight: 600;">Table</span>
-                    </h5>
-                    <!-- table section -->
-                    <table class="table_section">
-                      <thead class="table_head">
-                        <tr>
-                          <th class="S_No">Earnings Type</th>
-                          <th>Based On</th>
-                          <th>Amount Or Percentage</th>
-                          <th>Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Basic Pay</td>
-                          <td>Fixed</td>
-                          <td >30000</td>
-                          <td>400000</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <br>
-                    <!-- Detection Table -->
-                    <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Detection
-                      <span style="color:#516570;font-size:20px;font-weight: 600;">Table</span>
-                    </h5>
-                    <table class="table_section">
-                      <thead class="table_head">
-                        <tr>
-                          <th class="S_No">Detection Type</th>
-                          <th>Based On</th>
-                          <th>Amount Or Percentage</th>
-                          <th>Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>ESI</td>
-                          <td >Percentage</td>
-                          <td >40000</td>
-                          <td >60000</td>
-                        </tr>
-                        <tr>
-                          <td>PF</td>
-                          <td>Fixed</td>
-                          <td>40000 </td>
-                          <td>2000</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          </form>
+         </div>
       </div>
-    </div>
+      <!-- Ticket Info  -->
+      <!-- Loader -->
+      <div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+         <div class="Loading">
+            <div class="spinner">
+               <div class="rect1"></div>
+               <div class="rect2"></div>
+               <div class="rect3"></div>
+               <div class="rect4"></div>
+               <div class="rect5"></div>
+               <div class="rect6"></div>
+            </div>
+         </div>
+      </div>
+      <!-- Main Data -->
+      <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+         <div class="Employee_Info_Section">
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5>Employee Name <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5>{{_Data['EmployeeName']}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Employee Code <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5>{{_Data['EmployeeCode']}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Mobile Number <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5>{{_Data['MobileNo']}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Date Of Birth <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['DateOfBirth'] | date:'d/M/yyyy'}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Marital Status <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5>{{_Data['MaritalStatus']}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Job Title <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5>{{_Data['JobTitle']}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Joining Date <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5>{{_Data['JoiningDate'] | date:'d/M/yyyy'}}</h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Address <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5> {{_Data['Address']}}</h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Created By <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Created_By']?.Name}} <span> ( {{_Data['createdAt'] | date:'medium'}} ) </span> </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5>Last Modified By <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Last_Modified_By']?.Name}} <span> ( {{_Data['updatedAt'] | date:'medium'}} ) </span> </h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

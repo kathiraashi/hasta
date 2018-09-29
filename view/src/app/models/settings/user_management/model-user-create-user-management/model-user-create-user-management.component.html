@@ -42,11 +42,27 @@
             </div>
             <div class="col-sm-6 Form_Select">
                <label>User Type :</label>
-               <ng-select class="NgSelect" [searchable]="true" formControlName="User_Type">
-                  <ng-option *ngFor="let Type of _UserTypes" [value]="Type">{{Type}}</ng-option>
+               <ng-select class="NgSelect"
+                           [items]="_UserTypes"
+                           [searchable]="true"
+                           formControlName="User_Type"
+                           (change)="UserType_Change($event)">
                </ng-select>
                <p class="error" *ngIf="Form.controls['User_Type'].errors && !Form.controls['User_Type'].pristine">
                   <span *ngIf="Form.controls['User_Type'].errors.required"> User Type is required</span>
+               </p>
+            </div>
+            <div *ngIf="Form.value.User_Type === 'Employee'" class="col-sm-6 Form_Select">
+               <label> Employee :</label>
+               <ng-select class="NgSelect"
+                           [items]="_EmployeeList"
+                           [bindLabel]="'EmployeeName'"
+                           [bindValue]="'_id'"
+                           [searchable]="true"
+                           formControlName="Employee">
+               </ng-select>
+               <p class="error" *ngIf="Form.controls['Employee'].errors && !Form.controls['Employee'].pristine">
+                  <span *ngIf="Form.controls['Employee'].errors.required"> Employee is required</span>
                </p>
             </div>
          </div>

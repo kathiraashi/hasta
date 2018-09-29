@@ -5,7 +5,6 @@ import { AuthGuard } from './Authentication/auth.guard';
 
 import { LoginComponent } from './Components/Common-Components/login/login.component';
 import { MainCrmSettingsComponent } from './Components/Settings/CRM-Settings/main-crm-settings/main-crm-settings.component';
-import { MainHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/main-hrms-settings/main-hrms-settings.component';
 import { MainHrSettingsComponent } from './Components/Settings/HR-Settings/main-hr-settings/main-hr-settings.component';
 import { CrmCustomersListComponent } from './Components/CRM/Customers/crm-customers-list/crm-customers-list.component';
 import { MainCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-View/main-crm-customers-view/main-crm-customers-view.component';
@@ -13,7 +12,6 @@ import { CrmCustomersCreateComponent } from './Components/CRM/Customers/crm-cust
 import { CrmInvoiceListComponent } from './Components/CRM/Invoice/crm-invoice-list/crm-invoice-list.component';
 import { CrmInvoiceCreateComponent } from './Components/CRM/Invoice/crm-invoice-create/crm-invoice-create.component';
 import { UserManagementListComponent } from './Components/Settings/UserManagement/user-management-list/user-management-list.component';
-import { MainHrmsComponentsComponent } from './Components/HRMS/main-hrms-components/main-hrms-components.component';
 import { CrmInvoiceViewComponent } from './Components/CRM/Invoice/crm-invoice-view/crm-invoice-view.component';
 import { AccountsCustomerListComponent } from './Components/Accounts/Customer/accounts-customer-list/accounts-customer-list.component';
 import { AccountsCustomerInvoiceListComponent } from './Components/Accounts/customer-invoice/accounts-customer-invoice-list/accounts-customer-invoice-list.component';
@@ -37,6 +35,7 @@ import { MainAttendanceComponent } from './Components/HR/Attendance/main-attenda
 import { AttendanceReportViewComponent } from './Components/HR/Attendance/SubComponents/attendance-report-view/attendance-report-view.component';
 import { MainPayrollHrComponent } from './Components/HR/SubComponents/Payroll/main-payroll-hr/main-payroll-hr.component';
 import { MainPayrollMasterHrComponent } from './Components/HR/SubComponents/Payroll-Master/main-payroll-master-hr/main-payroll-master-hr.component';
+import { EditEmployeesComponent } from './Components/HR/Employees/edit-employees/edit-employees.component';
 
 
 
@@ -58,12 +57,6 @@ const appRoutes: Routes = [
       component: MainCrmSettingsComponent,
       canActivate: [AuthGuard],
       data: {   animation: { value: 'CRM_Settings'}   }
-   },
-   {
-      path: 'Hrms_Settings',
-      component: MainHrmsSettingsComponent,
-      canActivate: [AuthGuard],
-      data: {   animation: { value: 'Hrms_Settings'}   }
    },
    {
       path: 'Hr_Settings',
@@ -107,14 +100,6 @@ const appRoutes: Routes = [
       canActivate: [AuthGuard],
       data: {   animation: { value: 'crm_invoice_create'}   }
    },
-
-   {
-      path: 'main_hrms',
-      component: MainHrmsComponentsComponent,
-      canActivate: [AuthGuard],
-      data: {   animation: { value: 'main_hrms'}   }
-   },
-
    {
       path: 'crm_invoice_view',
       component: CrmInvoiceViewComponent,
@@ -231,10 +216,16 @@ const appRoutes: Routes = [
       data: {   animation: { value: 'Create_Employees'}   }
    },
    {
-      path: 'View_Employees',
+      path: 'View_Employees/:Employee_Id',
       component: ViewEmployeesComponent,
       canActivate: [AuthGuard],
       data: {   animation: { value: 'View_Employees'}   }
+   },
+   {
+      path: 'Edit_Employees/:Employee_Id',
+      component: EditEmployeesComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Edit_Employees'}   }
    },
    {
       path: 'main_Attendance',

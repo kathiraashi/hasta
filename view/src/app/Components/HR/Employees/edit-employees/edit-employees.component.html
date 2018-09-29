@@ -1,0 +1,109 @@
+<div class="Page_Section">
+   <div class="container-fluid">
+      <!-- page Identity -->
+      <div class="Page_Identity">
+         <div class="Page_Name">
+            <h5>EMPLOYEE EDIT</h5>
+         </div>
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">Hr</li>
+               <li class="arrow">>></li>
+               <li class="LinkName" [routerLink]="['/List_Employees']">Employee List</li>
+               <li class="arrow">>></li>
+               <li> Employee Edit</li>
+            </ul>
+         </div>
+      </div>
+      <div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+         <div class="Loading">
+            <div class="spinner">
+               <div class="rect1"></div>
+               <div class="rect2"></div>
+               <div class="rect3"></div>
+               <div class="rect4"></div>
+               <div class="rect5"></div>
+               <div class="rect6"></div>
+            </div>
+         </div>
+      </div>
+      <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+      <!-- Company Details -->
+         <div class="row">
+            <div class="col-sm-12">
+               <div class="BoxStyle_1">
+                  <form [formGroup]="Form">
+                     <div class="row">
+                        <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['EmployeeName'].pristine && Form.controls['EmployeeName'].errors, 'Form_Success': Form.controls['EmployeeName'].valid && !Form.controls['EmployeeName'].pristine }">
+                           <input type="text" formControlName="EmployeeName" placeholder="Employee Name" >
+                           <p class="error" *ngIf="Form.controls['EmployeeName'].errors && !Form.controls['EmployeeName'].pristine">
+                              <span *ngIf="Form.controls['EmployeeName'].errors.required"> Employee Name is required</span>
+                           </p>
+                        </div>
+                        <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['MobileNo'].pristine && Form.controls['MobileNo'].errors, 'Form_Success': Form.controls['MobileNo'].valid && !Form.controls['MobileNo'].pristine }">
+                           <input type="text" formControlName="MobileNo" (keypress)="onlyNumber($event)" placeholder="Mobile Number" >
+                           <p class="error" *ngIf="Form.controls['MobileNo'].errors && !Form.controls['MobileNo'].pristine">
+                              <span *ngIf="Form.controls['MobileNo'].errors.required"> Mobile Number is required</span>
+                              <span *ngIf="Form.controls['MobileNo'].errors.MobileNo_NotAvailable"> Mobile Number is Already Exist!</span>
+                           </p>
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="EmployeeCode" placeholder="Employee Code">
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <ng-select class="NgSelect ValueBold"
+                                    [items]="_Departments"
+                                    bindLabel="Department"
+                                    bindValue="_id"
+                                    formControlName="Department"
+                                    [searchable]="true" 
+                                    placeholder="Department">
+                           </ng-select>
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="JobTitle" placeholder="Job Title">
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="JoiningDate" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Joining Date">
+                           <mat-datepicker touchUi #Datepicker></mat-datepicker>
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="DateOfBirth" [matDatepicker]="DatepickerOne" (click)="DatepickerOne.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date Of Birth">
+                           <mat-datepicker touchUi #DatepickerOne></mat-datepicker>
+                        </div>
+                        <div class="col-sm-4 Form_Select" >
+                           <ng-select class="NgSelect ValueBold"
+                                    [items]="_MaritalStatus"
+                                    formControlName="MaritalStatus"
+                                    [searchable]="true" 
+                                    placeholder="Marital Status">
+                           </ng-select>
+                        </div>
+                        <div class="col-sm-4 Form_TextArea" >
+                           <textarea formControlName="Address" placeholder="Address"></textarea>
+                        </div>
+                        <div class="col-sm-4 Form_Select" >
+                           <ng-select class="NgSelect ValueBold"
+                                    [multiple]="true"
+                                    [hideSelected]="true"
+                                    [items]="_Customers"
+                                    bindLabel="CompanyName"
+                                    bindValue="_id"
+                                    formControlName="Customers"
+                                    [searchable]="true"
+                                    placeholder="Access Customers">
+                           </ng-select>
+                        </div>
+                     </div>
+                     <div class="row" style="margin-top: 20px;" > 
+                        <div class="col-sm-12 text-right">
+                           <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="Submit()"> Update </button>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

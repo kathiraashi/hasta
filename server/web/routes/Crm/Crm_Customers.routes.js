@@ -7,6 +7,10 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmCustomers_SimpleList', Controller.CrmCustomers_SimpleList);
    app.post('/API/CrmCustomers/CrmCustomers_View', Controller.CrmCustomers_View);
  
+   app.post('/API/CrmCustomers/CrmCustomersList_ForEmployee', Controller.CrmCustomersList_ForEmployee);
+   app.post('/API/CrmCustomers/CrmCustomers_SimpleList_ForEmployee', Controller.CrmCustomers_SimpleList_ForEmployee);
+
+
 
 
 
@@ -26,6 +30,10 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmMachines_SimpleList', Controller.CrmMachines_SimpleList);
    app.post('/API/CrmCustomers/CrmCustomerBasedMachines_SimpleList', Controller.CrmCustomerBasedMachines_SimpleList);
    app.post('/API/CrmCustomers/CrmMachine_View', Controller.CrmMachine_View);
+
+   app.post('/API/CrmCustomers/CrmMachinesList_ForEmployee', Controller.CrmMachinesList_ForEmployee);
+   app.post('/API/CrmCustomers/CrmMachines_SimpleList_ForEmployee', Controller.CrmMachines_SimpleList_ForEmployee);
+
 
    app.post('/API/CrmCustomers/CrmMachine_MaintenanceSchedule_Today', Controller.CrmMachine_MaintenanceSchedule_Today);
    app.post('/API/CrmCustomers/CrmMachine_MaintenanceSchedule_UpdateToday', Controller.CrmMachine_MaintenanceSchedule_UpdateToday);
@@ -52,6 +60,8 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmMachineBasedTickets_List', Controller.CrmMachineBasedTickets_List);
    app.post('/API/CrmCustomers/CrmTickets_View', Controller.CrmTickets_View);
 
+   app.post('/API/CrmCustomers/CrmTicketsList_ForEmployee', Controller.CrmTicketsList_ForEmployee);
+
 
    app.post('/API/CrmCustomers/CrmTicketActivities_Create', Controller.CrmTicketActivities_Create);
    app.post('/API/CrmCustomers/CrmTicketActivities_List', Controller.CrmTicketActivities_List);
@@ -59,6 +69,10 @@ module.exports = function(app) {
 
 
    app.post('/API/CrmCustomers/CrmCustomerBased_ActivitiesList', Controller.CrmCustomerBased_ActivitiesList);
+
+
+
+   app.post('/API/CrmCustomers/CrmSingleMachine_ChartData', Controller.CrmSingleMachine_ChartData);
 
 
 };

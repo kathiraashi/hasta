@@ -195,8 +195,12 @@ export class MachineStatusCrmCustomersViewComponent implements OnInit {
                      .attr('height', height)
                      .append('g')
                      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+
+      d3.selectAll('.ToolTipSection' + _index).remove();
       const  tooltip = d3.select('body')
                         .append('div')
+                        .attr('class', 'ToolTipSectionOne' + _index)
                         .style('position', 'absolute')
                         .style('z-index', '10')
                         .style('visibility', 'hidden')

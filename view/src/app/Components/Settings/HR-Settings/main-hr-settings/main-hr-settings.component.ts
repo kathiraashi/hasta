@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-hr-settings.component.css']
 })
 export class MainHrSettingsComponent implements OnInit {
-   Active_Tab = 'Employee_Category';
+   Active_Tab = 'Department';
    constructor() { }
 
    ngOnInit() {

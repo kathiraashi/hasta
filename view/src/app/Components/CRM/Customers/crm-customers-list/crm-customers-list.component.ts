@@ -16,6 +16,7 @@ export class CrmCustomersListComponent implements OnInit {
 
   User_Id;
   User_Type;
+  If_Employee;
   Loader: Boolean = true;
 
   _List: any[] = [];
@@ -28,7 +29,11 @@ export class CrmCustomersListComponent implements OnInit {
       ) {
          this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
          this.User_Type = this.Login_Service.LoginUser_Info()['User_Type'];
-         const Data = {'User_Id' : this.User_Id };
+         this.If_Employee = this.Login_Service.LoginUser_Info()['Employee'];
+         const Data = {'User_Id' : this.User_Id, Customers: this.If_Employee };
+         if (this.User_Type === 'Employee') {
+            Data.Customers = this.If_Employee['Customers'];
+         }
          let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
          Info = Info.toString();
          this.Crm_Service.CrmCustomers_List({ 'Info': Info }).subscribe( response => {

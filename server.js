@@ -44,6 +44,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use('/API/Uploads', express.static('Uploads'));
+
 // Every request Log Creation
 app.use('/API/', function (req, res, next) {
    if (req.body.Info !== '' && req.body.Info){
@@ -97,13 +99,15 @@ app.use('/API/', function (req, res, next) {
       require('./server/web/routes/settings/Hr_Settings.routes.js')(app);
 // CRM
    require('./server/web/routes/Crm/Crm_Customers.routes.js')(app);
+// Hr
+   require('./server/web/routes/Hr/Hr.routes.js')(app);
 
 
-   app.use(express.static(__dirname + '/view/dist/view/'));
+   // app.use(express.static(__dirname + '/view/dist/view/'));
 
-   app.use(function(req, res) {
-      res.sendFile(path.join(__dirname, '/view/dist/view', 'index.html'));
-   });
+   // app.use(function(req, res) {
+   //    res.sendFile(path.join(__dirname, '/view/dist/view', 'index.html'));
+   // });
 
 
 app.get('*', function(req, res){

@@ -89,35 +89,42 @@
 
 
 
+
 .ChartTooltip {
-  background-color: #546a79;
-  color: rgba(255, 255, 255, 0.5);
-  text-align: center;
-  font-size: 14px;
-  padding: 10px;
-  letter-spacing: 0.3px;
+   background-color: #546a79;
+   color: rgba(255, 255, 255, 0.5);
+   text-align: center;
+   font-size: 14px;
+   padding: 5px;
+   letter-spacing: 0.3px;
+   margin: 0px;
+ }
+ 
+ .ChartTooltip::before {
+   content: "";
+   position: absolute;
+   top: 35px;
+   left: -10%;
+   border-style: solid;
+   -webkit-transform: rotate(90DEG);
+   transform: rotate(90DEG);
+   border-left-width: 11px;
+   border-left-color: transparent;
+   border-bottom-width: 0px;
+   border-right-color: transparent;
+   border-right-width: 11px;
+   border-top-color: #546a79;
+   border-top-width: 11px;
 }
-
-.ChartTooltip::after {
-  content: "";
-  position: absolute;
-  top: 32%;
-  left: -12%;
-  margin-right: -5px;
-  border-width: 11px;
-  border-style: solid;
-  border-color: #546a79 transparent transparent transparent;
-  transform: rotate(90DEG);
-}
-
-.ChartTooltip p {
-  margin: 0px;
-  text-align: center
-}
-
-.ChartTooltip span {
-  color: #ffffff;
-}
+ 
+ .ChartTooltip p {
+   margin: 5px;
+   text-align: center
+ }
+ 
+ .ChartTooltip span {
+   color: #ffffff;
+ }
 
 
 

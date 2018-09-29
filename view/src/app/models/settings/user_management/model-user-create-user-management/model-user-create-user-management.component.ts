@@ -6,6 +6,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as CryptoJS from 'crypto-js';
 import { map } from 'rxjs/operators';
 
+import { HrService } from './../../../../services/Hr/hr.service';
 import { LoginService } from './../../../../services/LoginService/login.service';
 import { AdminService  } from './../../../../services/Admin/admin.service';
 import { ToastrService } from './../../../../services/common-services/toastr-service/toastr.service';
@@ -29,7 +30,7 @@ export class ModelUserCreateUserManagementComponent implements OnInit {
 
    ShowReportsTo: Boolean = false;
    _AccessPermissions: any[] = [];
-
+   _EmployeeList;
    User_Name_Changed: Boolean = false;
    UserNameValidated: Boolean = false;
    User_NameAvailable: Boolean = false;
@@ -42,9 +43,27 @@ export class ModelUserCreateUserManagementComponent implements OnInit {
                public bsModalRef: BsModalRef,
                public Login_Service: LoginService,
                public Service: AdminService,
-               private Toastr: ToastrService
+               private Toastr: ToastrService,
+               private Hr_Service: HrService
             ) {
                this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+               const Data = { User_Id : this.User_Id };
+               let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
+               Info = Info.toString();
+               this.Hr_Service.EmployeeList_WithoutUserManage({'Info': Info}).subscribe( response => {
+                  const ResponseData = JSON.parse(response['_body']);
+                  if (response['status'] === 200 && ResponseData['Status'] ) {
+                     const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
+                     const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+                     this._EmployeeList = DecryptedData;
+                  } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+                     this.Toastr.NewToastrMessage( { Type: 'Error', Message: response['Message'] } );
+                  } else if (response['status'] === 401 && !ResponseData['Status']) {
+                    this.Toastr.NewToastrMessage( { Type: 'Error', Message: response['Message'] } );
+                  } else {
+                     this.Toastr.NewToastrMessage( { Type: 'Error', Message: 'Employee List Getting Error!, Error not Identify!' } );
+                  }
+               });
             }
 
    ngOnInit() {
@@ -59,7 +78,7 @@ export class ModelUserCreateUserManagementComponent implements OnInit {
          Name: new FormControl('', Validators.required ),
          Email: new FormControl('', [Validators.required, Validators.email]),
          Phone: new FormControl(''),
-         User_Type: new FormControl(null, Validators.required),
+         User_Type: new FormControl(null, Validators.required)
       });
    }
 
@@ -77,6 +96,13 @@ export class ModelUserCreateUserManagementComponent implements OnInit {
       }));
    }
 
+   UserType_Change(_event) {
+      if (_event === 'Employee') {
+         this.Form.addControl('Employee',  new FormControl(null, Validators.required) );
+      } else {
+       this.Form.removeControl('Employee');
+      }
+   }
 
   submit() {
    if (this.Form.valid) {

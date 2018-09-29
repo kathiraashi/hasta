@@ -163,6 +163,54 @@ exports.CrmCustomers_View = function(req, res) {
 };
 
 
+// For Employee Login
+exports.CrmCustomersList_ForEmployee = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else if (!ReceivingData.Customers || ReceivingData.Customers === ''  ) {
+      res.status(400).send({Status: false, Message: "Customers can not be empty" });
+   }else {
+      CrmCustomersModel.CrmCustomersSchema
+         .find({'If_Deleted': false, _id: { $in: ReceivingData.Customers } }, {CompanyName: 1, EmailAddress: 1, PhoneNumber: 1, BillingAddress: 1 }, {sort: { updatedAt: -1 }})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customers List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customers List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+exports.CrmCustomers_SimpleList_ForEmployee = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else if (!ReceivingData.Customers || ReceivingData.Customers === ''  ) {
+      res.status(400).send({Status: false, Message: "Customers can not be empty" });
+   }else {
+      CrmCustomersModel.CrmCustomersSchema
+         .find({'If_Deleted': false, _id: { $in: ReceivingData.Customers }  }, {CompanyName: 1 }, {sort: { updatedAt: -1 }})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customers Simple List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customers Simple List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+
 
 
 
@@ -585,6 +633,64 @@ exports.CrmMachine_View = function(req, res) {
       });
    }
 };
+
+// For Employee Login
+exports.CrmMachinesList_ForEmployee = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else if (!ReceivingData.Customers || ReceivingData.Customers === ''  ) {
+      res.status(400).send({Status: false, Message: "Customers can not be empty" });
+   }else {
+      CrmCustomersModel.CrmMachinesSchema
+         .find({'If_Deleted': false, Customer: { $in: ReceivingData.Customers } }, {}, {sort: { updatedAt: -1 }})
+         .populate({ path: 'Customer', select: ['CompanyName'] })
+         .populate({ path: 'MachineType', select: ['Machine_Type'] })
+         .populate({ path: 'ControllerType', select: ['Controller_Type'] })
+         .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+         .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machines List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Machines List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+exports.CrmMachines_SimpleList_ForEmployee = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else if (!ReceivingData.Customers || ReceivingData.Customers === ''  ) {
+      res.status(400).send({Status: false, Message: "Customers can not be empty" });
+   }else {
+      CrmCustomersModel.CrmMachinesSchema
+         .find({'If_Deleted': false, Customer: { $in: ReceivingData.Customers } }, {MachineName: 1, Current_Status: 1 }, {sort: { updatedAt: -1 }})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machines Simple List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Machines Simple List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+
+
+
+
+
 
 
 exports.CrmMachine_MaintenanceSchedule_Today = function(req, res) {
@@ -1092,10 +1198,10 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                            if (MachineTicketsData.length === 0) {
                               var Arr = [];
                               if (Last_Activity.length > 0 && Last_Activity[0].Activity_Status === 'Open') {
-                                 Arr = [{ Status: Last_Activity[0].Activity, Percentage: 100, Hours: '24 Hrs', MilleSeconds: TotalMilleSeconds, From: FromDate, To: ToDate }];
+                                 Arr = [{ Status: Last_Activity[0].Activity, Percentage: 100, Hours: '24 hrs', MilleSeconds: TotalMilleSeconds, From: FromDate, To: ToDate }];
                                  return { Machine : SingleMachine, ChartData: Arr, Stage: '1' };
                               }else{
-                                 Arr = [{ Status: 'Up', Percentage: 100, Hours: '24 Hrs', MilleSeconds: TotalMilleSeconds, From: FromDate, To: ToDate }];
+                                 Arr = [{ Status: 'Up', Percentage: 100, Hours: '24 hrs', MilleSeconds: TotalMilleSeconds, From: FromDate, To: ToDate }];
                                  return { Machine : SingleMachine, ChartData: Arr, Stage: '1' };
                               }
                               
@@ -1114,7 +1220,7 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                                  let hh_F = Math.floor(diff_F / 1000 / 60 / 60);
                                  let mm_F = Math.ceil((diff_F - hh_F * 3600000) / 1000 / 60);
                                  if (mm_F === 60) { hh_F = hh_F + 1; mm_F = 0; }
-                                 const Hour_F =  hh_F +'hr '+("0" + mm_F).slice(-2)+'min';
+                                 const Hour_F =  hh_F +'hr'+ (hh_F < 2 ? " " : "s ") +("0" + mm_F).slice(-2)+'min';
                                  if (Percentage_F > 0 && MachineTicketsData[0].Activity === 'Waiting' && MachineTicketsData[0].Activity_Status !== 'Close') {
                                     ResArray.push({ Status: 'Waiting', Percentage: Percentage_F, Hours: Hour_F, MilleSeconds: diff_F, From: FromDate, To: MachineTicketsData[0].Activity_Date });
                                  }
@@ -1134,7 +1240,7 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                                     let hh_M = Math.floor(diff_M / 1000 / 60 / 60);
                                     let mm_M = Math.ceil((diff_M - hh_M * 3600000) / 1000 / 60);
                                     if (mm_M === 60) { hh_M = hh_M + 1; mm_M = 0; }
-                                    const Hour_M  = hh_M +'hr '+("0" + mm_M ).slice(-2)+'min';
+                                    const Hour_M  = hh_M +'hr' + (hh_M < 2 ? " " : "s ") +("0" + mm_M ).slice(-2)+'min';
                                     if (Percentage_M > 0) {
                                           ResArray.push({ Status: 'Up', Percentage: Percentage_M, Hours: Hour_M, MilleSeconds: diff_M, From: MachineTicketsData[0].Activity_Date, To: MachineTicketsData[1].Activity_Date });
                                     }
@@ -1142,14 +1248,14 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                               }
                               MachineTicketsData.map( (obj, i) => {
                                  if ( ((i % 2) / 100) !== 0 ) {
-                                    const diff_M = Math.abs(new Date(MachineTicketsData[i - 1].Activity_Date) - new Date(MachineTicketsData[i].Activity_Date));
-                                    const Percentage_M = ((diff_M * 100) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
-                                    let hh_M = Math.floor(diff_M / 1000 / 60 / 60);
-                                    let mm_M = Math.ceil((diff_M - hh_M * 3600000) / 1000 / 60);
-                                    if (mm_M === 60) { hh_M = hh_M + 1; mm_M = 0; }
-                                    const Hour_M =  hh_M + 'hr ' + ("0" + mm_M).slice(-2) + 'min';
-                                    if (Percentage_M > 0) {
-                                       ResArray.push({ Status: MachineTicketsData[i].Activity, Percentage: Percentage_M, Hours: Hour_M, MilleSeconds: diff_M, From: MachineTicketsData[i - 1].Activity_Date, To: MachineTicketsData[i].Activity_Date });
+                                    const diff_Mm = Math.abs(new Date(MachineTicketsData[i - 1].Activity_Date) - new Date(MachineTicketsData[i].Activity_Date));
+                                    const Percentage_Mm = ((diff_Mm * 100) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                                    let hh_Mm = Math.floor(diff_Mm / 1000 / 60 / 60);
+                                    let mm_Mm = Math.ceil((diff_Mm - hh_Mm * 3600000) / 1000 / 60);
+                                    if (mm_Mm === 60) { hh_Mm = hh_Mm + 1; mm_Mm = 0; }
+                                    const Hour_Mm =  hh_M + 'hr' + (hh_Mm < 2 ? " " : "s ") + ("0" + mm_Mm).slice(-2) + 'min';
+                                    if (Percentage_Mm > 0) {
+                                       ResArray.push({ Status: MachineTicketsData[i].Activity, Percentage: Percentage_Mm, Hours: Hour_Mm, MilleSeconds: diff_Mm, From: MachineTicketsData[i - 1].Activity_Date, To: MachineTicketsData[i].Activity_Date });
                                     }
                                  } else {
                                     if (i > 1) {
@@ -1158,7 +1264,7 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                                        let hh_Mm = Math.floor(diff_Mm / 1000 / 60 / 60);
                                        let mm_Mm = Math.ceil((diff_Mm - hh_Mm * 3600000) / 1000 / 60);
                                        if (mm_Mm === 60) { hh_Mm = hh_Mm + 1; mm_Mm = 0; }
-                                       const Hour_Mm = hh_Mm + 'hr ' + ("0" + mm_Mm).slice(-2) + 'min';
+                                       const Hour_Mm = hh_Mm + 'hr' + (hh_Mm < 2 ? " " : "s ") + ("0" + mm_Mm).slice(-2) + 'min';
                                        if (Percentage_Mm > 0) {
                                           ResArray.push({ Status: 'Up', Percentage: Percentage_Mm, Hours: Hour_Mm, MilleSeconds: diff_Mm, From: MachineTicketsData[i-1].Activity_Date, To: MachineTicketsData[i].Activity_Date });
                                        }
@@ -1174,7 +1280,7 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                                  let hh_L = Math.floor(diff_L / 1000 / 60 / 60);
                                  let mm_L = Math.ceil((diff_L - hh_L * 3600000) / 1000 / 60);
                                  if (mm_L === 60) { hh_L = hh_L + 1; mm_L = 0; }
-                                 const Hour_L  = hh_L +'hr '+("0" + mm_L ).slice(-2)+'min';
+                                 const Hour_L  = hh_L +'hr' + (hh_L < 2 ? " " : "s ") + ("0" + mm_L ).slice(-2)+'min';
                                  if (MachineTicketsData[MachineTicketsData.length - 1].Activity_Status === 'Open' && Percentage_L > 0) {
                                     ResArray.push({ Status: MachineTicketsData[MachineTicketsData.length - 1].Activity, Percentage: Percentage_L, Hours: Hour_L, MilleSeconds: diff_L, From: MachineTicketsData[MachineTicketsData.length - 1].Activity_Date, To: ToDate });
                                  }else {
@@ -1439,6 +1545,35 @@ exports.CrmTickets_View = function(req, res) {
    }
 };
 
+// For Employee Login
+exports.CrmTicketsList_ForEmployee = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else if (!ReceivingData.Customers || ReceivingData.Customers === ''  ) {
+      res.status(400).send({Status: false, Message: "Customers can not be empty" });
+   }else {
+      CrmCustomersModel.CrmTicketsSchema
+         .find({'If_Deleted': false, Customer: { $in: ReceivingData.Customers } }, {}, {sort: { updatedAt: -1 }})
+         .populate({ path: 'Customer', select: ['CompanyName'] })
+         .populate({ path: 'Machine', select: ['MachineName'] })
+         .populate({ path: 'TicketType', select: ['Ticket_Type'] })
+         .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+         .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Tickets List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Tickets List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
 
 
 // -------------------------------------------------- Crm Ticket Activities Create -----------------------------------------------
@@ -1642,11 +1777,6 @@ exports.CrmTicketActivities_List = function(req, res) {
 
 
 
-
-
-
-
-
 exports.CrmCustomerBased_ActivitiesList = function(req, res) {
    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
@@ -1656,27 +1786,193 @@ exports.CrmCustomerBased_ActivitiesList = function(req, res) {
    } else if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
       res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
    }else {
-      CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema
-         .find({'If_Deleted': false, 'If_Hidden': false }, {}, {sort: { Activity_Date: -1 }, limit: 10})
-         .populate({ path: 'Customer', select: ['CompanyName'] })
-         .populate({ path: 'Machine', select: ['MachineName'] })
-         .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
-         .exec(function(err, result) {
-         if(err) {
-            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Based Activities List Find Query Error', 'Crm_Customers.controller.js', err);
-            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Based Activities List!."});
-         } else {
 
-            result = result.map(obj => {
-               if (obj.Activity_Status === 'Close') {
-                  obj.Activity_Date = new Date(new Date(obj.Activity_Date).setSeconds(new Date(obj.Activity_Date).getSeconds() + 2));
+      CrmCustomersModel.CrmMachinesSchema
+      .find({Customer: mongoose.Types.ObjectId(ReceivingData.Customer_Id)}, { _id: 1 } )
+      .exec(function(err, result){
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Machines List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Machines List!."});
+         } else {
+            result = result.map(obj => obj._id);
+            CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema
+               .find({'If_Deleted': false, 'If_Hidden': false, Machine: {$in: result } }, {}, {sort: { Activity_Date: -1 }, limit: 10})
+               .populate({ path: 'Machine', select: ['MachineName'] })
+               .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+               .exec(function(err_1, result_1) {
+               if(err_1) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Based Activities List Find Query Error', 'Crm_Customers.controller.js', err_1);
+                  res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Based Activities List!."});
+               } else {
+                  result_1 = result_1.map(obj => {
+                     if (obj.Activity_Status === 'Close') {
+                        obj.Activity_Date = new Date(new Date(obj.Activity_Date).setSeconds(new Date(obj.Activity_Date).getSeconds() + 2));
+                     }
+                     return obj;
+                  });
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
+                  ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Response: ReturnData });
                }
-               return obj;
             });
-            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
-            ReturnData = ReturnData.toString();
-            res.status(200).send({Status: true, Response: ReturnData });
          }
       });
+   }
+};
+
+
+
+
+
+
+
+exports.CrmSingleMachine_ChartData = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.Machine_Id || ReceivingData.Machine_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if (!ReceivingData.From || ReceivingData.From === ''  ) {
+      res.status(400).send({Status: false, Message: "From Date can not be empty" });
+   } else if (!ReceivingData.To || ReceivingData.To === ''  ) {
+      res.status(400).send({Status: false, Message: "To Date can not be empty" });
+   }else {
+      
+      var From = new Date(ReceivingData.From);
+      var To = new Date(ReceivingData.To);
+      var DatArr = [];
+      while (From <= To) {
+         DatArr.push(new Date(From));
+         From.setDate(From.getDate() + 1);
+      }
+
+      Promise.all(
+         DatArr.map( DateObj => {
+            const FromDate = new Date(DateObj.setHours(0, 0, 0, 0));
+            const ToDate = new Date(DateObj.setHours(23, 59, 59, 999));
+            const Show_Date = FromDate.getDate() + '/' + FromDate.getMonth() + '/' + FromDate.getUTCFullYear() ;
+            const TotalMilleSeconds = Math.abs( new Date(ToDate) -  new Date(FromDate));
+            return Promise.all([
+               CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema
+               .find({ 'Machine': ReceivingData.Machine_Id, 
+                        $and: [{  Activity_Date : { $lt: ToDate } },
+                               { Activity_Date: { $gte: FromDate } } ]
+                     }, { Activity: 1, Activity_Status: 1, Activity_Date: 1, createdAt: 1},  {sort: { Activity_Date: 1 }} 
+                  ).exec(),
+               CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema.find({'Machine': ReceivingData.Machine_Id},{}, {sort: { Activity_Date: -1 }, limit: 1}).exec()
+               ]).then( Data => {
+                  var MachineTicketsData = Data[0];
+                  var Last_Activity = Data[1];
+                     if (MachineTicketsData.length === 0) {
+                        var Arr = [];
+                        if (Last_Activity.length > 0 && Last_Activity[0].Activity_Status === 'Open') {
+                           Arr = [{ Status: Last_Activity[0].Activity, Percentage: 100, Hours: 24, Show_Hours: '24 hrs', MilleSeconds: TotalMilleSeconds, From: FromDate, To: ToDate }];
+                           return { Date : Show_Date, ChartData: Arr, Stage: '1' };
+                        }else{
+                           Arr = [{ Status: 'Up', Percentage: 100, Hours: 24, Show_Hours: '24 hrs', MilleSeconds: TotalMilleSeconds, From: FromDate, To: ToDate }];
+                           return { Date : Show_Date, ChartData: Arr, Stage: '1' };
+                        }
+                        
+                     } else {
+                        MachineTicketsData = MachineTicketsData.map(obj => {
+                           if (obj.Activity_Status === 'Close') {
+                              obj.Activity_Date = new Date(new Date(obj.Activity_Date).setSeconds(new Date(obj.Activity_Date).getSeconds() + 2));
+                           }
+                           return obj;
+                        });
+                        
+                        var ResArray = [];
+                        // First Activity Calculate Start
+                           const diff_F = Math.abs( new Date(MachineTicketsData[0].Activity_Date) -  new Date(FromDate));
+                           const Percentage_F = (( diff_F * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                           let hh_F = Math.floor(diff_F / 1000 / 60 / 60);
+                           let mm_F = Math.ceil((diff_F - hh_F * 3600000) / 1000 / 60);
+                           if (mm_F === 60) { hh_F = hh_F + 1; mm_F = 0; }
+                           const Show_Hour_F =  hh_F +'hr' + (hh_F < 2 ? " " : "s ") +("0" + mm_F).slice(-2)+'min';
+                           const Hour_F = hh_F + Math.round((mm_F / 60)  * 100) / 100;
+                           if (Percentage_F > 0 && MachineTicketsData[0].Activity === 'Waiting' && MachineTicketsData[0].Activity_Status !== 'Close') {
+                              ResArray.push({ Status: 'Waiting', Percentage: Percentage_F, Hours: Hour_F, Show_Hours: Show_Hour_F, MilleSeconds: diff_F, From: FromDate, To: MachineTicketsData[0].Activity_Date });
+                           }
+                           else if (Percentage_F > 0 && MachineTicketsData[0].Activity !== 'Waiting' && MachineTicketsData[0].Activity_Status !== 'Close') {
+                              ResArray.push({ Status: 'Up', Percentage: Percentage_F, Hours: Hour_F, Show_Hours: Show_Hour_F, MilleSeconds: diff_F, From: FromDate, To: MachineTicketsData[0].Activity_Date });
+                           }else {
+                              if (Percentage_F > 0) {
+                                 ResArray.push({ Status: MachineTicketsData[0].Activity, Percentage: Percentage_F, Hours: Hour_F, Show_Hours: Show_Hour_F, MilleSeconds: diff_F, From: FromDate, To: MachineTicketsData[0].Activity_Date });
+                              }
+                           }
+                        // First Activity Calculate End
+
+                        // Middle Activity Calculate Start
+                        if (MachineTicketsData[0].Activity_Status === 'Close') {
+                              const diff_M= Math.abs( new Date(MachineTicketsData[0].Activity_Date) -  new Date(MachineTicketsData[1].Activity_Date));
+                              const Percentage_M  = (( diff_M  * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                              let hh_M = Math.floor(diff_M / 1000 / 60 / 60);
+                              let mm_M = Math.ceil((diff_M - hh_M * 3600000) / 1000 / 60);
+                              if (mm_M === 60) { hh_M = hh_M + 1; mm_M = 0; }
+                              const Show_Hour_M  = hh_M +'hr' + (hh_M < 2 ? " " : "s ")+("0" + mm_M ).slice(-2)+'min';
+                              const Hour_M = hh_M + Math.round((mm_M / 60)  * 100) / 100;
+                              if (Percentage_M > 0) {
+                                    ResArray.push({ Status: 'Up', Percentage: Percentage_M, Hours: Hour_M, Show_Hours: Show_Hour_M, MilleSeconds: diff_M, From: MachineTicketsData[0].Activity_Date, To: MachineTicketsData[1].Activity_Date });
+                              }
+                              MachineTicketsData.splice(0, 1);
+                        }
+                        MachineTicketsData.map( (obj, i) => {
+                           if ( ((i % 2) / 100) !== 0 ) {
+                              const diff_Mm = Math.abs(new Date(MachineTicketsData[i - 1].Activity_Date) - new Date(MachineTicketsData[i].Activity_Date));
+                              const Percentage_Mm = ((diff_Mm * 100) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                              let hh_Mm = Math.floor(diff_Mm / 1000 / 60 / 60);
+                              let mm_Mm = Math.ceil((diff_Mm - hh_Mm * 3600000) / 1000 / 60);
+                              if (mm_Mm === 60) { hh_Mm = hh_Mm + 1; mm_Mm = 0; }
+                              const Show_Hour_Mm =  hh_Mm + 'hr' + (hh_Mm < 2 ? " " : "s ") + ("0" + mm_Mm).slice(-2) + 'min';
+                              const Hour_Mm = hh_Mm + Math.round((mm_Mm / 60)  * 100) / 100;
+                              if (Percentage_Mm > 0) {
+                                 ResArray.push({ Status: MachineTicketsData[i].Activity, Percentage: Percentage_Mm, Hours: Hour_Mm, Show_Hours: Show_Hour_Mm, MilleSeconds: diff_Mm, From: MachineTicketsData[i - 1].Activity_Date, To: MachineTicketsData[i].Activity_Date });
+                              }
+                           } else {
+                              if (i > 1) {
+                                 const diff_Mm = Math.abs(new Date(MachineTicketsData[i - 1].Activity_Date) - new Date(MachineTicketsData[i].Activity_Date));
+                                 const Percentage_Mm = ((diff_Mm * 100) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                                 let hh_Mm = Math.floor(diff_Mm / 1000 / 60 / 60);
+                                 let mm_Mm = Math.ceil((diff_Mm - hh_Mm * 3600000) / 1000 / 60);
+                                 if (mm_Mm === 60) { hh_Mm = hh_Mm + 1; mm_Mm = 0; }
+                                 const Show_Hour_Mm = hh_Mm + 'hr' + (hh_Mm < 2 ? " " : "s ") + ("0" + mm_Mm).slice(-2) + 'min';
+                                 const Hour_Mm = hh_Mm + Math.round((mm_Mm / 60)  * 100) / 100;
+                                 if (Percentage_Mm > 0) {
+                                    ResArray.push({ Status: 'Up', Percentage: Percentage_Mm, Hours: Hour_Mm, Show_Hours: Show_Hour_Mm, MilleSeconds: diff_Mm, From: MachineTicketsData[i-1].Activity_Date, To: MachineTicketsData[i].Activity_Date });
+                                 }
+                              }
+                           }
+                        });
+                        // Middle Activity Calculate End
+
+                        // Last Activity Calculate Start
+                           const diff_L = Math.abs( new Date(ToDate) -  new Date(MachineTicketsData[MachineTicketsData.length - 1].Activity_Date));
+                           const Percentage_L  = (( diff_L  * 100 ) / TotalMilleSeconds).toFixed(1).replace(/\.0$/, '');
+                           let hh_L = Math.floor(diff_L / 1000 / 60 / 60);
+                           let mm_L = Math.ceil((diff_L - hh_L * 3600000) / 1000 / 60);
+                           if (mm_L === 60) { hh_L = hh_L + 1; mm_L = 0; }
+                           const Show_Hour_L  = hh_L +'hr' + (hh_L < 2 ? " " : "s ")+("0" + mm_L ).slice(-2)+'min';
+                           const Hour_L = hh_L + Math.round((mm_L / 60)  * 100) / 100;
+                           if (MachineTicketsData[MachineTicketsData.length - 1].Activity_Status === 'Open' && Percentage_L > 0) {
+                              ResArray.push({ Status: MachineTicketsData[MachineTicketsData.length - 1].Activity, Percentage: Percentage_L, Hours: Hour_L, Show_Hours: Show_Hour_L, MilleSeconds: diff_L, From: MachineTicketsData[MachineTicketsData.length - 1].Activity_Date, To: ToDate });
+                           }else {
+                              if (Percentage_L > 0) {
+                                    ResArray.push({ Status: 'Up', Percentage: Percentage_L, Hours: Hour_L, Show_Hours: Show_Hour_L, MilleSeconds: diff_L, From: MachineTicketsData[MachineTicketsData.length - 1].Activity_Date, To: ToDate });
+                              }
+                           }
+                        // Last Activity Calculate End
+                        return {  Date : Show_Date, ChartData: ResArray, Stage: '2' };
+                     }
+                  });
+         })
+      ).then(response => {
+         var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(response), 'SecretKeyOut@123');
+         ReturnData = ReturnData.toString();
+         res.status(200).send({Status: true, Response: ReturnData });
+      }).catch(error => {
+         console.log(error);
+      })
    }
 };

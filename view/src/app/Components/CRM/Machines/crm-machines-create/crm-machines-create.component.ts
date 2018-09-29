@@ -27,6 +27,8 @@ export class CrmMachinesCreateComponent implements OnInit {
   _Maintenance_Parts: any[] =  [];
   _Customers: any[] =  [];
 
+  User_Type;
+  If_Employee;
   Form: FormGroup;
 
 
@@ -41,7 +43,12 @@ export class CrmMachinesCreateComponent implements OnInit {
                public Login_Service: LoginService,
             ) {
                this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
-               const Data = {'User_Id' : this.User_Id };
+               this.User_Type = this.Login_Service.LoginUser_Info()['User_Type'];
+               this.If_Employee = this.Login_Service.LoginUser_Info()['Employee'];
+               const Data = {'User_Id' : this.User_Id, Customers: this.If_Employee };
+               if (this.User_Type === 'Employee') {
+                  Data.Customers = this.If_Employee['Customers'];
+               }
                let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
                Info = Info.toString();
                // Get Machine Types List
@@ -126,7 +133,7 @@ export class CrmMachinesCreateComponent implements OnInit {
 
    OpenModel(template: TemplateRef<any>) {
       this.modalRef = this.modalService.show(template, { class: 'modal-md', ignoreBackdropClick: true });
-    }
+   }
 
    Submit() {
       if (this.Form.valid) {

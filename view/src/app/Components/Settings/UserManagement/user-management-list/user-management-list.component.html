@@ -50,7 +50,10 @@
                   <span class="Style_1"> {{item['Phone']}} </span>
                </td>
                <td>
-                  <span class="Style_1"> {{item['User_Type']}}  </span>
+                  <span class="Style_1"> {{item['User_Type']}}
+                     <br>
+                     <span class="Time" *ngIf="item['Employee']"> Employee:  {{item['Employee']?.EmployeeName}}  </span>
+                  </span>
                </td>
                <td>
                   <span class="Style_1"> {{item['updatedAt'] | date:'medium'}} </span>

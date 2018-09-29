@@ -92,5 +92,6 @@
    .Page_Content.HR_Settings .Main_Section  .Right_Section{
       width:79%;
       margin-left: 1%;
+      position: relative;
    }
  

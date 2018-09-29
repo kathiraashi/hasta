@@ -13,7 +13,7 @@ var Machine_Maintenance_Schedule = schedule.scheduleJob('0 0 0 * * *', function(
          ErrorManagement.ErrorHandling.ErrorLogCreation('', 'CRM Machines Maintenance Schedule Create Machines List Find Query Error', 'Schedules/Machine_Maintenance.js', err);
       } else {
          if (result.length > 0) {
-            result.filter(Obj => Obj.Maintenance_Parts.length > 0 &&  Obj.Maintenance_Parts !== null);
+            result.filter(Obj => Obj.Maintenance_Parts !== null && Obj.Maintenance_Parts.length > 0);
          }
          let Today = new Date();
          Today.setHours(0, 0, 0, 0);

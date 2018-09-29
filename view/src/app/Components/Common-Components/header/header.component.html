@@ -10,45 +10,45 @@
       <div class="Header_Two">
          <ul class="Menus" *ngIf="Type === 'Admin'" >
             <!-- CRM -->
-            <li class="Menu_List">
+            <li class="Menu_List" routerLinkActive="active" >
                <span class="Menu_Tree">
                   <span class="Menu">
                      <i class="material-icons">people</i>
                      <span> &nbsp; CRM </span> 
                   </span>
                   <ul class="Menu_Tree_View">
-                     <li class="Menu_Tree_List" [routerLink]="['/Crm_Customers_List']"><a> Customers </a></li>
-                     <li class="Menu_Tree_List" [routerLink]="['/crm_machine_list']"><a> Machines </a></li>
-                     <li class="Menu_Tree_List" [routerLink]="['/crm_ticket_list']"><a> Tickets </a></li>
-                  </ul>
-               </span>
-            </li>
-            <!-- Settings -->
-            <li class="Menu_List" >
-               <span class="Menu_Tree">
-                  <span class="Menu">
-                     <i class="material-icons">settings</i>
-                     <span> &nbsp; Settings </span> 
-                  </span>
-                  <ul class="Menu_Tree_View">
-                     <li class="Menu_Tree_List" [routerLink]="['/CRM_Settings']"><a> CRM Settings </a></li>
-                     <li class="Menu_Tree_List" [routerLink]="['/Hr_Settings']" ><a> HR Settings </a></li> 
-                     <li class="Menu_Tree_List" [routerLink]="['/User_Management']"><a> User Management  </a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/Crm_Customers_List']"><a> Customers </a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/crm_machine_list']"><a> Machines </a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/crm_ticket_list']"><a> Tickets </a></li>
                   </ul>
                </span>
             </li>
             <!-- HR -->
-             <li class="Menu_List" >
+             <li class="Menu_List" routerLinkActive="active">
                <span class="Menu_Tree">
                   <span class="Menu">
                      <i class="material-icons">people</i>
                      <span> &nbsp; HR </span> 
                   </span>
                   <ul class="Menu_Tree_View">
-                     <li class="Menu_Tree_List"  [routerLink]="['/List_Employees']"><a> Employees </a></li>
-                     <li class="Menu_Tree_List"  [routerLink]="['/main_Attendance']"><a> Attendance </a></li>
-                     <li class="Menu_Tree_List"  [routerLink]="['/Main_Payroll']"><a> Payroll </a></li>
-                     <li class="Menu_Tree_List"  [routerLink]="['/Main_Payroll_Master']"><a> Payroll Master</a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/List_Employees']"><a> Employees </a></li>
+                     <!-- <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/main_Attendance']"><a> Attendance </a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/Main_Payroll']"><a> Payroll </a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/Main_Payroll_Master']"><a> Payroll Master</a></li> -->
+                  </ul>
+               </span>
+            </li>
+            <!-- Settings -->
+            <li class="Menu_List" routerLinkActive="active">
+               <span class="Menu_Tree">
+                  <span class="Menu">
+                     <i class="material-icons">settings</i>
+                     <span> &nbsp; Settings </span> 
+                  </span>
+                  <ul class="Menu_Tree_View">
+                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/CRM_Settings']"><a> CRM Settings </a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/Hr_Settings']" ><a> HR Settings </a></li> 
+                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/User_Management']"><a> User Management  </a></li>
                   </ul>
                </span>
             </li>

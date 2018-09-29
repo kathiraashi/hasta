@@ -42,18 +42,11 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
                import { ActivityStatusTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/activity-status-type-crm-settings/activity-status-type-crm-settings.component';
                import { ActivityPriorityTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/activity-priority-type-crm-settings/activity-priority-type-crm-settings.component';
                import { ContactRoleTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/contact-role-type-crm-settings/contact-role-type-crm-settings.component';
-         // Hrms Settings Folder
-            import { MainHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/main-hrms-settings/main-hrms-settings.component';
-            // Sub Components
-               import { LeaveTypeHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/SubComponents/leave-type-hrms-settings/leave-type-hrms-settings.component';
-               import { ExpensesTypeHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/SubComponents/expenses-type-hrms-settings/expenses-type-hrms-settings.component';
-         // Hr Settings Folder
+            // Hr Settings Folder
                import { MainHrSettingsComponent } from './Components/Settings/HR-Settings/main-hr-settings/main-hr-settings.component';
             // Sub Components
-               import { EmployeeCategoryHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/employee-category-hr-settings/employee-category-hr-settings.component';
                import { DepartmentHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/department-hr-settings/department-hr-settings.component';
-               import { DesignationHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/designation-hr-settings/designation-hr-settings.component';
-         // User Management And Permissions
+               // User Management And Permissions
             import { UserManagementListComponent } from './Components/Settings/UserManagement/user-management-list/user-management-list.component';
             import { ModelUserCreateUserManagementComponent } from './models/settings/user_management/model-user-create-user-management/model-user-create-user-management.component';
       // CRM Folder
@@ -87,15 +80,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
                import { CrmTicketsListComponent } from './Components/CRM/Tickets/crm-tickets-list/crm-tickets-list.component';
                import { CrmTicketsViewComponent } from './Components/CRM/Tickets/crm-tickets-view/crm-tickets-view.component';
                import { TicketsCrmCustomersViewComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/tickets-crm-customers-view/tickets-crm-customers-view.component';
-      // HRMS folder
-         // main hrms
-            import { MainHrmsComponentsComponent } from './Components/HRMS/main-hrms-components/main-hrms-components.component';
-         // SubComponents
-            import { DashboardHrmsComponent } from './Components/HRMS/SubComponents/dashboard-hrms/dashboard-hrms.component';
-            import { LeavesHrmsComponent } from './Components/HRMS/SubComponents/leaves-hrms/leaves-hrms.component';
-            import { OndutyHrmsComponent } from './Components/HRMS/SubComponents/onduty-hrms/onduty-hrms.component';
-            import { PermissionsHrmsComponent } from './Components/HRMS/SubComponents/permissions-hrms/permissions-hrms.component';
-            import { AdvanceHrmsComponent } from './Components/HRMS/SubComponents/advance-hrms/advance-hrms.component';
       // Accounts Folder
          // Customer
             import { AccountsCustomerListComponent } from './Components/Accounts/Customer/accounts-customer-list/accounts-customer-list.component';
@@ -106,17 +90,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
             import { CustomerPaymentsCreateComponent } from './Components/Accounts/customer-payments/customer-payments-create/customer-payments-create.component';
    // models
       // settings
-         // company settings
-            import { ModelCompanyinfoCompanysettingsComponent } from './models/settings/company_settings/model-companyinfo-companysettings/model-companyinfo-companysettings.component';
-            import { ModelContactinfoCompanysettingsComponent } from './models/settings/company_settings/model-contactinfo-companysettings/model-contactinfo-companysettings.component';
-            import { ModelDepartmentsCompanysettingsComponent } from './models/settings/company_settings/model-departments-companysettings/model-departments-companysettings.component';
-            import { ModelBranchCompanysettingsComponent } from './models/settings/company_settings/model-branch-companysettings/model-branch-companysettings.component';
-            import { ModelRegistrationinfoCompanysettingsComponent } from './models/settings/company_settings/model-registrationinfo-companysettings/model-registrationinfo-companysettings.component';
-            import { ModelPfinfoCompanysettingsComponent } from './models/settings/company_settings/model-pfinfo-companysettings/model-pfinfo-companysettings.component';
-            import { ModelEsiinfoCompanysettingsComponent } from './models/settings/company_settings/model-esiinfo-companysettings/model-esiinfo-companysettings.component';
-            import { ModelPtinfoCompanysettingsComponent } from './models/settings/company_settings/model-ptinfo-companysettings/model-ptinfo-companysettings.component';
-            import { ModelItinfoCompanysettingsComponent } from './models/settings/company_settings/model-itinfo-companysettings/model-itinfo-companysettings.component';
-            import { ModelRegistrationtypeCompanysettingsComponent } from './models/settings/company_settings/model-registrationtype-companysettings/model-registrationtype-companysettings.component';
         // CRM Settings
             import { ModelIndustrytypeCrmsettingsComponent } from './models/settings/crm_settings/model-industrytype-crmsettings/model-industrytype-crmsettings.component';
             import { ModelOwnershipytypeCrmsettingsComponent } from './models/settings/crm_settings/model-ownershipytype-crmsettings/model-ownershipytype-crmsettings.component';
@@ -124,24 +97,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
             import { ModelActivitystatusCrmsettingsComponent } from './models/settings/crm_settings/model-activitystatus-crmsettings/model-activitystatus-crmsettings.component';
             import { ModelActivitypriorityCrmsettingsComponent } from './models/settings/crm_settings/model-activitypriority-crmsettings/model-activitypriority-crmsettings.component';
             import { ModelContactroleCrmsettingsComponent } from './models/settings/crm_settings/model-contactrole-crmsettings/model-contactrole-crmsettings.component';
-         // HRMS settings
-            import { ModelLeavetypeHrmssettingsComponent } from './models/settings/hrms_settings/model-leavetype-hrmssettings/model-leavetype-hrmssettings.component';
-            import { ModelExpensestypeHrmssettingsComponent } from './models/settings/hrms_settings/model-expensestype-hrmssettings/model-expensestype-hrmssettings.component';
          // HR settings
-            import { ModelEmployeecategoryHrsettingsComponent } from './models/settings/hr_settings/model-employeecategory-hrsettings/model-employeecategory-hrsettings.component';
             import { ModelDepartmentHrsettingsComponent } from './models/settings/hr_settings/model-department-hrsettings/model-department-hrsettings.component';
-            import { ModelDesignationHrsettingsComponent } from './models/settings/hr_settings/model-designation-hrsettings/model-designation-hrsettings.component';
-         // Account Settings
-            import { ModelTaxesAccountsettingsComponent } from './models/settings/account_settings/model-taxes-accountsettings/model-taxes-accountsettings.component';
-            import { ModelBankAccountsettingsComponent } from './models/settings/account_settings/model-bank-accountsettings/model-bank-accountsettings.component';
-            import { ModelIncometypeAccountsettingsComponent } from './models/settings/account_settings/model-incometype-accountsettings/model-incometype-accountsettings.component';
-            import { ModelAssettypeAccountsettingsComponent } from './models/settings/account_settings/model-assettype-accountsettings/model-assettype-accountsettings.component';
-            import { ModelPaymenttermsAccountsettingsComponent } from './models/settings/account_settings/model-paymentterms-accountsettings/model-paymentterms-accountsettings.component';
-      // HRMS
-            import { ModelLeavesHrmsComponent } from './models/HRMS/model-leaves-hrms/model-leaves-hrms.component';
-            import { ModelOndutyHrmsComponent } from './models/HRMS/model-onduty-hrms/model-onduty-hrms.component';
-            import { ModelPermissionsHrmsComponent } from './models/HRMS/model-permissions-hrms/model-permissions-hrms.component';
-            import { ModelAdvanceHrmsComponent } from './models/HRMS/model-advance-hrms/model-advance-hrms.component';
 import { TicketTypeCrmSettingsComponent } from './Components/Settings/CRM-Settings/Sub-Components/ticket-type-crm-settings/ticket-type-crm-settings.component';
 import { ModelTickettypeCrmsettingsComponent } from './models/settings/crm_settings/model-tickettype-crmsettings/model-tickettype-crmsettings.component';
 import { EarningsHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/earnings-hr-settings/earnings-hr-settings.component';
@@ -182,6 +139,8 @@ import { ModelMachineScheduleActivityCrmsettingsComponent } from './models/setti
 import { ModelMachineMaintenancePartCrmsettingsComponent } from './models/settings/crm_settings/model-machine-maintenance-part-crmsettings/model-machine-maintenance-part-crmsettings.component';
 import { ModelScheduleActivityCreateComponent } from './models/CRM/Machines/model-schedule-activity-create/model-schedule-activity-create.component';
 import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-idle/model-machine-idle.component';
+import { EditEmployeesComponent } from './Components/HR/Employees/edit-employees/edit-employees.component';
+import { ModelMachineSingleChartComponent } from './models/CRM/Customers/model-machine-single-chart/model-machine-single-chart.component';
 
 
 @NgModule({
@@ -202,30 +161,12 @@ import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-i
                      ActivityStatusTypeCrmSettingsComponent,
                      ActivityPriorityTypeCrmSettingsComponent,
                      ContactRoleTypeCrmSettingsComponent,
-                // Hrms Settings Folder
-                 MainHrmsSettingsComponent,
-                 // Sub Components
-                    LeaveTypeHrmsSettingsComponent,
-                    ExpensesTypeHrmsSettingsComponent,
                 // Hr Settings Folder
                  MainHrSettingsComponent,
                  // Sub Components
-                    EmployeeCategoryHrSettingsComponent,
                     DepartmentHrSettingsComponent,
-                    DesignationHrSettingsComponent,
    // models
     // settings
-        // company settings
-            ModelCompanyinfoCompanysettingsComponent,
-            ModelContactinfoCompanysettingsComponent,
-            ModelDepartmentsCompanysettingsComponent,
-            ModelBranchCompanysettingsComponent,
-            ModelRegistrationinfoCompanysettingsComponent,
-            ModelPfinfoCompanysettingsComponent,
-            ModelEsiinfoCompanysettingsComponent,
-            ModelPtinfoCompanysettingsComponent,
-            ModelItinfoCompanysettingsComponent,
-            ModelRegistrationtypeCompanysettingsComponent,
         // CRM Settings
             ModelIndustrytypeCrmsettingsComponent,
             ModelOwnershipytypeCrmsettingsComponent,
@@ -233,19 +174,8 @@ import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-i
             ModelActivitystatusCrmsettingsComponent,
             ModelActivitypriorityCrmsettingsComponent,
             ModelContactroleCrmsettingsComponent,
-        // HRMS settings
-            ModelLeavetypeHrmssettingsComponent,
-            ModelExpensestypeHrmssettingsComponent,
         // HR settings
-            ModelEmployeecategoryHrsettingsComponent,
             ModelDepartmentHrsettingsComponent,
-            ModelDesignationHrsettingsComponent,
-       // Account Settings
-            ModelTaxesAccountsettingsComponent,
-            ModelBankAccountsettingsComponent,
-            ModelIncometypeAccountsettingsComponent,
-            ModelAssettypeAccountsettingsComponent,
-            ModelPaymenttermsAccountsettingsComponent,
       // User Management and User Permissions
       UserManagementListComponent,
       ModelUserCreateUserManagementComponent,
@@ -270,26 +200,6 @@ import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-i
         CrmInvoiceListComponent,
         CrmInvoiceViewComponent,
 
-    // models
-    // HRMS Folder
-        // main hrms
-            MainHrmsComponentsComponent,
-              // SubComponents
-                DashboardHrmsComponent,
-                LeavesHrmsComponent,
-                OndutyHrmsComponent,
-                PermissionsHrmsComponent,
-                AdvanceHrmsComponent,
-    // models
-        // HRMS
-                ModelLeavesHrmsComponent,
-                ModelOndutyHrmsComponent,
-                ModelPermissionsHrmsComponent,
-                ModelAdvanceHrmsComponent,
-
-
-
-   // Accounts Folder
         // Customer
             AccountsCustomerListComponent,
             AccountsCustomerInvoiceListComponent,
@@ -346,7 +256,9 @@ import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-i
            ModelMachineScheduleActivityCrmsettingsComponent,
            ModelMachineMaintenancePartCrmsettingsComponent,
            ModelScheduleActivityCreateComponent,
-           ModelMachineIdleComponent
+           ModelMachineIdleComponent,
+           EditEmployeesComponent,
+           ModelMachineSingleChartComponent
 
 
 
@@ -388,16 +300,7 @@ import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-i
           AppRoutingModule,
    ],
    providers: [AuthGuard],
-   entryComponents: [ModelCompanyinfoCompanysettingsComponent,
-    ModelContactinfoCompanysettingsComponent,
-    ModelDepartmentsCompanysettingsComponent,
-    ModelBranchCompanysettingsComponent,
-    ModelRegistrationinfoCompanysettingsComponent,
-    ModelPfinfoCompanysettingsComponent,
-    ModelEsiinfoCompanysettingsComponent,
-    ModelPtinfoCompanysettingsComponent,
-    ModelItinfoCompanysettingsComponent,
-    ModelRegistrationtypeCompanysettingsComponent,
+   entryComponents: [
     ModelIndustrytypeCrmsettingsComponent,
     ModelOwnershipytypeCrmsettingsComponent,
     ModelActivitytypeCrmsettingsComponent,
@@ -407,21 +310,8 @@ import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-i
     ModelControllertypeCrmsettingsComponent,
     ModelMachinetypeCrmsettingsComponent,
     ModelUserCreateUserManagementComponent,
-    ModelLeavetypeHrmssettingsComponent,
-    ModelExpensestypeHrmssettingsComponent,
-    ModelEmployeecategoryHrsettingsComponent,
     ModelDepartmentHrsettingsComponent,
-    ModelDesignationHrsettingsComponent,
-   ModelTaxesAccountsettingsComponent,
-    ModelBankAccountsettingsComponent,
-    ModelIncometypeAccountsettingsComponent,
-    ModelAssettypeAccountsettingsComponent,
-    ModelPaymenttermsAccountsettingsComponent,
     DeleteConfirmationComponent,
-    ModelLeavesHrmsComponent,
-    ModelOndutyHrmsComponent,
-    ModelPermissionsHrmsComponent,
-    ModelAdvanceHrmsComponent,
     ModelTickettypeCrmsettingsComponent,
     ModelEarningsHrsettingsComponent,
     ModelDetectionsHrsettingsComponent,
@@ -438,7 +328,8 @@ import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-i
     ModelMachineScheduleActivityCrmsettingsComponent,
     ModelMachineMaintenancePartCrmsettingsComponent,
     ModelScheduleActivityCreateComponent,
-    ModelMachineIdleComponent
+    ModelMachineIdleComponent,
+    ModelMachineSingleChartComponent
     ],
    bootstrap: [AppComponent]
 })
