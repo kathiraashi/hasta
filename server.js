@@ -39,6 +39,7 @@ var app = express();
       console.log('DB Connectivity, Success!');
    });
 
+   console.log(process.env.TZ);
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));

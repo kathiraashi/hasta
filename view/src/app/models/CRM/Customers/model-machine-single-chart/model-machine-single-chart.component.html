@@ -1,3 +1,54 @@
-<p>
-  model-machine-single-chart works!
-</p>
+<div class="Modal_Content">
+   <div class="Modal_Header">
+     <p> <span style="text-decoration: underline;">  {{MachineData['Machine']?.MachineName}} </span> <small> Monthly Chart </small> </p>
+     <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+         <div class="row" style="align-items: center;justify-content: center;">
+            <div class="col-sm-3 Form_Input" [ngClass]="{'Form_Err': Form.controls['FromDate'].errors && !Form.controls['FromDate'].pristine, 'Form_Success': Form.controls['FromDate'].valid && !Form.controls['FromDate'].pristine }">
+               <label>From Date:</label>
+               <input type="text"
+                     formControlName="FromDate"
+                     [matDatepicker]="DatepickerOne" 
+                     (click)="DatepickerOne.open()" 
+                     (keypress)="NotAllow()" 
+                     (keydown)="NotAllow()">
+               <mat-datepicker touchUi #DatepickerOne></mat-datepicker>
+               <p class="error" *ngIf="Form.controls['FromDate'].errors && !Form.controls['FromDate'].pristine">
+                  <span *ngIf="Form.controls['FromDate'].errors.required">From Date is required</span>
+               </p>
+            </div>
+            <div class="col-sm-3 Form_Input" [ngClass]="{'Form_Err': Form.controls['ToDate'].errors && !Form.controls['ToDate'].pristine, 'Form_Success': Form.controls['ToDate'].valid && !Form.controls['ToDate'].pristine }">
+               <label>To Date:</label>
+               <input type="text" 
+                     formControlName="ToDate"
+                     [matDatepicker]="DatepickerTwo" 
+                     (click)="DatepickerTwo.open()" 
+                     (keypress)="NotAllow()" 
+                     (keydown)="NotAllow()">
+               <mat-datepicker touchUi #DatepickerTwo></mat-datepicker>
+               <p class="error" *ngIf="Form.controls['ToDate'].errors && !Form.controls['ToDate'].pristine">
+                  <span *ngIf="Form.controls['ToDate'].errors.required"> Date is required</span>
+               </p>
+            </div>
+            <div class="col-sm-2">
+               <button type="submit" [disabled]="Form.status !== 'VALID' || Uploading" mat-raised-button color="primary">
+                  <span *ngIf=" !Uploading"> Apply </span>
+                  <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+               </button>
+            </div>
+         </div>
+      </form>
+
+
+
+      <div class="row">
+         <div class="col-sm-12" style="display: flex; justify-content: center">
+            <svg id="bar-chart"></svg>
+         </div>
+      </div>
+
+
+   </div>
+</div>

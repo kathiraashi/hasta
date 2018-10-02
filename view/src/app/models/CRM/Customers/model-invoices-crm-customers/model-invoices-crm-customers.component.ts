@@ -9,7 +9,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 })
 export class ModelInvoicesCrmCustomersComponent implements OnInit {
 
-  Type: String;
+  Type: string;
+
   constructor(public bsModalRef: BsModalRef) {}
 
   ngOnInit() {

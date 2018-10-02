@@ -18,6 +18,8 @@ import * as CryptoJS from 'crypto-js';
 import { ToastrService } from './../../../../../../services/common-services/toastr-service/toastr.service';
 import { CrmService } from './../../../../../../services/Crm/crm.service';
 
+import { ModelMachineSingleChartComponent } from './../../../../../../models/CRM/Customers/model-machine-single-chart/model-machine-single-chart.component';
+
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { LoginService } from './../../../../../../services/LoginService/login.service';
@@ -66,6 +68,14 @@ export class MachineStatusCrmCustomersViewComponent implements OnInit {
       });
       this.ApiLoad();
    }
+
+
+   ViewSingleChart(_index) {
+      const initialState = {
+         MachineData: this._List[_index]
+      };
+      this.bsModalRef = this.modalService.show(ModelMachineSingleChartComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'modal-lg max-width-85' }));
+    }
 
 
 
