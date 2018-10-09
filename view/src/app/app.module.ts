@@ -141,6 +141,7 @@ import { ModelScheduleActivityCreateComponent } from './models/CRM/Machines/mode
 import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-idle/model-machine-idle.component';
 import { EditEmployeesComponent } from './Components/HR/Employees/edit-employees/edit-employees.component';
 import { ModelMachineSingleChartComponent } from './models/CRM/Customers/model-machine-single-chart/model-machine-single-chart.component';
+import { MachinesMonthlyChartReportComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/machines-monthly-chart-report/machines-monthly-chart-report.component';
 
 
 @NgModule({
@@ -258,7 +259,8 @@ import { ModelMachineSingleChartComponent } from './models/CRM/Customers/model-m
            ModelScheduleActivityCreateComponent,
            ModelMachineIdleComponent,
            EditEmployeesComponent,
-           ModelMachineSingleChartComponent
+           ModelMachineSingleChartComponent,
+           MachinesMonthlyChartReportComponent
 
 
 

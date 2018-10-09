@@ -31,7 +31,7 @@
             </div>
          </div>
          <!-- Main Datas -->
-         <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+         <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader && _Data }">
             <div class="row">
                <div class="col-sm-9">
                   <!-- <div class="row">
@@ -123,17 +123,17 @@
                               <li [ngClass]="{'active': Active_Tab === 'Machines' }" (click)="Active_Tab_Change('Machines')"><span class="Menu_List">Machines</span></li>
                               <li [ngClass]="{'active': Active_Tab === 'Tickets' }" (click)="Active_Tab_Change('Tickets')"><span class="Menu_List">Tickets</span></li>
                               <li [ngClass]="{'active': Active_Tab === 'MachineStatus' }" (click)="Active_Tab_Change('MachineStatus')"><span class="Menu_List">Machine Status</span></li>
-                              <!-- <li  [ngClass]="{'active': Active_Tab === 'Invoice' }" (click)="Active_Tab_Change('Invoice')"><span class="Menu_List">Invoices</span></li> -->
+                              <li [ngClass]="{'active': Active_Tab === 'MachineChartReport' }" (click)="Active_Tab_Change('MachineChartReport')"><span class="Menu_List"> Machines Report</span></li>
                            </ul>
                         </div>
                      </div>
                   </div>
-                  <div class="row" *ngIf=" Active_Tab === 'About' ">
+                  <div class="row" *ngIf=" Active_Tab === 'About' && !isEmptyObject(_Data)">
                      <div class="col-sm-12">
                         <app-about-crm-customers-view [CustomerData]="_Data"></app-about-crm-customers-view>
                      </div>
                   </div>
-                  <div class="row" *ngIf=" Active_Tab === 'Contact' ">
+                  <div class="row" *ngIf=" Active_Tab === 'Contact' && !isEmptyObject(_Data)">
                      <div class="col-sm-12">
                         <app-contact-crm-customers-view [CustomerData]="_Data"></app-contact-crm-customers-view>
                      </div>
@@ -143,24 +143,24 @@
                         <app-activity-crm-customers-view></app-activity-crm-customers-view>
                      </div>
                   </div> -->
-                  <div class="row" *ngIf=" Active_Tab === 'Machines' ">
+                  <div class="row" *ngIf=" Active_Tab === 'Machines' && !isEmptyObject(_Data)">
                      <div class="col-sm-12">
                         <app-machines-crm-customers-view [CustomerData]="_Data"></app-machines-crm-customers-view>
                      </div>
                   </div>
-                  <div class="row" *ngIf=" Active_Tab === 'Tickets' ">
+                  <div class="row" *ngIf=" Active_Tab === 'Tickets' && !isEmptyObject(_Data)">
                      <div class="col-sm-12">
                            <app-tickets-crm-customers-view [CustomerData]="_Data"></app-tickets-crm-customers-view>
                      </div>
                   </div>
-                  <div class="row" *ngIf=" Active_Tab === 'MachineStatus' ">
+                  <div class="row" *ngIf=" Active_Tab === 'MachineStatus' && !isEmptyObject(_Data)">
                      <div class="col-sm-12">
                         <app-machine-status-crm-customers-view [CustomerData]="_Data"></app-machine-status-crm-customers-view>
                      </div>
                   </div>
-                  <div class="row" *ngIf=" Active_Tab === 'Invoice' ">
+                  <div class="row" *ngIf=" Active_Tab === 'MachineChartReport' && !isEmptyObject(_Data) ">
                      <div class="col-sm-12">
-                        <app-invoice-crm-customers-view></app-invoice-crm-customers-view>
+                        <app-machines-monthly-chart-report [CustomerData]="_Data"></app-machines-monthly-chart-report>
                      </div>
                   </div>
                </div>

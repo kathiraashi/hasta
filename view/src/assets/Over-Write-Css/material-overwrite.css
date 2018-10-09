@@ -46,3 +46,17 @@
 .cdk-overlay-container{
    z-index: 1052 !important;
 }
+
+.mat-calendar-body-disabled {
+   cursor: default;
+   pointer-events: none;
+}
+
+.DisableDate .mat-calendar-period-button.mat-button{
+   pointer-events: none;
+   cursor: not-allowed;
+   opacity: 0.65;
+   filter: alpha(opacity=65);
+   -webkit-box-shadow: none;
+   box-shadow: none;
+}

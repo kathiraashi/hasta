@@ -1,0 +1,2 @@
+[2018-10-05T18:59:55.897] [ERROR] Error - {"Error_Name":"Mongodb Connection Error","Error_Address":"Server.js","Error_Message":{"name":"MongoNetworkError","message":"failed to connect to server [ds249311.mlab.com:49311] on first connect [MongoNetworkError: getaddrinfo EAI_AGAIN ds249311.mlab.com:49311]"}}
+[2018-10-05T18:59:55.901] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":{"name":"MongoNetworkError","message":"failed to connect to server [ds249311.mlab.com:49311] on first connect [MongoNetworkError: getaddrinfo EAI_AGAIN ds249311.mlab.com:49311]"}}

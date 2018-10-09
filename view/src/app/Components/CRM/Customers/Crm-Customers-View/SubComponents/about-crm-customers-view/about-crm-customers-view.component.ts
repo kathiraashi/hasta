@@ -10,8 +10,9 @@ export class AboutCrmCustomersViewComponent implements OnInit {
 
    @Input() CustomerData: Object;
 
-   constructor() { }
+   constructor() {}
 
-   ngOnInit() {}
+   ngOnInit() {
+   }
 
 }

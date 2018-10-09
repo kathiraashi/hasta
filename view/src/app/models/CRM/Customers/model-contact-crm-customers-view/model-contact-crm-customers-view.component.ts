@@ -53,7 +53,7 @@ export class ModelContactCrmCustomersViewComponent implements OnInit {
                const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                this._Contact_Roles = DecryptedData;
                setTimeout(() => {
-                  this.Form.controls['ContactRole'].setValue(this._Data['Contact_Info']['ContactRole']);
+                  this.Form.controls['ContactRole'].setValue(this._Data['Contact_Info'].ContactRole);
                }, 500);
             } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
