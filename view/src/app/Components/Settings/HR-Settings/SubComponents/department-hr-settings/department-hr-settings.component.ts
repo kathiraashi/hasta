@@ -30,8 +30,7 @@ export class DepartmentHrSettingsComponent implements OnInit {
                   public Login_Service: LoginService
                )  {
                   this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
-                  console.log(this.User_Id);
-                     // Get Department List
+                  // Get Department List
                      const Data = { 'User_Id' : this.User_Id, };
                      let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
                      Info = Info.toString();

@@ -1,0 +1,76 @@
+<!-- page -->
+<div class="page" style="margin-top:100px;">
+   <div class="container-fluid">
+      <!-- page identity -->
+      <div class="Page_Identity">
+         <div class="Page_Track">
+            <ul>
+               <li class="HeaderName">Home</li>
+               <li class="arrow">>></li>
+               <li class="LinkName"><a [routerLink]="['/List_Leaves']">Leaves List</a></li>
+               <li class="arrow">>></li>
+               <li>Leaves Create</li>
+            </ul>
+         </div>
+      </div>
+      <!-- Company details -->
+      <div class="Company_Details">
+         <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Personal <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5><br>
+         <form [formGroup]="Form">
+            <div class="row">
+               <div class="col-sm-4 Form_Select" >
+                  <label>Employee Name:</label>
+                  <ng-select class="NgSelect" 
+                     [items]="_EmployeeName" 
+                     bindLabel="EmployeeName"
+                     bindValue="_id"
+                     formControlName="Employee"
+                     [searchable]="true" 
+                     placeholder="Employee Name">
+                  </ng-select>
+               </div>
+               <!-- <div class="col-sm-4 Form_Select">
+                  <label>Leave Type:</label>
+                  <ng-select class="NgSelect" 
+                     [items]="_LeaveType" 
+                     [searchable]="true" 
+                     placeholder="Leave Type">
+                  </ng-select>
+               </div> -->
+               <div class="col-sm-4 Form_Input" >
+                  <label>From Date:</label>
+                  <input matInput  formControlName="From_Date" [matDatepicker]="DatePicker1" (click)="DatePicker1.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="From Date">
+                  <mat-datepicker #DatePicker1></mat-datepicker>
+               </div>
+               <div class="col-sm-4 Form_Input" >
+                  <label>To Date:</label>
+                  <input matInput  formControlName="To_Date" [matDatepicker]="DatePicker2" (click)="DatePicker2.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="To Date">
+                  <mat-datepicker #DatePicker2></mat-datepicker>
+               </div>
+               <div class="col-sm-4 Form_Select" >
+                  <label>Name:</label>
+                  <ng-select class="NgSelect" 
+                     [items]="_Name" 
+                     bindLabel="Name"
+                     bindValue="_id"
+                     formControlName="Name"
+                     [searchable]="true" 
+                     placeholder="Name">
+                  </ng-select>
+               </div>
+               <div class="col-sm-4 Form_TextArea" >
+                  <label>Purpose:</label>
+                  <textarea rows="3" formControlName="Purpose"></textarea>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+<!-- Footer -->
+<div class="Footer">
+   <button mat-raised-button [disabled]="!Form.valid && Form.invalid" color="primary" style = "top: 5px;" (click)=" Submit()"> Submit </button>
+</div>
+
+
+

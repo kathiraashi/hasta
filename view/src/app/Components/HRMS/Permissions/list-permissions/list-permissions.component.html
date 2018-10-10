@@ -1,0 +1,160 @@
+<app-header></app-header>
+<!-- Page section -->
+<div class="Page_Section">
+   <div class="container-fluid">
+      <!-- page Identity -->
+      <div class="Page_Identity">
+         <div class="Page_Track">
+            <ul>
+               <li class="HeaderName">Home</li>
+               <li class="arrow">>></li>
+               <li>Permissions</li>
+            </ul>
+         </div>
+      </div>
+      <!--  Header Part -->
+      <!-- Create and search Section -->
+      <div class="row header_part">
+         <div class="col-sm-6">
+            <a [routerLink]="['/Create_Permissions']"><button class="Create_Button" mat-raised-button> + Create</button></a> 
+         </div>
+         <div class="col-sm-6">
+            <div class="Search_Section">
+               <input type="text" placeholder="Search.." name="search">
+               <i class="material-icons">search</i>
+            </div>
+         </div>
+      </div>
+      <!-- Table Section -->
+      <div class="Table_Section">
+         <table>
+            <thead>
+               <tr>
+                  <th>S.no</th>
+                  <th>Name</th>
+                  <th>Request Date</th>
+                  <th>In Time</th>
+                  <th>Out Time</th>
+                  <th>Status</th>
+                  <th>Action</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td>
+                     <span class="S_no"> 1 </span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Employee Name</span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> 24/05/2017</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">11AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">2PM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Requested</span>
+                  </td>
+                  <td>
+                     <button mat-raised-button color="primary" [matMenuTriggerFor] = "Action" > Action </button>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <span class="S_no"> 2 </span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Employee Name</span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> 24/05/2017</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">11AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">2PM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Requested</span>
+                  </td>
+                  <td>
+                     <button mat-raised-button color="primary" [matMenuTriggerFor] = "Action" > Action </button>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <span class="S_no"> 3 </span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Employee Name</span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> 24/05/2017</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">11AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">2PM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Requested</span>
+                  </td>
+                  <td>
+                     <button mat-raised-button color="primary" [matMenuTriggerFor] = "Action" > Action </button>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <span class="S_no"> 4 </span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Employee Name</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">24/05/2017</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">11AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">2PM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Requested</span>
+                  </td>
+                  <td>
+                     <button mat-raised-button color="primary" [matMenuTriggerFor] = "Action" > Action </button>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+
+<!-- Dropdown menus -->
+<mat-menu class="MenuStyleOne" #Action="matMenu" [overlapTrigger]="false" xPosition="after" yPosition="below" class="MenuStyleOne">
+   <a [routerLink]="['/Create_Permissions']"><button mat-menu-item>
+      <span>Edit</span>
+   </button></a>
+   <button mat-menu-item (click)="ViewPermissions()">
+      <span>View</span>
+   </button>
+   <button mat-menu-item>
+      <span>Approve</span>
+   </button>
+   <button mat-menu-item>
+      <span>Reject</span>
+   </button>
+</mat-menu>
+
+
+
+
+

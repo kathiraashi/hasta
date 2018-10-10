@@ -1,0 +1,60 @@
+<!-- page -->
+<div class="page" style="margin-top:100px;">
+   <div class="container-fluid">
+      <!-- page identity -->
+      <div class="Page_Identity">
+         <div class="Page_Track">
+            <ul>
+               <li class="HeaderName">Home</li>
+               <li class="arrow">>></li>
+               <li class="LinkName"><a [routerLink]="['/List_On_Duty']">OnDuty List</a></li>
+               <li class="arrow">>></li>
+               <li>OnDuty Create</li>
+            </ul>
+         </div>
+      </div>
+      <!-- Company details -->
+      <div class="Company_Details">
+         <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Personal <span style="color:#516570;font-size:20px;font-weight: 600;">Details</span></h5><br>
+         <div class="row">
+            <div class="col-sm-4 Form_Input" >
+               <label>Name:</label>
+               <ng-select class="NgSelect" 
+                  [items]="_Name" 
+                  [searchable]="true" 
+                  placeholder="Name">
+               </ng-select>
+            </div>
+            <div class="col-sm-4 Form_Input" >
+               <label>From Date:</label>
+               <input matInput [matDatepicker]="DatePicker1" (click)="DatePicker1.open()" placeholder="From Date">
+               <mat-datepicker #DatePicker1></mat-datepicker>
+            </div>
+            <div class="col-sm-4 Form_Input" >
+               <label>To Date:</label>
+               <input matInput [matDatepicker]="DatePicker2" (click)="DatePicker2.open()" placeholder="To Date">
+               <mat-datepicker #DatePicker2></mat-datepicker>
+            </div>
+            <div class="col-sm-4 Form_Input" >
+               <label>From Time:</label>
+               <input type="text" placeholder="From time"> 
+            </div>
+            <div class="col-sm-4 Form_Input" >
+               <label>To Time:</label>
+               <input type="text" placeholder="To time"> 
+            </div>
+            <div class="col-sm-4 Form_TextArea" >
+               <label>Purpose:</label>
+               <textarea class="purpose" rows="3"></textarea>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Footer -->
+<div class="Footer">
+   <button mat-raised-button color="primary" style = "top: 5px;"> Submit </button>
+</div>
+
+
+

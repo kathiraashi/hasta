@@ -141,6 +141,19 @@ import { ModelScheduleActivityCreateComponent } from './models/CRM/Machines/mode
 import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-idle/model-machine-idle.component';
 import { EditEmployeesComponent } from './Components/HR/Employees/edit-employees/edit-employees.component';
 import { ModelMachineSingleChartComponent } from './models/CRM/Customers/model-machine-single-chart/model-machine-single-chart.component';
+import { CreateLeavesComponent } from './Components/HRMS/Leaves/create-leaves/create-leaves.component';
+import { ListLeavesComponent } from './Components/HRMS/Leaves/list-leaves/list-leaves.component';
+import { CreateOnDutyComponent } from './Components/HRMS/On-Duty/create-on-duty/create-on-duty.component';
+import { ListOnDutyComponent } from './Components/HRMS/On-Duty/list-on-duty/list-on-duty.component';
+import { ModelLeavesViewComponent } from './models/HRMS/model-leaves-view/model-leaves-view.component';
+import { ModelOndutyViewComponent } from './models/HRMS/model-onduty-view/model-onduty-view.component';
+import { CreatePermissionsComponent } from './Components/HRMS/Permissions/create-permissions/create-permissions.component';
+import { ListPermissionsComponent } from './Components/HRMS/Permissions/list-permissions/list-permissions.component';
+import { ModelPermissionsViewComponent } from './models/HRMS/model-permissions-view/model-permissions-view.component';
+import { EditLeavesComponent } from './Components/HRMS/Leaves/edit-leaves/edit-leaves.component';
+import { MainHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/main-hrms-settings/main-hrms-settings.component';
+import { LeaveTypeHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/Sub-Components/leave-type-hrms-settings/leave-type-hrms-settings.component';
+import { ModelLeaveTypeHrmsSettingsComponent } from './models/settings/hrms_settings/model-leave-type-hrms-settings/model-leave-type-hrms-settings.component';
 
 
 @NgModule({
@@ -258,7 +271,20 @@ import { ModelMachineSingleChartComponent } from './models/CRM/Customers/model-m
            ModelScheduleActivityCreateComponent,
            ModelMachineIdleComponent,
            EditEmployeesComponent,
-           ModelMachineSingleChartComponent
+           ModelMachineSingleChartComponent,
+           CreateLeavesComponent,
+           ListLeavesComponent,
+           CreateOnDutyComponent,
+           ListOnDutyComponent,
+           ModelLeavesViewComponent,
+           ModelOndutyViewComponent,
+           CreatePermissionsComponent,
+           ListPermissionsComponent,
+           ModelPermissionsViewComponent,
+           EditLeavesComponent,
+           MainHrmsSettingsComponent,
+           LeaveTypeHrmsSettingsComponent,
+           ModelLeaveTypeHrmsSettingsComponent
 
 
 
@@ -329,7 +355,11 @@ import { ModelMachineSingleChartComponent } from './models/CRM/Customers/model-m
     ModelMachineMaintenancePartCrmsettingsComponent,
     ModelScheduleActivityCreateComponent,
     ModelMachineIdleComponent,
-    ModelMachineSingleChartComponent
+    ModelMachineSingleChartComponent,
+    ModelLeavesViewComponent,
+    ModelOndutyViewComponent,
+    ModelPermissionsViewComponent,
+    ModelLeaveTypeHrmsSettingsComponent
     ],
    bootstrap: [AppComponent]
 })

@@ -1,0 +1,159 @@
+<app-header></app-header>
+<!-- Page section -->
+<div class="Page_Section">
+   <div class="container-fluid">
+      <!-- page Identity -->
+      <div class="Page_Identity">
+         <div class="Page_Track">
+            <ul>
+               <li class="HeaderName">Home</li>
+               <li class="arrow">>></li>
+               <li>On Duty</li>
+            </ul>
+         </div>
+      </div>
+      <!--  Header Part -->
+      <!-- Create and search Section -->
+      <div class="row header_part">
+         <div class="col-sm-6">
+            <a [routerLink]="['/Create_On_Duty']"><button class="Create_Button" mat-raised-button> + Create</button></a> 
+         </div>
+         <div class="col-sm-6">
+            <div class="Search_Section">
+               <input type="text" placeholder="Search.." name="search">
+               <i class="material-icons">search</i>
+            </div>
+         </div>
+      </div>
+      <!-- Table Section -->
+      <div class="Table_Section">
+         <table>
+            <thead>
+               <tr>
+                  <th>S.no</th>
+                  <th>Name</th>
+                  <th>OD Date</th>
+                  <th>Out Time</th>
+                  <th>In Time</th>
+                  <th>Status</th>
+                  <th>Action</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td>
+                     <span class="S_no"> 1 </span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Employee Name</span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> 24/05/2017</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">12:05AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">12:05AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Requested</span>
+                  </td>
+                  <td>
+                     <button mat-raised-button color="primary" [matMenuTriggerFor] = "Action" > Action </button>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <span class="S_no"> 2 </span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Employee Name</span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> 24/05/2017</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">12:05AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">12:05AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Requested</span>
+                  </td>
+                  <td>
+                     <button mat-raised-button color="primary" [matMenuTriggerFor] = "Action" > Action </button>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <span class="S_no"> 3 </span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Employee Name</span>
+                  </td>
+                  <td>
+                     <span class="Style_1"> 24/05/2017</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">12:05AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">12:05AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Requested</span>
+                  </td>
+                  <td>
+                     <button mat-raised-button color="primary" [matMenuTriggerFor] = "Action" > Action </button>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <span class="S_no"> 4 </span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Employee Name</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">24/05/2017</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">12:05AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">12:05AM</span>
+                  </td>
+                  <td>
+                     <span class="Style_1">Requested</span>
+                  </td>
+                  <td>
+                     <button mat-raised-button color="primary" [matMenuTriggerFor] = "Action" > Action </button>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+
+<!-- Dropdown menus -->
+<mat-menu class="MenuStyleOne" #Action="matMenu" [overlapTrigger]="false" xPosition="after" yPosition="below" class="MenuStyleOne">
+   <a [routerLink]="['/Create_On_Duty']"><button mat-menu-item>
+      <span>Edit</span>
+   </button></a>
+   <button mat-menu-item (click)="ViewOnDuty()">
+      <span>View</span>
+   </button>
+   <button mat-menu-item>
+      <span>Approve</span>
+   </button>
+   <button mat-menu-item>
+      <span>Reject</span>
+   </button>
+</mat-menu>
+
+
+
+

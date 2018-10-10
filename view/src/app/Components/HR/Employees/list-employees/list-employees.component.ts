@@ -20,6 +20,7 @@ export class ListEmployeesComponent implements OnInit {
    Loader: Boolean = true;
    _List: any[] = [];
    User_Id;
+   User_Type;
 
    constructor( private modalService: BsModalService,
                private Toastr: ToastrService,
@@ -27,6 +28,7 @@ export class ListEmployeesComponent implements OnInit {
                public Service: HrService
                ) {
                   this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+                  this.User_Type = this.Login_Service.LoginUser_Info()['_UserType'];
                   // Get Employees List
                   const Data = { 'User_Id' : this.User_Id, };
                   let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');

@@ -98,10 +98,17 @@ app.use('/API/', function (req, res, next) {
       require('./server/web/routes/settings/CRM_Settings.routes.js')(app);
    // HR Settings
       require('./server/web/routes/settings/Hr_Settings.routes.js')(app);
+   // HRMS Settings
+      require('./server/web/routes/settings/Hrms_Settings.routes.js')(app);
 // CRM
    require('./server/web/routes/Crm/Crm_Customers.routes.js')(app);
 // Hr
    require('./server/web/routes/Hr/Hr.routes.js')(app);
+// Hrms
+   // Leaves
+   require('./server/web/routes/Hrms/Hrms.routes.js')(app);
+   // OnDuty
+   require('./server/web/routes/Hrms/OnDuty.routes.js')(app);
 
 
    // app.use(express.static(__dirname + '/view/dist/view/'));

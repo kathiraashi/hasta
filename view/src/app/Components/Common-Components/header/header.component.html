@@ -38,6 +38,35 @@
                   </ul>
                </span>
             </li>
+            <!-- HRMS -->
+            <li class="Menu_List" routerLinkActive="active">
+               <span class="Menu_Tree">
+                  <span class="Menu">
+                     <i class="material-icons">people</i>
+                     <span> &nbsp; HRMS </span> 
+                  </span>
+                  <ul class="Menu_Tree_View">
+                     <li class="Menu_Tree_List" routerLinkActive="active">
+                        <a [routerLink]="['/List_Leaves']"> Leaves </a>
+                        <span class="Hidden_Links"> 
+                           <span [routerLink]="['/Create_Leaves']"></span>
+                        </span>
+                     </li>
+                     <!-- <li class="Menu_Tree_List" routerLinkActive="active">
+                        <a [routerLink]="['/List_On_Duty']"> On Duty </a>
+                        <span class="Hidden_Links"> 
+                           <span [routerLink]="['/Create_On_Duty']"></span>
+                        </span>
+                     </li> -->
+                     <!-- <li class="Menu_Tree_List" routerLinkActive="active">
+                        <a [routerLink]="['/List_Permissions']"> Permissions </a>
+                        <span class="Hidden_Links"> 
+                           <span [routerLink]="['/Create_Permissions']"></span>
+                        </span>
+                     </li> -->
+                  </ul>
+               </span>
+            </li>
             <!-- Settings -->
             <li class="Menu_List" routerLinkActive="active">
                <span class="Menu_Tree">
@@ -48,6 +77,7 @@
                   <ul class="Menu_Tree_View">
                      <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/CRM_Settings']"><a> CRM Settings </a></li>
                      <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/Hr_Settings']" ><a> HR Settings </a></li> 
+                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/Hrms_Settings']" ><a> HRMS Settings </a></li> 
                      <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/User_Management']"><a> User Management  </a></li>
                   </ul>
                </span>

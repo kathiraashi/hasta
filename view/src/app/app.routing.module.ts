@@ -36,10 +36,13 @@ import { AttendanceReportViewComponent } from './Components/HR/Attendance/SubCom
 import { MainPayrollHrComponent } from './Components/HR/SubComponents/Payroll/main-payroll-hr/main-payroll-hr.component';
 import { MainPayrollMasterHrComponent } from './Components/HR/SubComponents/Payroll-Master/main-payroll-master-hr/main-payroll-master-hr.component';
 import { EditEmployeesComponent } from './Components/HR/Employees/edit-employees/edit-employees.component';
-
-
-
-
+import { CreateLeavesComponent } from './Components/HRMS/Leaves/create-leaves/create-leaves.component';
+import { ListLeavesComponent } from './Components/HRMS/Leaves/list-leaves/list-leaves.component';
+import { ListOnDutyComponent } from './Components/HRMS/On-Duty/list-on-duty/list-on-duty.component';
+import { CreateOnDutyComponent } from './Components/HRMS/On-Duty/create-on-duty/create-on-duty.component';
+import { ListPermissionsComponent } from './Components/HRMS/Permissions/list-permissions/list-permissions.component';
+import { CreatePermissionsComponent } from './Components/HRMS/Permissions/create-permissions/create-permissions.component';
+import { MainHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/main-hrms-settings/main-hrms-settings.component';
 
 const appRoutes: Routes = [
    {
@@ -63,6 +66,12 @@ const appRoutes: Routes = [
       component: MainHrSettingsComponent,
       canActivate: [AuthGuard],
       data: {   animation: { value: 'Hr_Settings'}   }
+   },
+   {
+      path: 'Hrms_Settings',
+      component: MainHrmsSettingsComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'Hrms_Settings'}   }
    },
    {
       path: 'User_Management',
@@ -251,10 +260,43 @@ const appRoutes: Routes = [
       canActivate: [AuthGuard],
       data: {   animation: { value: 'Main_Payroll_Master'}   }
    },
-
-
-
-
+   // HRMS
+      {
+         path: 'Create_Leaves',
+         component: CreateLeavesComponent,
+         canActivate: [AuthGuard],
+         data: {   animation: { value: 'Create_Leaves'}   }
+      },
+      {
+         path: 'List_Leaves',
+         component: ListLeavesComponent,
+         canActivate: [AuthGuard],
+         data: {   animation: { value: 'List_Leaves'}   }
+      },
+      {
+         path: 'List_On_Duty',
+         component: ListOnDutyComponent,
+         canActivate: [AuthGuard],
+         data: {   animation: { value: 'List_On_Duty'}   }
+      },
+      {
+         path: 'Create_On_Duty',
+         component: CreateOnDutyComponent,
+         canActivate: [AuthGuard],
+         data: {   animation: { value: 'Create_On_Duty'}   }
+      },
+      {
+         path: 'List_Permissions',
+         component: ListPermissionsComponent,
+         canActivate: [AuthGuard],
+         data: {   animation: { value: 'List_Permissions'}   }
+      },
+      {
+         path: 'Create_Permissions',
+         component: CreatePermissionsComponent,
+         canActivate: [AuthGuard],
+         data: {   animation: { value: 'Create_Permissions'}   }
+      }
 ];
 
 
