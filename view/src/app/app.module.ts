@@ -154,6 +154,7 @@ import { EditLeavesComponent } from './Components/HRMS/Leaves/edit-leaves/edit-l
 import { MainHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/main-hrms-settings/main-hrms-settings.component';
 import { LeaveTypeHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/Sub-Components/leave-type-hrms-settings/leave-type-hrms-settings.component';
 import { ModelLeaveTypeHrmsSettingsComponent } from './models/settings/hrms_settings/model-leave-type-hrms-settings/model-leave-type-hrms-settings.component';
+import { MachinesMonthlyChartReportComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/machines-monthly-chart-report/machines-monthly-chart-report.component';
 
 
 @NgModule({
@@ -284,7 +285,8 @@ import { ModelLeaveTypeHrmsSettingsComponent } from './models/settings/hrms_sett
            EditLeavesComponent,
            MainHrmsSettingsComponent,
            LeaveTypeHrmsSettingsComponent,
-           ModelLeaveTypeHrmsSettingsComponent
+           ModelLeaveTypeHrmsSettingsComponent,
+           MachinesMonthlyChartReportComponent
 
 
 

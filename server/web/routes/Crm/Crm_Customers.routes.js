@@ -49,7 +49,6 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmMachine_IdleTime_List', Controller.CrmMachine_IdleTime_List);
    app.post('/API/CrmCustomers/CrmMachine_IdleTime_Update', Controller.CrmMachine_IdleTime_Update);
 
-   app.post('/API/CrmCustomers/CrmCustomerBasedMachine_ChartData', Controller.CrmCustomerBasedMachine_ChartData);
 
 
 
@@ -72,7 +71,8 @@ module.exports = function(app) {
 
 
 
+   app.post('/API/CrmCustomers/CrmCustomerBasedMachine_ChartData', Controller.CrmCustomerBasedMachine_ChartData);
    app.post('/API/CrmCustomers/CrmSingleMachine_ChartData', Controller.CrmSingleMachine_ChartData);
-
+   app.post('/API/CrmCustomers/CrmCustomerBasedMachinesMonthly_ChartData', Controller.CrmCustomerBasedMachinesMonthly_ChartData);
 
 };

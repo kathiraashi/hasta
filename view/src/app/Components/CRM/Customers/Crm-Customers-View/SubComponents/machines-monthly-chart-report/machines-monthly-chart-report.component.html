@@ -1,0 +1,131 @@
+<div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+   <div class="Loading">
+      <div class="spinner">
+         <div class="rect1"></div>
+         <div class="rect2"></div>
+         <div class="rect3"></div>
+         <div class="rect4"></div>
+         <div class="rect5"></div>
+         <div class="rect6"></div>
+      </div>
+   </div>
+</div>
+<!-- Main Datas -->
+<div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader }">
+   <div class="about_section">
+      <div class="row">
+         <div class="col-sm-8">
+            <div class="Applied">
+               <span class="span-1"> Date Duration :  </span>
+               <span class="span-2"> {{From | date:'d/M/yyyy'}} </span>
+               <span  class="span-3"> - </span>
+               <span class="span-2">  {{ ShowTo | date:'d/M/yyyy'}} </span>
+               <span  class="span-3"> ( {{Hours}} ) </span>
+            </div>
+         </div>
+         <div class="col-sm-4 Form_Input_New">
+            <input type="text"
+                     [max]="maxDate" 
+                     [(ngModel)]="MonthFor"
+                     [matDatepicker]="Datepicker" 
+                     (click)="Datepicker.open()">
+            <button style="float: right" mat-raised-button color="primary" [disabled]="!ShowChangeBtn" (click)="ApiLoad()"> Change </button>
+            <mat-datepicker #Datepicker
+                           panelClass="DisableDate"
+                           startView="year"
+                           (monthSelected)="chosenMonthHandler($event, Datepicker)">
+            </mat-datepicker>
+         </div>
+      </div>
+      <br>
+      <div id="diagram"></div>
+   </div>
+   <br>
+   <div class="about_section" *ngIf="Calculated_Data['Final_MTBF']">
+      <div class="row">
+         <div class="col-sm-6">
+            <h5 style="text-decoration: underline;"> WithOut Spare Time </h5>
+            <br>
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="Customer_Details_Title">
+                     <h5> MTBF <span>:</span></h5>
+                  </div>
+               </div>
+               <div class="col-sm-8">
+                  <div class="Customer_Details_Value">
+                     <h5> {{Calculated_Data['Final_MTBF']}} </h5>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="Customer_Details_Title">
+                     <h5> MTTR <span>:</span></h5>
+                  </div>
+               </div>
+               <div class="col-sm-8">
+                  <div class="Customer_Details_Value">
+                     <h5> {{Calculated_Data['Final_MTTR']}} </h5>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="Customer_Details_Title">
+                     <h5> Availability <span>:</span></h5>
+                  </div>
+               </div>
+               <div class="col-sm-8">
+                  <div class="Customer_Details_Value">
+                     <h5> {{Calculated_Data['Final_Availability']}} </h5>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-sm-6">
+            <h5 style="text-decoration: underline;"> With Spare Time </h5>
+            <br>
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="Customer_Details_Title">
+                     <h5> MTBF <span>:</span></h5>
+                  </div>
+               </div>
+               <div class="col-sm-8">
+                  <div class="Customer_Details_Value">
+                     <h5> {{Calculated_Data['Final_Waiting_MTBF']}} </h5>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="Customer_Details_Title">
+                     <h5> MTTR <span>:</span></h5>
+                  </div>
+               </div>
+               <div class="col-sm-8">
+                  <div class="Customer_Details_Value">
+                     <h5> {{Calculated_Data['Final_Waiting_MTTR']}} </h5>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="Customer_Details_Title">
+                     <h5> Availability <span>:</span></h5>
+                  </div>
+               </div>
+               <div class="col-sm-8">
+                  <div class="Customer_Details_Value">
+                     <h5> {{Calculated_Data['Final_Waiting_Availability']}} </h5>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<br>
+<br>
+<br>

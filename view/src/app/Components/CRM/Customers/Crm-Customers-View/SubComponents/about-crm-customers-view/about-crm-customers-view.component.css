@@ -43,6 +43,7 @@
    padding: 5px;
    letter-spacing: 0.3px;
    margin: 0px;
+   min-width: 150px;
  }
  
  .ChartTooltip::before {
@@ -71,9 +72,11 @@
    color: #ffffff;
  }
 
- .axis--x text{
-   transform: rotateZ(-60deg) translateX(-35px) translateY(-8px);
+ .axis-x text{
+   transform: rotateZ(35deg) translateX(8px) translateY(-9px);;
    font-size: 11px;
    letter-spacing: 0.5px;
-
  }
+ .TextPercent {
+   text-anchor: middle;
+}

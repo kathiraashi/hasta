@@ -105,7 +105,7 @@
 
 
 
-.ChartTooltip {
+.ChartTooltipOne {
    background-color: #546a79;
    color: rgba(255, 255, 255, 0.5);
    text-align: center;
@@ -115,11 +115,11 @@
    margin: 0px;
  }
  
- .ChartTooltip::before {
+ .ChartTooltipOne::before {
    content: "";
    position: absolute;
-   top: 35px;
-   left: -10%;
+   top: 22px;
+   left: -5%;
    border-style: solid;
    -webkit-transform: rotate(90DEG);
    transform: rotate(90DEG);
@@ -132,12 +132,12 @@
    border-top-width: 11px;
 }
  
- .ChartTooltip p {
+ .ChartTooltipOne p {
    margin: 5px;
    text-align: center
  }
  
- .ChartTooltip span {
+ .ChartTooltipOne span {
    color: #ffffff;
  }
 

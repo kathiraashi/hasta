@@ -75,6 +75,10 @@ export class MachineStatusCrmCustomersViewComponent implements OnInit {
          MachineData: this._List[_index]
       };
       this.bsModalRef = this.modalService.show(ModelMachineSingleChartComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'modal-lg max-width-85' }));
+      this.bsModalRef.content.onClose.subscribe(response => {
+         console.log('123');
+         d3.selectAll('.ToolTipSection').remove();
+      });
     }
 
 
@@ -207,7 +211,7 @@ export class MachineStatusCrmCustomersViewComponent implements OnInit {
                      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
 
-      d3.selectAll('.ToolTipSection' + _index).remove();
+      d3.selectAll('.ToolTipSectionOne' + _index).remove();
       const  tooltip = d3.select('body')
                         .append('div')
                         .attr('class', 'ToolTipSectionOne' + _index)
@@ -273,12 +277,13 @@ export class MachineStatusCrmCustomersViewComponent implements OnInit {
                svg.select('.value').text(function(d1) { return d.data.Hours; });
                svg.select('.percentage').text(function(d1) { return d.data.Percentage + '%'; });
                return tooltip.style('visibility', 'visible').html(function(d1) {
-                  return  '<h5 class="ChartTooltip">'
+                  return  '<h5 class="ChartTooltipOne"> ('
                            + formatDate(d.data.From, 'dd-MM-yyyy ', 'en-US', '+0530')
-                           + ' <span>' + formatDate(d.data.From, 'hh:mm a', 'en-US', '+0530') + '</span>'
-                           + '<p> <span> to </span> </p>'
+                           + ' <span>' + formatDate(d.data.From, 'hh:mm a', 'en-US', '+0530') + ')</span>'
+                           + '<span> to </span> ('
                            +  formatDate(d.data.To, 'dd-MM-yyyy', 'en-US', '+0530')
-                           + ' <span>' + formatDate(d.data.To, 'hh:mm a', 'en-US', '+0530') + '</span>'
+                           + ' <span>' + formatDate(d.data.To, 'hh:mm a', 'en-US', '+0530') + ')</span>'
+                           + '<p style="max-width: 250px;"> <span>' + (d.data['Description'] === undefined ? '-' : d.data['Description'])  + '</span> </p>'
                            + '</h5>';
                });
          })

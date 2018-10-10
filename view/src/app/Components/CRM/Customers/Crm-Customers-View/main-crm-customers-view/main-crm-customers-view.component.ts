@@ -110,6 +110,10 @@ export class MainCrmCustomersViewComponent implements OnInit {
    ngOnInit() {
    }
 
+   isEmptyObject(obj) {
+      return (obj && (Object.keys(obj).length === 0));
+    }
+
    Active_Tab_Change(name) {
       this.Active_Tab = name;
    }

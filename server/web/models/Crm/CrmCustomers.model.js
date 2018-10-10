@@ -111,6 +111,7 @@ var Schema = mongoose.Schema;
       Activity_Status: { type : String, required : true },
       Activity_Date: { type : Date, required : true },
       Activity_Time: { type : String },
+      Description: { type : String },
       Idle_DbId: { type : Schema.Types.ObjectId, ref: 'CrmMachinesIdleTime' },
       Ticket_DbId: { type : Schema.Types.ObjectId, ref: 'Crm_Tickets' },
       Ticket_Activity_DbId: { type : Schema.Types.ObjectId, ref: 'CrmTicket_Activities' },

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation, TemplateRef  } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 import {NativeDateAdapter} from '@angular/material';
 import {DateAdapter} from '@angular/material/core';
@@ -35,6 +36,7 @@ export class ModelMachineSingleChartComponent implements OnInit {
 
 
    MachineData: Object;
+   onClose: Subject<any>;
 
    User_Id;
 
@@ -59,6 +61,7 @@ export class ModelMachineSingleChartComponent implements OnInit {
 
 
    ngOnInit() {
+      this.onClose = new Subject();
       const Today = new Date();
       const firstDay = new Date(Today.getFullYear(), Today.getMonth(), 1);
       const lastDay = new Date(Today.getFullYear(), Today.getMonth() + 1, 0);
@@ -85,6 +88,7 @@ export class ModelMachineSingleChartComponent implements OnInit {
             const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
             const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
             this._List = DecryptedData;
+            console.log(DecryptedData);
             DecryptedData.map(Obj => {
                Obj.ChartData.map(Obj_1 => {
                   if (Obj_1.Status === 'Up') { Obj_1.ColorCode = '#44AF5A'; }
@@ -94,7 +98,6 @@ export class ModelMachineSingleChartComponent implements OnInit {
                });
             });
             this.Uploading = false;
-            console.log(DecryptedData);
             this.LoadChart(DecryptedData);
          } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
             this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
@@ -211,11 +214,11 @@ export class ModelMachineSingleChartComponent implements OnInit {
                                                       d3.select(this).style('opacity', '0.7');
                                                       return tooltip.style('visibility', 'visible').html(function(d1) {
                                                          return '<h5 class="ChartTooltip">'
-                                                         + '<p> ' + d.Date + ' </span> </p>  <span>'
-                                                         + formatDate(d.ChartData[index].From, 'hh:mm a', 'en-US', '+0530')
+                                                         + d.Date + ' <span>' + formatDate(d.ChartData[index].From, 'hh:mm a', 'en-US', '+0530')
                                                          + '</span> to <span>'
-                                                         +  formatDate(d.ChartData[index].To, 'hh:mm a', 'en-US', '+0530')
-                                                         + '</span> <p style="color:' + d.ChartData[index].ColorCode + ';background-color: #fff; padding: 3px 0px;"> '
+                                                         + formatDate(d.ChartData[index].To, 'hh:mm a', 'en-US', '+0530') + ' </span>'
+                                                         +  '<p style="max-width: 250px;">' + (d.ChartData[index]['Description'] === undefined ? '-' : d.ChartData[index]['Description']) + '</p>'
+                                                         + ' <p style="color:' + d.ChartData[index].ColorCode + ';background-color: #fff; padding: 3px 0px;"> '
                                                          + d.ChartData[index].Show_Hours + '</p>'
                                                          + '</h5>';
                                                       });
