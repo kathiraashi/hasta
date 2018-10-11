@@ -17,9 +17,9 @@
                      <span> &nbsp; CRM </span> 
                   </span>
                   <ul class="Menu_Tree_View">
-                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/Crm_Customers_List']"><a> Customers </a></li>
-                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/crm_machine_list']"><a> Machines </a></li>
-                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/crm_ticket_list']"><a> Tickets </a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" ><a [routerLink]="['/Crm_Customers_List']"> Customers </a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" ><a [routerLink]="['/crm_machine_list']"> Machines </a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" ><a [routerLink]="['/crm_ticket_list']"> Tickets </a></li>
                   </ul>
                </span>
             </li>
@@ -31,7 +31,12 @@
                      <span> &nbsp; HR </span> 
                   </span>
                   <ul class="Menu_Tree_View">
-                     <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/List_Employees']"><a> Employees </a></li>
+                     <li class="Menu_Tree_List" routerLinkActive="active" >
+                        <a [routerLink]="['/List_Employees']"> Employees </a>
+                        <span class="Hidden_Links"> 
+                           <span [routerLink]="['/Create_Employees']"></span>
+                        </span>
+                     </li>
                      <!-- <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/main_Attendance']"><a> Attendance </a></li>
                      <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/Main_Payroll']"><a> Payroll </a></li>
                      <li class="Menu_Tree_List" routerLinkActive="active" [routerLink]="['/Main_Payroll_Master']"><a> Payroll Master</a></li> -->
@@ -39,7 +44,7 @@
                </span>
             </li>
             <!-- HRMS -->
-            <li class="Menu_List" routerLinkActive="active">
+            <!-- <li class="Menu_List" routerLinkActive="active">
                <span class="Menu_Tree">
                   <span class="Menu">
                      <i class="material-icons">people</i>
@@ -52,21 +57,15 @@
                            <span [routerLink]="['/Create_Leaves']"></span>
                         </span>
                      </li>
-                     <!-- <li class="Menu_Tree_List" routerLinkActive="active">
-                        <a [routerLink]="['/List_On_Duty']"> On Duty </a>
+                     <li class="Menu_Tree_List" routerLinkActive="active">
+                        <a [routerLink]="['/Expenses_List']"> Expenses </a>
                         <span class="Hidden_Links"> 
-                           <span [routerLink]="['/Create_On_Duty']"></span>
+                           <span [routerLink]="['/Create_Expenses']"></span>
                         </span>
-                     </li> -->
-                     <!-- <li class="Menu_Tree_List" routerLinkActive="active">
-                        <a [routerLink]="['/List_Permissions']"> Permissions </a>
-                        <span class="Hidden_Links"> 
-                           <span [routerLink]="['/Create_Permissions']"></span>
-                        </span>
-                     </li> -->
+                     </li>
                   </ul>
                </span>
-            </li>
+            </li> -->
             <!-- Settings -->
             <li class="Menu_List" routerLinkActive="active">
                <span class="Menu_Tree">
@@ -102,6 +101,18 @@
                   <span> &nbsp; Tickets </span> 
                </span>
             </li>
+            <!-- <li class="Menu_List" routerLinkActive="active" [routerLink]="['/List_Leaves']" style="outline:none;">
+               <span class="Menu">
+                  <i class="material-icons">people</i>
+                  <span> &nbsp; Leaves </span> 
+               </span>
+            </li>
+            <li class="Menu_List" routerLinkActive="active" [routerLink]="['/Expenses_List']" style="outline:none;">
+               <span class="Menu">
+                  <i class="material-icons">people</i>
+                  <span> &nbsp; Expenses </span> 
+               </span>
+            </li> -->
          </ul>
       </div>
    </div>

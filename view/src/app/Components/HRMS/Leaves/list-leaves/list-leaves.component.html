@@ -1,5 +1,4 @@
-<app-header></app-header>
-<div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+   <div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
       <div class="Loading">
          <div class="spinner">
             <div class="rect1"></div>
@@ -46,8 +45,9 @@
                         <th>Employee Name</th>
                         <th>From Date</th>
                         <th>To Date</th>
-                        <th>Name</th>
+                        <th>Leave Type</th>
                         <th>Purpose</th>
+                        <th> Status </th>
                         <th>Action</th>
                      </tr>
                   </thead>
@@ -66,13 +66,21 @@
                            <span class="Style_1">{{item.To_Date | date}}</span>
                         </td>
                         <td>
-                           <span class="Style_1">{{item.Name?.Name}}</span>
+                           <span class="Style_1">{{item.Leave_Type?.Name}}</span>
                         </td>
                         <td>
                            <span class="Style_1">{{item.Purpose}}</span>
                         </td>
                         <td>
-                           <button mat-raised-button color="primary" [matMenuTriggerFor] = "Action" > Action </button>
+                           <span class="Style_1">{{item.Current_Status}}</span>
+                        </td>
+                        <td>
+                           <ng-container *ngIf="item.Stage === 'Stage_5' || item.Stage === 'Stage_6'">
+                              <button mat-raised-button color="primary" (click)="Active_Id_Change(i); ViewLeaves()" > View </button>
+                           </ng-container>
+                           <ng-container *ngIf="item.Stage !== 'Stage_5' && item.Stage !== 'Stage_6'">
+                              <button mat-raised-button color="primary" (click)="Active_Id_Change(i)" [matMenuTriggerFor] = "Action" > Action </button>
+                           </ng-container>
                         </td>
                      </tr>
                   </tbody>
@@ -83,17 +91,26 @@
 </div>
 <!-- Dropdown menus -->
 <mat-menu class="MenuStyleOne" #Action="matMenu" [overlapTrigger]="false" xPosition="after" yPosition="below" class="MenuStyleOne">
-   <a [routerLink]="['/Create_Leaves']"><button mat-menu-item>
-      <span>Edit</span>
-   </button></a>
-   <button mat-menu-item (click)="ViewLeaves()" >
-      <span>View</span>
+   <button mat-menu-item (click)="ViewLeaves()">
+      <span> View </span>
    </button>
-   <button mat-menu-item>
+   <button *ngIf="IfShowMenu('DraftEdit')" mat-menu-item (click)="EditLeaves()">
+      <span> Edit </span>
+   </button>
+   <button *ngIf="IfShowMenu('SendToApprove')" mat-menu-item (click)="SendToApprove()">
+      <span> Send To Approve </span>
+   </button>
+   <button *ngIf="IfShowMenu('ModifyData')" mat-menu-item (click)="EditLeaves()">
+      <span> Modify </span>
+   </button>
+   <button *ngIf="IfShowMenu('Approve')" mat-menu-item (click)="Approve()">
       <span>Approve</span>
    </button>
-   <button mat-menu-item>
-      <span>Reject</span>
+   <button *ngIf="IfShowMenu('Reject')" mat-menu-item (click)="Reject()">
+      <span> Reject </span>
+   </button>
+   <button *ngIf="IfShowMenu('SendToModify')" mat-menu-item (click)="SendToModify()">
+      <span> Modify </span>
    </button>
 </mat-menu>
 

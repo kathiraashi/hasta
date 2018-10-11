@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
-
-
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-
 
 import * as CryptoJS from 'crypto-js';
 
@@ -35,36 +28,45 @@ export class MyDateAdapter extends NativeDateAdapter {
   providers: [{provide: DateAdapter, useClass: MyDateAdapter}]
 })
 export class CreateLeavesComponent implements OnInit {
+
+   Today: Date = new Date();
    _EmployeeName: any[] =  [];
-   _Name: any[] =  [];
-   User_Type;
+   _LeaveTypes: any[] =  [];
    Form: FormGroup;
    User_Id;
-   modalRef: BsModalRef;
+   User_Type;
+   IfEmployeeId;
+   MinDate: Date = new Date();
 
 
 
    constructor(   private Toastr: ToastrService,
-                  public hrservice: HrService,
+                  public hr_service: HrService,
                   public router: Router,
-                  private modalService: BsModalService,
                   public Service: HrmsServiceService,
                   public Login_Service: LoginService,
                   public SettingService: HrmsSettingsServiceService,
                ) {
                   this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
                   this.User_Type = this.Login_Service.LoginUser_Info()['User_Type'];
+                  if (this.User_Type === 'Employee') {
+                     this.IfEmployeeId = this.Login_Service.LoginUser_Info()['Employee']['_id'];
+                  }
                   const Data = {'User_Id' : this.User_Id};
                   let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
                   Info = Info.toString();
-
                   // Get Employee Simple List
-                  this.hrservice.Employee_SimpleList({'Info': Info}).subscribe( response => {
+                  this.hr_service.Employee_SimpleList({'Info': Info}).subscribe( response => {
                      const ResponseData = JSON.parse(response['_body']);
                      if (response['status'] === 200 && ResponseData['Status'] ) {
                         const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                         const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                         this._EmployeeName = DecryptedData;
+                        if (this.User_Type === 'Employee' && this.IfEmployeeId) {
+                           this.Form.controls['Employee'].setValue(this.IfEmployeeId);
+                        } else {
+                           this.Form.controls['Employee'].enable();
+                        }
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -79,8 +81,7 @@ export class CreateLeavesComponent implements OnInit {
                      if (response['status'] === 200 && ResponseData['Status'] ) {
                         const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                         const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-                        this._Name = DecryptedData;
-                        console.log(this._Name);
+                        this._LeaveTypes = DecryptedData;
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -93,20 +94,26 @@ export class CreateLeavesComponent implements OnInit {
 
   ngOnInit() {
    this.Form = new FormGroup({
-      Employee: new FormControl(null),
-      Name: new FormControl(null),
-      From_Date: new FormControl('', Validators.required),
-      To_Date: new FormControl('', Validators.required),
-      Purpose: new FormControl(''),
-      User_Id: new FormControl(this.User_Id)
+      Employee: new FormControl({value: null, disabled: true, }, Validators.required),
+      Leave_Type: new FormControl(null, Validators.required),
+      From_Date: new FormControl(this.Today, Validators.required),
+      To_Date: new FormControl(this.Today, Validators.required),
+      Purpose: new FormControl('', Validators.required),
+      User_Id: new FormControl(this.User_Id, Validators.required)
    });
   }
   NotAllow() {
    return false;
  }
+
+ FromDateChange(_date) {
+    this.Form.controls['To_Date'].setValue(_date);
+   this.MinDate = _date;
+ }
+
   Submit() {
    if (this.Form.valid) {
-      let Info = CryptoJS.AES.encrypt(JSON.stringify(this.Form.value), 'SecretKeyIn@123');
+      let Info = CryptoJS.AES.encrypt(JSON.stringify(this.Form.getRawValue()), 'SecretKeyIn@123');
       Info = Info.toString();
       this.Service.Leaves_Create({ 'Info': Info }).subscribe( response => {
          const ResponseData = JSON.parse(response['_body']);

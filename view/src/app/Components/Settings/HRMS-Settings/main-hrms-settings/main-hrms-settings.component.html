@@ -16,12 +16,16 @@
          <div class="Main_Section">
             <div class="Left_Section">
                <ul class="Tabs">
-                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Leave_Type'}" (click)="Active_Tab_Change('Leave_Type')"><span class="Tab_Content">Leave Type</span></li>     
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Leave_Type'}" (click)="Active_Tab_Change('Leave_Type')"><span class="Tab_Content">Leave Type</span></li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Expenses_Type'}" (click)="Active_Tab_Change('Expenses_Type')"><span class="Tab_Content">Expenses Type</span></li>     
                </ul>
             </div>
             <div class="Right_Section">
                <div *ngIf="Active_Tab === 'Leave_Type'">
                   <app-leave-type-hrms-settings></app-leave-type-hrms-settings>
+               </div> 
+               <div *ngIf="Active_Tab === 'Expenses_Type'">
+                  <app-expenses-type-hrms-settings></app-expenses-type-hrms-settings>
                </div> 
             </div>
          </div>

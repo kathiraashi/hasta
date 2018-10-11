@@ -143,18 +143,18 @@ import { EditEmployeesComponent } from './Components/HR/Employees/edit-employees
 import { ModelMachineSingleChartComponent } from './models/CRM/Customers/model-machine-single-chart/model-machine-single-chart.component';
 import { CreateLeavesComponent } from './Components/HRMS/Leaves/create-leaves/create-leaves.component';
 import { ListLeavesComponent } from './Components/HRMS/Leaves/list-leaves/list-leaves.component';
-import { CreateOnDutyComponent } from './Components/HRMS/On-Duty/create-on-duty/create-on-duty.component';
-import { ListOnDutyComponent } from './Components/HRMS/On-Duty/list-on-duty/list-on-duty.component';
 import { ModelLeavesViewComponent } from './models/HRMS/model-leaves-view/model-leaves-view.component';
-import { ModelOndutyViewComponent } from './models/HRMS/model-onduty-view/model-onduty-view.component';
-import { CreatePermissionsComponent } from './Components/HRMS/Permissions/create-permissions/create-permissions.component';
-import { ListPermissionsComponent } from './Components/HRMS/Permissions/list-permissions/list-permissions.component';
-import { ModelPermissionsViewComponent } from './models/HRMS/model-permissions-view/model-permissions-view.component';
 import { EditLeavesComponent } from './Components/HRMS/Leaves/edit-leaves/edit-leaves.component';
 import { MainHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/main-hrms-settings/main-hrms-settings.component';
 import { LeaveTypeHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/Sub-Components/leave-type-hrms-settings/leave-type-hrms-settings.component';
 import { ModelLeaveTypeHrmsSettingsComponent } from './models/settings/hrms_settings/model-leave-type-hrms-settings/model-leave-type-hrms-settings.component';
 import { MachinesMonthlyChartReportComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/machines-monthly-chart-report/machines-monthly-chart-report.component';
+import { CreateExpensesComponent } from './Components/HRMS/Expenses/create-expenses/create-expenses.component';
+import { ExpensesListComponent } from './Components/HRMS/Expenses/expenses-list/expenses-list.component';
+import { EditExpensesComponent } from './Components/HRMS/Expenses/edit-expenses/edit-expenses.component';
+import { ExpensesViewComponent } from './Components/HRMS/Expenses/expenses-view/expenses-view.component';
+import { ExpensesTypeHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/Sub-Components/expenses-type-hrms-settings/expenses-type-hrms-settings.component';
+import { ModelExpensesTypeHrmsSettingsComponent } from './models/settings/hrms_settings/model-expenses-type-hrms-settings/model-expenses-type-hrms-settings.component';
 
 
 @NgModule({
@@ -275,18 +275,18 @@ import { MachinesMonthlyChartReportComponent } from './Components/CRM/Customers/
            ModelMachineSingleChartComponent,
            CreateLeavesComponent,
            ListLeavesComponent,
-           CreateOnDutyComponent,
-           ListOnDutyComponent,
            ModelLeavesViewComponent,
-           ModelOndutyViewComponent,
-           CreatePermissionsComponent,
-           ListPermissionsComponent,
-           ModelPermissionsViewComponent,
            EditLeavesComponent,
            MainHrmsSettingsComponent,
            LeaveTypeHrmsSettingsComponent,
            ModelLeaveTypeHrmsSettingsComponent,
-           MachinesMonthlyChartReportComponent
+           MachinesMonthlyChartReportComponent,
+           CreateExpensesComponent,
+           ExpensesListComponent,
+           EditExpensesComponent,
+           ExpensesViewComponent,
+           ExpensesTypeHrmsSettingsComponent,
+           ModelExpensesTypeHrmsSettingsComponent
 
 
 
@@ -359,9 +359,8 @@ import { MachinesMonthlyChartReportComponent } from './Components/CRM/Customers/
     ModelMachineIdleComponent,
     ModelMachineSingleChartComponent,
     ModelLeavesViewComponent,
-    ModelOndutyViewComponent,
-    ModelPermissionsViewComponent,
-    ModelLeaveTypeHrmsSettingsComponent
+    ModelLeaveTypeHrmsSettingsComponent,
+    ModelExpensesTypeHrmsSettingsComponent
     ],
    bootstrap: [AppComponent]
 })

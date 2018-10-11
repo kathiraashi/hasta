@@ -53,7 +53,7 @@ export class LeaveTypeHrmsSettingsComponent implements OnInit {
 // Create New Leave Type
    CreateLeaveType() {
       const initialState = { Type: 'Create' };
-      this.bsModalRef = this.modalService.show(ModelLeaveTypeHrmsSettingsComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'model-md' }));
+      this.bsModalRef = this.modalService.show(ModelLeaveTypeHrmsSettingsComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'modal-md' }));
       this.bsModalRef.content.onClose.subscribe(response => {
          if (response.Status) {
             this._List.splice(0, 0, response.Response);
@@ -66,7 +66,7 @@ export class LeaveTypeHrmsSettingsComponent implements OnInit {
          Type: 'Edit',
          Data: this._List[_index]
       };
-      this.bsModalRef = this.modalService.show(ModelLeaveTypeHrmsSettingsComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: '' }));
+      this.bsModalRef = this.modalService.show(ModelLeaveTypeHrmsSettingsComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'modal-md' }));
       this.bsModalRef.content.onClose.subscribe(response => {
          if (response.Status) {
             this._List[_index] = response.Response;
@@ -78,7 +78,7 @@ export class LeaveTypeHrmsSettingsComponent implements OnInit {
          Type: 'View',
          Data: this._List[_index]
       };
-      this.bsModalRef = this.modalService.show(ModelLeaveTypeHrmsSettingsComponent, Object.assign({initialState}, { class: 'model-lg' }));
+      this.bsModalRef = this.modalService.show(ModelLeaveTypeHrmsSettingsComponent, Object.assign({initialState}, { class: 'modal-md' }));
    }
    DeleteLeaveType(_index) {
       const initialState = {

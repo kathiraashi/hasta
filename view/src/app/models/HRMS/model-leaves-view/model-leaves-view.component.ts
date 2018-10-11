@@ -14,7 +14,8 @@ export class ModelLeavesViewComponent implements OnInit {
 
    Type: string;
    User_Id;
-   Data;
+   _Data: Object = {};
+
    constructor(public bsModalRef: BsModalRef,
       public Login_Service: LoginService) {
       this.User_Id = this.Login_Service.LoginUser_Info()['_id'];

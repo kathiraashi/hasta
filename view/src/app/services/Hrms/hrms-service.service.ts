@@ -34,62 +34,93 @@ export class HrmsServiceService {
          observer.complete();
       });
    }
-   // Leaves
-      public OnDuty_Create(Info: any): Observable<any[]> {
-         if (this.Service.If_LoggedIn()) {
-            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
-            sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'OnDuty_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-      }  else {
-         return this.ValidateEveryRequest();
-      }
-      }
-      public OnDuty_List(Info: any): Observable<any[]> {
-         if (this.Service.If_LoggedIn()) {
-            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
-            sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'OnDuty_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-      }  else {
-         return this.ValidateEveryRequest();
-      }
-      }
-      public OnDuty_Update(Info: any): Observable<any[]> {
-         if (this.Service.If_LoggedIn()) {
-            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
-            sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'OnDuty_Update', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-      }  else {
-         return this.ValidateEveryRequest();
-      }
-      }
 
-      // On Duty
+      // Leaves
       public Leaves_Create(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Leaves_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-      }  else {
-         return this.ValidateEveryRequest();
-      }
+            return this.http.post(API_URL + 'Leaves_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
       }
       public Leaves_List(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Leaves_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-      }  else {
-         return this.ValidateEveryRequest();
+            const User_Type = this.Service.LoginUser_Info()['User_Type'];
+            if (User_Type === 'Employee') {
+               return this.http.post(API_URL + 'LeavesList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            } else {
+               return this.http.post(API_URL + 'Leaves_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            }
+         }  else {
+            return this.ValidateEveryRequest();
+         }
       }
+      public Leave_View(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Leave_View', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
       }
       public Leaves_Update(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Leaves_Update', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-      }  else {
-         return this.ValidateEveryRequest();
+            return this.http.post(API_URL + 'Leaves_Update', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
       }
+      public Leave_SendToApprove(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Leave_SendToApprove', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Leave_SendToModify(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Leave_SendToModify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Leaves_Modify(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Leaves_Modify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Leave_Rejected(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Leave_Rejected', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Leave_Approve(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Leave_Approve', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
       }
 }
 

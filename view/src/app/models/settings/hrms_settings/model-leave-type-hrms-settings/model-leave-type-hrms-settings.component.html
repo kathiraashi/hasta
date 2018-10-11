@@ -7,7 +7,7 @@
    <form [formGroup]="Form" (ngSubmit)="onSubmit()">
       <div class="Model_Body">
          <div class="row">
-            <div class="col-sm-6 Form_Input"  [ngClass]="{'Form_Err': Form.controls['Name'].errors && !Form.controls['Name'].pristine, 'Form_Success': Form.controls['Name'].valid && !Form.controls['Name'].pristine }">
+            <div class="col-sm-12 Form_Input"  [ngClass]="{'Form_Err': Form.controls['Name'].errors && !Form.controls['Name'].pristine, 'Form_Success': Form.controls['Name'].valid && !Form.controls['Name'].pristine }">
                <label>Name:</label>
                <input type="text" formControlName="Name">
                <p class="error" *ngIf="Form.controls['Name'].errors && !Form.controls['Name'].pristine">
@@ -15,7 +15,9 @@
                   <span *ngIf="Form.controls['Name'].errors.LeaveType_NotAvailable"> Name Already Exist </span>      
                </p>
             </div>
-            <div class="col-sm-6 Form_Select">
+         </div>
+         <div class="row">
+            <div class="col-sm-12 Form_Select">
                <label>Leave Type:</label>
                <ng-select class="NgSelect"
                   [items]="_LeaveType"

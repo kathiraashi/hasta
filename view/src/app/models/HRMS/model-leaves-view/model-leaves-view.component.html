@@ -8,34 +8,37 @@
       <div class="view_item">
          <div class="Static"> Employee Name </div>
          <div class="dots"> : </div>
-         <div class="Data">  {{Data.Employee.EmployeeName}}</div>
+         <div class="Data">  {{_Data['Employee']?.EmployeeName}}</div>
       </div>
       <div class="view_item">
          <div class="Static"> Name </div>
          <div class="dots"> : </div>
-         <div class="Data"> {{Data.Name.Name}} </div>
+         <div class="Data"> {{_Data['Leave_Type']?.Name}} </div>
       </div>
       <div class="view_item">
          <div class="Static">From Date</div>
          <div class="dots"> : </div>
-         <div class="Data">  {{Data.From_Date | date}}</div>
+         <div class="Data">  {{_Data['From_Date'] | date:'d-M-yyyy'}}</div>
       </div>
       <div class="view_item">
          <div class="Static">To Date </div>
          <div class="dots"> : </div>
-         <div class="Data">{{Data.To_Date | date}}</div>
+         <div class="Data">{{_Data['To_Date'] | date:'d-M-yyyy'}}</div>
       </div>
       <div class="view_item">
          <div class="Static">Purpose </div>
          <div class="dots"> : </div>
-         <div class="Data"> {{Data.Purpose}} </div>
+         <div class="Data"> {{_Data['Purpose']}} </div>
       </div>
-   </div>
-   <div class="row">
-      <div class="col-sm-12">
-         <button mat-raised-button color="primary" class="pull-right Reject"> Reject </button>
-         <button mat-raised-button color="primary" class="pull-right Modify"> Modify </button>
-         <button mat-raised-button color="primary" class="pull-right"> Approve </button>
+      <div class="view_item">
+         <div class="Static"> Created Date </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['createdAt'] | date:'medium'}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Created By </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Last_Modified_By']?.Name}} </div>
       </div>
    </div>
 </div>

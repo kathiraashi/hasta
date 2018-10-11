@@ -40,6 +40,8 @@ exports.Employee_Create = function(req, res) {
       res.status(400).send({Status: false, Message: "Employee Name can not be empty" });
    } else if(!ReceivingData.MobileNo || ReceivingData.MobileNo === '' ) {
       res.status(400).send({Status: false, Message: "Mobile Number can not be empty" });
+   } else if(!ReceivingData.EmployeeCode || ReceivingData.EmployeeCode === '' ) {
+      res.status(400).send({Status: false, Message: "Employee Code can not be empty" });
    } else if(!ReceivingData.Customers || ReceivingData.Customers.length <= 0 ) {
       res.status(400).send({Status: false, Message: "Customers can not be empty" });
    } else {
@@ -133,6 +135,8 @@ exports.Employee_Update = function(req, res) {
       res.status(400).send({Status: false, Message: "Employee Details can not be empty" });
    }else if(!ReceivingData.EmployeeName || ReceivingData.EmployeeName === '' ) {
       res.status(400).send({Status: false, Message: "Employee Name can not be empty" });
+   } else if(!ReceivingData.EmployeeCode || ReceivingData.EmployeeCode === '' ) {
+      res.status(400).send({Status: false, Message: "Employee Code can not be empty" });
    }else if(!ReceivingData.MobileNo || ReceivingData.MobileNo === '' ) {
       res.status(400).send({Status: false, Message: "Mobile Number can not be empty" });
    } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {

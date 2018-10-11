@@ -75,6 +75,10 @@
                      <div class="col-sm-4 Form_Input" >
                         <input type="text" formControlName="MfgYear" placeholder="Mfg Year"> 
                      </div>
+                     <div class="col-sm-4 Form_Input" >
+                        <input type="text" formControlName="DateOfPlaced" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date Of Placed">
+                        <mat-datepicker #Datepicker></mat-datepicker>
+                     </div>
                   </div>
                   <div class="row" style="margin-top: 20px;" > 
                      <div class="col-sm-12 text-right">

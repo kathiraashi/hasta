@@ -34,6 +34,23 @@
 }
 
 
+.MenuStyleOne .mat-menu-item-highlighted:not([disabled]),
+.MenuStyleOne .mat-menu-item.cdk-keyboard-focused:not([disabled]),
+.MenuStyleOne .mat-menu-item.cdk-program-focused:not([disabled]),
+.MenuStyleOne .mat-menu-item:hover:not([disabled]) {
+   background: rgb(64, 185, 89) !important;
+   color: #fff;
+}
+
+.MenuStyleOne .mat-menu-content:not(:empty) {
+   padding-top: 0px !important;
+   padding-bottom: 0px !important;
+}
+.MenuStyleOne .mat-menu-item{
+   line-height: 35px !important;
+   height: 35px !important;
+}
+
 .mat-calendar-body-selected{
    background-color: #4ab65f !important;
 }

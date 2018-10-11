@@ -88,6 +88,7 @@ export class MachinesMonthlyChartReportComponent implements OnInit {
             const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
             const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
             this._List = DecryptedData;
+            console.log(DecryptedData);
             this._List.map(Obj => {
                Obj.ChartData.map(Obj_1 => {
                   if (Obj_1.Type === 'Up') { Obj_1.ColorCode = '#44AF5A'; }

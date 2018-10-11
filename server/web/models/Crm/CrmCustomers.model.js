@@ -72,6 +72,7 @@ var Schema = mongoose.Schema;
       MachineId: { type : String },
       MfgYear: { type : String },
       MachineType: { type: Schema.Types.ObjectId, ref: 'MachineType' },
+      DateOfPlaced: { type : Date, require: true },
       ControllerType: { type: Schema.Types.ObjectId, ref: 'ControllerType' },
       ControllerModelNo: { type : String },
       Maintenance_Parts: [ {type: Schema.Types.ObjectId, ref: 'MachineMaintenancePart'} ],

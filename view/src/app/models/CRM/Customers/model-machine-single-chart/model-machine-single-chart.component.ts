@@ -88,7 +88,6 @@ export class ModelMachineSingleChartComponent implements OnInit {
             const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
             const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
             this._List = DecryptedData;
-            console.log(DecryptedData);
             DecryptedData.map(Obj => {
                Obj.ChartData.map(Obj_1 => {
                   if (Obj_1.Status === 'Up') { Obj_1.ColorCode = '#44AF5A'; }

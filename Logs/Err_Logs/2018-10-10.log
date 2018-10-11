@@ -1,0 +1,5 @@
+[2018-10-10T18:38:49.157] [ERROR] Error - {"Error_Name":"Mongodb Connection Error","Error_Address":"Server.js","Error_Message":{"name":"MongoNetworkError","message":"failed to connect to server [ds249311.mlab.com:49311] on first connect [MongoNetworkError: getaddrinfo EAI_AGAIN ds249311.mlab.com:49311]"}}
+[2018-10-10T18:38:49.161] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":{"name":"MongoNetworkError","message":"failed to connect to server [ds249311.mlab.com:49311] on first connect [MongoNetworkError: getaddrinfo EAI_AGAIN ds249311.mlab.com:49311]"}}
+[2018-10-10T19:03:36.144] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"Error: Route.post() requires a callback function but got a [object Undefined]"}
+[2018-10-10T19:07:34.958] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"Error: Route.post() requires a callback function but got a [object Undefined]"}
+[2018-10-10T19:08:09.771] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"Error: Route.post() requires a callback function but got a [object Undefined]"}

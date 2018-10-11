@@ -105,8 +105,6 @@ app.use('/API/', function (req, res, next) {
 // Hrms
    // Leaves
    require('./server/web/routes/Hrms/Hrms.routes.js')(app);
-   // OnDuty
-   require('./server/web/routes/Hrms/OnDuty.routes.js')(app);
 
 
    // app.use(express.static(__dirname + '/view/dist/view/'));

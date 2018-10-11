@@ -97,7 +97,7 @@ export class CreateEmployeesComponent implements OnInit {
    ngOnInit() {
       this.Form = new FormGroup({
          EmployeeName: new FormControl('', Validators.required),
-         EmployeeCode: new FormControl(''),
+         EmployeeCode: new FormControl('', Validators.required),
          Department: new FormControl(null),
          JobTitle: new FormControl(''),
          MobileNo: new FormControl('', { validators: Validators.required,

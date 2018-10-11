@@ -76,7 +76,6 @@ export class MachineStatusCrmCustomersViewComponent implements OnInit {
       };
       this.bsModalRef = this.modalService.show(ModelMachineSingleChartComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'modal-lg max-width-85' }));
       this.bsModalRef.content.onClose.subscribe(response => {
-         console.log('123');
          d3.selectAll('.ToolTipSection').remove();
       });
     }
@@ -97,6 +96,7 @@ export class MachineStatusCrmCustomersViewComponent implements OnInit {
             const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
             const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
             this._List = DecryptedData;
+            console.log(DecryptedData);
             DecryptedData.map(Obj => {
                if (Obj.ChartData[Obj.ChartData.length - 1].Status === 'Up') {
                   Obj.Machine.Color = 'rgba(68, 175, 91, 1)';

@@ -5,6 +5,17 @@ import { Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
+import {NativeDateAdapter} from '@angular/material';
+import {DateAdapter} from '@angular/material/core';
+export class MyDateAdapter extends NativeDateAdapter {
+   format(date: Date, displayFormat: Object): string {
+        const day = date.getDate();
+       const month = date.getMonth() + 1;
+       const year = date.getFullYear();
+       return `${day}-${month}-${year}`;
+   }
+}
+
 import * as CryptoJS from 'crypto-js';
 
 import { LoginService } from './../../../../services/LoginService/login.service';
@@ -15,7 +26,8 @@ import { CrmService } from './../../../../services/Crm/crm.service';
 @Component({
   selector: 'app-crm-machines-create',
   templateUrl: './crm-machines-create.component.html',
-  styleUrls: ['./crm-machines-create.component.css']
+  styleUrls: ['./crm-machines-create.component.css'],
+  providers: [{provide: DateAdapter, useClass: MyDateAdapter}],
 })
 export class CrmMachinesCreateComponent implements OnInit {
 
@@ -124,12 +136,14 @@ export class CrmMachinesCreateComponent implements OnInit {
          MfgSerialNo: new FormControl(''),
          MachineId: new FormControl(''),
          MfgYear: new FormControl(''),
+         DateOfPlaced: new FormControl(new Date()),
          ControllerModelNo: new FormControl(''),
          Maintenance_Parts: new FormControl(null),
          User_Id: new FormControl(this.User_Id)
       });
    }
 
+   NotAllow(): boolean {return false; }
 
    OpenModel(template: TemplateRef<any>) {
       this.modalRef = this.modalService.show(template, { class: 'modal-md', ignoreBackdropClick: true });

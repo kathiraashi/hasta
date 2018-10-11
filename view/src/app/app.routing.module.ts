@@ -38,11 +38,12 @@ import { MainPayrollMasterHrComponent } from './Components/HR/SubComponents/Payr
 import { EditEmployeesComponent } from './Components/HR/Employees/edit-employees/edit-employees.component';
 import { CreateLeavesComponent } from './Components/HRMS/Leaves/create-leaves/create-leaves.component';
 import { ListLeavesComponent } from './Components/HRMS/Leaves/list-leaves/list-leaves.component';
-import { ListOnDutyComponent } from './Components/HRMS/On-Duty/list-on-duty/list-on-duty.component';
-import { CreateOnDutyComponent } from './Components/HRMS/On-Duty/create-on-duty/create-on-duty.component';
-import { ListPermissionsComponent } from './Components/HRMS/Permissions/list-permissions/list-permissions.component';
-import { CreatePermissionsComponent } from './Components/HRMS/Permissions/create-permissions/create-permissions.component';
+import { EditLeavesComponent } from './Components/HRMS/Leaves/edit-leaves/edit-leaves.component';
 import { MainHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/main-hrms-settings/main-hrms-settings.component';
+import { CreateExpensesComponent } from './Components/HRMS/Expenses/create-expenses/create-expenses.component';
+import { ExpensesListComponent } from './Components/HRMS/Expenses/expenses-list/expenses-list.component';
+import { EditExpensesComponent } from './Components/HRMS/Expenses/edit-expenses/edit-expenses.component';
+import { ExpensesViewComponent } from './Components/HRMS/Expenses/expenses-view/expenses-view.component';
 
 const appRoutes: Routes = [
    {
@@ -268,35 +269,41 @@ const appRoutes: Routes = [
          data: {   animation: { value: 'Create_Leaves'}   }
       },
       {
+         path: 'Edit_Leaves/:Leave_Id',
+         component: EditLeavesComponent,
+         canActivate: [AuthGuard],
+         data: {   animation: { value: 'Edit_Leaves'}   }
+      },
+      {
          path: 'List_Leaves',
          component: ListLeavesComponent,
          canActivate: [AuthGuard],
          data: {   animation: { value: 'List_Leaves'}   }
       },
       {
-         path: 'List_On_Duty',
-         component: ListOnDutyComponent,
+         path: 'Expenses_List',
+         component: ExpensesListComponent,
          canActivate: [AuthGuard],
-         data: {   animation: { value: 'List_On_Duty'}   }
+         data: {   animation: { value: 'Expenses_List'}   }
       },
       {
-         path: 'Create_On_Duty',
-         component: CreateOnDutyComponent,
+         path: 'Create_Expenses',
+         component: CreateExpensesComponent,
          canActivate: [AuthGuard],
-         data: {   animation: { value: 'Create_On_Duty'}   }
+         data: {   animation: { value: 'Create_Expenses'}   }
       },
       {
-         path: 'List_Permissions',
-         component: ListPermissionsComponent,
+         path: 'Edit_Expenses',
+         component: EditExpensesComponent,
          canActivate: [AuthGuard],
-         data: {   animation: { value: 'List_Permissions'}   }
+         data: {   animation: { value: 'Edit_Expenses'}   }
       },
       {
-         path: 'Create_Permissions',
-         component: CreatePermissionsComponent,
+         path: 'Expenses_View',
+         component: ExpensesViewComponent,
          canActivate: [AuthGuard],
-         data: {   animation: { value: 'Create_Permissions'}   }
-      }
+         data: {   animation: { value: 'Expenses_View'}   }
+      },
 ];
 
 

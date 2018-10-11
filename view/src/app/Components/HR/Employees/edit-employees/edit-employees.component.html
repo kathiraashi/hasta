@@ -47,8 +47,11 @@
                               <span *ngIf="Form.controls['MobileNo'].errors.MobileNo_NotAvailable"> Mobile Number is Already Exist!</span>
                            </p>
                         </div>
-                        <div class="col-sm-4 Form_Input" >
+                        <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['EmployeeCode'].pristine && Form.controls['EmployeeCode'].errors, 'Form_Success': Form.controls['EmployeeCode'].valid && !Form.controls['EmployeeCode'].pristine }">
                            <input type="text" formControlName="EmployeeCode" placeholder="Employee Code">
+                           <p class="error" *ngIf="Form.controls['EmployeeCode'].errors && !Form.controls['EmployeeCode'].pristine">
+                              <span *ngIf="Form.controls['EmployeeCode'].errors.required"> Employee Code is required </span>
+                           </p>
                         </div>
                         <div class="col-sm-4 Form_Input" >
                            <ng-select class="NgSelect ValueBold"
