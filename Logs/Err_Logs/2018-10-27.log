@@ -1,0 +1,2 @@
+[2018-10-27T18:28:23.803] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"SyntaxError: Identifier 'Available_Hours' has already been declared"}
+[2018-10-27T18:28:36.064] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"SyntaxError: Identifier 'Available_Hours' has already been declared"}

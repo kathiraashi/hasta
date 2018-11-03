@@ -14,6 +14,7 @@ import { ModelTicketsCreateComponent } from '../../../../models/CRM/Machines/mod
 import { DeleteConfirmationComponent } from '../../../../Components/Common-Components/delete-confirmation/delete-confirmation.component';
 import { ModelScheduleActivityCreateComponent } from '../../../../models/CRM/Machines/model-schedule-activity-create/model-schedule-activity-create.component';
 import { ModelMachineIdleComponent } from '../../../../models/CRM/Machines/model-machine-idle/model-machine-idle.component';
+import { ModelMachineWorkingComponent } from '../../../../models/CRM/Machines/model-machine-working/model-machine-working.component';
 import { LoginService } from './../../../../services/LoginService/login.service';
 
 @Component({
@@ -34,7 +35,7 @@ export class CrmMachinesViewComponent implements OnInit {
    _TicketsList: any[] = [];
    _MaintenanceList: any[] = [];
    _ScheduleList: any[] = [];
-   _IdleList: any[] = [];
+   _WorkingList: any[] = [];
 
    bsModalRef: BsModalRef;
 
@@ -70,7 +71,7 @@ export class CrmMachinesViewComponent implements OnInit {
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else {
-                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Data Getting Error!, But not Identify!' });
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Machine Details Getting Error!, But not Identify!' });
                      }
                   });
                   this.Crm_Service.CrmMachineBasedTickets_List({ 'Info': Info }).subscribe( response => {
@@ -85,7 +86,7 @@ export class CrmMachinesViewComponent implements OnInit {
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else {
-                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Data Getting Error!, But not Identify!' });
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Machine Ticket Data Getting Error!, But not Identify!' });
                      }
                   });
                   this.Crm_Service.CrmMachine_MaintenanceSchedule_Today({ 'Info': Info }).subscribe( response => {
@@ -104,7 +105,7 @@ export class CrmMachinesViewComponent implements OnInit {
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else {
-                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Data Getting Error!, But not Identify!' });
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Machine Maintenance Data Getting Error!, But not Identify!' });
                      }
                   });
                   this.Crm_Service.CrmMachine_ScheduleActivity_List({ 'Info': Info }).subscribe( response => {
@@ -119,22 +120,22 @@ export class CrmMachinesViewComponent implements OnInit {
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else {
-                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Data Getting Error!, But not Identify!' });
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Machine Schedule Data Getting Error!, But not Identify!' });
                      }
                   });
-                  this.Crm_Service.CrmMachine_IdleTime_List({ 'Info': Info }).subscribe( response => {
+                  this.Crm_Service.CrmMachine_WorkingHours_List({ 'Info': Info }).subscribe( response => {
                      const ResponseData = JSON.parse(response['_body']);
                      this.Loader = false;
                      if (response['status'] === 200 && ResponseData['Status'] ) {
                         const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                         const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-                        this._IdleList = DecryptedData;
+                        this._WorkingList = DecryptedData;
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else {
-                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ' Customer Data Getting Error!, But not Identify!' });
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Machine Working Data Getting Error!, But not Identify!' });
                      }
                   });
                });
@@ -267,29 +268,29 @@ export class CrmMachinesViewComponent implements OnInit {
 
 
 
-   // ********************************* Idle ***************************************
-   CreateIdle() {
+   // ********************************* Working ***************************************
+   CreateWorking() {
       const initialState = {
-         _Data: { Type: 'Create', Machine_Id: this.Machine_Id, Last_Idle_Info: this._IdleList[0] }
+         _Data: { Type: 'Create', Machine_Id: this.Machine_Id, Last_Working_Info: this._WorkingList[0], MachinePlacedDate: this._Data['DateOfPlaced']}
       };
-      this.bsModalRef = this.modalService.show(ModelMachineIdleComponent, Object.assign({initialState}, { ignoreBackdropClick: true,  class: 'modal-lg' }));
+      this.bsModalRef = this.modalService.show(ModelMachineWorkingComponent, Object.assign({initialState}, { ignoreBackdropClick: true,  class: 'modal-lg' }));
       this.bsModalRef.content.onClose.subscribe(response => {
          if (response['Status']) {
-            this._IdleList.splice(0, 0, response['Response']);
-            this._Data['Current_Status'] = 'Idle';
+            this._WorkingList.splice(0, 0, response['Response']);
+            this._Data['Current_Status'] = 'Up';
          }
       });
    }
 
-   UpdateIdle(_index) {
+   UpdateWorking(_index) {
       const initialState = {
-         _Data: { Type: 'Edit', Machine_Id: this.Machine_Id, Idle_Info: this._IdleList[_index]  }
+         _Data: { Type: 'Edit', Machine_Id: this.Machine_Id, Working_Info: this._WorkingList[_index]  }
       };
-      this.bsModalRef = this.modalService.show(ModelMachineIdleComponent, Object.assign({initialState}, { ignoreBackdropClick: true,  class: 'modal-lg' }));
+      this.bsModalRef = this.modalService.show(ModelMachineWorkingComponent, Object.assign({initialState}, { ignoreBackdropClick: true,  class: 'modal-lg' }));
       this.bsModalRef.content.onClose.subscribe(response => {
          if (response['Status']) {
-            this._Data['Current_Status'] = 'Up';
-            this._IdleList[_index] = response['Response'];
+            this._Data['Current_Status'] = 'Idle';
+            this._WorkingList[_index] = response['Response'];
          }
       });
    }

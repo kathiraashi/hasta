@@ -44,6 +44,7 @@
                      <th> S.no </th>
                      <th> Employee Name </th>
                      <th> Date </th>
+                     <th> Required Date </th>
                      <th> Expenses Type </th>
                      <th> Amount </th>
                      <th> Description </th>
@@ -52,9 +53,69 @@
                   </tr>
                </thead>
                <tbody>
+                     <tr *ngFor="let item of _List; let i=index">
+                        <td>
+                           <span class="S_no">  {{ i + 1 }} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{item.Employee?.EmployeeName}}</span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{item.Applied_Date | date}}</span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{item.Required_Date | date}}</span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{item.Expenses_Type?.Expenses_Type }}</span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{item.Amount}}</span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{item.Description}}</span>
+                        </td>
+                        <td>
+                           <span class="Style_1">{{item.Current_Status}}</span>
+                        </td>
+                        <td>
+                           <ng-container *ngIf="item.Stage === 'Stage_5' || item.Stage === 'Stage_6'">
+                              <button mat-raised-button color="primary" (click)="Active_Id_Change(i); ViewExpenses()" > View </button>
+                           </ng-container>
+                           <ng-container *ngIf="item.Stage !== 'Stage_5' && item.Stage !== 'Stage_6'">
+                              <button mat-raised-button color="primary" (click)="Active_Id_Change(i)" [matMenuTriggerFor] = "Action" > Action </button>
+                           </ng-container>
+                        </td>
+                     </tr>
                </tbody>
             </table>
          </div>
       </div>
    </div>
 </div>
+
+
+<!-- Dropdown menus -->
+<mat-menu class="MenuStyleOne" #Action="matMenu" [overlapTrigger]="false" xPosition="after" yPosition="below" class="MenuStyleOne">
+   <button mat-menu-item (click)="ViewExpenses()">
+      <span> View </span>
+   </button>
+   <button *ngIf="IfShowMenu('DraftEdit')" mat-menu-item (click)="EditExpenses()">
+      <span> Edit </span>
+   </button>
+   <button *ngIf="IfShowMenu('SendToApprove')" mat-menu-item (click)="SendToApprove()">
+      <span> Send To Approve </span>
+   </button>
+   <button *ngIf="IfShowMenu('ModifyData')" mat-menu-item (click)="EditExpenses()">
+      <span> Modify </span>
+   </button>
+   <button *ngIf="IfShowMenu('Approve')" mat-menu-item (click)="Approve()">
+      <span>Approve</span>
+   </button>
+   <button *ngIf="IfShowMenu('Reject')" mat-menu-item (click)="Reject()">
+      <span> Reject </span>
+   </button>
+   <button *ngIf="IfShowMenu('SendToModify')" mat-menu-item (click)="SendToModify()">
+      <span> Modify </span>
+   </button>
+</mat-menu>

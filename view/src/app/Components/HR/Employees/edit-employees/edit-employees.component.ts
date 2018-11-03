@@ -177,7 +177,7 @@ export class EditEmployeesComponent implements OnInit {
       const Data = { MobileNo: control.value, User_Id: this.User_Id  };
       let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
       Info = Info.toString();
-      return this.Service.Employee_AsyncValidate({'Info': Info}).pipe(map( response => {
+      return this.Service.MobileNo_AsyncValidate({'Info': Info}).pipe(map( response => {
          if (this._Data['MobileNo'] === control.value) {
             return null;
          } else {

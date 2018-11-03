@@ -114,7 +114,7 @@ var mongoose = require('mongoose');
    
       if(!ReceivingData.Leaves_Id || ReceivingData.Leaves_Id === '' ) {
          res.status(400).send({Status: false, Message: "Leaves Details can not be empty" });
-      } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      } else if (!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
          res.status(400).send({Status: false, Message: "User Details can not be empty" });
       }else {
          LeavesModel.LeavesSchema.findOne({'_id': mongoose.Types.ObjectId(ReceivingData.Leaves_Id)}, {}, {}, function(err, result) {
@@ -220,7 +220,7 @@ var mongoose = require('mongoose');
          res.status(400).send({Status: false, Message: "Employee Details can not be empty" });
       }else {
          LeavesModel.LeavesSchema
-            .find({ 'If_Deleted': false, 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee_Id) }, {}, { sort: { updatedAt: -1 } })
+            .find({ 'If_Deleted': false, $or: [ {'Employee': mongoose.Types.ObjectId(ReceivingData.Employee_Id) }, {'Created_By': mongoose.Types.ObjectId(ReceivingData.User_Id) } ] }, {}, { sort: { updatedAt: -1 } })
             .populate({path: 'Employee', select:'EmployeeName'})
             .populate({path: 'Leave_Type', select:'Name'})
             .populate({path: 'Last_Modified_By', select:'Name'})

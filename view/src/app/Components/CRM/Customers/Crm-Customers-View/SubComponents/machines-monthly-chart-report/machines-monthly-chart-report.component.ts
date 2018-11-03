@@ -240,7 +240,7 @@ export class MachinesMonthlyChartReportComponent implements OnInit {
                                              return tooltip.style('visibility', 'visible').html(function(d1) {
                                                 return '<h5 class="ChartTooltip">'
                                                 + '<p>' + ParentData.Machine.MachineName + '</p>'
-                                                + ' <p style="color:' + d.ColorCode + ';background-color: #fff; padding: 3px 5px;"> ' + d.Show_Hours + '</p>'
+                                                + ' <p style="color:' + d.ColorCode + ';background-color: #fff; padding: 3px 5px;"> ' + d.Total_Hours + ' / ' + d.Show_Hours + '</p>'
                                                 + '<p>' + d.Percentage + '%</p>'
                                                 + '</h5>';
                                              });

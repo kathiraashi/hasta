@@ -16,6 +16,7 @@ export class HrmsServiceService {
    constructor(private http: Http, private Service: LoginService) {
       this.headers = new Headers();
    }
+
    ValidateEveryRequest() {
       let Message = JSON.stringify({Status: false, Message: 'Your Login Expired! Please Login Again'});
       if (sessionStorage.getItem('Token') && sessionStorage.getItem('SessionKey') && sessionStorage.getItem('SessionToken') ) {
@@ -118,6 +119,96 @@ export class HrmsServiceService {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
             return this.http.post(API_URL + 'Leave_Approve', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+
+
+
+
+      public Expenses_Create(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Expenses_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Expenses_List(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            const User_Type = this.Service.LoginUser_Info()['User_Type'];
+            if (User_Type === 'Employee') {
+               return this.http.post(API_URL + 'ExpensesList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            } else {
+               return this.http.post(API_URL + 'Expenses_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            }
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Expenses_View(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Expenses_View', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Expenses_Update(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Expenses_Update', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Expenses_SendToApprove(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Expenses_SendToApprove', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Expenses_SendToModify(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Expenses_SendToModify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Expenses_Modify(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Expenses_Modify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Expenses_Rejected(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Expenses_Rejected', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Expenses_Approve(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Expenses_Approve', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }

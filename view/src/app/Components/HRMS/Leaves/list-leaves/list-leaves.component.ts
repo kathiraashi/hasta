@@ -10,6 +10,7 @@ import * as CryptoJS from 'crypto-js';
 import { HrmsServiceService } from './../../../../services/Hrms/hrms-service.service';
 import { ToastrService } from '../../../../services/common-services/toastr-service/toastr.service';
 import { LoginService } from './../../../../services/LoginService/login.service';
+
 @Component({
   selector: 'app-list-leaves',
   templateUrl: './list-leaves.component.html',

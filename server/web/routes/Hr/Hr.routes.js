@@ -3,7 +3,8 @@ module.exports = function(app){
    var Controller = require('../../controller/Hr/Employee.controller.js');
 
    // Employee
-      app.post('/API/Hr/Employee_AsyncValidate', Controller.Employee_AsyncValidate);
+      app.post('/API/Hr/MobileNo_AsyncValidate', Controller.MobileNo_AsyncValidate);
+      app.post('/API/Hr/EmployeeCode_AsyncValidate', Controller.EmployeeCode_AsyncValidate);
       app.post('/API/Hr/Employee_Create', Controller.Employee_Create);
       app.post('/API/Hr/Employee_List', Controller.Employee_List);
       app.post('/API/Hr/Employee_View', Controller.Employee_View);

@@ -46,7 +46,8 @@
                   <th>Code</th>
                   <th>Phone No</th>
                   <th>Department</th>
-                  <th>Job Title</th>
+                  <th>Designation </th>
+                  <th>Employee Role </th>
                   <th>Join Date</th>
                   <th>Action</th>
                   </tr>
@@ -69,7 +70,10 @@
                         <span class="Style_1"> {{item.Department?.Department}} </span>
                      </td>
                      <td>
-                        <span class="Style_1"> {{item.JobTitle}} </span>
+                        <span class="Style_1"> {{item.Designation?.Designation}} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{item.EmployeeRole}} </span>
                      </td>
                      <td>
                         <span class="Style_1"> {{item.JoiningDate | date:'d/M/yyyy'}} </span>

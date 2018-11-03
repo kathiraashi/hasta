@@ -139,6 +139,7 @@ import { ModelMachineScheduleActivityCrmsettingsComponent } from './models/setti
 import { ModelMachineMaintenancePartCrmsettingsComponent } from './models/settings/crm_settings/model-machine-maintenance-part-crmsettings/model-machine-maintenance-part-crmsettings.component';
 import { ModelScheduleActivityCreateComponent } from './models/CRM/Machines/model-schedule-activity-create/model-schedule-activity-create.component';
 import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-idle/model-machine-idle.component';
+import { ModelMachineWorkingComponent } from './models/CRM/Machines/model-machine-working/model-machine-working.component';
 import { EditEmployeesComponent } from './Components/HR/Employees/edit-employees/edit-employees.component';
 import { ModelMachineSingleChartComponent } from './models/CRM/Customers/model-machine-single-chart/model-machine-single-chart.component';
 import { CreateLeavesComponent } from './Components/HRMS/Leaves/create-leaves/create-leaves.component';
@@ -155,7 +156,10 @@ import { EditExpensesComponent } from './Components/HRMS/Expenses/edit-expenses/
 import { ExpensesViewComponent } from './Components/HRMS/Expenses/expenses-view/expenses-view.component';
 import { ExpensesTypeHrmsSettingsComponent } from './Components/Settings/HRMS-Settings/Sub-Components/expenses-type-hrms-settings/expenses-type-hrms-settings.component';
 import { ModelExpensesTypeHrmsSettingsComponent } from './models/settings/hrms_settings/model-expenses-type-hrms-settings/model-expenses-type-hrms-settings.component';
-
+import { ModelExpensesViewComponent } from './models/HRMS/model-expenses-view/model-expenses-view.component';
+import { DesignationHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/designation-hr-settings/designation-hr-settings.component';
+import { ModelDesignationHrsettingsComponent } from './models/settings/hr_settings/model-designation-hrsettings/model-designation-hrsettings.component';
+import { AttendanceLoginComponent } from './Components/HR/attendance-login/attendance-login.component';
 
 @NgModule({
    declarations: [
@@ -271,6 +275,7 @@ import { ModelExpensesTypeHrmsSettingsComponent } from './models/settings/hrms_s
            ModelMachineMaintenancePartCrmsettingsComponent,
            ModelScheduleActivityCreateComponent,
            ModelMachineIdleComponent,
+           ModelMachineWorkingComponent,
            EditEmployeesComponent,
            ModelMachineSingleChartComponent,
            CreateLeavesComponent,
@@ -286,19 +291,11 @@ import { ModelExpensesTypeHrmsSettingsComponent } from './models/settings/hrms_s
            EditExpensesComponent,
            ExpensesViewComponent,
            ExpensesTypeHrmsSettingsComponent,
-           ModelExpensesTypeHrmsSettingsComponent
-
-
-
-
-
-
-
-
-
-
-
-
+           ModelExpensesTypeHrmsSettingsComponent,
+           ModelExpensesViewComponent,
+           DesignationHrSettingsComponent,
+           ModelDesignationHrsettingsComponent,
+           AttendanceLoginComponent
    ],
    imports: [
       // Default Modules
@@ -357,10 +354,13 @@ import { ModelExpensesTypeHrmsSettingsComponent } from './models/settings/hrms_s
     ModelMachineMaintenancePartCrmsettingsComponent,
     ModelScheduleActivityCreateComponent,
     ModelMachineIdleComponent,
+    ModelMachineWorkingComponent,
     ModelMachineSingleChartComponent,
     ModelLeavesViewComponent,
     ModelLeaveTypeHrmsSettingsComponent,
-    ModelExpensesTypeHrmsSettingsComponent
+    ModelExpensesTypeHrmsSettingsComponent,
+    ModelExpensesViewComponent,
+    ModelDesignationHrsettingsComponent
     ],
    bootstrap: [AppComponent]
 })

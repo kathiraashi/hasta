@@ -1,0 +1,1 @@
+[2018-10-12T14:47:39.094] [ERROR] Error - {"Error_Name":"Security Error For Every Request Log Creation","Error_Address":"Server.js","Ip":"::ffff:192.168.1.11","Request_Url":"/?classId=1&studentId=1&locId=1&classGeneralId=1","Request_Body":{},"If_Get":{},"Device_Info":{"ua":"okhttp/3.10.0","browser":{},"engine":{},"os":{},"device":{},"cpu":{}}}

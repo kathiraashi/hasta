@@ -16,6 +16,7 @@
             <div class="Left_Section">
                <ul class="Tabs">
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Department'}" (click)="Active_Tab_Change('Department')"><span class="Tab_Content">Department</span></li>
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Designation'}" (click)="Active_Tab_Change('Designation')"><span class="Tab_Content">Designation</span></li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'earnings'}" (click)="Active_Tab_Change('earnings')"><span class="Tab_Content">Earnings</span></li>  
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'detections'}" (click)="Active_Tab_Change('detections')"><span class="Tab_Content">Detections</span></li>            
                </ul>
@@ -23,7 +24,10 @@
             <div class="Right_Section">
                <div *ngIf="Active_Tab === 'Department'">
                   <app-department-hr-settings></app-department-hr-settings>
-               </div>       
+               </div>
+               <div *ngIf="Active_Tab === 'Designation'">
+                  <app-designation-hr-settings></app-designation-hr-settings>
+               </div>     
                <div *ngIf="Active_Tab === 'earnings'">
                   <app-earnings-hr-settings></app-earnings-hr-settings>
                </div>   

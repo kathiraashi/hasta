@@ -16,10 +16,12 @@
          </div>
       </div>
       <!-- Company Details -->
-      <div class="row">
-         <div class="col-sm-12">
-            <div class="BoxStyle_1">
-               <form [formGroup]="Form">
+      
+      <form [formGroup]="Form">
+         <div class="row">
+            <div class="col-sm-12">
+               <div class="BoxStyle_1">
+                  <h5 class="BoxHeader"> Basic Details </h5>
                   <div class="row">
                      <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['EmployeeName'].pristine && Form.controls['EmployeeName'].errors, 'Form_Success': Form.controls['EmployeeName'].valid && !Form.controls['EmployeeName'].pristine }">
                         <input type="text" formControlName="EmployeeName" placeholder="Employee Name" >
@@ -27,17 +29,11 @@
                            <span *ngIf="Form.controls['EmployeeName'].errors.required"> Employee Name is required</span>
                         </p>
                      </div>
-                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['MobileNo'].pristine && Form.controls['MobileNo'].errors, 'Form_Success': Form.controls['MobileNo'].valid && !Form.controls['MobileNo'].pristine }">
-                        <input type="text" formControlName="MobileNo" (keypress)="onlyNumber($event)" placeholder="Mobile Number" >
-                        <p class="error" *ngIf="Form.controls['MobileNo'].errors && !Form.controls['MobileNo'].pristine">
-                           <span *ngIf="Form.controls['MobileNo'].errors.required"> Mobile Number is required</span>
-                           <span *ngIf="Form.controls['MobileNo'].errors.MobileNo_NotAvailable"> Mobile Number is Already Exist!</span>
-                        </p>
-                     </div>
                      <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['EmployeeCode'].pristine && Form.controls['EmployeeCode'].errors, 'Form_Success': Form.controls['EmployeeCode'].valid && !Form.controls['EmployeeCode'].pristine }">
-                        <input type="text" formControlName="EmployeeCode" placeholder="Employee Code">
+                        <input type="text" formControlName="EmployeeCode" placeholder="Employee Code" >
                         <p class="error" *ngIf="Form.controls['EmployeeCode'].errors && !Form.controls['EmployeeCode'].pristine">
-                           <span *ngIf="Form.controls['EmployeeCode'].errors.required"> Employee Code is required </span>
+                           <span *ngIf="Form.controls['EmployeeCode'].errors.required"> Employee Code is required</span>
+                           <span *ngIf="Form.controls['EmployeeCode'].errors.EmployeeCode_NotAvailable">  Employee Code is Already Exist!</span>
                         </p>
                      </div>
                      <div class="col-sm-4 Form_Input" >
@@ -51,76 +47,196 @@
                         </ng-select>
                      </div>
                      <div class="col-sm-4 Form_Input" >
-                        <input type="text" formControlName="JobTitle" placeholder="Job Title">
+                        <ng-select class="NgSelect ValueBold"
+                                 [items]="_Designations"
+                                 bindLabel="Designation"
+                                 bindValue="_id"
+                                 formControlName="Designation"
+                                 [searchable]="true" 
+                                 placeholder="Designation">
+                        </ng-select>
                      </div>
                      <div class="col-sm-4 Form_Input" >
-                        <input type="text" formControlName="JoiningDate" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Joining Date">
-                        <mat-datepicker touchUi #Datepicker></mat-datepicker>
-                     </div>
-                     <div class="col-sm-4 Form_Input" >
-                        <input type="text" formControlName="DateOfBirth" [matDatepicker]="DatepickerOne" (click)="DatepickerOne.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date Of Birth">
-                        <mat-datepicker touchUi #DatepickerOne></mat-datepicker>
+                        <input type="text" formControlName="DateOfJoining" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date Of Joining">
+                        <mat-datepicker #Datepicker></mat-datepicker>
                      </div>
                      <div class="col-sm-4 Form_Select" >
                         <ng-select class="NgSelect ValueBold"
-                                 [items]="_MaritalStatus"
-                                 formControlName="MaritalStatus"
+                                 [items]="_EmployeeRoles"
+                                 formControlName="EmployeeRole"
                                  [searchable]="true" 
-                                 placeholder="Marital Status">
+                                 [placeholder]="'Employee Role'">
                         </ng-select>
                      </div>
-                     <div class="col-sm-4 Form_TextArea" >
-                        <textarea formControlName="Address" placeholder="Address"></textarea>
+                     <div class="col-sm-4 Form_TextArea">
+                        <textarea formControlName="Working_Location" placeholder="Working Location"></textarea>
+                     </div>
+                     <div class="col-sm-4 Form_Select" >
+                        <ng-select class="NgSelect ValueBold"
+                                 [multiple]="true"
+                                 [hideSelected]="true"
+                                 [items]="_Customers"
+                                 bindLabel="CompanyName"
+                                 bindValue="_id"
+                                 formControlName="Customers"
+                                 [searchable]="true"
+                                 placeholder="Access Customers">
+                        </ng-select>
                      </div>
                   </div>
-                  <div class="row" style="margin-top: 20px;" > 
-                     <div class="col-sm-12 text-right">
-                        <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="OpenModel(CustomersAddModel)"> Next </button>
-                     </div>
-                  </div>
-               </form>
+               </div>
             </div>
          </div>
+         <br>
+         <div class="row">
+            <div class="col-sm-12">
+               <div class=SectionTwo>
+                  <!-- Tabs -->
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div class="Tabs">
+                           <div class="Tab" [ngClass]="{'active': Active_Tab === 'Personal'}" (click)="Active_Tab_Change('Personal')">
+                              <span > Personal Details </span>
+                           </div>
+                           <div class="Tab" [ngClass]="{'active': Active_Tab === 'Salary'}" (click)="Active_Tab_Change('Salary')">
+                              <span > Salary Details </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="TabSection" *ngIf="Active_Tab === 'Personal'">
+                     <br>
+                     <div class="row">
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="EmployeeFatherName" placeholder="Father Name">
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="DateOfBirth" [matDatepicker]="DatepickerOne" (click)="DatepickerOne.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date Of Birth">
+                           <mat-datepicker #DatepickerOne></mat-datepicker>
+                        </div>
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="BloodGroup" placeholder="Blood Group">
+                        </div>
+                        <div class="col-sm-4 Form_Select" >
+                           <ng-select class="NgSelect ValueBold"
+                                    [items]="_MaritalStatus"
+                                    formControlName="MaritalStatus"
+                                    [searchable]="true"
+                                    (change)="MaritalStatusChange($event)"
+                                    placeholder="Marital Status">
+                           </ng-select>
+                        </div>
+                        <div class="col-sm-4 Form_Input" *ngIf="Form.controls['MaritalStatus'].value === 'Married'">
+                           <input type="text" formControlName="EmployeeWifeName" placeholder="Wife Name">
+                        </div>
+                        <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['Personal_MobileNo'].pristine && Form.controls['Personal_MobileNo'].errors, 'Form_Success': Form.controls['Personal_MobileNo'].valid && !Form.controls['Personal_MobileNo'].pristine }">
+                           <input type="text" formControlName="Personal_MobileNo" (keypress)="OnlyNumber($event)" placeholder="Personal Mobile Number" >
+                           <p class="error" *ngIf="Form.controls['Personal_MobileNo'].errors && !Form.controls['Personal_MobileNo'].pristine">
+                              <span *ngIf="Form.controls['Personal_MobileNo'].errors.required"> Personal Mobile Number is required</span>
+                              <span *ngIf="Form.controls['Personal_MobileNo'].errors.MobileNo_NotAvailable"> Personal Mobile Number is Already Exist!</span>
+                           </p>
+                        </div>
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="Official_MobileNo" (keypress)="OnlyNumber($event)" placeholder="Official Mobile Number">
+                        </div>
+                        <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['Emergency_MobileNo'].pristine && Form.controls['Emergency_MobileNo'].errors, 'Form_Success': Form.controls['Emergency_MobileNo'].valid && !Form.controls['Emergency_MobileNo'].pristine }">
+                           <input type="text" formControlName="Emergency_MobileNo" (keypress)="OnlyNumber($event)" placeholder="Emergency Mobile Number">
+                           <p class="error" *ngIf="Form.controls['Emergency_MobileNo'].errors && !Form.controls['Emergency_MobileNo'].pristine">
+                              <span *ngIf="Form.controls['Emergency_MobileNo'].errors.required"> Emergency Mobile Number is required</span>
+                           </p>
+                        </div>
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="Personal_Email" placeholder="Personal Email">
+                        </div>
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="Official_Email" placeholder="Official Email">
+                        </div>
+                        <div class="col-sm-4 Form_Input With_File">
+                           <input type="text" formControlName="Aadhar_No" placeholder="Aadhar Number">
+                           <input style="display:none" #AadharFile type="file" (change)="AadharFileChange($event)" accept=".PNG, .png, JPEG, .jpeg, JPG, .jpg, .PDF, .pdf" >
+                           <span [ngClass]="{'FileAdded': If_AadharFile}" (click)="AadharFile.click()">
+                                 <i class="material-icons"> attach_file </i>
+                                 <span *ngIf="If_AadharFile"> Attached </span>
+                                 <span *ngIf="!If_AadharFile"> Upload </span>
+                           </span>
+                        </div>
+                        <div class="col-sm-4 Form_Input With_File">
+                           <input type="text" formControlName="PanCard_No" placeholder="Pan Card Number">
+                           <input style="display:none" #PanCardFile type="file" (change)="PanCardFileChange($event)" accept=".PNG, .png, JPEG, .jpeg, JPG, .jpg, .PDF, .pdf" >
+                           <span [ngClass]="{'FileAdded': If_PanCardFile}" (click)="PanCardFile.click()">
+                                 <i class="material-icons"> attach_file </i>
+                                 <span *ngIf="If_PanCardFile"> Attached </span>
+                                 <span *ngIf="!If_PanCardFile"> Upload </span>
+                           </span>
+                        </div>
+                        <div class="col-sm-4 Form_Input With_File">
+                           <input type="text" formControlName="DrivingLicense_No" placeholder="Driving License Number">
+                           <input style="display:none" #DrivingLicenseFile type="file" (change)="DrivingLicenseFileChange($event)" accept=".PNG, .png, JPEG, .jpeg, JPG, .jpg, .PDF, .pdf" >
+                           <span [ngClass]="{'FileAdded': If_DrivingLicenseFile}" (click)="DrivingLicenseFile.click()">
+                                 <i class="material-icons"> attach_file </i>
+                                 <span *ngIf="If_DrivingLicenseFile"> Attached </span>
+                                 <span *ngIf="!If_DrivingLicenseFile"> Upload </span>
+                           </span>
+                        </div>
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="Education_Qualification" placeholder="Education Qualification">
+                        </div>
+                        <div class="col-sm-4 Form_TextArea">
+                           <textarea formControlName="Permanent_Address" placeholder="Permanent Address"></textarea>
+                        </div>
+                        <div class="col-sm-4 Form_TextArea">
+                           <textarea formControlName="Temporary_Address" placeholder="Temporary Address"></textarea>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="TabSection" *ngIf="Active_Tab === 'Salary'">
+                     <br>
+                     <div class="row">
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="PF_AccountNo" placeholder="PF Account Number">
+                        </div>
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="ESI_AccountNo" placeholder="ESI Account Number">
+                        </div>
+                     </div>
+                     <h5 class="BoxHeader"> Bank Details </h5>
+                     <div class="row">
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="Bank_Name" placeholder="Bank Name">
+                        </div>
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="Bank_AccountNo" placeholder="Account Number">
+                        </div>
+                        <div class="col-sm-4 Form_Select">
+                              <ng-select class="NgSelect ValueBold"
+                                          [items]="_BankAccountTypes"
+                                          formControlName="Bank_AccountType"
+                                          [searchable]="true" 
+                                          placeholder="Account Type">
+                              </ng-select>
+                        </div>
+                        <div class="col-sm-4 Form_Input">
+                           <input type="text" formControlName="Bank_IFSCCode" placeholder="IFSC Code">
+                        </div>
+                        <div class="col-sm-4 Form_TextArea">
+                           <textarea formControlName="Bank_Address" placeholder="Branch Address"></textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+      <br>
+      <br>
+      <br>
+   </div>
+</div>
+<div class="fixed-footer">
+   <div class="row"> 
+      <div class="col-sm-12 text-right">
+         <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="Submit()"> Submit </button>
       </div>
    </div>
 </div>
 
-
-
-
-
-<ng-template #CustomersAddModel>
-   <form [formGroup]="Form">
-      <div style="padding: 0px 10px">
-         <div class="Modal_Header">
-            <p> Access Customers </p>
-            <span data-dismiss="modal" (click)="modalRefHide()">&times;</span>
-         </div>
-         <div class="Model_Body">
-            <div class="row">
-               <div class="col-sm-12 Form_Select">
-                  <ng-select class="NgSelect ValueBold"
-                           [multiple]="true"
-                           [hideSelected]="true"
-                           [items]="_Customers"
-                           bindLabel="CompanyName"
-                           bindValue="_id"
-                           formControlName="Customers"
-                           [searchable]="true"
-                           placeholder="Access Customers">
-                  </ng-select>
-               </div>
-            </div>
-         </div>
-         <div class="Model_Footer">
-            <div class="row" > 
-               <div class="col-sm-6 ">
-               </div>
-               <div class="col-sm-6 text-right">
-                  <button mat-raised-button [disabled]="!Form.valid && Form.invalid" color="primary" (click)="Submit()"> Submit </button>
-               </div>
-            </div>
-         </div>
-      </div>
-   </form>
-</ng-template>

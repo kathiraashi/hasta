@@ -225,7 +225,7 @@
                      <span > Schedules </span>
                   </div>
                   <div class="Tab" [ngClass]="{'active': Active_Tab === 'Idle'}" (click)="Active_Tab_Change('Idle')">
-                     <span > Idle Times </span>
+                     <span > Working Hours </span>
                   </div>
                </div>
             </div>
@@ -413,10 +413,10 @@
          <div class="TabSection" *ngIf="Active_Tab === 'Idle'">
             <div class="row Activity_Header">
                <div class="col-sm-3">
-                  <button *ngIf="_Data['Current_Status'] === 'Up'" class="Create_Button" mat-raised-button color="primary" (click)="CreateIdle()" > + Create </button>
+                  <button *ngIf="_Data['Current_Status'] === 'Idle'" class="Create_Button" mat-raised-button color="primary" (click)="CreateWorking()" > + Create </button>
                </div>
                <div class="col-sm-6">
-                  <h5> Idle Times </h5>
+                  <h5> Working Hours </h5>
                </div>
             </div>
             <div class="Table_Section">
@@ -424,35 +424,35 @@
                   <thead>
                      <tr>
                         <th style="width: 50px"> S.no </th>
-                        <th> Idle Start Time </th>
-                        <th> Idle End Time </th>
+                        <th> Working Start Time </th>
+                        <th> Working End Time </th>
                         <th> Description </th>
                         <th> Last Modified By </th>
                         <th style="width: 180px"> Action </th>
                      </tr>
                   </thead>
                   <tbody>
-                     <tr *ngFor="let Idle of _IdleList; let i=index">
+                     <tr *ngFor="let Working of _WorkingList; let i=index">
                         <td>
                            <span class="S_no"> {{i + 1}} </span>
                         </td>
                         <td>
-                           <span class="Style_1"> {{Idle['Idle_Date'] | date:'d-M-y'}} - {{Idle['Idle_Time']}}</span>
+                           <span class="Style_1"> {{Working['Start_Date'] | date:'d-M-y'}} - {{Working['Start_Time']}}</span>
                         </td>
                         <td>
-                           <span class="Style_1">{{Idle['Idle_CloseDate'] | date:'d-M-y'}} - {{Idle['Idle_CloseTime']}} </span>
+                           <span class="Style_1">{{Working['Stop_Date'] | date:'d-M-y'}} - {{Working['Stop_Time']}} </span>
                         </td>
                         <td>
-                           <span class="Style_1"> {{Idle['Description']}} </span>
+                           <span class="Style_1"> {{Working['Description']}} </span>
                         </td>
                         <td>
                            <span class="Style_1">
-                              {{Idle['Last_Modified_By']?.Name}}
-                              <span class="Time"> {{Idle['updatedAt'] | date:'d-M-y'}} </span>
+                              {{Working['Last_Modified_By']?.Name}}
+                              <span class="Time"> {{Working['updatedAt'] | date:'d-M-y'}} </span>
                            </span>
                         </td>
                         <td>
-                           <button *ngIf="Idle['Idle_CloseDate'] === null || Idle['Idle_CloseDate'] === undefined" (click)="UpdateIdle(i)" class="Table_Action_mini Bg_warning" mat-raised-button color="primary">
+                           <button *ngIf="Working['Stop_Date'] === null || Working['Stop_Date'] === undefined" (click)="UpdateWorking(i)" class="Table_Action_mini Bg_warning" mat-raised-button color="primary">
                               <i class="material-icons">edit</i>
                            </button>
                         </td>

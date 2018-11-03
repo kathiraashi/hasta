@@ -19,7 +19,7 @@ export class AppComponent {
       // Find Page Url
          router.events.subscribe(event => {
             if (event instanceof NavigationEnd ) {
-               if (event.url === '/Login' || event.url === '/') {
+               if (event.url === '/Login' || event.url === '/' || event.url === '/Attendance') {
                   this.UserLoggedIn = false;
                } else {
                   this.UserLoggedIn = true;

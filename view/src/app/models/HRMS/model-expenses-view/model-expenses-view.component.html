@@ -1,0 +1,49 @@
+<!-- If View Attendance Log -->
+<div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+   <div class="Modal_Header">
+      <p>View Expense</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="view_item">
+         <div class="Static"> Employee Name </div>
+         <div class="dots"> : </div>
+         <div class="Data">  {{_Data['Employee']?.EmployeeName}}</div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Date</div>
+         <div class="dots"> : </div>
+         <div class="Data">  {{_Data['Applied_Date'] | date:'d-M-yyyy'}}</div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Required Date </div>
+         <div class="dots"> : </div>
+         <div class="Data">{{_Data['Required_Date'] | date:'d-M-yyyy'}}</div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Amount </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Amount']}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Expenses Type </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Expenses_Type']?.Expenses_Type}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static">Description </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Description']}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Created Date </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['createdAt'] | date:'medium'}} </div>
+      </div>
+      <div class="view_item">
+         <div class="Static"> Created By </div>
+         <div class="dots"> : </div>
+         <div class="Data"> {{_Data['Last_Modified_By']?.Name}} </div>
+      </div>
+   </div>
+</div>

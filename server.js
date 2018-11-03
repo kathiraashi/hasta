@@ -46,18 +46,19 @@ app.use(bodyParser.json());
 app.use('/API/Uploads', express.static('Uploads'));
 
 // Every request Log Creation
-app.use('/API/', function (req, res, next) {
-   if (req.body.Info !== '' && req.body.Info){
-      LogManagement.LogHandling.LogCreation(req);
-      return next();
-   }else {
-      ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Security Error For Every Request Log Creation', 'Server.js');
-      return res.status(406).send({Status: false, Message: 'Invalid Arguments'});
-   }
-});
+// app.use('/API/', function (req, res, next) {
+//    if (req.body.Info !== '' && req.body.Info){
+//       LogManagement.LogHandling.LogCreation(req);
+//       return next();
+//    }else {
+//       ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Security Error For Every Request Log Creation', 'Server.js');
+//       return res.status(406).send({Status: false, Message: 'Invalid Arguments'});
+//    }
+// });
 
  require('./server/web/routes/Admin/RegisterAndLogin.routes.js')(app); // Without Company Id, User Id and Authorization
-
+ require('./server/web/routes/Hr/Attendance.routes.js')(app);
+ 
 //    function AuthorizationValidate(AuthorizationKey, callback) {
 //       var date = new Date(new Date() - 20 * 60 * 1000); // 20 minutes differ
 //       AdminModel.User_Management.findOne({ 

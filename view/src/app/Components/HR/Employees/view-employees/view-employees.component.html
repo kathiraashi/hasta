@@ -32,6 +32,7 @@
       <!-- Main Data -->
       <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
          <div class="Employee_Info_Section">
+            <h5 class="BoxHeader"> Basic Details </h5>
             <div class="row">
                <div class="col-sm-6">
                   <div class="row">
@@ -61,60 +62,48 @@
                   <div class="row">
                      <div class="col-sm-4">
                         <div class="Employee_Details_Title">
-                           <h5> Mobile Number <span>:</span></h5>
+                           <h5> Department <span>:</span></h5>
                         </div>
                      </div>
                      <div class="col-sm-8">
                         <div class="Employee_Details_Value">
-                           <h5>{{_Data['MobileNo']}}</h5>
+                           <h5>{{_Data['Department']?.Department}}</h5>
                         </div>
                      </div>
                   </div>
                   <div class="row">
                      <div class="col-sm-4">
                         <div class="Employee_Details_Title">
-                           <h5> Date Of Birth <span>:</span></h5>
+                           <h5> Designation <span>:</span></h5>
                         </div>
                      </div>
                      <div class="col-sm-8">
                         <div class="Employee_Details_Value">
-                           <h5 >{{_Data['DateOfBirth'] | date:'d/M/yyyy'}}</h5>
+                           <h5 >{{_Data['Designation']?.Designation }}</h5>
                         </div>
                      </div>
                   </div>
                   <div class="row">
                      <div class="col-sm-4">
                         <div class="Employee_Details_Title">
-                           <h5> Marital Status <span>:</span></h5>
+                           <h5> Employee Role <span>:</span></h5>
                         </div>
                      </div>
                      <div class="col-sm-8">
                         <div class="Employee_Details_Value">
-                           <h5>{{_Data['MaritalStatus']}}</h5>
+                           <h5 >{{_Data['EmployeeRole'] }}</h5>
                         </div>
                      </div>
                   </div>
                   <div class="row">
                      <div class="col-sm-4">
                         <div class="Employee_Details_Title">
-                           <h5> Job Title <span>:</span></h5>
+                           <h5> Date Of Joining <span>:</span></h5>
                         </div>
                      </div>
                      <div class="col-sm-8">
                         <div class="Employee_Details_Value">
-                           <h5>{{_Data['JobTitle']}}</h5>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-4">
-                        <div class="Employee_Details_Title">
-                           <h5> Joining Date <span>:</span></h5>
-                        </div>
-                     </div>
-                     <div class="col-sm-8">
-                        <div class="Employee_Details_Value">
-                           <h5>{{_Data['JoiningDate'] | date:'d/M/yyyy'}}</h5>
+                           <h5>{{_Data['DateOfJoining'] | date:'d/M/yyyy'}}</h5>
                         </div>
                      </div>
                   </div>
@@ -124,12 +113,12 @@
                   <div class="row">
                      <div class="col-sm-4">
                         <div class="Employee_Details_Title">
-                           <h5> Address <span>:</span></h5>
+                           <h5> Working Location <span>:</span></h5>
                         </div>
                      </div>
                      <div class="col-sm-8">
                         <div class="Employee_Details_Value">
-                           <h5> {{_Data['Address']}}</h5>
+                           <h5>{{_Data['Working_Location']}}</h5>
                         </div>
                      </div>
                   </div>
@@ -157,9 +146,321 @@
                         </div>
                      </div>
                   </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Customers <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <span class="Grid" *ngFor="let Customer of _Data['Customers']"> {{Customer?.CompanyName}} </span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <br>
+
+         <div class="Employee_Info_Section">
+            <h5 class="BoxHeader"> Personal Details </h5>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Father Name <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['EmployeeFatherName']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Date Of Birth <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['DateOfBirth'] | date:'d/M/yyyy'}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Blood Group <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['BloodGroup']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Marital Status <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['MaritalStatus']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row" style="align-items: flex-end;">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Personal Mobile Number <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Personal_MobileNo']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row" style="align-items: flex-end;">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Official Mobile Number <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Official_MobileNo']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row" style="align-items: flex-end;">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Emergency Mobile Number <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Emergency_MobileNo']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Personal Email <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Personal_Email']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Official Email <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Official_Email']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Aadhar Number <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Aadhar_No']}}
+                              <a *ngIf="_Data['AadharDocument'] && _Data['AadharDocument'] !== {}" href="{{File_Url}}Employee/{{_Data['AadharDocument']?.filename}}" target="blank">
+                                 <i class="material-icons">attachment</i> 
+                              </a>
+                           </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Pan Card Number <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['PanCard_No']}} 
+                              <a *ngIf="_Data['PanDocument'] && _Data['PanDocument'] !== {}" href="{{File_Url}}Employee/{{_Data['PanDocument']?.filename}}" target="blank">
+                                 <i class="material-icons">attachment</i> 
+                              </a>
+                           </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row" style="align-items: flex-end;">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Driving License Number <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['DrivingLicense_No']}}
+                              <a *ngIf="_Data['DrivingDocument']  && _Data['DrivingDocument'] !== {}" href="{{File_Url}}Employee/{{_Data['DrivingDocument']?.filename}}" target="blank"> 
+                                 <i class="material-icons">attachment</i> 
+                              </a>
+                           </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row" style="align-items: flex-end;">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Education Qualification <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Education_Qualification']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Permanent Address <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Permanent_Address']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Temporary Address <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Temporary_Address']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <br>
+
+         <div class="Employee_Info_Section">
+            <h5 class="BoxHeader"> Salary Details </h5>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Bank Name <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Bank_Name']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Bank Account Number <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Bank_AccountNo']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Bank Account Type <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Bank_AccountType']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Bank IFSC Code <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Bank_IFSCCode']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> Bank Address <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['Bank_Address']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> PF Account Number <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['PF_AccountNo']}} </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="Employee_Details_Title">
+                           <h5> ESI Account Number <span>:</span></h5>
+                        </div>
+                     </div>
+                     <div class="col-sm-8">
+                        <div class="Employee_Details_Value">
+                           <h5 >{{_Data['ESI_AccountNo']}} </h5>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
       </div>
+      <br>
+
    </div>
 </div>

@@ -37,11 +37,20 @@ export class HrService {
    }
 
    // Employee
-      public Employee_AsyncValidate(Info: any): Observable<any[]> {
+      public MobileNo_AsyncValidate(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Employee_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'MobileNo_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public EmployeeCode_AsyncValidate(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'EmployeeCode_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }

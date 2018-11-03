@@ -143,7 +143,7 @@ export class EditLeavesComponent implements OnInit {
    UpdateFormEmployee() {
       if (this._EmployeeName.length > 0  && Object.keys(this._Data).length > 0) {
          this.Form.controls['Employee'].setValue(this._Data['Employee']);
-         if (this.User_Type === 'Employee' || this._Data['Stage'] === 'Stage_3') {
+         if (this._Data['Stage'] === 'Stage_3') {
             this.Form.controls['Employee'].disable();
          }
       }

@@ -41,55 +41,110 @@ export class HrSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Department_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-      } else {
-         return this.ValidateEveryRequest();
-      }
+            return this.http.post(API_URL + 'Department_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
       }
       public Department_Create(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
          return this.http.post(API_URL + 'Department_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-      } else {
-         return this.ValidateEveryRequest();
+         } else {
+            return this.ValidateEveryRequest();
+         }
       }
-   }
       public Department_List(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
          return this.http.post(API_URL + 'Department_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
-      } else {
-         return this.ValidateEveryRequest();
-      }
+         } else {
+            return this.ValidateEveryRequest();
+         }
       }
       public Department_SimpleList(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Department_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-      } else {
-         return this.ValidateEveryRequest();
-      }
+            return this.http.post(API_URL + 'Department_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
       }
       public Department_Update(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Department_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
-      } else {
-         return this.ValidateEveryRequest();
-      }
+            return this.http.post(API_URL + 'Department_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
       }
       public Department_Delete(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Department_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-      } else {
-         return this.ValidateEveryRequest();
+            return this.http.post(API_URL + 'Department_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
       }
+      // Designation
+      public Designation_AsyncValidate(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Designation_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Designation_Create(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+         return this.http.post(API_URL + 'Designation_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Designation_List(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+         return this.http.post(API_URL + 'Designation_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Designation_SimpleList(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Designation_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Designation_Update(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Designation_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Designation_Delete(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'Designation_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
       }
    // Earnings
       public Earnings_AsyncValidate(Info: any): Observable<any[]> {

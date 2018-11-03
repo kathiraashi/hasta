@@ -64,8 +64,6 @@ export class CreateLeavesComponent implements OnInit {
                         this._EmployeeName = DecryptedData;
                         if (this.User_Type === 'Employee' && this.IfEmployeeId) {
                            this.Form.controls['Employee'].setValue(this.IfEmployeeId);
-                        } else {
-                           this.Form.controls['Employee'].enable();
                         }
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
@@ -94,7 +92,7 @@ export class CreateLeavesComponent implements OnInit {
 
   ngOnInit() {
    this.Form = new FormGroup({
-      Employee: new FormControl({value: null, disabled: true, }, Validators.required),
+      Employee: new FormControl({value: null }, Validators.required),
       Leave_Type: new FormControl(null, Validators.required),
       From_Date: new FormControl(this.Today, Validators.required),
       To_Date: new FormControl(this.Today, Validators.required),

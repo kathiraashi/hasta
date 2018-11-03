@@ -68,13 +68,21 @@
    box-shadow: 3px 3px 4px #bfb6b6;
    margin: 0px;
 }
+.Employee_Info_Section .BoxHeader{
+   margin-bottom: 15px;
+   font-weight: 700;
+   font-size: 18px;
+   color: #4f6a7a;
+   letter-spacing: 0.3px;
+   text-decoration: underline;
+ }
 .Employee_Details_Title h5{
-   font-weight: 600;
-   font-size: 15px;
    margin: 0px;
    line-height: 30px;
-   color: rgb(57, 66, 74);
    font-family: 'Open Sans', sans-serif;
+   font-weight: 700;
+   color: #4f6a7a;
+   font-size: 15px;
 }
 .Employee_Details_Title h5 span{
    position: absolute;
@@ -96,4 +104,23 @@
    display: block;
    line-height: 12px;
    margin-bottom: 10px;
+}
+.Employee_Details_Value h5 a i{
+   margin: 0px 10px;
+    border: 2px solid rgba(128, 128, 128, 0.43);
+    padding: 1px 5px;
+    line-height: 15px;
+    position: absolute;
+    top: 5px;
+}
+.Employee_Details_Value .Grid{
+   color: #4f6a7a;
+    padding: 2px 4px;
+    margin: 5px 2px;
+    font-size: 15px;
+    letter-spacing: 0.4px;
+    border: 1px solid #4f6a7a;
+    display: inline-flex;
+    font-weight: 600;
+    line-height: 22px;
 }

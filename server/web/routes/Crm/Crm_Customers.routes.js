@@ -49,7 +49,9 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmMachine_IdleTime_List', Controller.CrmMachine_IdleTime_List);
    app.post('/API/CrmCustomers/CrmMachine_IdleTime_Update', Controller.CrmMachine_IdleTime_Update);
 
-
+   app.post('/API/CrmCustomers/CrmMachine_WorkingHours_Create', Controller.CrmMachine_WorkingHours_Create);
+   app.post('/API/CrmCustomers/CrmMachine_WorkingHours_List', Controller.CrmMachine_WorkingHours_List);
+   app.post('/API/CrmCustomers/CrmMachine_WorkingHours_Update', Controller.CrmMachine_WorkingHours_Update);
 
 
 

@@ -10,6 +10,14 @@ module.exports = function(app){
       app.post('/API/Hr_Settings/Department_Update', Controller.Department_Update);
       app.post('/API/Hr_Settings/Department_Delete', Controller.Department_Delete);
 
+   // Designation
+      app.post('/API/Hr_Settings/Designation_AsyncValidate', Controller.Designation_AsyncValidate);
+      app.post('/API/Hr_Settings/Designation_Create', Controller.Designation_Create);
+      app.post('/API/Hr_Settings/Designation_List', Controller.Designation_List);
+      app.post('/API/Hr_Settings/Designation_SimpleList', Controller.Designation_SimpleList);
+      app.post('/API/Hr_Settings/Designation_Update', Controller.Designation_Update);
+      app.post('/API/Hr_Settings/Designation_Delete', Controller.Designation_Delete);
+      
    // Earnings
       app.post('/API/Hr_Settings/Earnings_AsyncValidate', Controller.Earnings_AsyncValidate);
       app.post('/API/Hr_Settings/Earnings_Create', Controller.Earnings_Create);
