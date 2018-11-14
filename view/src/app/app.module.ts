@@ -159,7 +159,10 @@ import { ModelExpensesTypeHrmsSettingsComponent } from './models/settings/hrms_s
 import { ModelExpensesViewComponent } from './models/HRMS/model-expenses-view/model-expenses-view.component';
 import { DesignationHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/designation-hr-settings/designation-hr-settings.component';
 import { ModelDesignationHrsettingsComponent } from './models/settings/hr_settings/model-designation-hrsettings/model-designation-hrsettings.component';
-import { AttendanceLoginComponent } from './Components/HR/attendance-login/attendance-login.component';
+import { AttendanceLogComponent } from './Components/HR/attendance-log/attendance-log.component';
+import { ModelPayrollMasterComponent } from './models/HR/model-payroll-master/model-payroll-master.component';
+import { HolidayHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/holiday-hr-settings/holiday-hr-settings.component';
+import { ModelHolidayHrsettingsComponent } from './models/settings/hr_settings/model-holiday-hrsettings/model-holiday-hrsettings.component';
 
 @NgModule({
    declarations: [
@@ -295,7 +298,10 @@ import { AttendanceLoginComponent } from './Components/HR/attendance-login/atten
            ModelExpensesViewComponent,
            DesignationHrSettingsComponent,
            ModelDesignationHrsettingsComponent,
-           AttendanceLoginComponent
+           AttendanceLogComponent,
+           ModelPayrollMasterComponent,
+           HolidayHrSettingsComponent,
+           ModelHolidayHrsettingsComponent
    ],
    imports: [
       // Default Modules
@@ -360,7 +366,9 @@ import { AttendanceLoginComponent } from './Components/HR/attendance-login/atten
     ModelLeaveTypeHrmsSettingsComponent,
     ModelExpensesTypeHrmsSettingsComponent,
     ModelExpensesViewComponent,
-    ModelDesignationHrsettingsComponent
+    ModelDesignationHrsettingsComponent,
+    ModelPayrollMasterComponent,
+    ModelHolidayHrsettingsComponent
     ],
    bootstrap: [AppComponent]
 })

@@ -40,3 +40,38 @@
     height: 35px;
     width: 35px;
 }
+
+
+.Custom_Calender_2.ui-calendar{
+   width: 100% !important;
+}
+.Custom_Calender_2.ui-calendar input{
+   width: 100% !important;
+   padding: 4px 10px;
+   height: 37px;
+   border: 1px solid #e8e8e8 !important;;
+   color: rgb(79, 107, 123);
+   font-weight: 400;
+   font-size: 14px;
+   letter-spacing: 0.3px;
+}
+
+.Custom_Calender_2 .ui-datepicker .ui-datepicker-header .ui-datepicker-prev,
+.Custom_Calender_2 .ui-datepicker .ui-datepicker-header .ui-datepicker-next{
+   display: none
+}
+.Custom_Calender_2 .ui-datepicker .ui-datepicker-header .ui-datepicker-title{
+   text-decoration: underline;
+   font-weight: 600
+}
+.Custom_Calender_2 .ui-datepicker-inline{
+   border: none !important;
+   box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
+}
+.Custom_Calender_2 .ui-datepicker table td.ui-datepicker-today.ui-state-active a{
+   color: #ffffff !important;
+   background-color: #49b660 !important;
+}
+.Custom_Calender_2 .ui-datepicker table td > a.ui-state-active{
+   background-color: #49b660 !important;
+}

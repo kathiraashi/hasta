@@ -27,7 +27,7 @@
          <!-- Create and search Section -->
          <div class="row header_part">
             <div class="col-sm-6">
-               <button class="Create_Button" mat-raised-button  color="primary" [routerLink]="['/Create_Employees']"> + Create </button>
+               <button class="Create_Button" mat-raised-button [routerLink]="['/Create_Employees']"> + Create </button>
             </div>
             <div class="col-sm-6">
                <div class="Search_Section">
@@ -64,7 +64,7 @@
                         <span class="Style_1"> {{item.EmployeeCode}} </span>
                      </td>
                      <td>
-                        <span class="Style_1"> {{item.MobileNo}} </span>
+                        <span class="Style_1"> {{item.Personal_MobileNo}} </span>
                      </td>
                      <td>
                         <span class="Style_1"> {{item.Department?.Department}} </span>
@@ -76,7 +76,7 @@
                         <span class="Style_1"> {{item.EmployeeRole}} </span>
                      </td>
                      <td>
-                        <span class="Style_1"> {{item.JoiningDate | date:'d/M/yyyy'}} </span>
+                        <span class="Style_1"> {{item.DateOfJoining | date:'d/M/yyyy'}} </span>
                      </td>
                      <td>
                         <button  [routerLink]="['/View_Employees', item._id]" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">

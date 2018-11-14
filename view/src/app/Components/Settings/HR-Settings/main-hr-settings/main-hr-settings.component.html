@@ -18,7 +18,8 @@
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Department'}" (click)="Active_Tab_Change('Department')"><span class="Tab_Content">Department</span></li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Designation'}" (click)="Active_Tab_Change('Designation')"><span class="Tab_Content">Designation</span></li>
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'earnings'}" (click)="Active_Tab_Change('earnings')"><span class="Tab_Content">Earnings</span></li>  
-                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'detections'}" (click)="Active_Tab_Change('detections')"><span class="Tab_Content">Detections</span></li>            
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'detections'}" (click)="Active_Tab_Change('detections')"><span class="Tab_Content">Detections</span></li>   
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Holidays'}" (click)="Active_Tab_Change('Holidays')"><span class="Tab_Content"> Holidays </span></li>                
                </ul>
             </div>
             <div class="Right_Section">
@@ -33,7 +34,10 @@
                </div>   
                <div *ngIf="Active_Tab === 'detections'">
                   <app-detections-hr-settings></app-detections-hr-settings>
-               </div>          
+               </div>
+               <div *ngIf="Active_Tab === 'Holidays'">
+                  <app-holiday-hr-settings></app-holiday-hr-settings>
+               </div>     
             </div>
          </div>
       </div>

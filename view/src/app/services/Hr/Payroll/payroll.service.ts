@@ -4,13 +4,14 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { LoginService } from './../../LoginService/login.service';
 
-const API_URL = 'http://localhost:4000/API/Attendance/';
-const Live_API_URL = 'http://159.89.163.252:4000/API/Attendance/';
+const API_URL = 'http://localhost:4000/API/Payroll/';
+const Live_API_URL = 'http://159.89.163.252:4000/API/Payroll/';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AttendanceService {
+export class PayrollService {
+
 
    headers;
    constructor(private http: Http, private Service: LoginService) {
@@ -36,51 +37,34 @@ export class AttendanceService {
       });
    }
 
-   // Attendance
-   public Attendance_Log(Info: any): Observable<any[]> {
+   // PayrollMaster
+   public PayrollMaster_Create(Info: any): Observable<any[]> {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Attendance_Log', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(API_URL + 'PayrollMaster_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
    }
-   public WeekOff_AsyncValidate(Info: any): Observable<any[]> {
+   public PayrollMaster_List(Info: any): Observable<any[]> {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'WeekOff_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(API_URL + 'PayrollMaster_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
    }
-   public AttendanceDate_AsyncValidate(Info: any): Observable<any[]> {
+   public PayrollMaster_Update(Info: any): Observable<any[]> {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'AttendanceDate_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(API_URL + 'PayrollMaster_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
    }
-   public Attendance_Create(Info: any): Observable<any[]> {
-      if (this.Service.If_LoggedIn()) {
-         this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
-         sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Attendance_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
-      } else {
-         return this.ValidateEveryRequest();
-      }
-   }
-   public Complete_Attendance_Log(Info: any): Observable<any[]> {
-      if (this.Service.If_LoggedIn()) {
-         this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
-         sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Complete_Attendance_Log', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
-      } else {
-         return this.ValidateEveryRequest();
-      }
-   }
+
 
 }

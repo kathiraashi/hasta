@@ -44,8 +44,7 @@ import { CreateExpensesComponent } from './Components/HRMS/Expenses/create-expen
 import { ExpensesListComponent } from './Components/HRMS/Expenses/expenses-list/expenses-list.component';
 import { EditExpensesComponent } from './Components/HRMS/Expenses/edit-expenses/edit-expenses.component';
 import { ExpensesViewComponent } from './Components/HRMS/Expenses/expenses-view/expenses-view.component';
-import { AttendanceLoginComponent } from './Components/HR/attendance-login/attendance-login.component';
-
+import { AttendanceLogComponent } from './Components/HR/attendance-log/attendance-log.component';
 
 const appRoutes: Routes = [
    {
@@ -57,11 +56,6 @@ const appRoutes: Routes = [
       path: 'Login',
       component: LoginComponent,
       data: { animation: { value: 'Login'}  }
-   },
-   {
-      path: 'Attendance',
-      component: AttendanceLoginComponent,
-      data: { animation: { value: 'Attendance'}  }
    },
    {
       path: 'CRM_Settings',
@@ -310,6 +304,12 @@ const appRoutes: Routes = [
          component: ExpensesViewComponent,
          canActivate: [AuthGuard],
          data: {   animation: { value: 'Expenses_View'}   }
+      },
+      {
+         path: 'Attendance_Log',
+         component: AttendanceLogComponent,
+         canActivate: [AuthGuard],
+         data: {   animation: { value: 'Attendance_Log'}   }
       },
 ];
 

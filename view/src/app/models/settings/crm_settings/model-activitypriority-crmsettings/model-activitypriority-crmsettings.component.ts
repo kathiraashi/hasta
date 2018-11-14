@@ -20,7 +20,7 @@ export class ModelActivitypriorityCrmsettingsComponent implements OnInit {
 
   onClose: Subject<any>;
 
-   Type: String;
+   Type;
    Data;
    Uploading: Boolean = false;
    User_Id;

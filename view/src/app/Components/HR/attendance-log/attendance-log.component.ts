@@ -4,18 +4,19 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as CryptoJS from 'crypto-js';
 
-import { AttendanceService } from './../../../../../services/Hr/Attendance/attendance.service';
-import { ToastrService } from '../../../../../services/common-services/toastr-service/toastr.service';
-import { LoginService } from './../../../../../services/LoginService/login.service';
+import { AttendanceService } from './../../../services/Hr/Attendance/attendance.service';
+import { ToastrService } from '../../../services/common-services/toastr-service/toastr.service';
+import { LoginService } from './../../../services/LoginService/login.service';
 
-import { ModelAttendanceLogCreateComponent } from '../../../../../models/HR/model-attendance-log-create/model-attendance-log-create.component';
+import { ModelAttendanceLogCreateComponent } from '../../../models/HR/model-attendance-log-create/model-attendance-log-create.component';
+
 
 @Component({
-  selector: 'app-attendance-log-hr',
-  templateUrl: './attendance-log-hr.component.html',
-  styleUrls: ['./attendance-log-hr.component.css']
+  selector: 'app-attendance-log',
+  templateUrl: './attendance-log.component.html',
+  styleUrls: ['./attendance-log.component.css']
 })
-export class AttendanceLogHrComponent implements OnInit {
+export class AttendanceLogComponent implements OnInit {
 
    Loader: Boolean = false;
    _List: any[] = [];
@@ -23,7 +24,7 @@ export class AttendanceLogHrComponent implements OnInit {
    User_Type;
    bsModalRef: BsModalRef;
 
-   constructor(
+  constructor(
       private Toastr: ToastrService,
       public Login_Service: LoginService,
       public Service: AttendanceService,
@@ -31,11 +32,12 @@ export class AttendanceLogHrComponent implements OnInit {
       ) {
          this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
          this.User_Type = this.Login_Service.LoginUser_Info()['_UserType'];
+         const Employee = this.Login_Service.LoginUser_Info()['Employee']['_id'];
          // Get Attendance List
-         const Data = { 'User_Id' : this.User_Id};
+         const Data = { 'User_Id' : this.User_Id, 'Employee_Id' : Employee };
          let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
          Info = Info.toString();
-         this.Service.Complete_Attendance_Log({'Info': Info}).subscribe( response => {
+         this.Service.Attendance_Log({'Info': Info}).subscribe( response => {
             const ResponseData = JSON.parse(response['_body']);
             this.Loader = false;
             if (response['status'] === 200 && ResponseData['Status'] ) {

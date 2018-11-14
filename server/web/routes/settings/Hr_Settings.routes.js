@@ -33,4 +33,11 @@ module.exports = function(app){
       app.post('/API/Hr_Settings/Detections_SimpleList', Controller.Detections_SimpleList);
       app.post('/API/Hr_Settings/Detections_Update', Controller.Detections_Update);
       app.post('/API/Hr_Settings/Detections_Delete', Controller.Detections_Delete);
+
+   // Holiday
+      app.post('/API/Hr_Settings/Holiday_AsyncValidate', Controller.Holiday_AsyncValidate);
+      app.post('/API/Hr_Settings/Holiday_Create', Controller.Holiday_Create);
+      app.post('/API/Hr_Settings/Holiday_List', Controller.Holiday_List);
+      app.post('/API/Hr_Settings/Holiday_Update', Controller.Holiday_Update);
+      app.post('/API/Hr_Settings/Holiday_Delete', Controller.Holiday_Delete);
 };

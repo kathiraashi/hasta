@@ -776,3 +776,180 @@ exports.Earnings_AsyncValidate = function(req, res) {
       }
    };
 
+
+
+
+   
+// ************************************************** Holiday *****************************************************
+// -------------------------------------------------- Holiday Async Validate -----------------------------------------------
+exports.Holiday_AsyncValidate = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Month || ReceivingData.Month === '' ) {
+      res.status(400).send({Status: false, Message: "Month can not be empty" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else {
+      HrSettingsModel.HolidaySchema.findOne({ 'Month': ReceivingData.Month, 'If_Deleted': false }, {}, {}, function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Holiday AsyncValidate  Find Query Error', 'Hr_Settings.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find Holiday AsyncValidate!."});
+         } else {
+            if ( result !== null) {
+               res.status(200).send({Status: true, Available: false });
+            } else {
+               res.status(200).send({Status: true, Available: true });
+            }
+         }
+      });
+   }
+};              
+// Holiday Create -----------------------------------------------
+exports.Holiday_Create = function(req, res) {
+   var CryptoBytes = CryptoJS.AES.decrypt( req.body.Info , 'SecretKeyIn@123' );
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+   
+   if(!ReceivingData.Month || ReceivingData.Month === '' ) {
+      res.status(400).send({Status: false, Message: "Month can not be empty" });
+   } else if (!ReceivingData.Created_By || ReceivingData.Created_By === ''  ) {
+      res.status(400).send({Status: false, Message: "Creator Details can not be empty" });
+   }else {
+      var Create_Holiday = new HrSettingsModel.HolidaySchema({
+         Month: ReceivingData.Month,
+         Dates: ReceivingData.Dates,
+         Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
+         Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
+         Active_Status: true,
+         If_Deleted: false
+      });
+      Create_Holiday.save(function(err, result) { // Holiday Save Query
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR Settings Holiday Creation Query Error', 'Hr_Settings.controller.js');
+            res.status(417).send({Status: false, Message: "Some error occurred while creating the Holiday!."});
+         } else {
+            HrSettingsModel.HolidaySchema
+               .findOne({'_id': result._id})
+               .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+               .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+               .exec(function(err_1, result_1) { // Holiday FindOne Query
+               if(err_1) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR Settings Holiday Find Query Error', 'Hr_Settings.controller.js', err_1);
+                  res.status(417).send({status: false, Message: "Some error occurred while Find The Holiday!."});
+               } else {
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
+                     ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Response: ReturnData });
+               }
+            });
+         }
+      });
+   }
+};
+// Holiday List -----------------------------------------------
+exports.Holiday_List = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else {
+      HrSettingsModel.HolidaySchema
+      .find({ 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
+      .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+      .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+      .exec(function(err, result) { // Holiday FindOne Query
+      if(err) {
+         ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Hr Settings Holiday Find Query Error', 'Hr_Settings.controller.js', err);
+         res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Holiday!."});
+      } else {
+         var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+         ReturnData = ReturnData.toString();
+         res.status(200).send({Status: true, Response: ReturnData });
+      }
+   });
+   }
+};
+// Holiday Update -----------------------------------------------
+exports. Holiday_Update = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData. Holiday_Id || ReceivingData.Holiday_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Holiday Id can not be empty" });
+   }else if(!ReceivingData.Month || ReceivingData.Month === '' ) {
+      res.status(400).send({Status: false, Message: "Month can not be empty" });
+   } else if (!ReceivingData.Modified_By || ReceivingData.Modified_By === ''  ) {
+      res.status(400).send({Status: false, Message: "Modified User Details can not be empty" });
+   }else {
+      HrSettingsModel.HolidaySchema.findOne({'_id': ReceivingData.Holiday_Id}, {}, {}, function(err, result) { // Holiday FindOne Query
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR  Holiday FindOne Query Error', 'Hr_Settings.controller.js', err);
+            res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Holiday!."});
+         } else {
+            if (result !== null) {
+               result.Month = ReceivingData.Month;
+               result.Dates = ReceivingData.Dates;
+               result.Last_Modified_By = mongoose.Types.ObjectId(ReceivingData.Modified_By);
+               result.save(function(err_1, result_1) { //  Holiday  Update Query
+                  if(err_1) {
+                     ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Hr Settings  Holiday  Update Query Error', 'Hr_Settings.controller.js');
+                     res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Update the  Holiday !."});
+                  } else {
+                     HrSettingsModel.HolidaySchema
+                        .findOne({'_id': result_1._id})
+                        .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+                        .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+                        .exec(function(err_2, result_2) { //  Holiday  FindOne Query
+                        if(err_2) {
+                           ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Hr Settings  Holiday Find Query Error', 'Hr_Settings.controller.js', err_2);
+                           res.status(417).send({status: false, Message: "Some error occurred while Find The  Holiday!."});
+                        } else {
+                           var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_2), 'SecretKeyOut@123');
+                              ReturnData = ReturnData.toString();
+                           res.status(200).send({Status: true, Response: ReturnData });
+                        }
+                     });
+                  }
+               });
+            } else {
+               res.status(400).send({Status: false, Message: "Holiday Id can not be valid!" });
+            }
+         }
+      });
+   }
+};
+// Holiday Delete -----------------------------------------------
+exports.Holiday_Delete = function(req, res) { 
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Holiday_Id || ReceivingData.Holiday_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Holiday Id can not be empty" });
+   } else if (!ReceivingData.Modified_By || ReceivingData.Modified_By === ''  ) {
+      res.status(400).send({Status: false, Message: "Modified User Details can not be empty" });
+   }else {
+      HrSettingsModel.HolidaySchema.findOne({'_id': ReceivingData.Holiday_Id}, {}, {}, function(err, result) { // Holiday FindOne Query
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR Holiday FindOne Query Error', 'Hr_Settings.controller.js', err);
+            res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Holiday!."});
+         } else {
+            if (result !== null) {
+               result.If_Deleted = true;
+               result.Last_Modified_By = ReceivingData.Modified_By;
+               result.save(function(err_1, result_1) { // Holiday Delete Query
+                  if(err_1) {
+                     ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR Holiday Delete Query Error', 'Hrms_Settings.controller.js');
+                     res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Delete the Holiday!."});
+                  } else {
+                     res.status(200).send({Status: true, Message: 'Successfully Deleted' });
+                  }
+               });
+            } else {
+               res.status(400).send({Status: false, Message: "Holiday Id can not be valid!" });
+            }
+         }
+      });
+   }
+};
+

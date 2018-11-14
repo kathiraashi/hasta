@@ -36,13 +36,14 @@
       color: #4ab65f;
       font-weight: 600;
       cursor: pointer;
-   }
-/* Table Section */
+     }
+/* ********************************************** Table Main *********************************** */
    .Table_Section table {
       border: 1px solid lightgray;
       width: 100%;
       box-shadow: 2px 2px 3px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
    }
+/* ********************************************** Table Header Section *********************************** */
    .Table_Section table thead {
       line-height: 40px;
       text-align: center;
@@ -54,12 +55,13 @@
    .Table_Section table thead th{
       font-weight: 800;
    }
+/* ********************************************** Table Body Section *********************************** */
    .Table_Section table tbody {
       border: 1px solid #e8e8e8;
       background-color: #ffffff;
    }
    .Table_Section table tbody tr {
-      line-height: 42px;
+      height: 40px;
       text-align: center;
       align-items: center;
       border-bottom: 1px solid #eaeaea;
@@ -78,7 +80,11 @@
       font-size: 14px;
       color: rgba(77, 106, 122, 0.84);
       font-weight: 600;
-      cursor: pointer;
+   }
+   .Table_Section table tbody tr td  .Time{
+      font-size: 12px;
+      font-weight: 500;
+      color: #8ca5b3;
    }
    .Table_Section table tbody tr td .Action_Section{
       color: #ffffff;

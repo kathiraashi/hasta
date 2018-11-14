@@ -151,6 +151,7 @@ exports.Employee_Create = function(req, res) {
             Bank_IFSCCode: ReceivingData.Bank_IFSCCode,
             Bank_Address: ReceivingData.Bank_Address,
             If_UserManage: false,
+            If_PayrollMaster: false,
             Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
             Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.User_Id),
             Active_Status: true,
@@ -305,6 +306,28 @@ exports.EmployeeList_WithoutUserManage = function(req, res) {
    }else {
       HrModel.EmployeeSchema
          .find({'If_Deleted': false, If_UserManage: false }, { EmployeeName: 1 }, {sort: { updatedAt: -1 }})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee List Find Query Error', 'Employee.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Employee List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+
+exports.EmployeeList_WithoutPayrollMaster = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else {
+      HrModel.EmployeeSchema
+         .find({'If_Deleted': false, If_PayrollMaster: false }, { EmployeeName: 1 }, {sort: { updatedAt: -1 }})
          .exec(function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee List Find Query Error', 'Employee.controller.js', err);

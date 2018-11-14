@@ -1,0 +1,78 @@
+<!-- Loader -->
+<div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+   <div class="Loading">
+         <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+            <div class="rect6"></div>
+         </div>
+   </div>
+</div>
+<div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+   <!-- header part -->
+   <!-- create and search section -->
+   <div class="row header_part">
+      <div class="col-sm-6">
+         <button class="Create_Button" mat-button (click)="CreateHoliday()"> + Create </button>
+      </div>
+      <div class="col-sm-6">
+         <div class="Search_Section">
+            <input type="text" placeholder="Search.." name="search">
+            <i class="material-icons">search</i>
+         </div>
+      </div>
+   </div>
+   <!-- Table Section -->
+   <div class="Table_Section">
+      <table>
+         <thead>
+            <tr> 
+               <th> S.no </th>
+               <th> Month </th>
+               <th> Holidays </th>
+               <th> Last Modification </th>
+               <th> Action </th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr  *ngFor="let Item of _List; let i=index">
+               <td>
+                  <span class="S_no"> {{ i + 1 }} </span>
+               </td>
+               <td>
+                  <span class="Style_1">{{ Item.Month | date:'MMMM-yyyy' }}</span>
+               </td>
+               <td>
+                  <ng-container *ngIf="Item.Dates !== null" >
+                     <span class="Style_1" *ngFor="let Date of Item.Dates; let j=index">
+                        {{Date | date:'d'}} 
+                        <ng-container *ngIf="j+1 < Item.Dates?.length">, </ng-container> </span>
+                  </ng-container>
+                  <span *ngIf="Item.Dates === null "> - </span>
+               </td>
+               <td>
+                  <span class="Style_1">{{ Item.Last_Modified_By.Name }} </span>
+                  <br> 
+                  <span class="Time"> {{Item.updatedAt | date:'medium'}}  </span>
+               </td>
+               <td>
+                  <button (click)="ViewDepartment(i)" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                     <i class="material-icons">zoom_in</i>
+                  </button>
+                  <button (click)="EditHoliday(i)" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                     <i class="material-icons">edit</i>
+                  </button>
+                  <button (click)="DeleteDepartment(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                     <i class="material-icons">delete_forever</i>
+                  </button>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+ 
+ 

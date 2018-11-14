@@ -46,10 +46,24 @@ var Schema = mongoose.Schema;
    );
    var VarDetections = mongoose.model( 'Detections' ,DetectionsSchema, 'HR_Detections');
 
+   // Holiday schema
+   var HolidaySchema = mongoose.Schema({
+      Month: { type : Date , require : true},
+      Dates: [{ type : Date , require : true }],
+      Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
+      Active_Status: { type : Boolean , required : true},
+      If_Deleted: { type : Boolean , required : true }
+      },
+      { timestamps : true }
+   );
+   var VarHoliday = mongoose.model( 'Holidays' ,HolidaySchema, 'HR_Holidays');
+
    module.exports = {
       DesignationSchema: VarDesignation,
       DepartmentSchema : VarDepartment,
       EarningsSchema : VarEarnings,
-      DetectionsSchema : VarDetections
+      DetectionsSchema : VarDetections,
+      HolidaySchema : VarHoliday
       
    }

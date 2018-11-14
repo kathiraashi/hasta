@@ -57,7 +57,6 @@ app.use('/API/Uploads', express.static('Uploads'));
 // });
 
  require('./server/web/routes/Admin/RegisterAndLogin.routes.js')(app); // Without Company Id, User Id and Authorization
- require('./server/web/routes/Hr/Attendance.routes.js')(app);
  
 //    function AuthorizationValidate(AuthorizationKey, callback) {
 //       var date = new Date(new Date() - 20 * 60 * 1000); // 20 minutes differ
@@ -103,6 +102,8 @@ app.use('/API/Uploads', express.static('Uploads'));
    require('./server/web/routes/Crm/Crm_Customers.routes.js')(app);
 // Hr
    require('./server/web/routes/Hr/Hr.routes.js')(app);
+   require('./server/web/routes/Hr/Attendance.routes.js')(app);
+   require('./server/web/routes/Hr/Payroll.routes.js')(app);
 // Hrms
    // Leaves
    require('./server/web/routes/Hrms/Hrms.routes.js')(app);

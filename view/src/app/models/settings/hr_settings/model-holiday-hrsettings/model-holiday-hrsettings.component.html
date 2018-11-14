@@ -1,0 +1,93 @@
+<!-- If Create Or Edit The Department -->
+<div class="Modal_Content" *ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+   <div class="Modal_Header">
+      <p> {{Type}} Holidays</p>
+      <span *ngIf="!Uploading" data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+
+      <div class="Model_Body">
+         <div class="row">
+            <div class="col-sm-12 Form_Input" [ngClass]="{'Form_Err': Form.controls['Month'].errors && !Form.controls['Month'].pristine, 'Form_Success': Form.controls['Month'].valid && !Form.controls['Month'].pristine }">
+               <p-calendar styleClass="Custom_Calender_2" placeholder="Select Month and Year" formControlName="Month" view="month" dateFormat="MM-yy" (onSelect)="MonthChanged($event)" [yearNavigator]="true" yearRange="2018:2050"></p-calendar>
+               <p class="error" *ngIf="Form.controls['Month'].errors && Form.controls['Month'].touched">
+                  <span *ngIf="Form.controls['Month'].errors.required">Month is required</span>
+                  <span *ngIf="Form.controls['Month'].errors.Month_NotAvailable"> Month Already Exist </span> 
+               </p>
+            </div>
+         </div>
+         <br>
+         <div class="row" *ngIf="Form.controls['Month'].value !== null && Form.controls['Month'].errors === null">
+            <div class="col-sm-12 Form_Input" >
+               <p-calendar styleClass="Custom_Calender_2" [minDate]="MinDate" formControlName="Dates" [inline]="true" selectionMode="multiple" [defaultDate]="defaultDate"></p-calendar>
+            </div>
+         </div>
+      </div>
+      <div class="Model_Footer">
+         <button type="submit"   [disabled]="Form.status !== 'VALID' || Uploading"  mat-raised-button color="primary">
+            <span *ngIf="Type === 'Create' && !Uploading" >Submit</span>
+            <span *ngIf="Type === 'Edit' && !Uploading">Update</span>
+            <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+         </button>
+      </div>
+   </form>  
+</div>
+<!-- If View The Department-->
+<div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+   <div class="Modal_Header">
+      <p>Holidays</p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="Model_Body">
+         <div class="view_item">
+            <div class="Static">Month & Year </div>
+            <div class="dots"> : </div>
+            <div class="Data"> {{Data.Month | date:'MMMM-yyyy'}} </div>
+         </div>
+         <div class="view_item">
+            <div class="Static">Holiday Dates </div>
+            <div class="dots"> : </div>
+            <div class="Data"> 
+               <ng-container *ngIf="Data.Dates !== null" >
+                  <span class="Style_1" *ngFor="let Date of Data.Dates; let j=index">
+                     {{Date | date:'d'}} 
+                     <ng-container *ngIf="j+1 < Data.Dates?.length">, </ng-container> </span>
+               </ng-container>
+               <span *ngIf="Data.Dates === null "> - </span>
+            </div>
+         </div>
+         <div class="view_item">
+            <div class="Static">Created By </div>
+            <div class="dots"> : </div>
+            <div class="Data"> {{Data.Created_By.Name}}</div>
+         </div>
+         <div class="view_item">
+            <div class="Static">Last Modified By </div>
+            <div class="dots"> : </div>
+            <div class="Data"> {{Data.Last_Modified_By.Name}}</div>
+         </div>
+         <div class="view_item">
+            <div class="Static"> Created Date </div>
+            <div class="dots"> : </div>
+            <div class="Data"> {{Data.createdAt | date:'medium'}}</div>
+         </div>
+         <div class="view_item">
+            <div class="Static">Last Modified Date  </div>
+            <div class="dots"> : </div>
+            <div class="Data"> {{Data.updatedAt | date:'medium'}}</div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

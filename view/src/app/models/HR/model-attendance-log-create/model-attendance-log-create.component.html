@@ -5,88 +5,52 @@
       <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
    </div>
    <div class="Model_Body">
-      <div class="row">
-         <div class="col-sm-6 Form_Select">
-            <label>Employee Name:</label>
-            <select>
-               <option disabled> Employee Name</option>
-               <option>Name</option>
-               <option>Name </option>
-               <option>Name </option>
-            </select>
+      <form [formGroup]="Form">
+         <div class="row">
+            <div class="col-sm-6 Form_Select" >
+               <label>Employee:</label>
+               <ng-select class="NgSelect" 
+                           [items]="_EmployeeList" 
+                           bindLabel="EmployeeName"
+                           bindValue="_id"
+                           formControlName="Employee"
+                           (change)="EmployeeChange($event)"
+                           [searchable]="true" 
+                           placeholder="Employee">
+               </ng-select>
+               <p class="error" *ngIf="Form.controls['Employee'].errors && Form.controls['Employee'].touched">
+                  <span *ngIf="Form.controls['Employee'].errors.required">Employee is required</span>
+               </p>
+            </div>
+            <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': !Form.controls['Date'].pristine && Form.controls['Date'].errors, 'Form_Success': Form.controls['Date'].valid && !Form.controls['Date'].pristine }">
+               <label> Date:</label>
+               <input matInput [max]="Today" formControlName="Date" [matDatepicker]="DatePicker1" (dateChange)="DateChange($event.target.value)" (click)="DatePicker1.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="From Date">
+               <mat-datepicker #DatePicker1></mat-datepicker>
+               <p class="error" *ngIf="Form.controls['Date'].errors && !Form.controls['Date'].pristine">
+                  <span *ngIf="Form.controls['Date'].errors.required">Date is required</span>
+                  <span *ngIf="Form.controls['Date'].errors.Date_NotAvailable">Date is Not Valid</span>
+               </p>
+            </div>
+            <div class="col-sm-6 Form_Select" >
+               <label>Attendance:</label>
+               <ng-select class="NgSelect" 
+                           [items]="_AttendanceTypes"
+                           formControlName="Attendance"
+                           [searchable]="true" 
+                           placeholder="Attendance">
+               </ng-select>
+               <p class="error" *ngIf="Form.controls['Attendance'].errors && Form.controls['Attendance'].touched">
+                  <span *ngIf="Form.controls['Attendance'].errors.required">Attendance is required</span>
+                  <span *ngIf="Form.controls['Attendance'].errors.WeekOff_NotAvailable">Your WeekOff is Completed</span>
+               </p>
+            </div>
          </div>
-         <div class="col-sm-6 Form_Input">
-            <label>Code:</label>
-            <input type="text">
-         </div>
-         <div class="col-sm-6 Form_Input">
-            <label>Date:</label>
-            <input type="text">
-         </div>
-         <div class="col-sm-6 Form_Input">
-            <label>In Time:</label>
-            <input type="text">
-         </div>
-         <div class="col-sm-6 Form_Input">
-            <label>Out Time:</label>
-            <input type="text">
-         </div>
-         <div class="col-sm-6 Form_Select">
-            <label>Attendance Code:</label>
-            <select>
-               <option disabled> A</option>
-               <option> P</option>
-               <option>H </option>
-               <option> W </option>
-            </select>
-         </div>
-      </div>
+      </form>
    </div>
    <div class="Model_Footer">
-      <button mat-raised-button color="primary"> Submit </button>
-   </div>
-</div>
-<!-- If View Attendance Log -->
-<div class="Modal_Content" *ngIf=" Type && Type === 'View'">
-   <div class="Modal_Header">
-      <p>View Employees</p>
-      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
-   </div>
-   <div class="Model_Body">
-      <div class="view_item">
-         <div class=" Static">Employee Name </div>
-         <div class="dots"> : </div>
-         <div class=" Data"> Employee Name</div>
-      </div>
-      <div class="view_item">
-         <div class=" Static">Code </div>
-         <div class="dots"> : </div>
-         <div class=" Data"> Code</div>
-      </div>
-      <div class="view_item">
-         <div class=" Static">Date </div>
-         <div class="dots"> : </div>
-         <div class=" Data"> 28.08.18</div>
-      </div>
-      <div class="view_item">
-         <div class="Static">In Time </div>
-         <div class="dots"> : </div>
-         <div class="Data"> 9am</div>
-      </div>
-      <div class="view_item">
-         <div class="Static">Out Time </div>
-         <div class="dots"> : </div>
-         <div class=" Data"> 5pm</div>
-      </div>
-      <div class="view_item">
-         <div class="Static">Attendance Code </div>
-         <div class="dots"> : </div>
-         <div class="Data"> P</div>
-      </div>
-      <div class="view_item">
-         <div class="Static">OT Hours </div>
-         <div class="dots"> : </div>
-         <div class="Data"> 2hrs</div>
-      </div>
+      <button mat-raised-button color="primary" [disabled]="Form.invalid || Form.status !== 'VALID'"> 
+            <span (click)="Submit()" *ngIf="!Uploading"> Submit </span>
+            <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+      </button>
    </div>
 </div>

@@ -12,107 +12,82 @@
          </div>
       </div>
       <!--  Header Part -->
-      <!-- Create and search Section -->
-      <div class="row header_part">
-         <div class="col-sm-6">
-            <button class="Create_Button" mat-button [routerLink]="['/Payroll_master_View']"> + Create </button>
-         </div>
-         <div class="col-sm-6">
-            <div class="Search_Section">
-               <input type="text" placeholder="Search.." name="search">
-               <i class="material-icons">search</i>
-            </div>
+      <div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+         <div class="Loading">
+               <div class="spinner">
+                  <div class="rect1"></div>
+                  <div class="rect2"></div>
+                  <div class="rect3"></div>
+                  <div class="rect4"></div>
+                  <div class="rect5"></div>
+                  <div class="rect6"></div>
+               </div>
          </div>
       </div>
-      <!-- Table Section -->
-      <div class="Table_Section">
-         <table>
-            <thead>
-               <tr>
-               <th>S.no</th>
-               <th>Employee Name</th>
-               <th>Action</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>
-                     <span class="S_no"> 1 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <button (click)="ViewPayrollMaster()"  class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
-                     </button>
-                     <button [routerLink]="['/Payroll_master_View']" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                        <i class="material-icons">edit</i>
-                     </button>
-                     <button (click)=" DeletePayrollMaster()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                        <i class="material-icons">delete_forever</i>
-                     </button>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 2 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <button  (click)="ViewPayrollMaster()"  class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
-                     </button>
-                     <button [routerLink]="['/Payroll_master_View']" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                        <i class="material-icons">edit</i>
-                     </button>
-                     <button (click)=" DeletePayrollMaster()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                        <i class="material-icons">delete_forever</i>
-                     </button>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 3 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <button (click)="ViewPayrollMaster()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
-                     </button>
-                     <button [routerLink]="['/Payroll_master_View']" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                        <i class="material-icons">edit</i>
-                     </button>
-                     <button (click)=" DeletePayrollMaster()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                        <i class="material-icons">delete_forever</i>
-                     </button>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 4 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <button (click)="ViewPayrollMaster()" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
-                     </button>
-                     <button [routerLink]="['/Payroll_master_View']" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                        <i class="material-icons">edit</i>
-                     </button>
-                     <button (click)=" DeletePayrollMaster()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                        <i class="material-icons">delete_forever</i>
-                     </button>
-                  </td>
-               </tr>
-            </tbody>
-         </table>
+      <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+         <!-- header part -->
+         <!-- create and search section -->
+         <div class="row header_part">
+            <div class="col-sm-6">
+               <button class="Create_Button" mat-button (click)="CreatePayrollMaster()"> + Create </button>
+            </div>
+            <div class="col-sm-6">
+               <div class="Search_Section">
+                  <input type="text" placeholder="Search.." name="search">
+                  <i class="material-icons">search</i>
+               </div>
+            </div>
+         </div>
+         <!-- Table Section -->
+         <div class="Table_Section">
+            <table>
+               <thead>
+                  <tr>
+                     <th>S.no</th>
+                     <th>Employee</th>
+                     <th>No.of Paid Days per Year</th>
+                     <th>Maximum Leave Allowed per Month </th>
+                     <th>Created By</th>
+                     <th>Last Modification Date</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr  *ngFor="let Item of _List; let i=index">
+                     <td>
+                        <span class="S_no"> {{ i + 1 }} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1">{{ Item?.Employee?.EmployeeName }}</span>
+                     </td>
+                     <td>
+                        <span class="Style_1">{{ Item?.PaidLeaves_inYear }}</span>
+                     </td>
+                     <td>
+                        <span class="Style_1">{{ Item?.PaidLeaves_perMonth }}</span>
+                     </td>
+                     <td>
+                        <span class="Style_1">{{Item.Created_By.Name}}</span>
+                        <br>
+                        <span class="Time"> {{Item.createdAt | date:'medium'}}  </span>
+                     </td>
+                     <td>
+                        <span class="Style_1">{{Item.Last_Modified_By.Name }}</span>
+                        <br> 
+                        <span class="Time"> {{Item.updatedAt | date:'medium'}}  </span>
+                     </td>
+                     <td>
+                        <button (click)="ViewPayrollMaster(i)" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                           <i class="material-icons">zoom_in</i>
+                        </button>
+                        <button (click)="EditPayrollMaster(i)" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                           <i class="material-icons">edit</i>
+                        </button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
       </div>
    </div>
 </div>

@@ -1,0 +1,103 @@
+<!-- If Create Or Edit The  Payroll Master -->
+<div class="Modal_Content" *ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+      <div class="Modal_Header">
+         <p> {{Type}} Payroll Master </p>
+         <span *ngIf="!Uploading" data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+      </div>
+      <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+         <div class="Model_Body">
+            <div class="row">
+               <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': Form.controls['Employee'].errors && !Form.controls['Employee'].pristine, 'Form_Success': Form.controls['Employee'].valid && !Form.controls['Employee'].pristine }">
+                  <label>Employee:</label>
+                  <ng-select class="NgSelect" 
+                              [items]="_EmployeeList" 
+                              bindLabel="EmployeeName"
+                              bindValue="_id"
+                              formControlName="Employee"
+                              [searchable]="true" 
+                              placeholder="Employee">
+                  </ng-select>
+                  <p class="error" *ngIf="Form.controls['Employee'].errors && !Form.controls['Employee'].pristine">
+                     <span *ngIf="Form.controls['Employee'].errors.required">Employee is required</span> 
+                  </p>
+               </div>
+               <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': Form.controls['PaidLeaves_inYear'].errors && !Form.controls['PaidLeaves_inYear'].pristine, 'Form_Success': Form.controls['PaidLeaves_inYear'].valid && !Form.controls['PaidLeaves_inYear'].pristine }">
+                  <label> No.of Paid Leaves per Year:</label>
+                  <input type="number" formControlName="PaidLeaves_inYear">
+                  <p class="error" *ngIf="Form.controls['PaidLeaves_inYear'].errors && !Form.controls['PaidLeaves_inYear'].pristine">
+                        <span *ngIf="Form.controls['PaidLeaves_inYear'].errors.required">No.of Paid Leaves per Year is required</span>  
+                  </p>
+               </div>
+               <div class="col-sm-6 Form_Input" >
+                  <label> Maximum Leave Allowed per Month:</label>
+                  <input type="number" formControlName="PaidLeaves_perMonth">
+               </div>
+            </div>
+         </div>
+         <div class="Model_Footer">
+            <button type="submit" [disabled]="Form.status !== 'VALID' || Uploading"  mat-raised-button color="primary">
+               <span *ngIf="Type === 'Create' && !Uploading" >Submit</span>
+               <span *ngIf="Type === 'Edit' && !Uploading">Update</span>
+               <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+            </button>
+         </div>
+      </form>  
+   </div>
+   <!-- If View The  Payroll Master-->
+   <div class="Modal_Content" *ngIf=" Type && Type === 'View'">
+      <div class="Modal_Header">
+         <p>Payroll Master</p>
+         <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+      </div>
+      <div class="Model_Body">
+         <div class="Model_Body">
+            <div class="view_item">
+               <div class="Static">Employee </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.Employee?.EmployeeName}}</div>
+            </div>
+            <div class="view_item">
+               <div class="Static">No.of Paid Leaves per Year </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.PaidLeaves_inYear}}</div>
+            </div>
+            <div class="view_item">
+               <div class="Static">Maximum Leave Allowed per Month </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.PaidLeaves_perMonth}}</div>
+            </div>
+            <div class="view_item">
+               <div class="Static">Created By </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.Created_By.Name}}</div>
+            </div>
+            <div class="view_item">
+               <div class="Static">Last Modified By </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.Last_Modified_By.Name}}</div>
+            </div>
+            <div class="view_item">
+               <div class="Static"> Created Date </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.createdAt | date:'medium'}}</div>
+            </div>
+            <div class="view_item">
+               <div class="Static">Last Modified Date  </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{Data.updatedAt | date:'medium'}}</div>
+            </div>
+         </div>
+      </div>
+   </div>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   

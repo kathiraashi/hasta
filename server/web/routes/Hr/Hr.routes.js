@@ -11,4 +11,5 @@ module.exports = function(app){
       app.post('/API/Hr/Employee_Update', Controller.Employee_Update);
       app.post('/API/Hr/Employee_SimpleList', Controller.Employee_SimpleList);
       app.post('/API/Hr/EmployeeList_WithoutUserManage', Controller.EmployeeList_WithoutUserManage);
+      app.post('/API/Hr/EmployeeList_WithoutPayrollMaster', Controller.EmployeeList_WithoutPayrollMaster);
 };

@@ -37,6 +37,7 @@ var Schema = mongoose.Schema;
       Bank_IFSCCode: { type : String },
       Bank_Address: { type : String },
       If_UserManage: { type : Boolean, required : true},
+      If_PayrollMaster:  { type : Boolean, required : true},
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
