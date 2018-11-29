@@ -13,7 +13,6 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ModelTicketsCreateComponent } from '../../../../models/CRM/Machines/model-tickets-create/model-tickets-create.component';
 import { DeleteConfirmationComponent } from '../../../../Components/Common-Components/delete-confirmation/delete-confirmation.component';
 import { ModelScheduleActivityCreateComponent } from '../../../../models/CRM/Machines/model-schedule-activity-create/model-schedule-activity-create.component';
-import { ModelMachineIdleComponent } from '../../../../models/CRM/Machines/model-machine-idle/model-machine-idle.component';
 import { ModelMachineWorkingComponent } from '../../../../models/CRM/Machines/model-machine-working/model-machine-working.component';
 import { LoginService } from './../../../../services/LoginService/login.service';
 

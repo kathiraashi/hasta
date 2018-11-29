@@ -121,6 +121,7 @@
                               <li [ngClass]="{'active': Active_Tab === 'Contact' }" (click)="Active_Tab_Change('Contact')"><span class="Menu_List">Contacts</span></li>
                               <!-- <li  [ngClass]="{'active': Active_Tab === 'Activity' }" (click)="Active_Tab_Change('Activity')"><span class="Menu_List">Activities</span></li> -->
                               <li [ngClass]="{'active': Active_Tab === 'Machines' }" (click)="Active_Tab_Change('Machines')"><span class="Menu_List">Machines</span></li>
+                              <li [ngClass]="{'active': Active_Tab === 'Machines_Working' }" (click)="Active_Tab_Change('Machines_Working')"><span class="Menu_List">Machine Shifts</span></li>
                               <li [ngClass]="{'active': Active_Tab === 'Tickets' }" (click)="Active_Tab_Change('Tickets')"><span class="Menu_List">Tickets</span></li>
                               <li [ngClass]="{'active': Active_Tab === 'MachineStatus' }" (click)="Active_Tab_Change('MachineStatus')"><span class="Menu_List">Machine Status</span></li>
                               <li [ngClass]="{'active': Active_Tab === 'MachineChartReport' }" (click)="Active_Tab_Change('MachineChartReport')"><span class="Menu_List"> Machines Report</span></li>
@@ -146,6 +147,11 @@
                   <div class="row" *ngIf=" Active_Tab === 'Machines' && !isEmptyObject(_Data)">
                      <div class="col-sm-12">
                         <app-machines-crm-customers-view [CustomerData]="_Data"></app-machines-crm-customers-view>
+                     </div>
+                  </div>
+                  <div class="row" *ngIf=" Active_Tab === 'Machines_Working' && !isEmptyObject(_Data)">
+                     <div class="col-sm-12">
+                        <app-machine-working-update [CustomerData]="_Data"></app-machine-working-update>
                      </div>
                   </div>
                   <div class="row" *ngIf=" Active_Tab === 'Tickets' && !isEmptyObject(_Data)">

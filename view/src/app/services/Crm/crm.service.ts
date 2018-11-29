@@ -294,35 +294,6 @@ export class CrmService {
       }
 
 
-      public CrmMachine_IdleTime_Create(Info: any): Observable<any[]> {
-         if (this.Service.If_LoggedIn()) {
-            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
-            sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmMachine_IdleTime_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-         } else {
-            return this.ValidateEveryRequest();
-         }
-      }
-      public CrmMachine_IdleTime_List(Info: any): Observable<any[]> {
-         if (this.Service.If_LoggedIn()) {
-            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
-            sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmMachine_IdleTime_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-         } else {
-            return this.ValidateEveryRequest();
-         }
-      }
-      public CrmMachine_IdleTime_Update(Info: any): Observable<any[]> {
-         if (this.Service.If_LoggedIn()) {
-            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
-            sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmMachine_IdleTime_Update', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-         } else {
-            return this.ValidateEveryRequest();
-         }
-      }
-
-
       public CrmMachine_WorkingHours_Create(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
@@ -350,33 +321,20 @@ export class CrmService {
             return this.ValidateEveryRequest();
          }
       }
-
-
-      public CrmCustomerBasedMachine_ChartData(Info: any): Observable<any[]> {
+      public CrmMachinesList_ForWorking(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmCustomerBasedMachine_ChartData', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'CrmMachinesList_ForWorking', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
       }
-
-      public CrmSingleMachine_ChartData(Info: any): Observable<any[]> {
+      public CrmMachine_WorkingUpdate(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmSingleMachine_ChartData', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
-         } else {
-            return this.ValidateEveryRequest();
-         }
-      }
-
-      public CrmCustomerBasedMachinesMonthly_ChartData(Info: any): Observable<any[]> {
-         if (this.Service.If_LoggedIn()) {
-            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
-            sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'CrmCustomerBasedMachinesMonthly_ChartData', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'CrmMachine_WorkingUpdate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -389,6 +347,15 @@ export class CrmService {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
             return this.http.post(API_URL + 'CrmTickets_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public CrmTickets_IdleCheck(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'CrmTickets_IdleCheck', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -447,6 +414,15 @@ export class CrmService {
             return this.ValidateEveryRequest();
          }
       }
+      public CustomerBased_Employees(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'CustomerBased_Employees', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
       public CrmTicketActivities_List(Info: any): Observable<any[]> {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
@@ -457,6 +433,35 @@ export class CrmService {
          }
       }
 
+
+   // Chart
+      public CrmCustomerBasedMachine_ChartData(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'CrmCustomerBasedMachine_ChartData', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public CrmSingleMachine_ChartData(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'CrmSingleMachine_ChartData', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public CrmCustomerBasedMachinesMonthly_ChartData(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'CrmCustomerBasedMachinesMonthly_ChartData', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.ValidateEveryRequest();
+         }
+      }
 
 
    // Crm Activities

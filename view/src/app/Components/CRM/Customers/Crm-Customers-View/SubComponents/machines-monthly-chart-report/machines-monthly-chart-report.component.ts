@@ -63,7 +63,7 @@ export class MachinesMonthlyChartReportComponent implements OnInit {
       this.ShowChangeBtn = false;
       this.From = new Date(this.MonthFor.getFullYear(), this.MonthFor.getMonth(), 1);
       if (new Date().getMonth() === this.MonthFor.getMonth()) {
-         this.To = new Date(this.MonthFor.getFullYear(), this.MonthFor.getMonth(), new Date().getDate());
+         this.To = new Date(this.MonthFor.getFullYear(), this.MonthFor.getMonth(), new Date().getDate() + 1);
          this.ShowTo = new Date(this.MonthFor.getFullYear(), this.MonthFor.getMonth(), new Date().getDate());
       } else {
          this.To = new Date(this.MonthFor.getFullYear(), this.MonthFor.getMonth() + 1, 1);
@@ -88,7 +88,6 @@ export class MachinesMonthlyChartReportComponent implements OnInit {
             const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
             const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
             this._List = DecryptedData;
-            console.log(DecryptedData);
             this._List.map(Obj => {
                Obj.ChartData.map(Obj_1 => {
                   if (Obj_1.Type === 'Up') { Obj_1.ColorCode = '#44AF5A'; }

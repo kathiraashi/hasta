@@ -41,6 +41,7 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
                            {Type: 'Type_6', Value: 'Closed'} ];
    _Contacts: any[] =  [];
    _Customers: any[] = [];
+   _Employees: any[] = [];
    _Machines: any[] = [];
 
    _ShowEndDateTime: Boolean = false;
@@ -49,10 +50,12 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
    _Data: Object;
    Type: any;
    MinDate: Date;
+   Previous_Date: Date;
    MaxDate: Date = new Date();
    MinTime: string;
    SetMinTime: string;
    _Contact: Object;
+   _Employee: Object;
 
    Uploading: Boolean = false;
    onClose: Subject<any>;
@@ -93,6 +96,7 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
          If_Idle: new FormControl(this._Data['If_Idle']),
          StartDate: new FormControl(this.MinDate, Validators.required),
          StartTime: new FormControl(this.MinTime, Validators.required),
+         Previous_StartDate: new FormControl(this.Previous_Date, Validators.required),
          Status: new FormControl(null, Validators.required),
          Description: new FormControl(''),
          User_Id: new FormControl(this.User_Id),
@@ -124,6 +128,25 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
             this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
          } else {
             this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Customer Contacts Simple List Getting Error!, But not Identify!' });
+         }
+      });
+      this.Crm_Service.CustomerBased_Employees({'Info': Info}).subscribe( response => {
+         const ResponseData = JSON.parse(response['_body']);
+         if (response['status'] === 200 && ResponseData['Status'] ) {
+            const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
+            const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+            this._Employees = DecryptedData;
+            if (this._Employee !== null) {
+               setTimeout(() => {
+                  this.Form.controls['Employee'].setValue(this._Employee);
+               }, 500);
+            }
+         } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+            this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+         } else if (response['status'] === 401 && !ResponseData['Status']) {
+            this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
+         } else {
+            this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Employees List Getting Error!, But not Identify!' });
          }
       });
 
@@ -215,11 +238,9 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
                this.Toastr.NewToastrMessage({ Type: 'Success', Message: 'New Activity Successfully Created' });
                this.onClose.next({Status: true, Response: DecryptedData});
                this.bsModalRef.hide();
-            } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+            } else if (response['status'] === 200 && !ResponseData['Status']) {
                this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
-               this.onClose.next({Status: false});
-               this.bsModalRef.hide();
-            } else if (response['status'] === 401 && !ResponseData['Status']) {
+            } else if (response['status'] === 400 || response['status'] === 401 || response['status'] === 417 && !ResponseData['Status']) {
                this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                this.onClose.next({Status: false});
                this.bsModalRef.hide();

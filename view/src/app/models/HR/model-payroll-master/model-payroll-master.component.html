@@ -7,7 +7,7 @@
       <form [formGroup]="Form" (ngSubmit)="onSubmit()">
          <div class="Model_Body">
             <div class="row">
-               <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': Form.controls['Employee'].errors && !Form.controls['Employee'].pristine, 'Form_Success': Form.controls['Employee'].valid && !Form.controls['Employee'].pristine }">
+               <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': Form.controls['Employee'].errors && !Form.controls['Employee'].pristine, 'Form_Success': Form.controls['Employee'].valid && !Form.controls['Employee'].pristine }">
                   <label>Employee:</label>
                   <ng-select class="NgSelect" 
                               [items]="_EmployeeList" 
@@ -21,16 +21,120 @@
                      <span *ngIf="Form.controls['Employee'].errors.required">Employee is required</span> 
                   </p>
                </div>
-               <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': Form.controls['PaidLeaves_inYear'].errors && !Form.controls['PaidLeaves_inYear'].pristine, 'Form_Success': Form.controls['PaidLeaves_inYear'].valid && !Form.controls['PaidLeaves_inYear'].pristine }">
+               <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': Form.controls['PaidLeaves_inYear'].errors && !Form.controls['PaidLeaves_inYear'].pristine, 'Form_Success': Form.controls['PaidLeaves_inYear'].valid && !Form.controls['PaidLeaves_inYear'].pristine }">
                   <label> No.of Paid Leaves per Year:</label>
                   <input type="number" formControlName="PaidLeaves_inYear">
                   <p class="error" *ngIf="Form.controls['PaidLeaves_inYear'].errors && !Form.controls['PaidLeaves_inYear'].pristine">
                         <span *ngIf="Form.controls['PaidLeaves_inYear'].errors.required">No.of Paid Leaves per Year is required</span>  
                   </p>
                </div>
-               <div class="col-sm-6 Form_Input" >
+               <div class="col-sm-4 Form_Input" >
                   <label> Maximum Leave Allowed per Month:</label>
                   <input type="number" formControlName="PaidLeaves_perMonth">
+               </div>
+            </div>
+   
+            <div class="row">
+               <div class="col-sm-12">
+                  <h5 class="GroupHeader"> Pay Details </h5>
+                  <div class="row" style="margin: 0px 0px 0px 30px;">
+                        <div class="col-sm-4 Form_Input">
+                              <label> Monthly Salary :</label>
+                              <input type="number" formControlName="Monthly_Salary">
+                           </div>
+                     <div class="col-sm-4 Form_Input">
+                        <label> Basic Pay :</label>
+                        <input type="number" formControlName="Basic_Pay">
+                     </div>
+                     <div class="col-sm-4 Form_Input Dual_Input">
+                        <label> HRA : </label>
+                        <input type="number" formControlName="HRA">
+                        <ng-select class="NgSelect ClearHide" 
+                              [items]="_Calc_Type"
+                              formControlName="HRA_Type">
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Input Dual_Input">
+                        <label> Conveyance :</label>
+                        <input type="number" formControlName="Conveyance">
+                        <ng-select class="NgSelect ClearHide" 
+                              [items]="_Calc_Type"
+                              formControlName="Conveyance_Type">
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Input Dual_Input">
+                        <label> Medical Reimbursement :</label>
+                        <input type="number" formControlName="Medical_Reimbursement">
+                        <ng-select class="NgSelect ClearHide" 
+                              [items]="_Calc_Type"
+                              formControlName="Medical_Reimbursement_Type">
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Input Dual_Input">
+                        <label> Food Allowance :</label>
+                        <input type="number" formControlName="Food_Allowance">
+                        <ng-select class="NgSelect ClearHide" 
+                              [items]="_Calc_Type"
+                              formControlName="Food_Allowance_Type">
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Input Dual_Input">
+                        <label> Other Allowance :</label>
+                        <input type="number" formControlName="Other_Allowance">
+                        <ng-select class="NgSelect ClearHide" 
+                              [items]="_Calc_Type"
+                              formControlName="Other_Allowance_Type">
+                        </ng-select>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="col-sm-12">
+                  <h5 class="GroupHeader"> Detection Details </h5>
+                  <div class="row" style="margin: 0px 0px 0px 30px;">
+                     <div class="col-sm-4 Form_Input Dual_Input">
+                        <label> Professional Tax :</label>
+                        <input type="number" formControlName="Professional_Tax">
+                        <ng-select class="NgSelect ClearHide" 
+                              [items]="_Calc_Type"
+                              formControlName="Professional_Tax_Type">
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Input Dual_Input">
+                        <label> Provident Fund :</label>
+                        <input type="number" formControlName="Provident_Fund">
+                        <ng-select class="NgSelect ClearHide" 
+                              [items]="_Calc_Type"
+                              formControlName="Provident_Fund_Type">
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Input Dual_Input">
+                        <label> Employee State Insurance :</label>
+                        <input type="number" formControlName="Employee_State_Insurance">
+                        <ng-select class="NgSelect ClearHide" 
+                              [items]="_Calc_Type"
+                              formControlName="Employee_State_Insurance_Type">
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Input Dual_Input">
+                        <label> Medical Insurance :</label>
+                        <input type="number" formControlName="Medical_Insurance">
+                        <ng-select class="NgSelect ClearHide" 
+                              [items]="_Calc_Type"
+                              formControlName="Medical_Insurance_Type">
+                        </ng-select>
+                     </div>
+                     <div class="col-sm-4 Form_Input Dual_Input">
+                        <label> TDS :</label>
+                        <input type="number" formControlName="TDS">
+                        <ng-select class="NgSelect ClearHide" 
+                              [items]="_Calc_Type"
+                              formControlName="TDS_Type">
+                        </ng-select>
+                     </div>                  
+                  </div>
                </div>
             </div>
          </div>

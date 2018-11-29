@@ -138,7 +138,6 @@ import { MachineScheduleActivityComponent } from './Components/Settings/CRM-Sett
 import { ModelMachineScheduleActivityCrmsettingsComponent } from './models/settings/crm_settings/model-machine-schedule-activity-crmsettings/model-machine-schedule-activity-crmsettings.component';
 import { ModelMachineMaintenancePartCrmsettingsComponent } from './models/settings/crm_settings/model-machine-maintenance-part-crmsettings/model-machine-maintenance-part-crmsettings.component';
 import { ModelScheduleActivityCreateComponent } from './models/CRM/Machines/model-schedule-activity-create/model-schedule-activity-create.component';
-import { ModelMachineIdleComponent } from './models/CRM/Machines/model-machine-idle/model-machine-idle.component';
 import { ModelMachineWorkingComponent } from './models/CRM/Machines/model-machine-working/model-machine-working.component';
 import { EditEmployeesComponent } from './Components/HR/Employees/edit-employees/edit-employees.component';
 import { ModelMachineSingleChartComponent } from './models/CRM/Customers/model-machine-single-chart/model-machine-single-chart.component';
@@ -163,6 +162,8 @@ import { AttendanceLogComponent } from './Components/HR/attendance-log/attendanc
 import { ModelPayrollMasterComponent } from './models/HR/model-payroll-master/model-payroll-master.component';
 import { HolidayHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/holiday-hr-settings/holiday-hr-settings.component';
 import { ModelHolidayHrsettingsComponent } from './models/settings/hr_settings/model-holiday-hrsettings/model-holiday-hrsettings.component';
+import { MachineWorkingUpdateComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/machine-working-update/machine-working-update.component';
+
 
 @NgModule({
    declarations: [
@@ -277,7 +278,6 @@ import { ModelHolidayHrsettingsComponent } from './models/settings/hr_settings/m
            ModelMachineScheduleActivityCrmsettingsComponent,
            ModelMachineMaintenancePartCrmsettingsComponent,
            ModelScheduleActivityCreateComponent,
-           ModelMachineIdleComponent,
            ModelMachineWorkingComponent,
            EditEmployeesComponent,
            ModelMachineSingleChartComponent,
@@ -301,7 +301,8 @@ import { ModelHolidayHrsettingsComponent } from './models/settings/hr_settings/m
            AttendanceLogComponent,
            ModelPayrollMasterComponent,
            HolidayHrSettingsComponent,
-           ModelHolidayHrsettingsComponent
+           ModelHolidayHrsettingsComponent,
+           MachineWorkingUpdateComponent
    ],
    imports: [
       // Default Modules
@@ -359,7 +360,6 @@ import { ModelHolidayHrsettingsComponent } from './models/settings/hr_settings/m
     ModelMachineScheduleActivityCrmsettingsComponent,
     ModelMachineMaintenancePartCrmsettingsComponent,
     ModelScheduleActivityCreateComponent,
-    ModelMachineIdleComponent,
     ModelMachineWorkingComponent,
     ModelMachineSingleChartComponent,
     ModelLeavesViewComponent,

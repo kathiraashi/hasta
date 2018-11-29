@@ -12,8 +12,6 @@ module.exports = function(app) {
 
 
 
-
-
    app.post('/API/CrmCustomers/CrmCustomerContact_Create', Controller.CrmCustomerContact_Create);
    app.post('/API/CrmCustomers/CrmCustomerContact_List', Controller.CrmCustomerContact_List);
    app.post('/API/CrmCustomers/CrmCustomerContact_SimpleList', Controller.CrmCustomerContact_SimpleList);
@@ -45,17 +43,16 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmMachine_ScheduleActivity_ReSchedule', Controller.CrmMachine_ScheduleActivity_ReSchedule);
    app.post('/API/CrmCustomers/CrmMachine_ScheduleActivity_Delete', Controller.CrmMachine_ScheduleActivity_Delete);
 
-   app.post('/API/CrmCustomers/CrmMachine_IdleTime_Create', Controller.CrmMachine_IdleTime_Create);
-   app.post('/API/CrmCustomers/CrmMachine_IdleTime_List', Controller.CrmMachine_IdleTime_List);
-   app.post('/API/CrmCustomers/CrmMachine_IdleTime_Update', Controller.CrmMachine_IdleTime_Update);
 
    app.post('/API/CrmCustomers/CrmMachine_WorkingHours_Create', Controller.CrmMachine_WorkingHours_Create);
    app.post('/API/CrmCustomers/CrmMachine_WorkingHours_List', Controller.CrmMachine_WorkingHours_List);
    app.post('/API/CrmCustomers/CrmMachine_WorkingHours_Update', Controller.CrmMachine_WorkingHours_Update);
-
+   app.post('/API/CrmCustomers/CrmMachinesList_ForWorking', Controller.CrmMachinesList_ForWorking);
+   app.post('/API/CrmCustomers/CrmMachine_WorkingUpdate', Controller.CrmMachine_WorkingUpdate);
 
 
    app.post('/API/CrmCustomers/CrmTickets_Create', Controller.CrmTickets_Create);
+   app.post('/API/CrmCustomers/CrmTickets_IdleCheck', Controller.CrmTickets_IdleCheck);
    app.post('/API/CrmCustomers/CrmTickets_List', Controller.CrmTickets_List);
    app.post('/API/CrmCustomers/CrmCustomerBasedTickets_List', Controller.CrmCustomerBasedTickets_List);
    app.post('/API/CrmCustomers/CrmMachineBasedTickets_List', Controller.CrmMachineBasedTickets_List);
@@ -65,6 +62,7 @@ module.exports = function(app) {
 
 
    app.post('/API/CrmCustomers/CrmTicketActivities_Create', Controller.CrmTicketActivities_Create);
+   app.post('/API/CrmCustomers/CustomerBased_Employees', Controller.CustomerBased_Employees);
    app.post('/API/CrmCustomers/CrmTicketActivities_List', Controller.CrmTicketActivities_List);
 
 

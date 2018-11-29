@@ -23,6 +23,28 @@ exports.PayrollMaster_Create = function(req, res) {
          Employee: mongoose.Types.ObjectId(ReceivingData.Employee),
          PaidLeaves_inYear: ReceivingData.PaidLeaves_inYear,
          PaidLeaves_perMonth: ReceivingData.PaidLeaves_perMonth,
+         Monthly_Salary: ReceivingData.Monthly_Salary,
+         Basic_Pay: ReceivingData.Basic_Pay,
+         HRA: ReceivingData.HRA,
+         HRA_Type: ReceivingData.HRA_Type,
+         Conveyance: ReceivingData.Conveyance,
+         Conveyance_Type: ReceivingData.Conveyance_Type,
+         Medical_Reimbursement: ReceivingData.Medical_Reimbursement,
+         Medical_Reimbursement_Type: ReceivingData.Medical_Reimbursement_Type,
+         Food_Allowance: ReceivingData.Food_Allowance,
+         Food_Allowance_Type: ReceivingData.Food_Allowance_Type,
+         Other_Allowance: ReceivingData.Other_Allowance,
+         Other_Allowance_Type: ReceivingData.Other_Allowance_Type,
+         Professional_Tax: ReceivingData.Professional_Tax,
+         Professional_Tax_Type: ReceivingData.Professional_Tax_Type,
+         Provident_Fund: ReceivingData.Provident_Fund,
+         Provident_Fund_Type: ReceivingData.Provident_Fund_Type,
+         Employee_State_Insurance: ReceivingData.Employee_State_Insurance,
+         Employee_State_Insurance_Type: ReceivingData.Employee_State_Insurance_Type,
+         Medical_Insurance: ReceivingData.Medical_Insurance,
+         Medical_Insurance_Type: ReceivingData.Medical_Insurance_Type,
+         TDS: ReceivingData.TDS,
+         TDS_Type: ReceivingData.TDS_Type,
          Created_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
          Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.Created_By),
          Active_Status: true,
@@ -103,6 +125,28 @@ exports. PayrollMaster_Update = function(req, res) {
             if (result !== null) {
                result.PaidLeaves_inYear = ReceivingData.PaidLeaves_inYear;
                result.PaidLeaves_perMonth = ReceivingData.PaidLeaves_perMonth;
+               result.Monthly_Salary = ReceivingData.Monthly_Salary;
+               result.Basic_Pay = ReceivingData.Basic_Pay;
+               result.HRA = ReceivingData.HRA;
+               result.HRA_Type = ReceivingData.HRA_Type;
+               result.Conveyance = ReceivingData.Conveyance;
+               result.Conveyance_Type = ReceivingData.Conveyance_Type;
+               result.Medical_Reimbursement = ReceivingData.Medical_Reimbursement;
+               result.Medical_Reimbursement_Type = ReceivingData.Medical_Reimbursement_Type;
+               result.Food_Allowance = ReceivingData.Food_Allowance;
+               result.Food_Allowance_Type = ReceivingData.Food_Allowance_Type;
+               result.Other_Allowance = ReceivingData.Other_Allowance;
+               result.Other_Allowance_Type = ReceivingData.Other_Allowance_Type;
+               result.Professional_Tax = ReceivingData.Professional_Tax;
+               result.Professional_Tax_Type = ReceivingData.Professional_Tax_Type;
+               result.Provident_Fund = ReceivingData.Provident_Fund;
+               result.Provident_Fund_Type = ReceivingData.Provident_Fund_Type;
+               result.Employee_State_Insurance = ReceivingData.Employee_State_Insurance;
+               result.Employee_State_Insurance_Type = ReceivingData.Employee_State_Insurance_Type;
+               result.Medical_Insurance = ReceivingData.Medical_Insurance;
+               result.Medical_Insurance_Type = ReceivingData.Medical_Insurance_Type;
+               result.TDS = ReceivingData.TDS;
+               result.TDS_Type = ReceivingData.TDS_Type;
                result.Last_Modified_By = mongoose.Types.ObjectId(ReceivingData.Modified_By);
                result.save(function(err_1, result_1) {
                   if(err_1) {

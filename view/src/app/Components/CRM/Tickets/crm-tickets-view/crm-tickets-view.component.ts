@@ -88,12 +88,18 @@ export class CrmTicketsViewComponent implements OnInit {
       if (this._ActivityList.length > 0) {
          Contact = this._ActivityList[0].Contact;
       }
+      let Employee = null;
+      if (this._ActivityList.length > 0) {
+         Employee = this._ActivityList[0].Employee;
+      }
       const initialState = {
          MinDate: new Date(MinDate),
          MinTime: MinTime.toLowerCase(),
          _Contact: Contact,
+         _Employee: Employee,
          _Data: this._Data,
-         Type: 'Create'
+         Type: 'Create',
+         Previous_Date: new Date(MinDate),
       };
       this.bsModalRef = this.modalService.show(ModelTicketsActivityCreateComponent, Object.assign({initialState}, {ignoreBackdropClick: true,  class: 'modal-lg' }));
       this.bsModalRef.content.onClose.subscribe(response => {

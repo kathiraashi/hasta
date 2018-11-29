@@ -31,7 +31,7 @@
                         </p>
                      </div>
                      <div class="col-sm-4 Form_Input" >
-                        <ng-select class="NgSelect ValueBold" formControlName="Machine" [searchable]="true" placeholder="Machine" (ngModelChange)="Machine_Change()">
+                        <ng-select class="NgSelect ValueBold" formControlName="Machine" [searchable]="true" placeholder="Machine" (ngModelChange)="Idle_Check()">
                            <ng-option *ngFor="let Machine of _Machines" [value]="Machine">{{ Machine.MachineName }}</ng-option>
                         </ng-select>
                         <p class="error" *ngIf="Form.controls['Machine'].errors && !Form.controls['Machine'].pristine">
@@ -39,25 +39,25 @@
                         </p>
                      </div>
                      <div class="col-sm-4 Form_Input" >
-                        <ng-select class="NgSelect ValueBold" formControlName="TicketType" [searchable]="true" placeholder="Ticket Type">
+                        <ng-select class="NgSelect ValueBold" formControlName="TicketType" [searchable]="true" placeholder="Ticket Type" (ngModelChange)="Idle_Check()">
                            <ng-option *ngFor="let Ticket_Type of _Tickets_Types" [value]="Ticket_Type">{{ Ticket_Type.Ticket_Type }}</ng-option>
                         </ng-select>
                         <p class="error" *ngIf="Form.controls['TicketType'].errors && !Form.controls['TicketType'].pristine">
                            <span *ngIf="Form.controls['TicketType'].errors.required"> Ticket Type is required</span>
                         </p>
                      </div>
-                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['TicketOpenDate'].pristine && Form.controls['TicketOpenDate'].errors, 'Form_Success': Form.controls['TicketOpenDate'].valid && !Form.controls['TicketOpenDate'].pristine }">
-                        <input type="text" formControlName="TicketOpenDate" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date">
+                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['TicketOpenDate'].pristine && Form.controls['TicketOpenDate'].errors, 'Form_Success': Form.controls['TicketOpenDate'].valid && Form.controls['TicketOpenDate'].touched }">
+                        <input type="text" formControlName="TicketOpenDate" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date" (ngModelChange)="Idle_Check()">
                         <mat-datepicker touchUi #Datepicker></mat-datepicker>
                         <p class="error" *ngIf="Form.controls['TicketOpenDate'].errors && !Form.controls['TicketOpenDate'].pristine">
                            <span *ngIf="Form.controls['TicketOpenDate'].errors.required"> Date is required</span>
                         </p>
                      </div>
-                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['TicketOpenTime'].pristine && Form.controls['TicketOpenTime'].errors, 'Form_Success': Form.controls['TicketOpenTime'].valid && !Form.controls['TicketOpenTime'].pristine }">
-                        <input type="text" formControlName="TicketOpenTime" [ngxTimepicker]="picker" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Time" >
+                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['TicketOpenTime'].pristine && Form.controls['TicketOpenTime'].errors, 'Form_Success': Form.controls['TicketOpenTime'].valid && Form.controls['TicketOpenTime'].touched }">
+                        <input type="text" formControlName="TicketOpenTime" [ngxTimepicker]="picker" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Time" (ngModelChange)="Idle_Check()" >
                         <ngx-material-timepicker #picker></ngx-material-timepicker>
                         <p class="error" *ngIf="Form.controls['TicketOpenTime'].errors && !Form.controls['TicketOpenTime'].pristine">
-                           <span *ngIf="Form.controls['TicketOpenTime'].errors.required"> Date is required</span>
+                           <span *ngIf="Form.controls['TicketOpenTime'].errors.required"> Time is required</span>
                         </p>
                      </div>
                      <div class="col-sm-4 Form_TextArea" [ngClass]="{'Form_Err': !Form.controls['Issue'].pristine && Form.controls['Issue'].errors, 'Form_Success': Form.controls['Issue'].valid && !Form.controls['Issue'].pristine }">
@@ -70,7 +70,7 @@
                   <div class="row" > 
                      <div class="col-sm-12 text-right">
                         <mat-checkbox formControlName="If_Idle" [labelPosition]="'before'"> Idle Ticket </mat-checkbox> &nbsp; &nbsp;
-                        <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="Submit()"> Submit </button>
+                        <button [disabled]="Form.status !== 'VALID' || Sub_Loading" mat-raised-button color="primary" (click)="OpenModel(ConfirmationModel)"> Submit </button>
                      </div>
                   </div>
                </form>
@@ -81,3 +81,21 @@
 </div>
  
  
+
+<ng-template #ConfirmationModel>
+   <div class="Modal_Content">
+      <div class="Modal_Header">
+         <p *ngIf="Availability_Info === null"> Ticket Confirmation </p>
+         <p *ngIf="Availability_Info && Availability_Info !== null"> Alert </p>
+      </div>
+      <div class="Model_Body">
+         <p *ngIf="Availability_Info === null && WorkShift_Info === null"> Are you Sure? <br> You want to Create a <b> Idle Ticket</b>.</p>
+         <p *ngIf="WorkShift_Info && Availability_Info === null && WorkShift_Info !== null"> Are you Sure? <br> You want to Create a <b> Breakdown Ticket</b>. <br> Shift: <b>{{WorkShift_Info?.Start_Time}} - {{WorkShift_Info?.Stop_Time}}</b></p>
+         <p *ngIf="Availability_Info && Availability_Info !== null"> Invalid Time! <br> Already Ticket <b>{{Availability_Info?.TicketId}}</b> is Processed . <br> From: <b>{{Availability_Info?.TicketOpenDate | date: 'medium'}} </b> <br> To: <b> {{Availability_Info?.TicketCloseDate | date: 'medium'}}</b></p>
+         <div class="Model_Footer">
+            <button class="Bg_Danger" mat-raised-button color="primary" (click)="modalRef.hide()"> Cancel </button>
+            <button *ngIf="!Availability_Info || Availability_Info === null" mat-raised-button color="primary" (click)="Submit(); modalRef.hide()"> Proceed </button>
+         </div>
+      </div>
+   </div>
+</ng-template>

@@ -27,6 +27,8 @@ export class ModelPayrollMasterComponent implements OnInit {
    User_Id;
    Form: FormGroup;
    _EmployeeList: any[] = [];
+   _Calc_Type: any[] = ['Rs', '%'];
+
 
    constructor (  public bsModalRef: BsModalRef,
       public Hr_Service: HrService,
@@ -64,6 +66,28 @@ export class ModelPayrollMasterComponent implements OnInit {
             Employee: new FormControl(null, Validators.required),
             PaidLeaves_inYear: new FormControl(0, Validators.required),
             PaidLeaves_perMonth: new FormControl(0),
+            Monthly_Salary: new FormControl(null, Validators.required),
+            Basic_Pay: new FormControl(null, Validators.required),
+            HRA: new FormControl(null, Validators.required),
+            HRA_Type: new FormControl('Rs', Validators.required),
+            Conveyance: new FormControl(null, Validators.required),
+            Conveyance_Type: new FormControl('Rs', Validators.required),
+            Medical_Reimbursement: new FormControl(null, Validators.required),
+            Medical_Reimbursement_Type: new FormControl('Rs', Validators.required),
+            Food_Allowance: new FormControl(null, Validators.required),
+            Food_Allowance_Type: new FormControl('Rs', Validators.required),
+            Other_Allowance: new FormControl(null, Validators.required),
+            Other_Allowance_Type: new FormControl('Rs', Validators.required),
+            Professional_Tax: new FormControl(null, Validators.required),
+            Professional_Tax_Type: new FormControl('Rs', Validators.required),
+            Provident_Fund: new FormControl(null, Validators.required),
+            Provident_Fund_Type: new FormControl('Rs', Validators.required),
+            Employee_State_Insurance: new FormControl(null, Validators.required),
+            Employee_State_Insurance_Type: new FormControl('Rs', Validators.required),
+            Medical_Insurance: new FormControl(null, Validators.required),
+            Medical_Insurance_Type: new FormControl('Rs', Validators.required),
+            TDS: new FormControl(null, Validators.required),
+            TDS_Type: new FormControl('Rs', Validators.required),
             Created_By: new FormControl(this.User_Id, Validators.required),
          });
       }
@@ -73,6 +97,28 @@ export class ModelPayrollMasterComponent implements OnInit {
             Employee: new FormControl(null, Validators.required),
             PaidLeaves_inYear: new FormControl(this.Data.PaidLeaves_inYear, Validators.required),
             PaidLeaves_perMonth: new FormControl(this.Data.PaidLeaves_perMonth),
+            Monthly_Salary: new FormControl(this.Data.Monthly_Salary, Validators.required),
+            Basic_Pay: new FormControl(this.Data.Basic_Pay, Validators.required),
+            HRA: new FormControl(this.Data.HRA, Validators.required),
+            HRA_Type: new FormControl(this.Data.HRA_Type, Validators.required),
+            Conveyance: new FormControl(this.Data.Conveyance, Validators.required),
+            Conveyance_Type: new FormControl(this.Data.Conveyance_Type, Validators.required),
+            Medical_Reimbursement: new FormControl(this.Data.Medical_Reimbursement, Validators.required),
+            Medical_Reimbursement_Type: new FormControl(this.Data.Medical_Reimbursement_Type, Validators.required),
+            Food_Allowance: new FormControl(this.Data.Food_Allowance, Validators.required),
+            Food_Allowance_Type: new FormControl(this.Data.Food_Allowance_Type, Validators.required),
+            Other_Allowance: new FormControl(this.Data.Other_Allowance, Validators.required),
+            Other_Allowance_Type: new FormControl(this.Data.Other_Allowance_Type, Validators.required),
+            Professional_Tax: new FormControl(this.Data.Professional_Tax, Validators.required),
+            Professional_Tax_Type: new FormControl(this.Data.Professional_Tax_Type, Validators.required),
+            Provident_Fund: new FormControl(this.Data.Provident_Fund, Validators.required),
+            Provident_Fund_Type: new FormControl(this.Data.Provident_Fund_Type, Validators.required),
+            Employee_State_Insurance: new FormControl(this.Data.Employee_State_Insurance, Validators.required),
+            Employee_State_Insurance_Type: new FormControl(this.Data.Employee_State_Insurance_Type, Validators.required),
+            Medical_Insurance: new FormControl(this.Data.Medical_Insurance, Validators.required),
+            Medical_Insurance_Type: new FormControl(this.Data.Medical_Insurance_Type, Validators.required),
+            TDS: new FormControl(this.Data.TDS, Validators.required),
+            TDS_Type: new FormControl(this.Data.TDS_Type, Validators.required),
             PayrollMaster_Id: new FormControl(this.Data._id, Validators.required),
             Modified_By: new FormControl(this.User_Id, Validators.required)
          });

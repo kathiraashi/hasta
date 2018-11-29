@@ -103,3 +103,12 @@
     letter-spacing: 0.4px;
     padding-right: 5px;
 }
+
+.ng-select.ClearHide .ng-clear-wrapper{
+   display: none;
+}
+
+.Dual_Input .ng-select.NgSelect {
+   display: inline-flex;
+   width: 60px;
+}

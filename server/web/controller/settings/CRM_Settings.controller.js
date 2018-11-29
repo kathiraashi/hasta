@@ -80,19 +80,29 @@ var mongoose = require('mongoose');
          if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
             res.status(400).send({Status: false, Message: "User Details can not be empty" });
          }else {
-            CRMSettingsModel.IndustryTypeSchema
-               .find({'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
-               .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
-               .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
-               .exec(function(err, result) { // Industry Type FindOne Query
-               if(err) {
-                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Industry Type Find Query Error', 'CRM_Settings.controller.js', err);
-                  res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Industry Types!."});
-               } else {
-                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
-                  ReturnData = ReturnData.toString();
-                  res.status(200).send({Status: true, Response: ReturnData });
-               }
+            const Skip_Count = parseInt(ReceivingData.Skip_Count, 0) || 0;
+            const Limit_Count = parseInt(ReceivingData.Limit_Count, 0) || 5;
+            const Last_Creation = new Date(ReceivingData.Last_Creation) || new Date();
+            Promise.all([
+               CRMSettingsModel.IndustryTypeSchema
+                              .find({'If_Deleted': false, 'createdAt': { $lte: Last_Creation } },
+                                    {},
+                                    { 'skip': Skip_Count, 'limit': Limit_Count, 'sort': { updatedAt: -1 } })
+                              .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+                              .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+                              .exec(),
+               CRMSettingsModel.IndustryTypeSchema.count({'If_Deleted': false }).exec(),
+               CRMSettingsModel.IndustryTypeSchema.count( {'If_Deleted': false, 'createdAt' : { $gt: Last_Creation } } ).exec()
+            ]).then(result => {
+               var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result[0]), 'SecretKeyOut@123');
+               ReturnData = ReturnData.toString();
+               const SubResult = { Total_Datas: result[1], New_Datas: result[2] };
+               var SubReturnData = CryptoJS.AES.encrypt(JSON.stringify(SubResult), 'SecretKeyOut@123');
+               SubReturnData = SubReturnData.toString();
+               res.status(200).send({Status: true, Response: ReturnData, SubResponse: SubReturnData });
+            }).catch(err => {
+               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Settings Industry Type Find Query Error', 'CRM_Settings.controller.js', err);
+               res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Industry Types!."});
             });
          }
       };

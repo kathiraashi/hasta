@@ -1,0 +1,86 @@
+<div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+   <div class="Loading">
+      <div class="spinner">
+         <div class="rect1"></div>
+         <div class="rect2"></div>
+         <div class="rect3"></div>
+         <div class="rect4"></div>
+         <div class="rect5"></div>
+         <div class="rect6"></div>
+      </div>
+   </div>
+</div>
+<div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+   <!-- Create and search section -->
+   <div class="row header_part">
+      <div class="col-sm-3">
+         <button class="Create_Button" [disabled]="!previous_btn" (click)="GotoPrevious()" mat-raised-button > Previous Day</button>
+      </div>
+      <div class="col-sm-6 text-center">
+         <h3> {{ Required_Date | date: 'd-M-yyyy'}} </h3>
+      </div>
+      <div class="col-sm-3 text-right">
+         <button class="Create_Button" [disabled]="!next_btn" (click)="GotoNext()"  mat-raised-button> Next Day </button>
+      </div>
+   </div>
+   <!-- Table Section -->
+   <div class="Table_Section">
+      <form [formGroup]="AllFromGroups">
+         <table>
+            <thead>
+               <tr>
+                  <th style="width: 50px"> S.no </th>
+                  <th> Machine </th>
+                  <th> Previous Shifts </th>
+                  <th style="width: 300px"> New Shift </th>
+                  <th style="width: 95px"> Action </th>
+               </tr>
+            </thead>
+            <tbody>
+               <ng-container formArrayName="FromGroups">
+                  <tr *ngFor="let Group of AllFromGroups.controls['FromGroups']['controls']; let i = index" [formGroupName]="i" >
+                     <td>
+                        <span class="S_no"> {{i + 1}} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{Group['controls']['Machine_Name'].value }} </span>
+                     </td>
+                     <td style="max-width: 300px;">
+                        <span class="Style_1">
+                           <span *ngFor="let PreviousShift of Group['controls']['Show_Previous'].value"> {{PreviousShift}} </span>
+                        </span>
+                     </td>
+                     <td *ngIf="Group['controls']['TicketIsOpen'].value">
+                        <p class="err" style="margin: 0px; text-align:center" > Ticket is Under Process! </p>
+                     </td>
+                     <td *ngIf="!Group['controls']['TicketIsOpen'].value">
+                        <div class="row" *ngIf="Group['controls']['ShowTimePicker'].value">
+                           <div class="col-sm-6 Form_Input">
+                              <input type="text" formControlName="Start_Time" placeholder="Start Time" [ngxTimepicker]="StartTimePicker" (keypress)="NotAllow()" (keydown)="NotAllow()">
+                              <ngx-material-timepicker #StartTimePicker></ngx-material-timepicker>
+                           </div>
+                           <div class="col-sm-6 Form_Input">
+                              <input type="text" formControlName="Stop_Time" placeholder="Stop Time" [ngxTimepicker]="StopTimePicker" (keypress)="NotAllow()" (keydown)="NotAllow()">
+                              <ngx-material-timepicker #StopTimePicker></ngx-material-timepicker>
+                           </div>
+                        </div>
+                        <div class="row" *ngIf="Group['errors'] !== null">
+                           <div class="col-sm-12">
+                              <p class="err" *ngIf="Group['errors']['InvalidTime']"> Invalid Shift Timing </p>
+                              <p class="err" *ngIf="Group['errors']['PreviousAffect']"> Previous Shifts Affected </p>
+                           </div>
+                        </div>
+                     </td>
+                     <td>
+                        <button type="button" (click)="Submit(Group)" [disabled]="Group['status'] !== 'VALID' || Group['value']['Uploading']"  mat-raised-button color="primary">
+                           <span *ngIf="!Group['value']['Uploading']"> Update </span>
+                           <span *ngIf="Group['value']['Uploading']" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Updating... </span>
+                        </button>
+                     </td>
+                  </tr>
+               </ng-container>
+            </tbody>
+         </table>
+      </form>
+   </div>
+</div>

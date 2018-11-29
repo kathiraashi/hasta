@@ -17,16 +17,25 @@
             <button class="Create_Button" mat-raised-button (click)="CreateIndustrytype()"> + Create </button>
          </div>
          <div class="col-sm-6">
-            <div class="Search_Section">
-               <input type="text" placeholder="Search.." name="search">
-               <i class="material-icons">search</i>
+            <div class="Table_Activities">
+               <div class="Search_Section">
+                  <input type="text" placeholder="Search.." name="search">
+                  <i class="material-icons">search</i>
+               </div>
+               <button mat-raised-button [matMenuTriggerFor]="Short"> {{Limit_Count}} </button>
+               <mat-menu class="PaginationShort" #Short="matMenu" [overlapTrigger]="false">
+                  <button mat-menu-item [ngClass]="{'active': Limit_Count === 5}" (click)="Short_Change(5)"> 5 </button>
+                  <button mat-menu-item [ngClass]="{'active': Limit_Count === 10}" (click)="Short_Change(10)"> 10 </button>
+                  <button mat-menu-item [ngClass]="{'active': Limit_Count === 20}" (click)="Short_Change(20)"> 20 </button>
+                  <button mat-menu-item [ngClass]="{'active': Limit_Count === 50}" (click)="Short_Change(50)"> 50 </button>
+               </mat-menu>
             </div>
          </div>
       </div>
    <!-- Table Section -->
-      <div class="Table_Section">
-         <table >
-            <thead>
+      <div class="Table_Section" >
+         <table #TableSection>
+            <thead #TableHeaderSection>
                <tr>
                   <th>S.no</th>
                   <th>Industry Type</th>
@@ -35,7 +44,7 @@
                   <th>Action</th>
                </tr>
             </thead>
-            <tbody>
+            <tbody #TableBodySection>
                <tr *ngFor="let Item of _List; let i=index">
                   <td>
                      <span class="S_no"> {{ i + 1}} </span>
@@ -45,15 +54,12 @@
                   </td>
                   <td>
                      <span class="Style_1"> {{Item.Created_By.Name}}
-                        <!-- <span class="Badge"> {{Item.Created_By.User_Type.User_Type}} </span> -->
                         <br> 
                         <span class="Time"> {{Item.createdAt | date:'medium'}}  </span>
                      </span>
                   </td>
                   <td>
-                     <span class="Style_1"> 
-                        {{Item.Last_Modified_By.Name}} 
-                        <!-- <span class="Badge"> {{Item.Last_Modified_By.User_Type.User_Type}} </span>  -->
+                     <span class="Style_1"> {{Item.Last_Modified_By.Name}} 
                         <br> 
                         <span class="Time"> {{Item.updatedAt | date:'medium'}}  </span>
                      </span>
@@ -70,7 +76,38 @@
                      </button>
                   </td>
                </tr>
+               <tr class="TableLoader" #TableLoaderSection >
+                  <td colspan="100%" class="Tr_Loader">  Loading<span class="dot">.</span><span class="dot-2">.</span><span class="dot-3">.</span> </td>
+               </tr>
             </tbody>
+            <tfoot #TableFooterSection>
+               <tr>
+                  <td colspan="100">
+                     <div class="Table_Footer_Section">
+                        <div class="Footer_Left">
+                           <p [innerHTML]="Showing_Text"> </p>
+                        </div>
+                        <div class="Footer_Right">
+                           <div class="Pagination">
+                              <ul>
+                                 <li class="{{Page_Previous['Class']}}" (click)="Pagination_Action(Page_Previous['Value'])" >
+                                    <span class="arrow"> << </span>
+                                    <span> Previous </span>
+                                 </li>
+                                 <li *ngFor="let Page of Pages_Array; let i=index" class="{{Page.Class}}" [ngClass]="{'active': Page.Active}" (click)="Pagination_Action(Page.Value)" > 
+                                    <span> {{Page.Text}} </span>
+                                 </li> 
+                                 <li class="{{Page_Next['Class']}}" (click)="Pagination_Action(Page_Next['Value'])">
+                                    <span> Next </span>
+                                    <span class="arrow"> >> </span>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+            </tfoot>
          </table>
       </div>
 </div>

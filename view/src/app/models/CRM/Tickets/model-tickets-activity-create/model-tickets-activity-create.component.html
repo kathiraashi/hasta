@@ -43,7 +43,12 @@
             </div>
             <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': !Form.controls['Employee'].pristine && Form.controls['Employee'].errors, 'Form_Success': Form.controls['Employee'].valid && !Form.controls['Employee'].pristine }">
                <label> Employee:</label>
-               <input type="text" formControlName="Employee">
+               <ng-select class="NgSelect ValueBold" 
+                        [items]="_Employees" 
+                        bindLabel="EmployeeName" 
+                        formControlName="Employee" 
+                        [searchable]="true">
+               </ng-select>
                <p class="error" *ngIf="Form.controls['Employee'].errors && !Form.controls['Employee'].pristine">
                   <span *ngIf="Form.controls['Employee'].errors.required"> Employee is required</span>
                </p>

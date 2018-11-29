@@ -1,5 +1,6 @@
 var CryptoJS = require("crypto-js");
 var CrmCustomersModel = require('./../../models/Crm/CrmCustomers.model.js');
+var HrModel = require('./../../models/Hr/Employee.model.js');
 var ErrorManagement = require('./../../../handling/ErrorHandling.js');
 var mongoose = require('mongoose');
 
@@ -1020,163 +1021,6 @@ exports.CrmMachine_ScheduleActivity_Delete = function(req, res) {
 
 
 
-exports.CrmMachine_IdleTime_Create = function(req, res) {
-   
-   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
-   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-
-   if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
-      res.status(400).send({Status: false, Message: "User Details can not be empty" });
-   } else if(!ReceivingData.Machine_Id || ReceivingData.Machine_Id === '' ) {
-      res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
-   } else if(!ReceivingData.Idle_Date || ReceivingData.Idle_Date === '' ) {
-      res.status(400).send({Status: false, Message: "Idle Date can not be empty" });
-   } else if(!ReceivingData.Idle_Time ||  ReceivingData.Idle_Time === '' ) {
-      res.status(400).send({Status: false, Message: "Idle Time can not be empty" });
-   } else {
-      if (ReceivingData.Description === '') {
-         ReceivingData.Description = '-';
-      }
-        var Crm_Machines_IdleTime= new CrmCustomersModel.CrmMachinesIdleTimeSchema({
-         Machine: mongoose.Types.ObjectId(ReceivingData.Machine_Id),
-         Idle_Date: ReceivingData.Idle_Date,
-         Idle_Time: ReceivingData.Idle_Time,
-         Description: ReceivingData.Description,
-         Active_Status: true,
-         If_Deleted: false,
-         Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-         Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.User_Id),
-      });
-      Crm_Machines_IdleTime.save(function(err, result) {
-         if(err) {
-            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Machine Idle Creation Query Error', 'Crm_Customers.controller.js', err);
-            res.status(400).send({Status: false, Message: "Some error occurred while creating the Crm Machine Idle!."});
-         } else {
-            CrmCustomersModel.CrmMachinesSchema.update(
-               { _id : mongoose.Types.ObjectId(ReceivingData.Machine_Id)  },
-               {$set: { Current_Status: 'Idle' } }
-            ).exec();
-            new CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema({
-               Machine: mongoose.Types.ObjectId(ReceivingData.Machine_Id),
-               Activity: 'Idle',
-               Activity_Status: 'Open',
-               Activity_Date:  ReceivingData.Idle_Date,
-               Activity_Time:  ReceivingData.Idle_Time,
-               Description: ReceivingData.Description,
-               Idle_DbId: result._id,
-               Ticket_DbId: null,
-               Ticket_Activity_DbId: null,
-               If_Hidden: false,
-               If_Deleted: false,
-               Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-            }).save();
-            CrmCustomersModel.CrmMachinesIdleTimeSchema
-               .findOne({'_id': mongoose.Types.ObjectId(result._id), 'If_Deleted': false }, {}, {})
-               .populate({ path: 'Created_By', select: ['Name'] })
-               .populate({ path: 'Last_Modified_By', select: ['Name'] })
-               .exec(function(err_1, result_1) {
-               if(err_1) {
-                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machine Idle Time Find Query Error', 'Crm_Customers.controller.js', err_1);
-                  res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Machine Idle Time!."});
-               } else {
-                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
-                  ReturnData = ReturnData.toString();
-                  res.status(200).send({Status: true, Response: ReturnData });
-               }
-            });
-         }
-      });
-   }
-};
-exports.CrmMachine_IdleTime_List = function(req, res) {
-   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
-   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-
-   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
-      res.status(400).send({Status: false, Message: "User Details can not be empty" });
-   } else if (!ReceivingData.Machine_Id || ReceivingData.Machine_Id === ''  ) {
-      res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
-   }else {
-      CrmCustomersModel.CrmMachinesIdleTimeSchema
-         .find({'Machine': mongoose.Types.ObjectId(ReceivingData.Machine_Id), 'If_Deleted': false, 'Active_Status': true}, {}, {sort: { updatedAt: -1 }})
-         .populate({ path: 'Created_By', select: ['Name'] })
-         .populate({ path: 'Last_Modified_By', select: ['Name'] })
-         .exec(function(err, result) {
-         if(err) {
-            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machine Idle List Find Query Error', 'Crm_Customers.controller.js', err);
-            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Machine Idle List!."});
-         } else {
-            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
-            ReturnData = ReturnData.toString();
-            res.status(200).send({Status: true, Response: ReturnData });
-         }
-      });
-   }
-};
-exports.CrmMachine_IdleTime_Update = function(req, res) {
-   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
-   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-
-   if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
-      res.status(400).send({Status: false, Message: "User Details can not be empty" });
-   } else if(!ReceivingData.IdleTime_Id || ReceivingData.IdleTime_Id === '' ) {
-      res.status(400).send({Status: false, Message: "Idle Details can not be empty" });
-   } else if(!ReceivingData.Idle_CloseDate || ReceivingData.Idle_CloseDate === '' ) {
-      res.status(400).send({Status: false, Message: "Idle Close Date can not be empty" });
-   } else if(!ReceivingData.Idle_CloseTime ||  ReceivingData.Idle_CloseTime === '' ) {
-      res.status(400).send({Status: false, Message: "Idle Close Time can not be empty" });
-   } else {
-      CrmCustomersModel.CrmMachinesIdleTimeSchema.update(
-         { _id : mongoose.Types.ObjectId(ReceivingData.IdleTime_Id)  },
-         {  $set: {
-               Idle_CloseDate: ReceivingData.Idle_CloseDate,
-               Idle_CloseTime: ReceivingData.Idle_CloseTime,
-               Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.User_Id),
-            } 
-         }
-      ).exec( function(err, result) {
-         if(err) {
-            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Machine Idle Updating Query Error', 'Crm_Customers.controller.js', err);
-            res.status(400).send({Status: false, Message: "Some error occurred while Updating the Crm Machine Idle!."});
-         } else {
-            CrmCustomersModel.CrmMachinesIdleTimeSchema
-               .findOne({'_id': mongoose.Types.ObjectId(ReceivingData.IdleTime_Id), 'If_Deleted': false }, {}, {})
-               .populate({ path: 'Created_By', select: ['Name'] })
-               .populate({ path: 'Last_Modified_By', select: ['Name'] })
-               .exec(function(err_1, result_1) {
-               if(err_1) {
-                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machine Idle Find Query Error', 'Crm_Customers.controller.js', err_1);
-                  res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Machine Idle!."});
-               } else {
-                  CrmCustomersModel.CrmMachinesSchema.update(
-                     { _id : mongoose.Types.ObjectId(result_1.Machine._id)  },
-                     {$set: { Current_Status: 'Up' } }
-                  ).exec();
-                  new CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema({
-                     Machine: mongoose.Types.ObjectId(result_1.Machine._id),
-                     Activity: 'Idle',
-                     Activity_Status: 'Close',
-                     Activity_Date: new Date(new Date(ReceivingData.Idle_CloseDate).setSeconds(new Date(ReceivingData.Idle_CloseDate).getSeconds() - 2)),
-                     Activity_Time:  ReceivingData.Idle_CloseTime,
-                     Description: result_1.Description,
-                     Idle_DbId: mongoose.Types.ObjectId(ReceivingData.IdleTime_Id),
-                     Ticket_DbId: null,
-                     Ticket_Activity_DbId: null,
-                     If_Hidden: false,
-                     If_Deleted: false,
-                     Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-                  }).save();
-                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
-                  ReturnData = ReturnData.toString();
-                  res.status(200).send({Status: true, Response: ReturnData });
-               }
-            });
-         }
-      });
-   }
-};
-
-
 exports.CrmMachine_WorkingHours_Create = function(req, res) {
    
    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
@@ -1334,7 +1178,7 @@ exports.CrmMachine_WorkingHours_Update = function(req, res) {
                      WorkingHours_DbId: mongoose.Types.ObjectId(ReceivingData.WorkingHours_Id),
                      Ticket_DbId: null,
                      Ticket_Activity_DbId: null,
-                     If_Hidden: false,
+                     If_Hidden: true,
                      If_Deleted: false,
                      Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
                   }).save();
@@ -1348,10 +1192,212 @@ exports.CrmMachine_WorkingHours_Update = function(req, res) {
                      WorkingHours_DbId: mongoose.Types.ObjectId(ReceivingData.WorkingHours_Id),
                      Ticket_DbId: null,
                      Ticket_Activity_DbId: null,
+                     If_Hidden: false,
+                     If_Deleted: false,
+                     Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                  }).save();
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
+                  ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Response: ReturnData });
+               }
+            });
+         }
+      });
+   }
+};
+
+exports.CrmMachinesList_ForWorking = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+   } else if (!ReceivingData.Required_Date || ReceivingData.Required_Date === ''  ) {
+      res.status(400).send({Status: false, Message: "Date can not be empty" });
+   }else {
+      var Required_Date = new Date(ReceivingData.Required_Date); // Required date.
+      var GreaterThen = new Date(Required_Date.getFullYear() , Required_Date.getMonth(), Required_Date.getDate(), 0, 0, 0, 0);
+      var LessThen = new Date(Required_Date.getFullYear(), Required_Date.getMonth(), Required_Date.getDate(), 24, 0, 0, 0);
+      CrmCustomersModel.CrmMachinesSchema
+         .find({'Customer': mongoose.Types.ObjectId(ReceivingData.Customer_Id), 'If_Deleted': false }, {MachineName: 1, Open_Ticket: 1 }, {sort: { updatedAt: -1 }})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machines List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Machines List!."});
+         } else {
+            Promise.all(
+               result.map(obj => {
+                  return Promise.all([
+                     CrmCustomersModel.CrmMachinesWorkingHoursSchema
+                        .find(
+                           {  'Machine': mongoose.Types.ObjectId(obj._id),
+                              $and: [  { Start_Date : { $lt: LessThen } },
+                                       { Start_Date: { $gte: GreaterThen } } ],
+                              'If_Deleted': false,
+                              'Active_Status': true
+                           }, {Machine: 1, Start_Date: 1, Start_Time: 1, Stop_Date: 1, Stop_Time: 1, updatedAt: 1}, { sort: { Start_Date: 1 }})
+                        .exec()
+                  ]).then(response => {
+                     var newObj = { _id: obj._id,
+                                    MachineName: obj.MachineName,
+                                    Open_Ticket: obj.Open_Ticket,
+                                    PreviousShifts: response[0]
+                                 }
+                     return newObj;
+                  })
+               })
+            ).then( FinalResponse => {
+               var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(FinalResponse), 'SecretKeyOut@123');
+               ReturnData = ReturnData.toString();
+               res.status(200).send({Status: true, Response: ReturnData });
+            })
+         }
+      });
+   }
+};
+exports.CrmMachine_WorkingUpdate = function(req, res) {
+
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if(!ReceivingData.Machine_Id || ReceivingData.Machine_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
+   } else if(!ReceivingData.Start_Date || ReceivingData.Start_Date === '' ) {
+      res.status(400).send({Status: false, Message: "Start Date can not be empty" });
+   } else if(!ReceivingData.Start_Time ||  ReceivingData.Start_Time === '' ) {
+      res.status(400).send({Status: false, Message: "Start Time can not be empty" });
+   } else if(!ReceivingData.Stop_Date || ReceivingData.Stop_Date === '' ) {
+      res.status(400).send({Status: false, Message: "Stop Date can not be empty" });
+   } else if(!ReceivingData.Stop_Time ||  ReceivingData.Stop_Time === '' ) {
+      res.status(400).send({Status: false, Message: "Stop Time can not be empty" });
+   } else {
+      if (ReceivingData.Description === '') {
+         ReceivingData.Description = '-';
+      }
+      var Crm_Machines_WorkingHours= new CrmCustomersModel.CrmMachinesWorkingHoursSchema({
+         Machine: mongoose.Types.ObjectId(ReceivingData.Machine_Id),
+         Start_Date: ReceivingData.Start_Date,
+         Start_Time: ReceivingData.Start_Time,
+         Description: ReceivingData.Description,
+         Stop_Date: ReceivingData.Stop_Date,
+         Stop_Time: ReceivingData.Stop_Time,
+         Active_Status: true,
+         If_Deleted: false,
+         Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+         Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.User_Id),
+      });
+      Crm_Machines_WorkingHours.save(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Machine Working Hours Creation Query Error', 'Crm_Customers.controller.js', err);
+            res.status(400).send({Status: false, Message: "Some error occurred while creating the Crm Machine Working Hours!."});
+         } else {
+            // CrmCustomersModel.CrmMachinesSchema.update(
+            //    { _id : mongoose.Types.ObjectId(ReceivingData.Machine_Id)  },
+            //    {$set: { Current_Status: 'Idle' } }
+            // ).exec();
+            // (X > A && X < B) ||  (X <= A && Y > A)
+            Promise.all([
+               CrmCustomersModel.CrmTicketsSchema
+                  .findOne( {'Machine': mongoose.Types.ObjectId(ReceivingData.Machine_Id),
+                              $and: [ { TicketOpenDate: { $lte: ReceivingData.Start_Date } },
+                                       { TicketCloseDate: { $gte: ReceivingData.Start_Date } }
+                                    ], 
+                              'If_Deleted': false, If_Idle: false }, {}, {}).exec(),
+               CrmCustomersModel.CrmTicketsSchema
+                  .findOne( {'Machine': mongoose.Types.ObjectId(ReceivingData.Machine_Id),
+                              $and: [ { TicketOpenDate: { $lte: ReceivingData.Stop_Date } },
+                                       { TicketCloseDate: { $gte: ReceivingData.Stop_Date } }
+                                    ], 
+                              'If_Deleted': false, If_Idle: false }, {}, {}).exec(),
+            ]).then(response => {
+               var IdleCloseDelete = false;
+               if (response[0] !== null && response[1] === null) {
+                  ReceivingData.Start_Date = response[0].TicketCloseDate;
+                  ReceivingData.Start_Time = response[0].TicketCloseTime;
+                  IdleCloseDelete = true;
+                  CrmCustomersModel.CrmMachinesActivitiesSchema
+                     .update({ 'Machine': mongoose.Types.ObjectId(ReceivingData.Machine_Id),
+                                 Activity_Date: ReceivingData.Start_Date,
+                                 $or : [ {Activity: 'Idle' }, {Activity: 'Up' } ],
+                                 Activity_Status: 'Open',
+                                 'If_Deleted': false
+                           },
+                           { $set: { "If_Deleted" : true } }).exec();
+                  MachineActivity_Create();
+               }
+               if (response[0] === null && response[1] === null) {
+                  MachineActivity_Create();
+               }
+               function MachineActivity_Create() {
+                  new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                     Machine: mongoose.Types.ObjectId(ReceivingData.Machine_Id),
+                     Activity: 'Idle',
+                     Activity_Status: 'Close',
+                     Activity_Date: new Date(new Date(ReceivingData.Start_Date).setSeconds(new Date(ReceivingData.Start_Date).getSeconds() - 2)),
+                     Activity_Time: ReceivingData.Start_Time,
+                     Description: ReceivingData.Description,
+                     WorkingHours_DbId: result._id,
+                     Ticket_DbId: null,
+                     Ticket_Activity_DbId: null,
+                     If_Hidden: true,
+                     If_Deleted: IdleCloseDelete,
+                     Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                  }).save();
+                  new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                     Machine: mongoose.Types.ObjectId(ReceivingData.Machine_Id),
+                     Activity: 'Up',
+                     Activity_Status: 'Open',
+                     Activity_Date: ReceivingData.Start_Date,
+                     Activity_Time: ReceivingData.Start_Time,
+                     Description: ReceivingData.Description,
+                     WorkingHours_DbId: result._id,
+                     Ticket_DbId: null,
+                     Ticket_Activity_DbId: null,
+                     If_Hidden: false,
+                     If_Deleted: false,
+                     Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                  }).save();
+                  new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                     Machine: mongoose.Types.ObjectId(ReceivingData.Machine_Id),
+                     Activity: 'Up',
+                     Activity_Status: 'Close',
+                     Activity_Date: new Date(new Date(ReceivingData.Stop_Date).setSeconds(new Date(ReceivingData.Stop_Date).getSeconds() - 2)),
+                     Activity_Time:  ReceivingData.Stop_Time,
+                     Description: ReceivingData.Description,
+                     WorkingHours_DbId: result._id,
+                     Ticket_DbId: null,
+                     Ticket_Activity_DbId: null,
                      If_Hidden: true,
                      If_Deleted: false,
                      Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
                   }).save();
+                  new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                     Machine: mongoose.Types.ObjectId(ReceivingData.Machine_Id),
+                     Activity: 'Idle',
+                     Activity_Status: 'Open',
+                     Activity_Date: ReceivingData.Stop_Date,
+                     Activity_Time: ReceivingData.Stop_Time,
+                     Description: ReceivingData.Description,
+                     WorkingHours_DbId: result._id,
+                     Ticket_DbId: null,
+                     Ticket_Activity_DbId: null,
+                     If_Hidden: false,
+                     If_Deleted: false,
+                     Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                  }).save();
+               }   
+            });
+            CrmCustomersModel.CrmMachinesWorkingHoursSchema
+               .findOne({'_id': mongoose.Types.ObjectId(result._id), 'If_Deleted': false }, {Machine: 1, Start_Date: 1, Start_Time: 1, Stop_Date: 1, Stop_Time: 1, updatedAt: 1}, {})
+               .exec(function(err_1, result_1) {
+               if(err_1) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Machine Working Hours Find Query Error', 'Crm_Customers.controller.js', err_1);
+                  res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Machine Working Hours!."});
+               } else {
                   var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
                   ReturnData = ReturnData.toString();
                   res.status(200).send({Status: true, Response: ReturnData });
@@ -1435,6 +1481,41 @@ exports.CrmTickets_Create = function(req, res) {
             });
          }
       });
+   }
+};
+exports.CrmTickets_IdleCheck = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+   }else if (!ReceivingData.Machine_Id || ReceivingData.Machine_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
+   }else if (!ReceivingData.DateTime || ReceivingData.DateTime === ''  ) {
+      res.status(400).send({Status: false, Message: "Date and Time can not be empty" });
+   }else {
+      Promise.all([
+         CrmCustomersModel.CrmMachinesWorkingHoursSchema
+            .findOne( {'Machine': mongoose.Types.ObjectId(ReceivingData.Machine_Id), Start_Date : { $lte: ReceivingData.DateTime }, Stop_Date : { $gte: ReceivingData.DateTime },'If_Deleted': false }, {}, {}).exec(),
+         CrmCustomersModel.CrmTicketsSchema
+            .findOne( {'Machine': mongoose.Types.ObjectId(ReceivingData.Machine_Id), TicketOpenDate : { $lte: ReceivingData.DateTime }, TicketCloseDate : { $gt: ReceivingData.DateTime },'If_Deleted': false }, {}, {}).exec(),
+      ]).then(response => {
+         var Idle_Stage = true;
+         var Availability = true;
+         if (response[0] !== null) {
+            Idle_Stage = false;  
+         }
+         if (response[1] !== null) {
+            Availability = false;  
+         }
+         var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(response[0]), 'SecretKeyOut@123');
+         ReturnData = ReturnData.toString();
+         var ReturnData_1 = CryptoJS.AES.encrypt(JSON.stringify(response[1]), 'SecretKeyOut@123');
+         ReturnData_1 = ReturnData_1.toString();
+         res.status(200).send({Status: true, Idle_Stage: Idle_Stage, Availability: Availability, Idle_Response: ReturnData, Availability_Response: ReturnData_1  });
+      })
    }
 };
 exports.CrmTickets_List = function(req, res) {
@@ -1609,201 +1690,273 @@ exports.CrmTicketActivities_Create = function(req, res) {
       if (ReceivingData.Contact && typeof ReceivingData.Contact === 'object' && Object.keys(ReceivingData.Contact).length > 0 ) {
          ReceivingData.Contact = mongoose.Types.ObjectId(ReceivingData.Contact._id);
       }
+      if (ReceivingData.Employee && typeof ReceivingData.Employee === 'object' && Object.keys(ReceivingData.Employee).length > 0 ) {
+         ReceivingData.Employee = mongoose.Types.ObjectId(ReceivingData.Employee._id);
+      }
       if (ReceivingData.Description === '') {
          ReceivingData.Description = '-';
       }
       
-      var Crm_TicketActivities = new CrmCustomersModel.CrmTicketActivitiesSchema({
-         Machine: ReceivingData.Machine,
-         Customer: ReceivingData.Customer,
-         Ticket: mongoose.Types.ObjectId(ReceivingData.TicketId),
-         Contact: ReceivingData.Contact,
-         Employee: ReceivingData.Employee,
-         StartDate: ReceivingData.StartDate,
-         StartTime: ReceivingData.StartTime,
-         EndDate: ReceivingData.EndDate,
-         EndTime: ReceivingData.EndTime,
-         Status: ReceivingData.Status,
-         Description: ReceivingData.Description || '-',
-         If_Idle: ReceivingData.If_Idle,
-         Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-         Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-         If_Deleted: false,
-         Active_Status : ReceivingData.Active_Status || true,
-      });
-      Crm_TicketActivities.save(function(err, result) {
-         if(err) {
-            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Ticket Activities Creation Query Error', 'AdminManagement.controller.js', err);
-            res.status(400).send({Status: false, Message: "Some error occurred while creating the Crm Ticket Activities!."});
-         } else {
-            CrmCustomersModel.CrmTicketsSchema.update(
-               { _id : mongoose.Types.ObjectId(ReceivingData.TicketId)  },
-               { $set: {CurrentStatus : result.Status } }
-            ).exec();
+      Promise.all([
+         CrmCustomersModel.CrmTicketsSchema
+            .findOne( {'Machine': ReceivingData.Machine, TicketOpenDate: { $lte: ReceivingData.StartDate }, TicketCloseDate: { $gte: ReceivingData.StartDate }, 'If_Deleted': false }, {}, {}).exec(),
+         CrmCustomersModel.CrmTicketsSchema
+            .findOne( {'Machine': ReceivingData.Machine, $and: [ { TicketOpenDate : { $gte: ReceivingData.Previous_StartDate } }, { TicketOpenDate : { $lt: ReceivingData.StartDate }  } ],  TicketCloseDate: { $exists: true }, 'If_Deleted': false }, {}, {}).exec(),
+         CrmCustomersModel.CrmMachinesActivitiesSchema
+            .updateMany({  'Machine': ReceivingData.Machine,
+                           'If_Deleted': false,
+                           $and: [ { Activity_Date: { $gte: ReceivingData.Previous_StartDate } },
+                                   { Activity_Date: { $lt: ReceivingData.StartDate } },
+                                   { $or : [ { Activity : 'Up'}, { Activity : 'Idle' } ] }, ]
+                        },
+                        { $set: { "If_Deleted" : true } }).exec(),
+      ]).then(response => {
 
-            if (ReceivingData.Status.Type === 'Type_1' && !ReceivingData.If_Idle) {
-               new CrmCustomersModel.CrmMachinesActivitiesSchema({
-                  Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
-                  Activity: 'Up',
-                  Activity_Status: 'Close',
-                  Activity_Date: new Date(new Date(ReceivingData.StartDate).setSeconds(new Date(ReceivingData.StartDate).getSeconds() - 2)),
-                  Activity_Time: ReceivingData.StartTime,
-                  Description: ReceivingData.Description,
-                  WorkingHours_DbId: null,
-                  Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
-                  Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
-                  If_Hidden: true,
-                  If_Deleted: false,
-                  Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-               }).save();
-               new CrmCustomersModel.CrmMachinesActivitiesSchema({
-                  Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
-                  Activity: 'Down',
-                  Activity_Status: 'Open',
-                  Activity_Date:  new Date(ReceivingData.StartDate),
-                  Activity_Time: ReceivingData.StartTime,
-                  Description: ReceivingData.Description,
-                  WorkingHours_DbId: null,
-                  Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
-                  Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
-                  If_Hidden: false,
-                  If_Deleted: false,
-                  Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-               }).save();
-            }
-            if (ReceivingData.Status.Type === 'Type_3' && !ReceivingData.If_Idle) {
-               new CrmCustomersModel.CrmMachinesActivitiesSchema({
-                  Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
-                  Activity: 'Down',
-                  Activity_Status: 'Close',
-                  Activity_Date: new Date(new Date(ReceivingData.StartDate).setSeconds(new Date(ReceivingData.StartDate).getSeconds() - 2)),
-                  Activity_Time: ReceivingData.StartTime,
-                  Description: ReceivingData.Description,
-                  WorkingHours_DbId: null,
-                  Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
-                  Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
-                  If_Hidden: true,
-                  If_Deleted: false,
-                  Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-               }).save();
-               new CrmCustomersModel.CrmMachinesActivitiesSchema({
-                  Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
-                  Activity: 'Waiting',
-                  Activity_Status: 'Open',
-                  Activity_Date: new Date(ReceivingData.StartDate),
-                  Activity_Time: ReceivingData.StartTime,
-                  Description: ReceivingData.Description,
-                  WorkingHours_DbId: null,
-                  Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
-                  Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
-                  If_Hidden: false,
-                  If_Deleted: false,
-                  Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-               }).save();
-            }
-            if (ReceivingData.Status.Type === 'Type_4' && !ReceivingData.If_Idle) {
-               new CrmCustomersModel.CrmMachinesActivitiesSchema({
-                  Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
-                  Activity: 'Waiting',
-                  Activity_Status: 'Close',
-                  Activity_Date: new Date(new Date(ReceivingData.StartDate).setSeconds(new Date(ReceivingData.StartDate).getSeconds() - 2)),
-                  Activity_Time: ReceivingData.StartTime,
-                  Description: ReceivingData.Description,
-                  WorkingHours_DbId: null,
-                  Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
-                  Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
-                  If_Hidden: false,
-                  If_Deleted: false,
-                  Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-               }).save();
-               new CrmCustomersModel.CrmMachinesActivitiesSchema({
-                  Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
-                  Activity: 'Down',
-                  Activity_Status: 'Open',
-                  Activity_Date: new Date(ReceivingData.StartDate),
-                  Activity_Time: ReceivingData.StartTime,
-                  Description: ReceivingData.Description,
-                  WorkingHours_DbId: null,
-                  Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
-                  Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
-                  If_Hidden: true,
-                  If_Deleted: false,
-                  Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-               }).save();
-            }
-            if (ReceivingData.Status.Type === 'Type_6' && !ReceivingData.If_Idle) {
-               new CrmCustomersModel.CrmMachinesActivitiesSchema({
-                  Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
-                  Activity: 'Down',
-                  Activity_Status: 'Close',
-                  Activity_Date: new Date(new Date(ReceivingData.StartDate).setSeconds(new Date(ReceivingData.StartDate).getSeconds() - 2)),
-                  Activity_Time: ReceivingData.StartTime,
-                  Description: ReceivingData.Description,
-                  WorkingHours_DbId: null,
-                  Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
-                  Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
-                  If_Hidden: false,
-                  If_Deleted: false,
-                  Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-               }).save();
-               new CrmCustomersModel.CrmMachinesActivitiesSchema({
-                  Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
-                  Activity: 'Up',
-                  Activity_Status: 'Open',
-                  Activity_Date: new Date(ReceivingData.StartDate),
-                  Activity_Time: ReceivingData.StartTime,
-                  Description: ReceivingData.Description,
-                  WorkingHours_DbId: null,
-                  Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
-                  Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
-                  If_Hidden: false,
-                  If_Deleted: false,
-                  Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
-               }).save();
-            }
-
-            if ( !ReceivingData.If_Idle) {
-               if (ReceivingData.Status.Type === 'Type_1') {
-                  CrmCustomersModel.CrmMachinesSchema.update(
-                     { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
-                     {$set: { Current_Status: 'Down' } }
-                  ).exec();
-               }
-               if ( ReceivingData.Status.Type === 'Type_6') {
-                  CrmCustomersModel.CrmMachinesSchema.update(
-                     { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
-                     {$set: { Current_Status: 'Up' } }
-                  ).exec();
-               }
-            }
-            if (ReceivingData.Status.Type === 'Type_6') {
-               CrmCustomersModel.CrmTicketsSchema.update(
-                  { _id : mongoose.Types.ObjectId(ReceivingData.TicketId)  },
-                  { $set: { TicketCloseDate : ReceivingData.StartDate, TicketCloseTime: ReceivingData.StartTime } }
-               ).exec();
-               CrmCustomersModel.CrmMachinesSchema.update(
-                  { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
-                  { $set: { Open_Ticket : false } }
-               ).exec();
-            }
-            CrmCustomersModel.CrmTicketActivitiesSchema
-               .findOne({'_id': result._id}, {}, {})
-               .populate({ path: 'Customer', select: ['CompanyName'] })
-               .populate({ path: 'Machine', select: ['MachineName'] })
-               .populate({ path: 'Ticket', select: ['TicketId'] })
-               .populate({ path: 'Contact', select: ['Name'] })
-               .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
-               .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
-               .exec(function(err, result) {
+         if (response[0] === null && response[1] === null) {
+            var Crm_TicketActivities = new CrmCustomersModel.CrmTicketActivitiesSchema({
+               Machine: ReceivingData.Machine,
+               Customer: ReceivingData.Customer,
+               Ticket: mongoose.Types.ObjectId(ReceivingData.TicketId),
+               Contact: ReceivingData.Contact,
+               Employee: ReceivingData.Employee,
+               StartDate: ReceivingData.StartDate,
+               StartTime: ReceivingData.StartTime,
+               Status: ReceivingData.Status,
+               Description: ReceivingData.Description || '-',
+               If_Idle: ReceivingData.If_Idle,
+               Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+               Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+               If_Deleted: false,
+               Active_Status : ReceivingData.Active_Status || true,
+            });
+            Crm_TicketActivities.save(function(err, result) {
                if(err) {
-                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Activity Data Find Query Error', 'Crm_Customers.controller.js', err);
-                  res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Activity Data!."});
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Ticket Activities Creation Query Error', 'AdminManagement.controller.js', err);
+                  res.status(400).send({Status: false, Message: "Some error occurred while creating the Crm Ticket Activities!."});
                } else {
-                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
-                  ReturnData = ReturnData.toString();
-                  res.status(200).send({Status: true, Response: ReturnData });
+                  CrmCustomersModel.CrmTicketsSchema.update(
+                     { _id : mongoose.Types.ObjectId(ReceivingData.TicketId)  },
+                     { $set: {CurrentStatus : result.Status } }
+                  ).exec();
+      
+                  if (ReceivingData.Status.Type === 'Type_1' && !ReceivingData.If_Idle) {
+                     new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                        Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
+                        Activity: 'Up',
+                        Activity_Status: 'Close',
+                        Activity_Date: new Date(new Date(ReceivingData.StartDate).setSeconds(new Date(ReceivingData.StartDate).getSeconds() - 2)),
+                        Activity_Time: ReceivingData.StartTime,
+                        Description: '-',
+                        WorkingHours_DbId: null,
+                        Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
+                        Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
+                        If_Hidden: true,
+                        If_Deleted: false,
+                        Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                     }).save();
+                     new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                        Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
+                        Activity: 'Down',
+                        Activity_Status: 'Open',
+                        Activity_Date:  new Date(ReceivingData.StartDate),
+                        Activity_Time: ReceivingData.StartTime,
+                        Description: ReceivingData.Description,
+                        WorkingHours_DbId: null,
+                        Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
+                        Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
+                        If_Hidden: false,
+                        If_Deleted: false,
+                        Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                     }).save();
+                  }
+                  if (ReceivingData.Status.Type === 'Type_3' && !ReceivingData.If_Idle) {
+                     new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                        Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
+                        Activity: 'Down',
+                        Activity_Status: 'Close',
+                        Activity_Date: new Date(new Date(ReceivingData.StartDate).setSeconds(new Date(ReceivingData.StartDate).getSeconds() - 2)),
+                        Activity_Time: ReceivingData.StartTime,
+                        Description: '-',
+                        WorkingHours_DbId: null,
+                        Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
+                        Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
+                        If_Hidden: true,
+                        If_Deleted: false,
+                        Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                     }).save();
+                     new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                        Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
+                        Activity: 'Waiting',
+                        Activity_Status: 'Open',
+                        Activity_Date: new Date(ReceivingData.StartDate),
+                        Activity_Time: ReceivingData.StartTime,
+                        Description: ReceivingData.Description,
+                        WorkingHours_DbId: null,
+                        Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
+                        Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
+                        If_Hidden: false,
+                        If_Deleted: false,
+                        Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                     }).save();
+                  }
+                  if (ReceivingData.Status.Type === 'Type_4' && !ReceivingData.If_Idle) {
+                     new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                        Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
+                        Activity: 'Waiting',
+                        Activity_Status: 'Close',
+                        Activity_Date: new Date(new Date(ReceivingData.StartDate).setSeconds(new Date(ReceivingData.StartDate).getSeconds() - 2)),
+                        Activity_Time: ReceivingData.StartTime,
+                        Description: ReceivingData.Description,
+                        WorkingHours_DbId: null,
+                        Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
+                        Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
+                        If_Hidden: true,
+                        If_Deleted: false,
+                        Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                     }).save();
+                     new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                        Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
+                        Activity: 'Down',
+                        Activity_Status: 'Open',
+                        Activity_Date: new Date(ReceivingData.StartDate),
+                        Activity_Time: ReceivingData.StartTime,
+                        Description: ReceivingData.Description,
+                        WorkingHours_DbId: null,
+                        Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
+                        Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
+                        If_Hidden: false,
+                        If_Deleted: false,
+                        Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                     }).save();
+                  }
+                  if (ReceivingData.Status.Type === 'Type_6' && !ReceivingData.If_Idle) {
+                     Promise.all([
+                        CrmCustomersModel.CrmMachinesWorkingHoursSchema
+                           .findOne( {'Machine': ReceivingData.Machine, Start_Date: { $lte: ReceivingData.StartDate }, Stop_Date: { $gte: ReceivingData.StartDate }, 'If_Deleted': false }, {}, {}).exec(),
+                     ]).then(response_one => {
+                        new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                           Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
+                           Activity: 'Down',
+                           Activity_Status: 'Close',
+                           Activity_Date: new Date(new Date(ReceivingData.StartDate).setSeconds(new Date(ReceivingData.StartDate).getSeconds() - 2)),
+                           Activity_Time: ReceivingData.StartTime,
+                           Description: '-',
+                           WorkingHours_DbId: null,
+                           Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
+                           Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
+                           If_Hidden: true,
+                           If_Deleted: false,
+                           Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                        }).save();
+                        if (response_one[0] !== null) {
+                           if ( new Date(response_one[0].Start_Date).valueOf() !== new Date(ReceivingData.StartDate).valueOf()
+                                 && new Date(response_one[0].Stop_Date).valueOf() !== new Date(ReceivingData.StartDate).valueOf()) {
+                              new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                                 Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
+                                 Activity: 'Up',
+                                 Activity_Status: 'Open',
+                                 Activity_Date: new Date(ReceivingData.StartDate),
+                                 Activity_Time: ReceivingData.StartTime,
+                                 Description: ReceivingData.Description,
+                                 WorkingHours_DbId: null,
+                                 Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
+                                 Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
+                                 If_Hidden: false,
+                                 If_Deleted: false,
+                                 Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                              }).save();
+                              CrmCustomersModel.CrmMachinesSchema.update(
+                                 { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
+                                 {$set: { Current_Status: 'Up' } }
+                              ).exec();
+                           }
+                        } else {
+                           new CrmCustomersModel.CrmMachinesActivitiesSchema({
+                              Machine: mongoose.Types.ObjectId(ReceivingData.Machine),
+                              Activity: 'Idle',
+                              Activity_Status: 'Open',
+                              Activity_Date: new Date(ReceivingData.StartDate),
+                              Activity_Time: ReceivingData.StartTime,
+                              Description: ReceivingData.Description,
+                              WorkingHours_DbId: null,
+                              Ticket_DbId: mongoose.Types.ObjectId(ReceivingData.TicketId),
+                              Ticket_Activity_DbId: mongoose.Types.ObjectId(result._id),
+                              If_Hidden: false,
+                              If_Deleted: false,
+                              Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+                           }).save();
+                           CrmCustomersModel.CrmMachinesSchema.update(
+                              { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
+                              {$set: { Current_Status: 'Idle' } }
+                           ).exec();
+                        }
+                     });
+                  }
+      
+                  if ( !ReceivingData.If_Idle) {
+                     if (ReceivingData.Status.Type === 'Type_1') {
+                        CrmCustomersModel.CrmMachinesSchema.update(
+                           { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
+                           {$set: { Current_Status: 'Down' } }
+                        ).exec();
+                     }
+                  }
+                  if (ReceivingData.Status.Type === 'Type_6') {
+                     CrmCustomersModel.CrmTicketsSchema.update(
+                        { _id : mongoose.Types.ObjectId(ReceivingData.TicketId)  },
+                        { $set: { TicketCloseDate : ReceivingData.StartDate, TicketCloseTime: ReceivingData.StartTime } }
+                     ).exec();
+                     CrmCustomersModel.CrmMachinesSchema.update(
+                        { _id : mongoose.Types.ObjectId(ReceivingData.Machine)  },
+                        { $set: { Open_Ticket : false } }
+                     ).exec();
+                  }
+                  CrmCustomersModel.CrmTicketActivitiesSchema
+                     .findOne({'_id': result._id}, {}, {})
+                     .populate({ path: 'Customer', select: ['CompanyName'] })
+                     .populate({ path: 'Machine', select: ['MachineName'] })
+                     .populate({ path: 'Ticket', select: ['TicketId'] })
+                     .populate({ path: 'Contact', select: ['Name'] })
+                     .populate({ path: 'Employee', select: ['EmployeeName'] })
+                     .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+                     .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+                     .exec(function(err, result) {
+                     if(err) {
+                        ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Activity Data Find Query Error', 'Crm_Customers.controller.js', err);
+                        res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Activity Data!."});
+                     } else {
+                        var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+                        ReturnData = ReturnData.toString();
+                        res.status(200).send({Status: true, Response: ReturnData });
+                     }
+                  });
                }
             });
+         } else {
+            res.status(200).send({Status: false, Message: "Activity Date Time Affect the Another Ticket"});
+         }
+      }) 
+   }
+};
+exports.CustomerBased_Employees = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
+         res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+   } else {
+      HrModel.EmployeeSchema
+         .find({'If_Deleted': false , 'Customers': mongoose.Types.ObjectId(ReceivingData.Customer_Id) }, { EmployeeName: 1}, {sort: { updatedAt: -1 }})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Employee List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
          }
       });
    }
@@ -1823,6 +1976,7 @@ exports.CrmTicketActivities_List = function(req, res) {
          .populate({ path: 'Machine', select: ['MachineName'] })
          .populate({ path: 'Ticket', select: ['TicketId'] })
          .populate({ path: 'Contact', select: ['Name'] })
+         .populate({ path: 'Employee', select: ['EmployeeName'] })
          .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
          .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
          .exec(function(err, result) {
@@ -1859,7 +2013,7 @@ exports.CrmCustomerBased_ActivitiesList = function(req, res) {
             res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customer Machines List!."});
          } else {
             result = result.map(obj => obj._id);
-            CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema
+            CrmCustomersModel.CrmMachinesActivitiesSchema
                .find({'If_Deleted': false, 'If_Hidden': false, Machine: {$in: result } }, {}, {sort: { Activity_Date: -1 }, limit: 10})
                .populate({ path: 'Machine', select: ['MachineName'] })
                .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
@@ -1918,14 +2072,16 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                   return Promise.all([
                      CrmCustomersModel.CrmMachinesActivitiesSchema
                      .find({ 'Machine': SingleMachine._id, 
-                              $and: [{  Activity_Date : { $lt: ToDate } },
+                              'If_Deleted': false,
+                              $and: [{ Activity_Date : { $lt: ToDate } },
                                      { Activity_Date: { $gte: FromDate } } ]
                            }, { Activity: 1, Activity_Status: 1, Activity_Date: 1, Description: 1, createdAt: 1},  {sort: { Activity_Date: 1 }} 
                         ).exec(),
                      CrmCustomersModel.CrmMachinesActivitiesSchema.find({'Machine': SingleMachine._id},{}, {sort: { Activity_Date: -1 }, limit: 1}).exec()
-                     ]).then( Data => {
+                     ]).then( Data => {                        
                         var MachineTicketsData = Data[0];
                         var Last_Activity = Data[1];
+
                         FromDate = new Date(FromDate.setSeconds(FromDate.getSeconds() + 2));
                         
                            if (MachineTicketsData.length === 0) {
@@ -1945,6 +2101,7 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                                  return obj;
                               });
                               
+                              
                               var ResArray = [];
                               // First Activity Calculate Start
                                  const diff_F = Math.abs( new Date(MachineTicketsData[0].Activity_Date) -  new Date(FromDate));
@@ -1954,7 +2111,7 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                                  if (mm_F === 60) { hh_F = hh_F + 1; mm_F = 0; }
                                  const Hour_F =  hh_F +'hr'+ (hh_F < 2 ? " " : "s ") +("0" + mm_F).slice(-2)+'min';
                                  if (Percentage_F > 0) {
-                                    if (MachineTicketsData[0].Activity === 'Waiting' && MachineTicketsData[0].Activity_Status !== 'Close') {
+                                    if (MachineTicketsData[0].Activity === 'Waiting' && MachineTicketsData[0].Activity_Status === 'Open') {
                                        ResArray.push({ Status: 'Down', Percentage: Percentage_F, Description: MachineTicketsData[0].Description, Hours: Hour_F, MilleSeconds: diff_F, From: FromDate, To: MachineTicketsData[0].Activity_Date });
                                     }else {
                                        ResArray.push({ Status: MachineTicketsData[0].Activity, Percentage: Percentage_F, Description: MachineTicketsData[0].Description, Hours: Hour_F, MilleSeconds: diff_F, From: FromDate, To: MachineTicketsData[0].Activity_Date });
@@ -1984,7 +2141,7 @@ exports.CrmCustomerBasedMachine_ChartData = function(req, res) {
                                     if (mm_Mm === 60) { hh_Mm = hh_Mm + 1; mm_Mm = 0; }
                                     const Hour_Mm =  hh_Mm + 'hr' + (hh_Mm < 2 ? " " : "s ") + ("0" + mm_Mm).slice(-2) + 'min';
                                     if (Percentage_Mm > 0) {
-                                       ResArray.push({ Status: MachineTicketsData[i].Activity, Percentage: Percentage_Mm, Description: MachineTicketsData[i].Description, Hours: Hour_Mm, MilleSeconds: diff_Mm, From: MachineTicketsData[i - 1].Activity_Date, To: MachineTicketsData[i].Activity_Date });
+                                       ResArray.push({ Status: MachineTicketsData[i - 1].Activity, Percentage: Percentage_Mm, Description: MachineTicketsData[i - 1].Description, Hours: Hour_Mm, MilleSeconds: diff_Mm, From: MachineTicketsData[i - 1].Activity_Date, To: MachineTicketsData[i].Activity_Date });
                                     }
                                  }
                               });
@@ -2111,14 +2268,14 @@ exports.CrmSingleMachine_ChartData = function(req, res) {
             
             const Temp_FromDate = new Date(new Date(ChangeDate.setDate(ChangeDate.getDate() - 1)).setHours(23, 59, 58));
             return Promise.all([
-               CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema
+               CrmCustomersModel.CrmMachinesActivitiesSchema
                .find({ 'Machine': ReceivingData.Machine_Id, 
                         $and: [{  Activity_Date : { $lt: ToDate } },
                                { Activity_Date: { $gte: Temp_FromDate } } ]
                      }, { Activity: 1, Activity_Status: 1, Description: 1, Activity_Date: 1, createdAt: 1},  {sort: { Activity_Date: 1 }} 
                   ).exec(),
-               CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema.find({'Machine': ReceivingData.Machine_Id},{}, {sort: { Activity_Date: -1 }, limit: 1}).exec(),
-               CrmCustomersModel.CrmMachinesIdleAndTicketActivitySchema.find({'Machine': ReceivingData.Machine_Id},{}, {sort: { Activity_Date: 1 }, limit: 1}).exec(),
+               CrmCustomersModel.CrmMachinesActivitiesSchema.find({'Machine': ReceivingData.Machine_Id},{}, {sort: { Activity_Date: -1 }, limit: 1}).exec(),
+               CrmCustomersModel.CrmMachinesActivitiesSchema.find({'Machine': ReceivingData.Machine_Id},{}, {sort: { Activity_Date: 1 }, limit: 1}).exec(),
                CrmCustomersModel.CrmMachinesSchema.findOne({'_id': ReceivingData.Machine_Id},{}, {}).exec()
                ]).then( Data => {
                   var MachineTicketsData = Data[0];
@@ -2302,13 +2459,14 @@ exports.CrmCustomerBasedMachinesMonthly_ChartData = function(req, res) {
                      CrmCustomersModel.CrmMachinesActivitiesSchema
                      .find({ 'Machine': SingleMachine._id,
                               $and: [ { Activity_Date : { $lt: ToDate } },
-                                     { Activity_Date: { $gte: Temp_FromDate } } ]
+                                     { Activity_Date: { $gte: Temp_FromDate } } ],
+                              'If_Deleted': false
                            }, { Activity: 1, Activity_Status: 1, Activity_Date: 1, createdAt: 1},  {sort: { Activity_Date: 1 }} 
                         ).exec(),
                         CrmCustomersModel.CrmMachinesActivitiesSchema.find({'Machine': SingleMachine._id},{}, {sort: { Activity_Date: -1 }, limit: 1}).exec(),
                      ]).then( Data => {
                         var MachineTicketsData = Data[0];
-
+                        
                         MachineTicketsData = MachineTicketsData.map(obj => {
                            if (obj.Activity_Status === 'Close') {
                               obj.Activity_Date = new Date(new Date(obj.Activity_Date).setSeconds(new Date(obj.Activity_Date).getSeconds() + 2));
@@ -2322,7 +2480,6 @@ exports.CrmCustomerBasedMachinesMonthly_ChartData = function(req, res) {
                         if (SingleMachine.DateOfPlaced > FromDate) {
                            Running_Ms = Math.abs( new Date(ToDate) -  new Date(SingleMachine.DateOfPlaced));
                         }
-                        
                         
                         var Last_Activity = Data[1];
                         var Types = ['Up', 'Idle','Waiting', 'Down'];

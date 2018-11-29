@@ -58,7 +58,7 @@ export class MainPayrollMasterHrComponent implements OnInit {
          const initialState = {
             Type: 'Create'
          };
-         this.bsModalRef = this.modalService.show(ModelPayrollMasterComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'modal-lg' }));
+         this.bsModalRef = this.modalService.show(ModelPayrollMasterComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'modal-lg max-width-80' }));
          this.bsModalRef.content.onClose.subscribe(response => {
             if (response.Status) {
                this._List.splice(0, 0, response.Response);
@@ -71,7 +71,7 @@ export class MainPayrollMasterHrComponent implements OnInit {
             Type: 'Edit',
             Data: this._List[_index]
          };
-         this.bsModalRef = this.modalService.show(ModelPayrollMasterComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'modal-lg' }));
+         this.bsModalRef = this.modalService.show(ModelPayrollMasterComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'modal-lg max-width-80' }));
          this.bsModalRef.content.onClose.subscribe(response => {
             if (response.Status) {
                this._List[_index] = response.Response;
@@ -84,6 +84,6 @@ export class MainPayrollMasterHrComponent implements OnInit {
             Type: 'View',
             Data: this._List[_index]
          };
-         this.bsModalRef = this.modalService.show(ModelPayrollMasterComponent, Object.assign({initialState}, { class: '' }));
+         this.bsModalRef = this.modalService.show(ModelPayrollMasterComponent, Object.assign({initialState}, { class: 'modal-lg max-width-80' }));
       }
 }

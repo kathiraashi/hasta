@@ -190,7 +190,7 @@
                <th style="width: 50px;"> S.no </th>
                <th style="width: 150px;"> Contact Person </th>
                <th style="width: 150px;"> Employee Name </th>
-               <th style="width: 160px;"> Activity Start </th>
+               <th style="width: 200px;"> Activity Start </th>
                <!-- <th style="width: 160px;"> Activity End </th> -->
                <th style="width: 170px;"> Last Modified </th>
                <th> Status </th>
@@ -206,7 +206,7 @@
                       <span class="Style_1"> {{Activity['Contact']?.Name}} </span>
                    </td>
                   <td>
-                     <span class="Style_1"> {{Activity['Employee']}} </span>
+                     <span class="Style_1"> {{Activity['Employee']?.EmployeeName}} </span>
                   </td>
                   <td>
                      <span class="Style_1"> {{Activity['StartDate'] | date:'medium' }}</span>
