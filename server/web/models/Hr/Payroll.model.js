@@ -19,7 +19,7 @@ var Employee_PayrollMasterSchema = mongoose.Schema({
    Food_Allowance_Type: { type : String , required : true},
    Other_Allowance: { type : String , required : true},
    Other_Allowance_Type: { type : String , required : true},
-      // Detection
+   // Detection
    Professional_Tax: { type : String , required : true},
    Professional_Tax_Type: { type : String , required : true},
    Provident_Fund: { type : String , required : true},
@@ -30,7 +30,6 @@ var Employee_PayrollMasterSchema = mongoose.Schema({
    Medical_Insurance_Type: { type : String , required : true},
    TDS: { type : String , required : true},
    TDS_Type: { type : String , required : true},
-
 
    Created_By: { type : Schema.Types.ObjectId , ref : 'User_Management'},
    Last_Modified_By: { type : Schema.Types.ObjectId , ref : 'User_Management'},

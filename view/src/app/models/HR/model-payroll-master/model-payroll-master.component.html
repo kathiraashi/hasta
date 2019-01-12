@@ -25,7 +25,7 @@
                   <label> No.of Paid Leaves per Year:</label>
                   <input type="number" formControlName="PaidLeaves_inYear">
                   <p class="error" *ngIf="Form.controls['PaidLeaves_inYear'].errors && !Form.controls['PaidLeaves_inYear'].pristine">
-                        <span *ngIf="Form.controls['PaidLeaves_inYear'].errors.required">No.of Paid Leaves per Year is required</span>  
+                     <span *ngIf="Form.controls['PaidLeaves_inYear'].errors.required">No.of Paid Leaves per Year is required</span>  
                   </p>
                </div>
                <div class="col-sm-4 Form_Input" >
@@ -38,102 +38,126 @@
                <div class="col-sm-12">
                   <h5 class="GroupHeader"> Pay Details </h5>
                   <div class="row" style="margin: 0px 0px 0px 30px;">
-                        <div class="col-sm-4 Form_Input">
-                              <label> Monthly Salary :</label>
-                              <input type="number" formControlName="Monthly_Salary">
-                           </div>
                      <div class="col-sm-4 Form_Input">
-                        <label> Basic Pay :</label>
-                        <input type="number" formControlName="Basic_Pay">
+                        <label> Basic Pay : <small>(min Rs.1000 )</small></label>
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="Basic_Pay">
                      </div>
-                     <div class="col-sm-4 Form_Input Dual_Input">
+                     <div class="col-sm-4 Form_Input Dual_Input" *ngIf="Form.controls['Basic_Pay'].status === 'VALID'">
                         <label> HRA : </label>
-                        <input type="number" formControlName="HRA">
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="HRA">
                         <ng-select class="NgSelect ClearHide" 
-                              [items]="_Calc_Type"
-                              formControlName="HRA_Type">
+                                    [items]="_Calc_Type"
+                                    (change)="OnChangeCalculation()"
+                                    formControlName="HRA_Type">
                         </ng-select>
                      </div>
-                     <div class="col-sm-4 Form_Input Dual_Input">
+                     <div class="col-sm-4 Form_Input Dual_Input" *ngIf="Form.controls['Basic_Pay'].status === 'VALID'">
                         <label> Conveyance :</label>
-                        <input type="number" formControlName="Conveyance">
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="Conveyance">
                         <ng-select class="NgSelect ClearHide" 
-                              [items]="_Calc_Type"
-                              formControlName="Conveyance_Type">
+                                    [items]="_Calc_Type"
+                                    (change)="OnChangeCalculation()"
+                                    formControlName="Conveyance_Type">
                         </ng-select>
                      </div>
-                     <div class="col-sm-4 Form_Input Dual_Input">
+                     <div class="col-sm-4 Form_Input Dual_Input" *ngIf="Form.controls['Basic_Pay'].status === 'VALID'">
                         <label> Medical Reimbursement :</label>
-                        <input type="number" formControlName="Medical_Reimbursement">
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="Medical_Reimbursement">
                         <ng-select class="NgSelect ClearHide" 
-                              [items]="_Calc_Type"
-                              formControlName="Medical_Reimbursement_Type">
+                                    [items]="_Calc_Type"
+                                    (change)="OnChangeCalculation()"
+                                    formControlName="Medical_Reimbursement_Type">
                         </ng-select>
                      </div>
-                     <div class="col-sm-4 Form_Input Dual_Input">
+                     <div class="col-sm-4 Form_Input Dual_Input" *ngIf="Form.controls['Basic_Pay'].status === 'VALID'">
                         <label> Food Allowance :</label>
-                        <input type="number" formControlName="Food_Allowance">
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="Food_Allowance">
                         <ng-select class="NgSelect ClearHide" 
-                              [items]="_Calc_Type"
-                              formControlName="Food_Allowance_Type">
+                                    [items]="_Calc_Type"
+                                    (change)="OnChangeCalculation()"
+                                    formControlName="Food_Allowance_Type">
                         </ng-select>
                      </div>
-                     <div class="col-sm-4 Form_Input Dual_Input">
+                     <div class="col-sm-4 Form_Input Dual_Input" *ngIf="Form.controls['Basic_Pay'].status === 'VALID'">
                         <label> Other Allowance :</label>
-                        <input type="number" formControlName="Other_Allowance">
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="Other_Allowance">
                         <ng-select class="NgSelect ClearHide" 
-                              [items]="_Calc_Type"
-                              formControlName="Other_Allowance_Type">
+                                    [items]="_Calc_Type"
+                                    (change)="OnChangeCalculation()"
+                                    formControlName="Other_Allowance_Type">
                         </ng-select>
                      </div>
+                     <div class="col-sm-4 Form_Input" *ngIf="Form.controls['Basic_Pay'].status === 'VALID'">
+                        <label> Total Payable :</label>
+                        <input type="number" formControlName="Total_Payable">
+                     </div> 
                   </div>
                </div>
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="Form.controls['Basic_Pay'].status === 'VALID'">
                <div class="col-sm-12">
                   <h5 class="GroupHeader"> Detection Details </h5>
                   <div class="row" style="margin: 0px 0px 0px 30px;">
                      <div class="col-sm-4 Form_Input Dual_Input">
                         <label> Professional Tax :</label>
-                        <input type="number" formControlName="Professional_Tax">
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="Professional_Tax">
                         <ng-select class="NgSelect ClearHide" 
-                              [items]="_Calc_Type"
-                              formControlName="Professional_Tax_Type">
+                                    [items]="_Calc_Type"
+                                    (change)="OnChangeCalculation()"
+                                    formControlName="Professional_Tax_Type">
                         </ng-select>
                      </div>
                      <div class="col-sm-4 Form_Input Dual_Input">
                         <label> Provident Fund :</label>
-                        <input type="number" formControlName="Provident_Fund">
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="Provident_Fund">
                         <ng-select class="NgSelect ClearHide" 
-                              [items]="_Calc_Type"
-                              formControlName="Provident_Fund_Type">
+                                    [items]="_Calc_Type"
+                                    (change)="OnChangeCalculation()"
+                                    formControlName="Provident_Fund_Type">
                         </ng-select>
                      </div>
                      <div class="col-sm-4 Form_Input Dual_Input">
                         <label> Employee State Insurance :</label>
-                        <input type="number" formControlName="Employee_State_Insurance">
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="Employee_State_Insurance">
                         <ng-select class="NgSelect ClearHide" 
-                              [items]="_Calc_Type"
-                              formControlName="Employee_State_Insurance_Type">
+                                    [items]="_Calc_Type"
+                                    (change)="OnChangeCalculation()"
+                                    formControlName="Employee_State_Insurance_Type">
                         </ng-select>
                      </div>
                      <div class="col-sm-4 Form_Input Dual_Input">
                         <label> Medical Insurance :</label>
-                        <input type="number" formControlName="Medical_Insurance">
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="Medical_Insurance">
                         <ng-select class="NgSelect ClearHide" 
-                              [items]="_Calc_Type"
-                              formControlName="Medical_Insurance_Type">
+                                    [items]="_Calc_Type"
+                                    (change)="OnChangeCalculation()"
+                                    formControlName="Medical_Insurance_Type">
                         </ng-select>
                      </div>
                      <div class="col-sm-4 Form_Input Dual_Input">
                         <label> TDS :</label>
-                        <input type="number" formControlName="TDS">
+                        <input type="number" (input)="OnChangeCalculation()" formControlName="TDS">
                         <ng-select class="NgSelect ClearHide" 
-                              [items]="_Calc_Type"
-                              formControlName="TDS_Type">
+                                    [items]="_Calc_Type"
+                                    (change)="OnChangeCalculation()"
+                                    formControlName="TDS_Type">
                         </ng-select>
+                     </div> 
+                     <div class="col-sm-4 Form_Input">
+                        <label> Total Detectable :</label>
+                        <input type="number" formControlName="Total_Detectable">
                      </div>                  
+                  </div>
+               </div>
+            </div>
+            <div class="row" *ngIf="Form.controls['Basic_Pay'].status === 'VALID'">
+               <div class="col-sm-12">
+                  <h5 class="GroupHeader"> Monthly Salary </h5>
+                  <div class="row" style="margin: 0px 0px 0px 30px;">
+                     <div class="col-sm-4 Form_Input">
+                        <input type="number" formControlName="Monthly_Salary">
+                     </div>
                   </div>
                </div>
             </div>
@@ -155,41 +179,167 @@
       </div>
       <div class="Model_Body">
          <div class="Model_Body">
-            <div class="view_item">
-               <div class="Static">Employee </div>
-               <div class="dots"> : </div>
-               <div class="Data"> {{Data.Employee?.EmployeeName}}</div>
+            <div class="row">
+               <div class="col-sm-8">
+                  <div class="view_item">
+                     <div class="Static">Employee </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{Data.Employee?.EmployeeName}}</div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static">No.of Paid Leaves per Year </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{Data.PaidLeaves_inYear}}</div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static">Maximum Leave Allowed per Month </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{Data.PaidLeaves_perMonth}}</div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static">Monthly Salary </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">Rs {{Data.Monthly_Salary}}</div>
+                  </div>
+
+                  <div class="view_item">
+                     <div class="Static">Created By </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{Data.Created_By.Name}}</div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static">Last Modified By </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{Data.Last_Modified_By.Name}}</div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Created Date </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{Data.createdAt | date:'medium'}}</div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static">Last Modified Date  </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{Data.updatedAt | date:'medium'}}</div>
+                  </div>
+               </div>
             </div>
-            <div class="view_item">
-               <div class="Static">No.of Paid Leaves per Year </div>
-               <div class="dots"> : </div>
-               <div class="Data"> {{Data.PaidLeaves_inYear}}</div>
+
+
+
+            <div class="row">
+               <div class="col-sm-6">
+                  <h5 class="GroupHeader"> Payable Details </h5>
+                  <div class="view_item">
+                     <div class="Static"> Basic Pay </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">Rs {{Data.Basic_Pay}}</div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> HRA </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.HRA_Type === 'Rs'"> Rs </span>
+                        {{Data.HRA}}
+                        <span *ngIf="Data.HRA_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Conveyance </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.Conveyance_Type === 'Rs'"> Rs </span>
+                        {{Data.Conveyance}}
+                        <span *ngIf="Data.Conveyance_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Medical Reimbursement </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.Medical_Reimbursement_Type === 'Rs'"> Rs </span>
+                        {{Data.Medical_Reimbursement}}
+                        <span *ngIf="Data.Medical_Reimbursement_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Food Allowance </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.Food_Allowance_Type === 'Rs'"> Rs </span>
+                        {{Data.Food_Allowance}}
+                        <span *ngIf="Data.Food_Allowance_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Other Allowance </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.Other_Allowance_Type === 'Rs'"> Rs </span>
+                        {{Data.Other_Allowance}}
+                        <span *ngIf="Data.Other_Allowance_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Other Allowance </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.Other_Allowance_Type === 'Rs'"> Rs </span>
+                        {{Data.Other_Allowance}}
+                        <span *ngIf="Data.Other_Allowance_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <h5 class="GroupHeader"> Detection Details </h5>
+                  <div class="view_item">
+                     <div class="Static"> Professional Tax </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.Professional_Tax_Type === 'Rs'"> Rs </span>
+                        {{Data.Professional_Tax}}
+                        <span *ngIf="Data.Professional_Tax_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Provident Fund </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.Provident_Fund_Type === 'Rs'"> Rs </span>
+                        {{Data.Provident_Fund}}
+                        <span *ngIf="Data.Provident_Fund_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Employee State Insurance </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.Employee_State_Insurance_Type === 'Rs'"> Rs </span>
+                        {{Data.Employee_State_Insurance}}
+                        <span *ngIf="Data.Employee_State_Insurance_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Medical Insurance </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.Medical_Insurance_Type === 'Rs'"> Rs </span>
+                        {{Data.Medical_Insurance}}
+                        <span *ngIf="Data.Medical_Insurance_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> TDS </div>
+                     <div class="dots"> : </div>
+                     <div class="Data">
+                        <span *ngIf="Data.TDS_Type === 'Rs'"> Rs </span>
+                        {{Data.TDS}}
+                        <span *ngIf="Data.TDS_Type !== 'Rs'"> % </span>
+                     </div>
+                  </div>
+               </div>
             </div>
-            <div class="view_item">
-               <div class="Static">Maximum Leave Allowed per Month </div>
-               <div class="dots"> : </div>
-               <div class="Data"> {{Data.PaidLeaves_perMonth}}</div>
-            </div>
-            <div class="view_item">
-               <div class="Static">Created By </div>
-               <div class="dots"> : </div>
-               <div class="Data"> {{Data.Created_By.Name}}</div>
-            </div>
-            <div class="view_item">
-               <div class="Static">Last Modified By </div>
-               <div class="dots"> : </div>
-               <div class="Data"> {{Data.Last_Modified_By.Name}}</div>
-            </div>
-            <div class="view_item">
-               <div class="Static"> Created Date </div>
-               <div class="dots"> : </div>
-               <div class="Data"> {{Data.createdAt | date:'medium'}}</div>
-            </div>
-            <div class="view_item">
-               <div class="Static">Last Modified Date  </div>
-               <div class="dots"> : </div>
-               <div class="Data"> {{Data.updatedAt | date:'medium'}}</div>
-            </div>
+
          </div>
       </div>
    </div>

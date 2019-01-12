@@ -81,6 +81,8 @@ exports.Employee_Create = function(req, res) {
          res.status(400).send({Status: false, Message: "Employee Name can not be empty" });
       } else if(!ReceivingData.EmployeeCode || ReceivingData.EmployeeCode === '' ) {
          res.status(400).send({Status: false, Message: "Employee Code can not be empty" });
+      } else if(!ReceivingData.JoiningDate || ReceivingData.JoiningDate === '' ) {
+         res.status(400).send({Status: false, Message: "Date of joining can not be empty" });
       } else if(!ReceivingData.MaritalStatus || ReceivingData.MaritalStatus === '' ) {
          res.status(400).send({Status: false, Message: "Marital Status can not be empty" });
       } else if(!ReceivingData.Personal_MobileNo || ReceivingData.Personal_MobileNo === '' ) {
@@ -234,6 +236,8 @@ exports.Employee_Update = function(req, res) {
       res.status(400).send({Status: false, Message: "Employee Name can not be empty" });
    } else if(!ReceivingData.EmployeeCode || ReceivingData.EmployeeCode === '' ) {
       res.status(400).send({Status: false, Message: "Employee Code can not be empty" });
+   } else if(!ReceivingData.JoiningDate || ReceivingData.JoiningDate === '' ) {
+      res.status(400).send({Status: false, Message: "Date of joining can not be empty" });
    }else if(!ReceivingData.MobileNo || ReceivingData.MobileNo === '' ) {
       res.status(400).send({Status: false, Message: "Mobile Number can not be empty" });
    } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {

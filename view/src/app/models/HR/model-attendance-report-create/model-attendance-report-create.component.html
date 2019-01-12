@@ -1,39 +1,41 @@
-<div class="Modal_Content" *ngIf="Type && Type === 'Create'">
+<div class="Modal_Content">
    <div class="Modal_Header">
-      <p>Attendance Report</p>
-      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+      <p> Attendance Report Generate </p>
+      <span *ngIf="!Uploading" data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
    </div>
    <div class="Model_Body">
       <div class="row">
          <div class="col-sm-6 Form_Select">
-            <label>Salary Method:</label>
-            <select>
-               <option disabled> Salary Method</option>
-               <option> Hourly</option>
-               <option>Monthly </option>
-            </select>
-         </div>
-         <div class="col-sm-6 Form_Select">
-            <label>Category:</label>
-            <select>
-               <option disabled> Category</option>
-               <option> Category</option>
-               <option>Category </option>
-               <option> Category </option>
-            </select>
+            <label> Employee :</label>
+            <ng-select class="NgSelect ValueBold" 
+                     [items]="Employees" 
+                     bindLabel="EmployeeName"
+                     bindValue="_id"
+                     [(ngModel)]="Employee"
+                     [searchable]="true"
+                     (change)="ValidateDatas()">
+            </ng-select>
          </div>
          <div class="col-sm-6 Form_Input">
-            <label>From Date:</label>
-            <input type="text">
+            <label>Month And Year : </label>
+            <input type="text" [max]="maxDate" [(ngModel)]="MonthFor" [matDatepicker]="Datepicker" (click)="Datepicker.open()">
+            <mat-datepicker #Datepicker panelClass="DisableDate" startView="year" (monthSelected)="chosenMonthHandler($event, Datepicker); MonthChange()"></mat-datepicker>
          </div>
          <div class="col-sm-6 Form_Input">
-            <label>To Date:</label>
-            <input type="text">
+            <label>Date From : </label>
+            <input type="text" value="{{From | date: 'dd/MM/yyyy' }}" disabled>
+         </div>
+         <div class="col-sm-6 Form_Input">
+            <label>Date To : </label>
+            <input type="text" value="{{To | date: 'dd/MM/yyyy' }}" disabled>
          </div>
       </div>
-      <div class="Model_Footer">
-         <button mat-raised-button color="primary"> Submit </button>
-      </div>
+   </div>
+   <div class="Model_Footer">
+      <button type="submit" [disabled]="!Valid || Uploading" (click)="Submit()" mat-raised-button color="primary">
+         <span *ngIf="!Uploading">Submit</span>
+         <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+      </button>
    </div>
 </div>
  

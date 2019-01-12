@@ -22,13 +22,13 @@ export class AttendanceReportListComponent implements OnInit {
       const initialState = {
       Type: 'Create'
       };
-      this.bsModalRef = this.modalService.show(ModelAttendanceReportCreateComponent, Object.assign({initialState}, { class: 'modal-lg' }));
+      this.bsModalRef = this.modalService.show(ModelAttendanceReportCreateComponent, Object.assign({initialState}, {ignoreBackdropClick: true, class: 'modal-lg' }));
    }
    DeleteAttendanceReport() {
       const initialState = {
       Text: 'Attendance report'
       };
-      this.bsModalRef = this.modalService.show(DeleteConfirmationComponent, Object.assign({initialState}, { class: 'modal-sm' }));
+      this.bsModalRef = this.modalService.show(DeleteConfirmationComponent, Object.assign({initialState}, {ignoreBackdropClick: true, class: 'modal-sm' }));
    }
 
 }

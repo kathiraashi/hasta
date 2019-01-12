@@ -1,6 +1,8 @@
 var CryptoJS = require("crypto-js");
 var HrAttendanceModel = require('./../../models/Hr/Attendance.model.js');
+var HrmsLeavesModel = require('./../../models/Hrms/Leaves.model.js');
 var HrEmployeeModel = require('./../../models/Hr/Employee.model.js');
+var HrmsSettingsModel = require('./../../models/settings/Hr_Settings.model.js');
 var ErrorManagement = require('./../../../handling/ErrorHandling.js');
 var mongoose = require('mongoose');
 
@@ -27,7 +29,37 @@ exports.AttendanceDate_AsyncValidate = function(req, res) {
             if (result !== null) {
                res.status(200).send({Status: true, Available: false });
             } else {
-               res.status(200).send({Status: true, Available: true });
+               HrmsLeavesModel.LeavesSchema.findOne(
+                  { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),
+                     $and: [  { From_Date : { $lte: new Date(ReceivingData.Date) } },
+                              { To_Date: { $gte: new Date(ReceivingData.Date) } } ,
+                              { Current_Status: {$ne: 'Rejected'} }],
+                     'If_Deleted': false 
+                  }, {}, {}
+               ).exec(function(err_1, result_1) {
+                  if(err_1) {
+                     ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee Attendance Date Validate Query Error', 'Attendance.controller.js', err_1);
+                     res.status(417).send({status: false, Message: "Some error occurred while Validate Employee Attendance Date !."});
+                  } else {
+                     if (result_1 !== null) {
+                        res.status(200).send({Status: true, Available: false });
+                     } else {
+                        HrmsSettingsModel.HolidaySchema
+                        .findOne( {'Dates' : new Date(ReceivingData.Date), 'If_Deleted': false }, {}, {}, function(err_2, result_2) {
+                           if(err_2) {
+                              ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee Attendance Date Validate Query Error', 'Attendance.controller.js', err_2);
+                              res.status(417).send({status: false, Message: "Some error occurred while Validate Employee Attendance Date !."});
+                           } else {
+                              if (result_2 !== null) {
+                                 res.status(200).send({Status: true, Available: false });
+                              } else {
+                                 res.status(200).send({Status: true, Available: true });
+                              }
+                           }
+                        });
+                     }
+                  }
+               })
             }
          }
       });
@@ -107,6 +139,7 @@ exports.Attendance_Create = function(req, res) {
             HrAttendanceModel.Employee_AttendanceSchema
                .findOne({'_id': result._id })
                .populate( { path: 'Created_By', select: 'Name'})
+               .populate( { path: 'Employee', select: 'EmployeeName'})
                .exec(function(err_1, result_1) {
                if(err_1) {
                   ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance Find Query Error', 'Attendance.controller.js', err_1);
@@ -169,5 +202,189 @@ exports.Complete_Attendance_Log = function(req, res) {
             res.status(200).send({Status: true, Response: ReturnData });
          }
       });
+   }
+};
+
+
+
+// -------------------------------------------------- Attendance Report Validate -----------------------------------------------
+exports.Attendance_Report_Validate = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Employee || ReceivingData.Employee === '' ) {
+      res.status(400).send({Status: false, Message: "Employee can not be empty" });
+   } else if(!ReceivingData.Month || ReceivingData.Month === '' ) {
+      res.status(400).send({Status: false, Message: "Month can not be empty" });
+   } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else {
+      ReceivingData.Month = new Date(ReceivingData.Month);
+      HrAttendanceModel.AttendanceReportSchema
+      .findOne( { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee), 'MonthYear' : ReceivingData.Month, 'If_Deleted': false }, {}, {}, function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee Attendance Date Validate Query Error', 'Attendance.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Validate Employee Attendance Date !."});
+         } else {
+            if ( result !== null) {
+               res.status(200).send({Status: true, Available: false });
+            } else {
+               res.status(200).send({Status: true, Available: true });
+            }
+         }
+      });
+   }
+};
+
+
+exports.Attendance_Report_Create = function(req, res) {
+   var CryptoBytes = CryptoJS.AES.decrypt( req.body.Info , 'SecretKeyIn@123' );
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+   
+   if(!ReceivingData.Employee || ReceivingData.Employee === '' ) {
+      res.status(400).send({Status: false, Message: "Employee Details can not be empty" });
+   } else if (!ReceivingData.Month || ReceivingData.Month === ''  ) {
+      res.status(400).send({Status: false, Message: " Month can not be empty" });
+   } else if (!ReceivingData.From || ReceivingData.From === ''  ) {
+      res.status(400).send({Status: false, Message: " From Date can not be empty" });
+   } else if (!ReceivingData.To || ReceivingData.To === ''  ) {
+      res.status(400).send({Status: false, Message: " To Date can not be empty" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: " User Details can not be empty" });
+   }else {
+
+      var From = new Date(ReceivingData.From);
+      var To = new Date(ReceivingData.To);
+
+      var DatArr = [];
+      while (From <= To) {
+         DatArr.push(new Date(From));
+         From.setDate(From.getDate() + 1);
+      }
+
+      var Presents = 0;
+      var Absents = 0;
+      var WeekOffs = 0;
+      var Leaves = 0;
+      var Holidays = 0;
+
+      HrEmployeeModel.EmployeeSchema.findOne({_id: mongoose.Types.ObjectId(ReceivingData.Employee) }, {}, {})
+         .exec( function(err, result) {
+            if(err) {
+               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR Attendance Creation Query Error', 'Attendance.controller.js');
+               res.status(417).send({Status: false, Message: "Some error occurred while creating the Attendance!."});
+            } else {
+               Promise.all(
+                  DatArr.map(obj => DateDetailsFind(obj)),
+               ).then(response => {
+
+                  // var YearsFirstDay = new Date(result.DateOfJoining);
+                  // var YearsLastDay = new Date(YearsFirstDay.getFullYear() + 1, YearsFirstDay.getMonth(), YearsFirstDay.getDate());
+
+                  // var Current_Date_Status = new Date(From.getFullYear(), YearsFirstDay.getMonth(), YearsFirstDay.getDate())
+                  
+                  // if (Current_Date_Status.valueOf() >= From.valueOf()) {
+                     
+                  // }
+
+                  Promise.all([
+                     HrmsLeavesModel.LeavesSchema.find(
+                        { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),
+                           $and: [  { From_Date : { $gte: new Date(YearsFirstDay) } },
+                                    { To_Date: { $lt: new Date(From) } } ,
+                                    { Current_Status: {$ne: 'Draft'} }, 
+                                    { Current_Status: {$ne: 'Rejected'} },],
+                           'If_Deleted': false 
+                        }, {}, {sort: { createdAt: 1 }})
+                        .populate({path: 'Leave_Type', select:['Name', 'Leave_Type']}).exec(),
+                     HrmsLeavesModel.LeavesSchema.find(
+                        { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),
+                           $and: [  { From_Date : { $gte: new Date(From) } },
+                                    { To_Date: { $lte: new Date(To) } } ,
+                                    { Current_Status: {$ne: 'Draft'} }, 
+                                    { Current_Status: {$ne: 'Rejected'} },],
+                           'If_Deleted': false 
+                        }, {}, {sort: { createdAt: 1 }})
+                        .populate({path: 'Leave_Type', select:['Name', 'Leave_Type']}).exec()
+                  ]).then(response_1 => {
+                     var Leaves_Count = 0;
+                     response_1[0].map(obj => {
+                        const Count = Math.ceil((new Date(obj.To_Date) - new Date(obj.From_Date)) / 86400000) + 1;
+                        Leaves_Count = Leaves_Count + Count;
+                     })
+                  }).catch(catch_err => {
+                     console.log(catch_err);
+                  });
+                  res.status(200).send({Status: false, Available: true, response: response });
+               }).catch(catch_err => {
+                  console.log(catch_err);
+                  res.status(200).send({Status: false, Available: false, catch_err: catch_err });
+               });
+
+
+               function DateDetailsFind(Obj) {
+                  return new Promise( (resole, reject) => {
+                     Promise.all([
+                        HrAttendanceModel.Employee_AttendanceSchema.findOne(
+                           { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),
+                              'Attendance_Date' : new Date(Obj),
+                              'If_Deleted': false
+                           }, {}, {}).exec(),
+                        HrmsLeavesModel.LeavesSchema.findOne(
+                           { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),
+                              $and: [  { From_Date : { $lte: new Date(Obj) } },
+                                       { To_Date: { $gte: new Date(Obj) } } ,
+                                       { Current_Status: {$ne: 'Draft'} }, 
+                                       { Current_Status: {$ne: 'Rejected'} },],
+                              'If_Deleted': false 
+                           }, {}, {})
+                           .populate({path: 'Leave_Type', select:['Name', 'Leave_Type']})
+                           .exec(),
+                        HrmsSettingsModel.HolidaySchema.findOne(
+                           { 'Dates': new Date(Obj),
+                              'If_Deleted': false 
+                           }, {}, {}).exec()
+                     ]).then(response => {
+                        const ReturnData = { Date:  new Date(Obj),
+                                             If_Attendance: false, Attendance: '', Attendance_Id: null,
+                                             If_Leave: false, Leave_From: null, Leave_To: null, Leave_Status: '', Leave_Type: null, Leave_Id: null,
+                                             If_Holiday: false, Holiday_Id: null, 
+                                             If_Absent: false };
+                        if (response[0] !== null) {
+                           ReturnData.If_Attendance = true;
+                           ReturnData.Attendance = response[0]['Attendance'];
+                           ReturnData.Attendance_Id = response[0]['_id']; 
+                           if (response[0]['Attendance'] === 'Present') {
+                              Presents = Presents + 1;
+                           } else {
+                              WeekOffs = WeekOffs + 1;
+                           }
+                        }
+                        if (response[1] !== null) {
+                           ReturnData.If_Leave = true;
+                           ReturnData.Leave_From = response[1]['From_Date'];
+                           ReturnData.Leave_To = response[1]['To_Date'];
+                           ReturnData.Leave_Status = response[1]['Current_Status'];
+                           ReturnData.Leave_Type = response[1]['Leave_Type'];
+                           ReturnData.Leave_Id = response[1]['_id'];
+                           Leaves = Leaves + 1;
+                        }
+                        if (response[2] !== null) {
+                           ReturnData.If_Holiday = true;
+                           ReturnData.Holiday_Id = response[2]['_id'];
+                           Holidays = Holidays + 1;
+                        }
+                        if (response[0] === null && response[1] === null && response[2] === null) {
+                           ReturnData.If_Absent = true
+                           Absents = Absents + 1;
+                        }
+                        resole(ReturnData);
+                     }).catch( catch_err => {
+                        reject(catch_err)
+                     });
+                  })
+               }
+            }
+         })
    }
 };

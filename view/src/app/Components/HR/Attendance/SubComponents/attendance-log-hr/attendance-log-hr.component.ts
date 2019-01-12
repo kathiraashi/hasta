@@ -56,7 +56,7 @@ export class AttendanceLogHrComponent implements OnInit {
       const initialState = {
          Type: 'Create'
       };
-      this.bsModalRef = this.modalService.show(ModelAttendanceLogCreateComponent, Object.assign({initialState}, { class: 'modal-lg' }));
+      this.bsModalRef = this.modalService.show(ModelAttendanceLogCreateComponent, Object.assign({initialState}, {ignoreBackdropClick: true, class: 'modal-lg' }));
       this.bsModalRef.content.onClose.subscribe(response => {
          if (response.Status) {
             this._List.splice(0, 0, response.Response);

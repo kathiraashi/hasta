@@ -24,7 +24,7 @@
             </div>
             <div class="col-sm-6 Form_Input" [ngClass]="{'Form_Err': !Form.controls['Date'].pristine && Form.controls['Date'].errors, 'Form_Success': Form.controls['Date'].valid && !Form.controls['Date'].pristine }">
                <label> Date:</label>
-               <input matInput [max]="Today" formControlName="Date" [matDatepicker]="DatePicker1" (dateChange)="DateChange($event.target.value)" (click)="DatePicker1.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="From Date">
+               <input matInput [max]="Today" formControlName="Date" [matDatepicker]="DatePicker1" (dateChange)="DateChange($event.target.value)" (click)="DatePicker1.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date">
                <mat-datepicker #DatePicker1></mat-datepicker>
                <p class="error" *ngIf="Form.controls['Date'].errors && !Form.controls['Date'].pristine">
                   <span *ngIf="Form.controls['Date'].errors.required">Date is required</span>

@@ -52,6 +52,7 @@ exports.PayrollMaster_Create = function(req, res) {
       });
       Create_PayrollMaster.save(function(err, result) {
          if(err) {
+            console.log(err);
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR Payroll Master Creation Query Error', 'Payroll.controller.js');
             res.status(417).send({Status: false, Message: "Some error occurred while creating the HR Payroll Master !."});
          } else {

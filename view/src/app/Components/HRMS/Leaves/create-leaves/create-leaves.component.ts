@@ -6,12 +6,14 @@ import * as CryptoJS from 'crypto-js';
 
 import { LoginService } from './../../../../services/LoginService/login.service';
 import { HrService } from './../../../../services/Hr/hr.service';
+import { AttendanceService } from './../../../../services/Hr/Attendance/attendance.service';
 import { ToastrService } from './../../../../services/common-services/toastr-service/toastr.service';
 import { HrmsServiceService } from './../../../../services/Hrms/hrms-service.service';
 import { HrmsSettingsServiceService } from './../../../../services/settings/HrmsSettings/hrms-settings-service.service';
 
 import {NativeDateAdapter} from '@angular/material';
 import {DateAdapter} from '@angular/material/core';
+import { map } from 'rxjs/operators';
 export class MyDateAdapter extends NativeDateAdapter {
    format(date: Date, displayFormat: Object): string {
         const day = date.getDate();
@@ -33,9 +35,10 @@ export class CreateLeavesComponent implements OnInit {
    _EmployeeName: any[] =  [];
    _LeaveTypes: any[] =  [];
    Form: FormGroup;
-   User_Id;
-   User_Type;
-   IfEmployeeId;
+   User_Id: any;
+   User_Type: any;
+   IfEmployeeId: any;
+   Employee_Id: any;
    MinDate: Date = new Date();
 
 
@@ -46,6 +49,7 @@ export class CreateLeavesComponent implements OnInit {
                   public Service: HrmsServiceService,
                   public Login_Service: LoginService,
                   public SettingService: HrmsSettingsServiceService,
+                  public Attendance_Service: AttendanceService
                ) {
                   this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
                   this.User_Type = this.Login_Service.LoginUser_Info()['User_Type'];
@@ -90,24 +94,65 @@ export class CreateLeavesComponent implements OnInit {
                   });
                }
 
-  ngOnInit() {
-   this.Form = new FormGroup({
-      Employee: new FormControl({value: null }, Validators.required),
-      Leave_Type: new FormControl(null, Validators.required),
-      From_Date: new FormControl(this.Today, Validators.required),
-      To_Date: new FormControl(this.Today, Validators.required),
-      Purpose: new FormControl('', Validators.required),
-      User_Id: new FormControl(this.User_Id, Validators.required)
-   });
-  }
-  NotAllow() {
-   return false;
- }
+   ngOnInit() {
+      this.Form = new FormGroup({
+         Employee: new FormControl( null, Validators.required),
+         Leave_Type: new FormControl( {value: null, disabled: true }, Validators.required),
+         From_Date: new FormControl( {value: null, disabled: true }, {  validators: Validators.required,
+                                                                        asyncValidators: [ this.Date_AsyncValidate.bind(this) ], }),
+         To_Date: new FormControl( {value: null, disabled: true }, { validators: Validators.required,
+                                                                     asyncValidators: [ this.Date_AsyncValidate.bind(this) ], }),
+         Purpose: new FormControl( {value: '', disabled: true }, Validators.required),
+         User_Id: new FormControl(this.User_Id, Validators.required)
+      });
+   }
 
- FromDateChange(_date) {
-    this.Form.controls['To_Date'].setValue(_date);
-   this.MinDate = _date;
- }
+   EmployeeChange() {
+      const Employee = this.Form.controls['Employee'].value;
+      if (Employee !== null && Employee !== '' && Employee !== undefined) {
+         this.Employee_Id = Employee;
+         this.Form.controls['Leave_Type'].enable();
+         this.Form.controls['Leave_Type'].setValue(null);
+         this.Form.controls['From_Date'].enable();
+         this.Form.controls['From_Date'].setValue(null);
+         this.Form.controls['To_Date'].enable();
+         this.Form.controls['To_Date'].setValue(null);
+         this.Form.controls['Purpose'].enable();
+         this.Form.controls['Purpose'].setValue('');
+      } else {
+         this.Form.controls['Leave_Type'].disable();
+         this.Form.controls['Leave_Type'].setValue(null);
+         this.Form.controls['From_Date'].disable();
+         this.Form.controls['From_Date'].setValue(null);
+         this.Form.controls['To_Date'].disable();
+         this.Form.controls['To_Date'].setValue(null);
+         this.Form.controls['Purpose'].disable();
+         this.Form.controls['Purpose'].setValue('');
+      }
+   }
+
+   Date_AsyncValidate( control: AbstractControl ) {
+      const Data = { Date: control.value, User_Id: this.User_Id, Employee: this.Employee_Id };
+      let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
+      Info = Info.toString();
+      return this.Service.LeaveDate_AsyncValidate({'Info': Info}).pipe(map( response => {
+         const ReceivingData = JSON.parse(response['_body']);
+         if (response['status'] === 200 && ReceivingData['Status'] && ReceivingData['Available']) {
+            return null;
+         } else {
+            return { Date_NotAvailable: true };
+         }
+      }));
+   }
+
+   NotAllow() {
+      return false;
+   }
+
+   FromDateChange(_date) {
+      this.Form.controls['To_Date'].setValue(_date);
+      this.MinDate = _date;
+   }
 
   Submit() {
    if (this.Form.valid) {

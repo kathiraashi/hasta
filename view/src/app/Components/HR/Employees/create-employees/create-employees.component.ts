@@ -132,7 +132,7 @@ export class CreateEmployeesComponent implements OnInit {
                                              updateOn: 'blur' } ),
          Department: new FormControl(null),
          Designation: new FormControl(null),
-         DateOfJoining: new FormControl(null),
+         DateOfJoining: new FormControl(null, Validators.required),
          EmployeeRole: new FormControl(null),
          Working_Location: new FormControl(),
          Customers: new FormControl(null, Validators.required),

@@ -5,6 +5,7 @@ module.exports = function(app){
 
 
    // Leaves
+   app.post('/API/Hrms/LeaveDate_AsyncValidate', Leaves_Controller.LeaveDate_AsyncValidate);
    app.post('/API/Hrms/Leaves_Create', Leaves_Controller.Leaves_Create);
    app.post('/API/Hrms/Leaves_List', Leaves_Controller.Leaves_List);
    app.post('/API/Hrms/LeavesList_ForEmployee', Leaves_Controller.LeavesList_ForEmployee);

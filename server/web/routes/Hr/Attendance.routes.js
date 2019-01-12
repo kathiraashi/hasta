@@ -8,4 +8,10 @@ module.exports = function(app){
       app.post('/API/Attendance/Attendance_Create', Controller.Attendance_Create);
       app.post('/API/Attendance/Attendance_Log', Controller.Attendance_Log);
       app.post('/API/Attendance/Complete_Attendance_Log', Controller.Complete_Attendance_Log);
+
+   // Attendance Report
+      app.post('/API/Attendance/Attendance_Report_Validate', Controller.Attendance_Report_Validate);
+      app.post('/API/Attendance/Attendance_Report_Create', Controller.Attendance_Report_Create);
+
+
 };

@@ -18,7 +18,7 @@ import { CrmService } from './../../../../services/Crm/crm.service';
 })
 export class CrmCustomersCreateComponent implements OnInit {
 
-   _CompanyTypes: any[] = ['PL', 'BR', 'AMC'];
+   _CompanyTypes: any[] = ['PL', 'BD', 'AMC'];
    _Industry_Types: any[] =  [];
    _Ownership_Types: any[] =  [];
 

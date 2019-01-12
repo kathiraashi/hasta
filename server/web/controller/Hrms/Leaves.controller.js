@@ -1,11 +1,58 @@
 var CryptoJS = require("crypto-js");
 var LeavesModel = require('./../../models/Hrms/Leaves.model.js');
+var HrAttendanceModel = require('./../../models/Hr/Attendance.model.js')
 var ErrorManagement = require('./../../../handling/ErrorHandling.js');
 var mongoose = require('mongoose');
 
 
 
 // ******************************** Leaves *************************
+   exports.LeaveDate_AsyncValidate = function(req, res) {
+      var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+      var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+      if(!ReceivingData.Employee || ReceivingData.Employee === '' ) {
+         res.status(400).send({Status: false, Message: "Employee can not be empty" });
+      } else if(!ReceivingData.Date || ReceivingData.Date === '' ) {
+         res.status(400).send({Status: false, Message: "Date can not be empty" });
+      } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+         res.status(400).send({Status: false, Message: "User Details can not be empty" });
+      }else {
+         HrAttendanceModel.Employee_AttendanceSchema
+         .findOne( { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee), 'Attendance_Date' : new Date(ReceivingData.Date), 'If_Deleted': false }, {}, {}, function(err, result) {
+            if(err) {
+               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee Attendance Date Validate Query Error', 'Attendance.controller.js', err);
+               res.status(417).send({status: false, Message: "Some error occurred while Validate Employee Attendance Date !."});
+            } else {
+               if (result !== null) {
+                  res.status(200).send({Status: true, Available: false });
+               } else {
+                  LeavesModel.LeavesSchema.findOne(
+                     { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),
+                        $and: [  { From_Date : { $lte: new Date(ReceivingData.Date) } },
+                                 { To_Date: { $gte: new Date(ReceivingData.Date) } } ,
+                                 { Current_Status: {$ne: 'Rejected'} }],
+                        'If_Deleted': false 
+                     }, {}, {}
+                  ).exec(function(err_1, result_1) {
+                     if(err_1) {
+                        ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee Attendance Date Validate Query Error', 'Attendance.controller.js', err_1);
+                        res.status(417).send({status: false, Message: "Some error occurred while Validate Employee Attendance Date !."});
+                     } else {
+                        if (result_1 !== null) {
+                           res.status(200).send({Status: true, Available: false });
+                        } else {
+                           res.status(200).send({Status: true, Available: true });
+                        }
+                     }
+                  })
+               }
+            }
+         });
+      }
+   };
+
+
    exports.Leaves_Create = function(req, res) {
       var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
       var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
