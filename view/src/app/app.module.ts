@@ -163,6 +163,8 @@ import { ModelPayrollMasterComponent } from './models/HR/model-payroll-master/mo
 import { HolidayHrSettingsComponent } from './Components/Settings/HR-Settings/SubComponents/holiday-hr-settings/holiday-hr-settings.component';
 import { ModelHolidayHrsettingsComponent } from './models/settings/hr_settings/model-holiday-hrsettings/model-holiday-hrsettings.component';
 import { MachineWorkingUpdateComponent } from './Components/CRM/Customers/Crm-Customers-View/SubComponents/machine-working-update/machine-working-update.component';
+import { CrmCustomersEditComponent } from './Components/CRM/Customers/crm-customers-edit/crm-customers-edit.component';
+import { CrmMachinesEditComponent } from './Components/CRM/Machines/crm-machines-edit/crm-machines-edit.component';
 
 
 @NgModule({
@@ -302,7 +304,9 @@ import { MachineWorkingUpdateComponent } from './Components/CRM/Customers/Crm-Cu
            ModelPayrollMasterComponent,
            HolidayHrSettingsComponent,
            ModelHolidayHrsettingsComponent,
-           MachineWorkingUpdateComponent
+           MachineWorkingUpdateComponent,
+           CrmCustomersEditComponent,
+           CrmMachinesEditComponent
    ],
    imports: [
       // Default Modules

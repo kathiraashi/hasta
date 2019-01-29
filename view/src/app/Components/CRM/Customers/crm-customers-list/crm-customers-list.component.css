@@ -145,12 +145,20 @@
       font-size:13px;
    }
    .Page_Content .Sub_Content span{
+      border-radius: 40px;
       position: absolute;
-      top: 5px;
-      right: 5px;
+      top: -10px;
+      right: -10px;
+      width: 34px;
+      height: 34px;
+      background-color: #ffffff;
+      color: #49b660;
+      text-align: center;
+      line-height: 40px;
+      box-shadow: 1px 1px 3px #6c7379;
    }
    .Page_Content .Sub_Content span .settings{
-      color: #516570;
+      /* color: #516570; */
       font-size:20px;
    }
 

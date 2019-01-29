@@ -162,6 +162,92 @@ exports.CrmCustomers_View = function(req, res) {
       });
    }
 };
+exports.CrmCustomers_Update = function(req, res) {
+    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+
+    if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+        res.status(400).send({Status: false, Message: "User Details can not be empty" });
+    } else if(!ReceivingData.Customer_Id || ReceivingData.Customer_Id === '' ) {
+        res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+     } else if(!ReceivingData.CompanyName || ReceivingData.CompanyName === '' ) {
+        res.status(400).send({Status: false, Message: "Company Name can not be empty" });
+     } else if(!ReceivingData.EmailAddress || ReceivingData.EmailAddress === '' ) {
+        res.status(400).send({Status: false, Message: "Email Address can not be empty" });
+     } else if(!ReceivingData.PhoneNumber || ReceivingData.PhoneNumber === '' ) {
+        res.status(400).send({Status: false, Message: "Phone Number can not be empty" });
+     } else if(!ReceivingData.CompanyType || ReceivingData.CompanyType === '' ) {
+        res.status(400).send({Status: false, Message: "Company Type can not be empty" });
+    } else {
+        if (ReceivingData.IndustryType && typeof ReceivingData.IndustryType === 'object' && Object.keys(ReceivingData.IndustryType).length > 0 ) {
+            ReceivingData.IndustryType = mongoose.Types.ObjectId(ReceivingData.IndustryType._id);
+         }
+         if (ReceivingData.OwnershipType && typeof ReceivingData.OwnershipType === 'object' && Object.keys(ReceivingData.OwnershipType).length > 0 ) {
+            ReceivingData.OwnershipType = mongoose.Types.ObjectId(ReceivingData.OwnershipType._id);
+         }
+         if (ReceivingData.BillingCountry && typeof ReceivingData.BillingCountry === 'object' && Object.keys(ReceivingData.BillingCountry).length > 0 ) {
+            ReceivingData.BillingCountry._id = mongoose.Types.ObjectId(ReceivingData.BillingCountry._id);
+         }
+         if (ReceivingData.BillingState && typeof ReceivingData.BillingState === 'object' && Object.keys(ReceivingData.BillingState).length > 0 ) {
+            ReceivingData.BillingState._id = mongoose.Types.ObjectId(ReceivingData.BillingState._id);
+         }
+         if (ReceivingData.BillingCity && typeof ReceivingData.BillingCity === 'object' && Object.keys(ReceivingData.BillingCity).length > 0 ) {
+            ReceivingData.BillingCity._id = mongoose.Types.ObjectId(ReceivingData.BillingCity._id);
+         }
+         if (ReceivingData.ShopFloorCountry && typeof ReceivingData.ShopFloorCountry === 'object' && Object.keys(ReceivingData.ShopFloorCountry).length > 0 ) {
+            ReceivingData.ShopFloorCountry._id = mongoose.Types.ObjectId(ReceivingData.ShopFloorCountry._id);
+         }
+         if (ReceivingData.ShopFloorState && typeof ReceivingData.ShopFloorState === 'object' && Object.keys(ReceivingData.ShopFloorState).length > 0 ) {
+            ReceivingData.ShopFloorState._id = mongoose.Types.ObjectId(ReceivingData.ShopFloorState._id);
+         }
+         if (ReceivingData.ShopFloorCity && typeof ReceivingData.ShopFloorCity === 'object' && Object.keys(ReceivingData.ShopFloorCity).length > 0 ) {
+            ReceivingData.ShopFloorCity._id = mongoose.Types.ObjectId(ReceivingData.ShopFloorCity._id);
+         }
+
+        CrmCustomersModel.CrmCustomersSchema.update(
+        { _id : mongoose.Types.ObjectId(ReceivingData.Customer_Id)  },
+        {  $set: {
+            CompanyName: ReceivingData.CompanyName,
+            PhoneNumber: ReceivingData.PhoneNumber,
+            EmailAddress: ReceivingData.EmailAddress,
+            Website: ReceivingData.Website,
+            NoOfEmployees: ReceivingData.NoOfEmployees,
+            CompanyType: ReceivingData.CompanyType,
+            StateCode: ReceivingData.StateCode,
+            IndustryType: ReceivingData.IndustryType,
+            OwnershipType: ReceivingData.OwnershipType,
+            GSTNo: ReceivingData.GSTNo,
+            Notes: ReceivingData.Notes,
+            Image: null,
+            "BillingAddress.Street": ReceivingData.BillingStreet,
+            "BillingAddress.Area": ReceivingData.BillingArea,
+            "BillingAddress.ZipCode": ReceivingData.BillingZipCode,
+            "BillingAddress.Country": ReceivingData.BillingCountry,
+            "BillingAddress.State": ReceivingData.BillingState,
+            "BillingAddress.City": ReceivingData.BillingCity,
+            SameAddresses: ReceivingData.SameAddresses,
+            "ShopFloorAddress.Street": ReceivingData.ShopFloorStreet,
+            "ShopFloorAddress.Area": ReceivingData.ShopFloorArea,
+            "ShopFloorAddress.ZipCode": ReceivingData.ShopFloorZipCode,
+            "ShopFloorAddress.Country": ReceivingData.ShopFloorCountry,
+            "ShopFloorAddress.State": ReceivingData.ShopFloorState,
+            "ShopFloorAddress.City": ReceivingData.ShopFloorCity,
+            Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+            } 
+        }
+        ).exec( function(err, result) {
+            if(err) {
+                ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Customer Updating Query Error', 'Crm_Customers.controller.js', err);
+                res.status(400).send({Status: false, Message: "Some error occurred while Updating the Crm Customer!."});
+            } else {
+                var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+                ReturnData = ReturnData.toString();
+                res.status(200).send({Status: true, Message: 'Customer Successfully Updated' });
+                }
+        });
+    }
+};
 
 
 // For Employee Login

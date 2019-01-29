@@ -6,6 +6,8 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmCustomers_List', Controller.CrmCustomers_List);
    app.post('/API/CrmCustomers/CrmCustomers_SimpleList', Controller.CrmCustomers_SimpleList);
    app.post('/API/CrmCustomers/CrmCustomers_View', Controller.CrmCustomers_View);
+   app.post('/API/CrmCustomers/CrmCustomers_Update', Controller.CrmCustomers_Update);
+
  
    app.post('/API/CrmCustomers/CrmCustomersList_ForEmployee', Controller.CrmCustomersList_ForEmployee);
    app.post('/API/CrmCustomers/CrmCustomers_SimpleList_ForEmployee', Controller.CrmCustomers_SimpleList_ForEmployee);

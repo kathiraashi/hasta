@@ -45,6 +45,10 @@ import { ExpensesListComponent } from './Components/HRMS/Expenses/expenses-list/
 import { EditExpensesComponent } from './Components/HRMS/Expenses/edit-expenses/edit-expenses.component';
 import { ExpensesViewComponent } from './Components/HRMS/Expenses/expenses-view/expenses-view.component';
 import { AttendanceLogComponent } from './Components/HR/attendance-log/attendance-log.component';
+import { CrmCustomersEditComponent } from './Components/CRM/Customers/crm-customers-edit/crm-customers-edit.component';
+import { CrmMachinesEditComponent } from './Components/CRM/Machines/crm-machines-edit/crm-machines-edit.component';
+
+
 
 const appRoutes: Routes = [
    {
@@ -93,6 +97,12 @@ const appRoutes: Routes = [
       canActivate: [AuthGuard],
       data: {   animation: { value: 'main_crm_customers_view'}   }
    },
+   {
+      path: 'crm_customers_edit/:Customer_Id',
+      component: CrmCustomersEditComponent,
+      canActivate: [AuthGuard],
+      data: {   animation: { value: 'crm_customers_edit'}   }
+    },
    {
       path: 'crm_customers_create',
       component: CrmCustomersCreateComponent,
@@ -214,6 +224,12 @@ const appRoutes: Routes = [
       canActivate: [AuthGuard],
       data: {   animation: { value: 'Crm_Machines_View'}   }
    },
+   {
+    path: 'Crm_Machines_Edit/:Machine_Id',
+    component: CrmMachinesEditComponent,
+    canActivate: [AuthGuard],
+    data: {   animation: { value: 'Crm_Machines_Edit'}   }
+  },
    {
       path: 'List_Employees',
       component: ListEmployeesComponent,
