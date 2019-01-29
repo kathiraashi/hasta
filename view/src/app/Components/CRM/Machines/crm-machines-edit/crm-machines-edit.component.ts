@@ -72,6 +72,11 @@ export class CrmMachinesEditComponent implements OnInit {
                         const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                         const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                         this._Data = DecryptedData;
+                        this.UpdateForm();
+                        this.ControllerTypeUpdate();
+                        this.MachineTypeUpdate();
+                        this.CustomerUpdate();
+                        this.MaintenancePartsUpdate();
                         console.log(this._Data);
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
@@ -91,6 +96,7 @@ export class CrmMachinesEditComponent implements OnInit {
                         const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                         const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                         this._Machine_Types = DecryptedData;
+                        this.MachineTypeUpdate();
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -106,6 +112,7 @@ export class CrmMachinesEditComponent implements OnInit {
                         const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                         const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                         this._Controller_Types = DecryptedData;
+                        this.ControllerTypeUpdate();
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -121,6 +128,7 @@ export class CrmMachinesEditComponent implements OnInit {
                         const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                         const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                         this._Customers = DecryptedData;
+                        this.CustomerUpdate();
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -136,6 +144,7 @@ export class CrmMachinesEditComponent implements OnInit {
                         const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                         const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                         this._Maintenance_Parts = DecryptedData;
+                        this.MaintenancePartsUpdate();
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -148,6 +157,7 @@ export class CrmMachinesEditComponent implements OnInit {
 
    ngOnInit() {
       this.Form = new FormGroup({
+         Machine_Id: new FormControl('', Validators.required),
          MachineName: new FormControl('', Validators.required),
          Customer: new FormControl(null, Validators.required),
          MachineType: new FormControl(null),
@@ -164,7 +174,36 @@ export class CrmMachinesEditComponent implements OnInit {
       });
    }
    UpdateForm() {
-      
+      this.Form.controls['Machine_Id'].setValue(this._Data['_id']);
+      this.Form.controls['MachineName'].setValue(this._Data['MachineName']);
+      this.Form.controls['MachineModel'].setValue(this._Data['MachineModel']);
+      this.Form.controls['MachineMake'].setValue(this._Data['MachineMake']);
+      this.Form.controls['MfgSerialNo'].setValue(this._Data['MfgSerialNo']);
+      this.Form.controls['MachineId'].setValue(this._Data['MachineId']);
+      this.Form.controls['MfgYear'].setValue(this._Data['MfgYear']);
+      this.Form.controls['DateOfPlaced'].setValue(new Date(this._Data['DateOfPlaced']));
+      this.Form.controls['ControllerModelNo'].setValue(this._Data['ControllerModelNo']);
+   }
+
+   MachineTypeUpdate() {
+      if (this._Machine_Types.length > 0 && this._Data !== undefined && this._Data['MachineType'] !== null) {
+        this.Form.controls['MachineType'].setValue(this._Data['MachineType']);
+      }
+   }
+   ControllerTypeUpdate() {
+      if (this._Controller_Types.length > 0 && this._Data !== undefined && this._Data['ControllerType'] !== null) {
+        this.Form.controls['ControllerType'].setValue(this._Data['ControllerType']);
+      }
+   }
+   CustomerUpdate() {
+      if (this._Customers.length > 0 && this._Data !== undefined && this._Data['Customer'] !== null) {
+        this.Form.controls['Customer'].setValue(this._Data['Customer']);
+      }
+   }
+   MaintenancePartsUpdate() {
+      if (this._Maintenance_Parts.length > 0 && this._Data !== undefined && this._Data['Maintenance_Parts'] !== null) {
+        this.Form.controls['Maintenance_Parts'].setValue(this._Data['Maintenance_Parts']);
+      }
    }
 
    NotAllow(): boolean {return false; }
@@ -173,17 +212,15 @@ export class CrmMachinesEditComponent implements OnInit {
       if (this.Form.valid) {
          let Info = CryptoJS.AES.encrypt(JSON.stringify(this.Form.value), 'SecretKeyIn@123');
          Info = Info.toString();
-         this.Crm_Service.CrmMachines_Create({ 'Info': Info }).subscribe( response => {
+         this.Crm_Service.CrmMachine_Update({ 'Info': Info }).subscribe( response => {
             const ResponseData = JSON.parse(response['_body']);
             if (response['status'] === 200 && ResponseData['Status'] ) {
-               this.Toastr.NewToastrMessage({ Type: 'Success', Message: 'New Machine Successfully Created' });
+               this.Toastr.NewToastrMessage({ Type: 'Success', Message: 'Machine Details Successfully Updated' });
                this.router.navigate(['/crm_machine_list']);
-            } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
-               this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
-            } else if (response['status'] === 401 && !ResponseData['Status']) {
+            } else if (response['status'] === 400 || response['status'] === 417 || response['status'] === 401 && !ResponseData['Status']) {
                this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
             } else {
-               this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Creating Machine Getting Error!, But not Identify!' });
+               this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Updated Machine Details Getting Error!, But not Identify!' });
             }
          });
       }

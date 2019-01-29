@@ -241,8 +241,6 @@ exports.CrmCustomers_Update = function(req, res) {
                 ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Customer Updating Query Error', 'Crm_Customers.controller.js', err);
                 res.status(400).send({Status: false, Message: "Some error occurred while Updating the Crm Customer!."});
             } else {
-                var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
-                ReturnData = ReturnData.toString();
                 res.status(200).send({Status: true, Message: 'Customer Successfully Updated' });
                 }
         });
@@ -732,6 +730,60 @@ exports.CrmMachine_View = function(req, res) {
             ReturnData = ReturnData.toString();
             res.status(200).send({Status: true, Response: ReturnData });
          }
+      });
+   }
+};
+exports.CrmMachine_Update = function(req, res) {
+
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if(!ReceivingData.Machine_Id || ReceivingData.Machine_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
+   } else if(!ReceivingData.MachineName || ReceivingData.MachineName === '' ) {
+      res.status(400).send({Status: false, Message: "Machine Name can not be empty" });
+   } else if(!ReceivingData.Customer || typeof ReceivingData.Customer !== 'object' || Object.keys(ReceivingData.Customer).length < 2 ) {
+      res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+   } else {
+      if (ReceivingData.Customer && typeof ReceivingData.Customer === 'object' && Object.keys(ReceivingData.Customer).length > 0 ) {
+         ReceivingData.Customer = mongoose.Types.ObjectId(ReceivingData.Customer._id);
+      }
+      if (ReceivingData.MachineType && typeof ReceivingData.MachineType === 'object' && Object.keys(ReceivingData.MachineType).length > 0 ) {
+         ReceivingData.MachineType = mongoose.Types.ObjectId(ReceivingData.MachineType._id);
+      }
+      if (ReceivingData.ControllerType && typeof ReceivingData.ControllerType === 'object' && Object.keys(ReceivingData.ControllerType).length > 0 ) {
+         ReceivingData.ControllerType = mongoose.Types.ObjectId(ReceivingData.ControllerType._id);
+      }
+      if (ReceivingData.Maintenance_Parts && typeof ReceivingData.Maintenance_Parts === 'object' && ReceivingData.Maintenance_Parts.length > 0 ) {
+         ReceivingData.Maintenance_Parts.map(obj => mongoose.Types.ObjectId(obj));
+      }
+      CrmCustomersModel.CrmMachinesSchema.update(
+         { _id : mongoose.Types.ObjectId(ReceivingData.Machine_Id)  },
+         {  $set: {
+               MachineName: ReceivingData.MachineName,
+               Customer: ReceivingData.Customer,
+               MachineModel: ReceivingData.MachineModel,
+               MachineMake: ReceivingData.MachineMake,
+               MfgSerialNo: ReceivingData.MfgSerialNo,
+               MachineId: ReceivingData.MachineId,
+               MfgYear: ReceivingData.MfgYear,
+               MachineType: ReceivingData.MachineType,
+               DateOfPlaced: new Date(ReceivingData.DateOfPlaced).setHours(0,0,0, 0) || new Date(new Date().setHours(0,0,0, 0)),
+               ControllerType: ReceivingData.ControllerType,
+               ControllerModelNo: ReceivingData.ControllerModelNo,
+               Maintenance_Parts: ReceivingData.Maintenance_Parts,
+               Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+            } 
+         }
+      ).exec( function(err, result) {
+         if(err) {
+               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Machine Updating Query Error', 'Crm_Customers.controller.js', err);
+               res.status(400).send({Status: false, Message: "Some error occurred while Updating the Machine!."});
+         } else {
+               res.status(200).send({Status: true, Message: 'Machine Successfully Updated' });
+               }
       });
    }
 };

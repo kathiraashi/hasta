@@ -159,6 +159,27 @@
    border-color: #4ab65f;
  }
 
+
+ .Form_Input.With_File {
+   display: grid;
+   grid-template-columns: auto 100px;
+}
+.Form_Input.With_File > span {
+   display: flex;
+   align-items: center;
+   font-size: 13px;
+   letter-spacing: 0.4px;
+   color: #b5b5b5;
+   border: 1px solid #e6e6e6;
+   margin-left: 10px;
+   font-weight: 600;
+   cursor: pointer;
+   height: 37px;
+}
+.Form_Input.With_File > span.FileAdded {
+   color: #49b660;
+   border: 1px solid #49b660;
+}
  
    
  
@@ -166,7 +187,6 @@
    background-color: #fff;
    padding: 20px 30px;
    box-shadow: 1px 1px 10px #d4d4d4;
-   padding-top: 30px;
  }
  .BoxStyle_1 .BoxHeader{
    margin-bottom: 15px;
@@ -176,5 +196,92 @@
    letter-spacing: 0.3px;
  }
    
+
+
+ .SectionTwo{
+   background-color: #fff;
+   padding: 20px 30px;
+   box-shadow: 1px 1px 10px #d4d4d4;
+}
+
+    
+/* ********************************************** Tabs *********************************** */
+.Tabs{
+   display: flex;
+   width: 100%;
+}
+.Tabs .Tab{
+   color: #4d6a7a;
+   min-width: 200px;
+   line-height: 35px;
+   background-color: #80808038;
+   margin-top: -10px;
+   text-align: center;
+   margin-right: 5px;
+   font-size: 15px;
+   font-weight: 600;
+   letter-spacing: 0.4px;
+   cursor: pointer;
+}
+.Tabs .Tab:hover{
+   background-color: #80808048;
+   border-bottom: 2px solid #80808068;
+}
+
+.Tabs .Tab.active{
+   border-bottom: 2px solid #4ab65f;
+   color: #4ab65f;
+   cursor: default;
+}
+
+
+ 
+
+/* ******************************************* Model Style ***************************************** */
+.Modal_Content {
+   width: 100%;
+   height: 100%;
+   padding: 0px 10px;
+}
+.Modal_Header {
+   position: relative;
+   display: flex;
+   align-items: center;
+   height: 45px;
+   border-bottom: 1px solid #e8e8e8;
+}
+.Modal_Header p {
+   margin: 0px;
+   font-weight: 700;
+   font-size: 24px;
+   color: #4f6a7a;
+   letter-spacing: 0.3px;
+   width: 100%;
+   text-align: center;
+}
+.Modal_Header span {
+   font-size: 30px;
+   position: absolute;
+   right: 0px;
+   font-weight: 900;
+   top: -4px;
+   cursor: pointer;
+}
+.Model_Body {
+   padding: 20px;
+}
+.Model_Footer {
+   border-top: 1px solid #e8e8e8;
+   height: 55px;
+   line-height: 50px;
+}
+
   
-   
+.fixed-footer {
+   position: fixed;
+   width: 100%;
+   height: 50px;
+   padding: 7.5px 15px;
+   bottom: 0%;
+   background-color: rgba(0, 0, 0, 0.25);
+}

@@ -30,6 +30,8 @@ module.exports = function(app) {
    app.post('/API/CrmCustomers/CrmMachines_SimpleList', Controller.CrmMachines_SimpleList);
    app.post('/API/CrmCustomers/CrmCustomerBasedMachines_SimpleList', Controller.CrmCustomerBasedMachines_SimpleList);
    app.post('/API/CrmCustomers/CrmMachine_View', Controller.CrmMachine_View);
+   app.post('/API/CrmCustomers/CrmMachine_Update', Controller.CrmMachine_Update);
+
 
    app.post('/API/CrmCustomers/CrmMachinesList_ForEmployee', Controller.CrmMachinesList_ForEmployee);
    app.post('/API/CrmCustomers/CrmMachines_SimpleList_ForEmployee', Controller.CrmMachines_SimpleList_ForEmployee);

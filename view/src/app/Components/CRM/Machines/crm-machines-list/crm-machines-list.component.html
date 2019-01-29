@@ -88,8 +88,12 @@
                            <span class="Style_1">{{Machine['Current_Status']}}</span>
                         </td>
                         <td>
-                           <button mat-raised-button color="primary" [routerLink]="['/Crm_Machines_View', Machine._id]"> View </button>
-                           <button mat-raised-button color="primary" [routerLink]="['/Crm_Machines_Edit', Machine._id]"> Edit </button>
+                           <button  [routerLink]="['/Crm_Machines_View', Machine._id]" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                              <i class="material-icons">zoom_in</i>
+                           </button>
+                           <button  [routerLink]="['/Crm_Machines_Edit', Machine._id]" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                              <i class="material-icons">edit</i>
+                           </button>
                         </td>
                      </tr>
                   </tbody>

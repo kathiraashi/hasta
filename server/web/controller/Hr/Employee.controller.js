@@ -81,7 +81,7 @@ exports.Employee_Create = function(req, res) {
          res.status(400).send({Status: false, Message: "Employee Name can not be empty" });
       } else if(!ReceivingData.EmployeeCode || ReceivingData.EmployeeCode === '' ) {
          res.status(400).send({Status: false, Message: "Employee Code can not be empty" });
-      } else if(!ReceivingData.JoiningDate || ReceivingData.JoiningDate === '' ) {
+      } else if(!ReceivingData.DateOfJoining || ReceivingData.DateOfJoining === '' ) {
          res.status(400).send({Status: false, Message: "Date of joining can not be empty" });
       } else if(!ReceivingData.MaritalStatus || ReceivingData.MaritalStatus === '' ) {
          res.status(400).send({Status: false, Message: "Marital Status can not be empty" });
@@ -226,57 +226,112 @@ exports.Employee_View = function(req, res) {
    }
 };
 
-exports.Employee_Update = function(req, res) {
-   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
-   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
 
-   if(!ReceivingData.Employee_Id || ReceivingData.Employee_Id === '' ) {
-      res.status(400).send({Status: false, Message: "Employee Details can not be empty" });
-   }else if(!ReceivingData.EmployeeName || ReceivingData.EmployeeName === '' ) {
-      res.status(400).send({Status: false, Message: "Employee Name can not be empty" });
-   } else if(!ReceivingData.EmployeeCode || ReceivingData.EmployeeCode === '' ) {
-      res.status(400).send({Status: false, Message: "Employee Code can not be empty" });
-   } else if(!ReceivingData.JoiningDate || ReceivingData.JoiningDate === '' ) {
-      res.status(400).send({Status: false, Message: "Date of joining can not be empty" });
-   }else if(!ReceivingData.MobileNo || ReceivingData.MobileNo === '' ) {
-      res.status(400).send({Status: false, Message: "Mobile Number can not be empty" });
-   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
-      res.status(400).send({Status: false, Message: "User Details can not be empty" });
-   } else if (!ReceivingData.Customers || ReceivingData.Customers === ''  ) {
-      res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
-   }else {
-      HrModel.EmployeeSchema.findOne({'_id': mongoose.Types.ObjectId(ReceivingData.Employee_Id)}, {}, {}, function(err, result) {
-         if(err) {
-            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee FindOne Query Error', 'Employee.controller.js', err);
-            res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Employee!."});
-         } else {
-            if (result !== null) {
-               ReceivingData.Customers = ReceivingData.Customers.map(obj => mongoose.Types.ObjectId(obj));
-               result.EmployeeName = ReceivingData.EmployeeName;
-               result.EmployeeCode = ReceivingData.EmployeeCode;
-               result.Department = ReceivingData.Department;
-               result.JobTitle = ReceivingData.JobTitle;
-               result.MobileNo = ReceivingData.MobileNo;
-               result.JoiningDate = ReceivingData.JoiningDate;
-               result.DateOfBirth = ReceivingData.DateOfBirth;
-               result.MaritalStatus = ReceivingData.MaritalStatus;
-               result.Address = ReceivingData.Address;
-               result.Customers = ReceivingData.Customers;
-               result.Last_Modified_By = mongoose.Types.ObjectId(ReceivingData.User_Id);
-               result.save(function(err_1, result_1) { //  Employee  Update Query
-                  if(err_1) {
-                     ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee Update Query Error', 'Employee.controller.js');
-                     res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Update the Employee !."});
-                  } else {
-                     res.status(200).send({Status: true, Message: 'Successfully Updated'  });
-                  }
-               });
-            } else {
-               res.status(400).send({Status: false, Message: "Employee Details can not be valid!" });
+exports.Employee_Update = function(req, res) {
+   Employee_Files(req, res, function(upload_err) {
+
+      var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+      var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+      
+      if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+         res.status(400).send({Status: false, Message: "User Details can not be empty" });
+      } else if(!ReceivingData.Employee_Id || ReceivingData.Employee_Id === '' ) {
+         res.status(400).send({Status: false, Message: "Employee Details can not be empty" });
+      } else if(!ReceivingData.EmployeeName || ReceivingData.EmployeeName === '' ) {
+         res.status(400).send({Status: false, Message: "Employee Name can not be empty" });
+      } else if(!ReceivingData.EmployeeCode || ReceivingData.EmployeeCode === '' ) {
+         res.status(400).send({Status: false, Message: "Employee Code can not be empty" });
+      } else if(!ReceivingData.DateOfJoining || ReceivingData.DateOfJoining === '' ) {
+         res.status(400).send({Status: false, Message: "Date of joining can not be empty" });
+      } else if(!ReceivingData.MaritalStatus || ReceivingData.MaritalStatus === '' ) {
+         res.status(400).send({Status: false, Message: "Marital Status can not be empty" });
+      } else if(!ReceivingData.Personal_MobileNo || ReceivingData.Personal_MobileNo === '' ) {
+         res.status(400).send({Status: false, Message: "Personal Mobile Number can not be empty" });
+      } else if(!ReceivingData.Emergency_MobileNo || ReceivingData.Emergency_MobileNo === '' ) {
+         res.status(400).send({Status: false, Message: "Emergency Mobile Number can not be empty" });
+      } else if(!ReceivingData.Customers || ReceivingData.Customers.length <= 0 ) {
+         res.status(400).send({Status: false, Message: "Customers can not be empty" });
+      } else {
+         if (ReceivingData.OldAadharDocument === null) { ReceivingData.OldAadharDocument = {}; }
+         if (ReceivingData.OldDrivingDocument === null) { ReceivingData.OldDrivingDocument = {}; }
+         if (ReceivingData.OldPanDocument === null) { ReceivingData.OldPanDocument = {}; }
+
+         var AadharDocument = ReceivingData.OldAadharDocument || {};
+         var DrivingDocument = ReceivingData.OldDrivingDocument || {};
+         var PanDocument = ReceivingData.OldPanDocument || {};
+         
+         if (req.files['AadharDocument']) {
+            if(req.files['AadharDocument'][0] !== null && req.files['AadharDocument'][0] !== undefined && req.files['AadharDocument'][0] !== ''){
+               AadharDocument = { filename: req.files['AadharDocument'][0].filename, mimetype: req.files['AadharDocument'][0].mimetype, size: req.files['AadharDocument'][0].size };
             }
          }
-      });
-   }
+         if (req.files['PanDocument']) {
+            if(req.files['PanDocument'][0] !== null && req.files['PanDocument'][0] !== undefined && req.files['PanDocument'][0] !== ''){
+               PanDocument = { filename: req.files['PanDocument'][0].filename, mimetype: req.files['PanDocument'][0].mimetype, size: req.files['PanDocument'][0].size };
+            }
+         }
+         if (req.files['DrivingDocument']) {
+            if(req.files['DrivingDocument'][0] !== null && req.files['DrivingDocument'][0] !== undefined && req.files['DrivingDocument'][0] !== ''){
+               DrivingDocument = { filename: req.files['DrivingDocument'][0].filename, mimetype: req.files['DrivingDocument'][0].mimetype, size: req.files['DrivingDocument'][0].size };
+            }
+         }
+         ReceivingData.Customers = ReceivingData.Customers.map(obj => mongoose.Types.ObjectId(obj));
+         if (ReceivingData.Department !== null && ReceivingData.Department !== '') {
+            ReceivingData.Department = mongoose.Types.ObjectId(ReceivingData.Department);
+         }
+         if (ReceivingData.Designation !== null && ReceivingData.Designation !== '') {
+            ReceivingData.Designation = mongoose.Types.ObjectId(ReceivingData.Designation);
+         }
+
+         HrModel.EmployeeSchema.update(
+            { _id : mongoose.Types.ObjectId(ReceivingData.Employee_Id)  },
+            {  $set: {
+                  EmployeeName: ReceivingData.EmployeeName,
+                  EmployeeCode: ReceivingData.EmployeeCode,
+                  Department: ReceivingData.Department,
+                  Designation: ReceivingData.Designation,
+                  DateOfJoining: ReceivingData.DateOfJoining,
+                  EmployeeRole: ReceivingData.EmployeeRole,
+                  Working_Location: ReceivingData.Working_Location,
+                  Customers: ReceivingData.Customers,
+                  EmployeeFatherName: ReceivingData.EmployeeFatherName,
+                  DateOfBirth: ReceivingData.DateOfBirth,
+                  BloodGroup: ReceivingData.BloodGroup,
+                  MaritalStatus: ReceivingData.MaritalStatus,
+                  Personal_MobileNo: ReceivingData.Personal_MobileNo,
+                  Official_MobileNo: ReceivingData.Official_MobileNo,
+                  Emergency_MobileNo: ReceivingData.Emergency_MobileNo,
+                  Personal_Email: ReceivingData.Personal_Email,
+                  Official_Email: ReceivingData.Official_Email,
+                  Aadhar_No: ReceivingData.Aadhar_No,
+                  AadharDocument: AadharDocument,
+                  PanCard_No: ReceivingData.PanCard_No,
+                  PanDocument: PanDocument,
+                  DrivingLicense_No: ReceivingData.DrivingLicense_No,
+                  DrivingDocument: DrivingDocument,
+                  Permanent_Address: ReceivingData.Permanent_Address,
+                  Temporary_Address: ReceivingData.Temporary_Address,
+                  Education_Qualification: ReceivingData.Education_Qualification,
+                  PF_AccountNo: ReceivingData.PF_AccountNo,
+                  ESI_AccountNo: ReceivingData.ESI_AccountNo,
+                  Bank_Name: ReceivingData.Bank_Name,
+                  Bank_AccountNo: ReceivingData.Bank_AccountNo,
+                  Bank_AccountType: ReceivingData.Bank_AccountType,
+                  Bank_IFSCCode: ReceivingData.Bank_IFSCCode,
+                  Bank_Address: ReceivingData.Bank_Address,
+                  Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
+               } 
+            }
+         ).exec( function(err, result) {
+            if(err) {
+               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee Details Updating Query Error', 'Employee.controller.js', err);
+               res.status(400).send({Status: false, Message: "Some error occurred while Updating the Employee Details!."});
+            } else {
+               res.status(200).send({Status: true, Message: 'Employee Details Successfully Updated' });
+            }
+         });
+      }
+   });
 };
 
 exports.Employee_SimpleList = function(req, res) {

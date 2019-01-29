@@ -1,103 +1,117 @@
 <div class="Page_Section">
    <div class="container-fluid">
-      <!-- page Identity -->
-      <div class="Page_Identity">
-         <div class="Page_Name">
-            <h5>MACHINES EDIT</h5>
-         </div>
-         <div class="Page_Track">
-            <ul >
-               <li class="HeaderName">CRM</li>
-               <li class="arrow">>></li>
-               <li class="LinkName" [routerLink]="['/crm_machine_list']">Machines List</li>
-               <li class="arrow">>></li>
-               <li> Machines Edit</li>
-            </ul>
+      <div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+         <div class="Loading">
+               <div class="spinner">
+                  <div class="rect1"></div>
+                  <div class="rect2"></div>
+                  <div class="rect3"></div>
+                  <div class="rect4"></div>
+                  <div class="rect5"></div>
+                  <div class="rect6"></div>
+               </div>
          </div>
       </div>
-      <!-- Company Details -->
-      <div class="row">
-         <div class="col-sm-12">
-            <div class="BoxStyle_1">
-               <form [formGroup]="Form">
-                  <div class="row">
-                     <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['MachineName'].pristine && Form.controls['MachineName'].errors, 'Form_Success': Form.controls['MachineName'].valid && !Form.controls['MachineName'].pristine }">
-                        <input type="text" formControlName="MachineName" placeholder="Machine Name" >
-                        <p class="error" *ngIf="Form.controls['MachineName'].errors && !Form.controls['MachineName'].pristine">
-                           <span *ngIf="Form.controls['MachineName'].errors.required"> Machine Name is required</span>
-                        </p>
+      <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
+         <!-- page Identity -->
+         <div class="Page_Identity">
+            <div class="Page_Name">
+               <h5>MACHINES EDIT</h5>
+            </div>
+            <div class="Page_Track">
+               <ul >
+                  <li class="HeaderName">CRM</li>
+                  <li class="arrow">>></li>
+                  <li class="LinkName" [routerLink]="['/crm_machine_list']">Machines List</li>
+                  <li class="arrow">>></li>
+                  <li> Machines Edit</li>
+               </ul>
+            </div>
+         </div>
+         <!-- Company Details -->
+         <div class="row">
+            <div class="col-sm-12">
+               <div class="BoxStyle_1">
+                  <form [formGroup]="Form">
+                     <div class="row">
+                        <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['MachineName'].pristine && Form.controls['MachineName'].errors, 'Form_Success': Form.controls['MachineName'].valid && !Form.controls['MachineName'].pristine }">
+                           <input type="text" formControlName="MachineName" placeholder="Machine Name" >
+                           <p class="error" *ngIf="Form.controls['MachineName'].errors && !Form.controls['MachineName'].pristine">
+                              <span *ngIf="Form.controls['MachineName'].errors.required"> Machine Name is required</span>
+                           </p>
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <ng-select class="NgSelect ValueBold"
+                                    [items]="_Customers"
+                                    bindLabel="CompanyName"
+                                    formControlName="Customer"
+                                    [searchable]="true" 
+                                    placeholder="Customer">
+                           </ng-select>
+                           <p class="error" *ngIf="Form.controls['Customer'].errors && !Form.controls['Customer'].pristine">
+                              <span *ngIf="Form.controls['Customer'].errors.required"> Customer is required</span>
+                           </p>
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="MachineMake" placeholder="Machine make">
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="MachineModel" placeholder="Model">
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="MfgSerialNo" placeholder="Mfg Serial No">
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="MachineId" placeholder="Machine Id">
+                        </div>
+                        <div class="col-sm-4 Form_Select" >
+                           <ng-select class="NgSelect ValueBold"
+                                    [items]="_Machine_Types"
+                                    bindLabel="Machine_Type" 
+                                    formControlName="MachineType"
+                                    [searchable]="true" 
+                                    placeholder="Machine Type">
+                           </ng-select>
+                        </div>
+                        <div class="col-sm-4 Form_Select" >
+                           <ng-select class="NgSelect ValueBold"
+                                    [items]="_Controller_Types"
+                                    bindLabel="Controller_Type" 
+                                    formControlName="ControllerType" 
+                                    [searchable]="true" 
+                                    placeholder="Controller Type">
+                           </ng-select>
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="ControllerModelNo" placeholder="Controller Model No"> 
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="MfgYear" placeholder="Mfg Year"> 
+                        </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="DateOfPlaced" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date Of Placed">
+                           <mat-datepicker #Datepicker></mat-datepicker>
+                        </div>
+                        <div class="col-sm-8 Form_Select">
+                           <ng-select class="NgSelect ValueBold"
+                                    [multiple]="true"
+                                    [hideSelected]="true"
+                                    [items]="_Maintenance_Parts"
+                                    bindLabel="Part_Name"
+                                    bindValue="_id"
+                                    formControlName="Maintenance_Parts"
+                                    [searchable]="true"
+                                    placeholder="Add Maintenance Parts">
+                           </ng-select>
+                        </div>
                      </div>
-                     <div class="col-sm-4 Form_Input" >
-                        <ng-select class="NgSelect ValueBold"
-                                 [items]="_Customers"
-                                 bindLabel="CompanyName"
-                                 formControlName="Customer"
-                                 [searchable]="true" 
-                                 placeholder="Customer">
-                        </ng-select>
-                        <p class="error" *ngIf="Form.controls['Customer'].errors && !Form.controls['Customer'].pristine">
-                           <span *ngIf="Form.controls['Customer'].errors.required"> Customer is required</span>
-                        </p>
+                     <div class="row" style="margin-top: 20px;" > 
+                        <div class="col-sm-12 text-right">
+                           <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="Submit()"> Update </button>
+                        </div>
                      </div>
-                     <div class="col-sm-4 Form_Input" >
-                        <input type="text" formControlName="MachineMake" placeholder="Machine make">
-                     </div>
-                     <div class="col-sm-4 Form_Input" >
-                        <input type="text" formControlName="MachineModel" placeholder="Model">
-                     </div>
-                     <div class="col-sm-4 Form_Input" >
-                        <input type="text" formControlName="MfgSerialNo" placeholder="Mfg Serial No">
-                     </div>
-                     <div class="col-sm-4 Form_Input" >
-                        <input type="text" formControlName="MachineId" placeholder="Machine Id">
-                     </div>
-                     <div class="col-sm-4 Form_Select" >
-                        <ng-select class="NgSelect ValueBold"
-                                 [items]="_Machine_Types"
-                                 bindLabel="Machine_Type" 
-                                 formControlName="MachineType"
-                                 [searchable]="true" 
-                                 placeholder="Machine Type">
-                        </ng-select>
-                     </div>
-                     <div class="col-sm-4 Form_Select" >
-                        <ng-select class="NgSelect ValueBold"
-                                 [items]="_Controller_Types"
-                                 bindLabel="Controller_Type" 
-                                 formControlName="ControllerType" 
-                                 [searchable]="true" 
-                                 placeholder="Controller Type">
-                        </ng-select>
-                     </div>
-                     <div class="col-sm-4 Form_Input" >
-                        <input type="text" formControlName="ControllerModelNo" placeholder="Controller Model No"> 
-                     </div>
-                     <div class="col-sm-4 Form_Input" >
-                        <input type="text" formControlName="MfgYear" placeholder="Mfg Year"> 
-                     </div>
-                     <div class="col-sm-4 Form_Input" >
-                        <input type="text" formControlName="DateOfPlaced" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date Of Placed">
-                        <mat-datepicker #Datepicker></mat-datepicker>
-                     </div>
-                     <div class="col-sm-8 Form_Select">
-                        <ng-select class="NgSelect ValueBold"
-                                 [multiple]="true"
-                                 [hideSelected]="true"
-                                 [items]="_Maintenance_Parts"
-                                 bindLabel="Part_Name"
-                                 bindValue="_id"
-                                 formControlName="Maintenance_Parts"
-                                 [searchable]="true"
-                                 placeholder="Add Maintenance Parts">
-                        </ng-select>
-                     </div>
-                  </div>
-                  <div class="row" style="margin-top: 20px;" > 
-                     <div class="col-sm-12 text-right">
-                        <button [disabled]="!Form.valid && Form.invalid" mat-raised-button color="primary" (click)="Submit()"> Next </button>
-                     </div>
-                  </div>
-               </form>
+                  </form>
+               </div>
             </div>
          </div>
       </div>
