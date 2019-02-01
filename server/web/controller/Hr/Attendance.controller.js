@@ -278,7 +278,7 @@ exports.Attendance_Report_Create = function(req, res) {
                   DatArr.map(obj => DateDetailsFind(obj)),
                ).then(response => {
 
-                  // var YearsFirstDay = new Date(result.DateOfJoining);
+                  var YearsFirstDay = new Date(result.DateOfJoining);
                   // var YearsLastDay = new Date(YearsFirstDay.getFullYear() + 1, YearsFirstDay.getMonth(), YearsFirstDay.getDate());
 
                   // var Current_Date_Status = new Date(From.getFullYear(), YearsFirstDay.getMonth(), YearsFirstDay.getDate())

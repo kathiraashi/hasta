@@ -60,23 +60,25 @@ export class CreateLeavesComponent implements OnInit {
                   let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
                   Info = Info.toString();
                   // Get Employee Simple List
-                  this.hr_service.Employee_SimpleList({'Info': Info}).subscribe( response => {
-                     const ResponseData = JSON.parse(response['_body']);
-                     if (response['status'] === 200 && ResponseData['Status'] ) {
-                        const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
-                        const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-                        this._EmployeeName = DecryptedData;
-                        if (this.User_Type === 'Employee' && this.IfEmployeeId) {
-                           this.Form.controls['Employee'].setValue(this.IfEmployeeId);
+                  if (this.User_Type !== 'Employee') {
+                     this.hr_service.Employee_SimpleList({'Info': Info}).subscribe( response => {
+                        const ResponseData = JSON.parse(response['_body']);
+                        if (response['status'] === 200 && ResponseData['Status'] ) {
+                           const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
+                           const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+                           this._EmployeeName = DecryptedData;
+                           if (this.User_Type === 'Employee' && this.IfEmployeeId) {
+                              this.Form.controls['Employee'].setValue(this.IfEmployeeId);
+                           }
+                        } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+                           this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+                        } else if (response['status'] === 401 && !ResponseData['Status']) {
+                           this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
+                        } else {
+                           this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Employee Simple List Getting Error!, But not Identify!' });
                         }
-                     } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
-                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
-                     } else if (response['status'] === 401 && !ResponseData['Status']) {
-                        this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
-                     } else {
-                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Employee Simple List Getting Error!, But not Identify!' });
-                     }
-                  });
+                     });
+                  }
                   // Get Leave Name Simple List
                   this.SettingService.Leave_Type_SimpleList({'Info': Info}).subscribe( response => {
                      const ResponseData = JSON.parse(response['_body']);
@@ -105,6 +107,19 @@ export class CreateLeavesComponent implements OnInit {
          Purpose: new FormControl( {value: '', disabled: true }, Validators.required),
          User_Id: new FormControl(this.User_Id, Validators.required)
       });
+      if (this.User_Type === 'Employee') {
+         const EmployeeId = this.Login_Service.LoginUser_Info()['Employee']['_id'];
+         const EmployeeName = this.Login_Service.LoginUser_Info()['Employee']['EmployeeName'];
+         this._EmployeeName.push({'EmployeeName': EmployeeName, '_id': EmployeeId });
+         setTimeout(() => {
+            if (EmployeeId !== undefined && EmployeeId !== null && EmployeeId !== '') {
+               this.Employee_Id = EmployeeId;
+               this.Form.controls['Employee'].setValue(EmployeeId);
+               this.Form.controls['Employee'].disable();
+               this.EmployeeChange();
+            }
+         }, 500);
+      }
    }
 
    EmployeeChange() {

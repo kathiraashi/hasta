@@ -54,7 +54,7 @@
                         <h5>{{Customer.PhoneNumber}}</h5>
                         <h5>{{Customer.BillingAddress.Area}}, {{Customer.BillingAddress.City.City_Name}}, {{Customer.BillingAddress.State.State_Name}}</h5>
                      </div>
-                     <span [routerLink]="[ '/crm_customers_edit', Customer._id ]"><i class="material-icons settings">border_color</i></span>
+                     <span *ngIf="User_Type !== 'Employee'" [routerLink]="[ '/crm_customers_edit', Customer._id ]"><i class="material-icons settings">border_color</i></span>
                   </div>
                </div>
             </div>

@@ -91,7 +91,7 @@
                            <button  [routerLink]="['/Crm_Machines_View', Machine._id]" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
                               <i class="material-icons">zoom_in</i>
                            </button>
-                           <button  [routerLink]="['/Crm_Machines_Edit', Machine._id]" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
+                           <button *ngIf="User_Type !== 'Employee'" [routerLink]="['/Crm_Machines_Edit', Machine._id]" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
                               <i class="material-icons">edit</i>
                            </button>
                         </td>
