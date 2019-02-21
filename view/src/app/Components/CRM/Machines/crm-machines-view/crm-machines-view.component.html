@@ -224,9 +224,11 @@
                   <div class="Tab" [ngClass]="{'active': Active_Tab === 'Schedules'}" (click)="Active_Tab_Change('Schedules')">
                      <span > Schedules </span>
                   </div>
-                  <div class="Tab" [ngClass]="{'active': Active_Tab === 'Idle'}" (click)="Active_Tab_Change('Idle')">
-                     <span > Working Hours </span>
-                  </div>
+                  <ng-container *ngIf="_Data['Customer']?.CustomerType === 'PL'">
+                     <div class="Tab" [ngClass]="{'active': Active_Tab === 'Idle'}" (click)="Active_Tab_Change('Idle')">
+                        <span > Working Hours </span>
+                     </div>
+                  </ng-container>
                </div>
             </div>
          </div>
@@ -410,7 +412,7 @@
                </table>
             </div>
          </div>
-         <div class="TabSection" *ngIf="Active_Tab === 'Idle'">
+         <div class="TabSection" *ngIf="Active_Tab === 'Idle' && _Data['Customer']?.CustomerType === 'PL'">
             <div class="row Activity_Header">
                <div class="col-sm-3">
                   <!-- <button *ngIf="_Data['Current_Status'] === 'Idle'" class="Create_Button" mat-raised-button color="primary" (click)="CreateWorking()" > + Create </button> -->

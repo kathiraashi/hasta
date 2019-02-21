@@ -23,6 +23,15 @@ exports.CrmCustomers_Create = function(req, res) {
    } else if(!ReceivingData.CompanyType || ReceivingData.CompanyType === '' ) {
       res.status(400).send({Status: false, Message: "Company Type can not be empty" });
    } else {
+      if (ReceivingData.CompanyType === 'AMC' ) {
+         if (!ReceivingData.TicketsLimit || ReceivingData.TicketsLimit === '') {
+            res.status(400).send({Status: false, Message: "Tickets Limit can not be empty" });
+         } else if (!ReceivingData.AMCFrom || ReceivingData.AMCFrom === '') {
+            res.status(400).send({Status: false, Message: "AMC Duration From Date can not be empty" });
+         } else if (!ReceivingData.AMCTo || ReceivingData.AMCTo === '') {
+            res.status(400).send({Status: false, Message: "AMC Duration To Date can not be empty" });
+         } 
+      }
 
       if (ReceivingData.IndustryType && typeof ReceivingData.IndustryType === 'object' && Object.keys(ReceivingData.IndustryType).length > 0 ) {
          ReceivingData.IndustryType = mongoose.Types.ObjectId(ReceivingData.IndustryType._id);
@@ -56,6 +65,9 @@ exports.CrmCustomers_Create = function(req, res) {
          Website: ReceivingData.Website,
          NoOfEmployees: ReceivingData.NoOfEmployees,
          CompanyType: ReceivingData.CompanyType,
+         TicketsLimit: ReceivingData.TicketsLimit || 0,
+         AMCFrom: new Date(ReceivingData.AMCFrom).setHours(0,0,0, 0) || null,
+         AMCTo: new Date(ReceivingData.AMCTo).setHours(0,0,0, 0) || null,
          StateCode: ReceivingData.StateCode,
          IndustryType: ReceivingData.IndustryType,
          OwnershipType: ReceivingData.OwnershipType,
@@ -101,7 +113,7 @@ exports.CrmCustomers_List = function(req, res) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
    }else {
       CrmCustomersModel.CrmCustomersSchema
-         .find({'If_Deleted': false }, {CompanyName: 1, EmailAddress: 1, PhoneNumber: 1, BillingAddress: 1 }, {sort: { updatedAt: -1 }})
+         .find({'If_Deleted': false }, {CompanyName: 1, EmailAddress: 1, PhoneNumber: 1, BillingAddress: 1, CompanyType: 1, TicketsLimit: 1, AMCFrom: 1, AMCTo: 1 }, {sort: { updatedAt: -1 }})
          .exec(function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customers List Find Query Error', 'Crm_Customers.controller.js', err);
@@ -145,7 +157,7 @@ exports.CrmCustomers_View = function(req, res) {
       res.status(400).send({Status: false, Message: "Crm Customer Details can not be empty" });
    }else {
       CrmCustomersModel.CrmCustomersSchema
-         .findOne({'_id': ReceivingData.Customer_Id }, {}, {})
+         .findOne({'_id': ReceivingData.Customer_Id, If_Deleted: false }, {}, {})
          .populate({ path: 'IndustryType', select: ['Industry_Type'] })
          .populate({ path: 'OwnershipType', select: ['Ownership_Type'] })
          .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
@@ -180,6 +192,16 @@ exports.CrmCustomers_Update = function(req, res) {
      } else if(!ReceivingData.CompanyType || ReceivingData.CompanyType === '' ) {
         res.status(400).send({Status: false, Message: "Company Type can not be empty" });
     } else {
+         if (ReceivingData.CompanyType === 'AMC' ) {
+            if (!ReceivingData.TicketsLimit || ReceivingData.TicketsLimit === '') {
+               res.status(400).send({Status: false, Message: "Tickets Limit can not be empty" });
+            } else if (!ReceivingData.AMCFrom || ReceivingData.AMCFrom === '') {
+               res.status(400).send({Status: false, Message: "AMC Duration From Date can not be empty" });
+            } else if (!ReceivingData.AMCTo || ReceivingData.AMCTo === '') {
+               res.status(400).send({Status: false, Message: "AMC Duration To Date can not be empty" });
+            } 
+         }
+
         if (ReceivingData.IndustryType && typeof ReceivingData.IndustryType === 'object' && Object.keys(ReceivingData.IndustryType).length > 0 ) {
             ReceivingData.IndustryType = mongoose.Types.ObjectId(ReceivingData.IndustryType._id);
          }
@@ -214,6 +236,9 @@ exports.CrmCustomers_Update = function(req, res) {
             Website: ReceivingData.Website,
             NoOfEmployees: ReceivingData.NoOfEmployees,
             CompanyType: ReceivingData.CompanyType,
+            TicketsLimit: ReceivingData.TicketsLimit || 0,
+            AMCFrom: new Date(ReceivingData.AMCFrom).setHours(0,0,0, 0) || null,
+            AMCTo: new Date(ReceivingData.AMCTo).setHours(0,0,0, 0) || null,
             StateCode: ReceivingData.StateCode,
             IndustryType: ReceivingData.IndustryType,
             OwnershipType: ReceivingData.OwnershipType,
@@ -245,6 +270,34 @@ exports.CrmCustomers_Update = function(req, res) {
                 }
         });
     }
+};
+exports.CrmCustomers_Delete = function(req, res) {
+
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Customer_Id || ReceivingData.Customer_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
+   } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else {
+      Promise.all([
+         CrmCustomersModel.CrmCustomersSchema.update(
+            { _id : mongoose.Types.ObjectId(ReceivingData.Customer_Id)  },
+            {  $set: { If_Deleted : true } }).exec(),
+         CrmCustomersModel.CrmMachinesSchema.updateMany(
+            { Customer : mongoose.Types.ObjectId(ReceivingData.Customer_Id)  },
+            {  $set: { If_Deleted : true } }).exec(),
+         CrmCustomersModel.CrmTicketsSchema.updateMany(
+            { Customer : mongoose.Types.ObjectId(ReceivingData.Customer_Id)  },
+            {  $set: { If_Deleted : true } }).exec(),
+      ]).then( result => {
+         res.status(200).send({Status: true, Message: 'Customer Successfully Hided'  });
+      }).catch(err => {
+         ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Customer Delete Query Error', 'Crm_Customers.controller.js', err);
+         res.status(400).send({Status: false, Message: "Some error occurred while hide the Crm Customer!."});
+      });
+   }
 };
 
 
@@ -715,8 +768,8 @@ exports.CrmMachine_View = function(req, res) {
       res.status(400).send({Status: false, Message: "Crm Customer Details can not be empty" });
    }else {
       CrmCustomersModel.CrmMachinesSchema
-         .findOne({'_id': ReceivingData.Machine_Id }, {}, {})
-         .populate({ path: 'Customer', select: ['CompanyName'] })
+         .findOne({'_id': ReceivingData.Machine_Id, 'If_Deleted': false, }, {}, {})
+         .populate({ path: 'Customer', select: ['CompanyName', 'CompanyType'] })
          .populate({ path: 'MachineType', select: ['Machine_Type'] })
          .populate({ path: 'ControllerType', select: ['Controller_Type'] })
          .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
@@ -784,6 +837,31 @@ exports.CrmMachine_Update = function(req, res) {
          } else {
                res.status(200).send({Status: true, Message: 'Machine Successfully Updated' });
                }
+      });
+   }
+};
+exports.CrmMachine_Delete = function(req, res) {
+
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Machine_Id || ReceivingData.Machine_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Machine Details can not be empty" });
+   } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else {
+      Promise.all([
+         CrmCustomersModel.CrmMachinesSchema.update(
+            { _id : mongoose.Types.ObjectId(ReceivingData.Machine_Id)  },
+            {  $set: { If_Deleted : true } }).exec(),
+         CrmCustomersModel.CrmTicketsSchema.updateMany(
+            { Machine : mongoose.Types.ObjectId(ReceivingData.Machine_Id)  },
+            {  $set: { If_Deleted : true } }).exec(),
+      ]).then( result => {
+         res.status(200).send({Status: true, Message: 'Machine Successfully Hided'  });
+      }).catch(err => {
+         ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Crm Machine Delete Query Error', 'Crm_Customers.controller.js', err);
+         res.status(400).send({Status: false, Message: "Some error occurred while hide the Crm Machine!."});
       });
    }
 };
@@ -1656,6 +1734,46 @@ exports.CrmTickets_IdleCheck = function(req, res) {
       })
    }
 };
+exports.CrmAMCTicketLimit_Check = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if (!ReceivingData.Customer_Id || ReceivingData.Customer_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "Crm Customer Details can not be empty" });
+   }else {
+      CrmCustomersModel.CrmCustomersSchema
+         .findOne({'_id': ReceivingData.Customer_Id }, {AMCFrom: 1, AMCTo: 1, TicketsLimit: 1}, {}).exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customers Data Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customers Data!."});
+         } else {
+            if (result !== null) {
+               CrmCustomersModel.CrmTicketsSchema
+                  .count({  'Customer': ReceivingData.Customer_Id, 
+                           'If_Deleted': false,
+                           $and: [  { TicketOpenDate: { $lte: result.AMCTo } },
+                                    { TicketOpenDate: { $gte: result.AMCFrom } } ] })
+                  .exec(function(err_1, result_1) {
+                     if(err_1) {
+                        ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Tickes Count Find Query Error', 'Crm_Customers.controller.js', err_1);
+                        res.status(417).send({status: false, Message: "Some error occurred!."});
+                     } else {
+                        var Availability = false;
+                        if (result.TicketsLimit > result_1) {
+                           Availability = true;
+                        }
+                        res.status(200).send({Status: true, Availability: Availability });
+                     }
+                  })
+            } else {
+               res.status(401).send({status: false, Message: "Invalid Credentials!."});
+            }
+         }
+      });
+   }
+};
 exports.CrmTickets_List = function(req, res) {
    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
@@ -2144,7 +2262,7 @@ exports.CrmCustomerBased_ActivitiesList = function(req, res) {
    }else {
 
       CrmCustomersModel.CrmMachinesSchema
-      .find({Customer: mongoose.Types.ObjectId(ReceivingData.Customer_Id)}, { _id: 1 } )
+      .find({Customer: mongoose.Types.ObjectId(ReceivingData.Customer_Id), If_Deleted: false}, { _id: 1 } )
       .exec(function(err, result){
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customer Machines List Find Query Error', 'Crm_Customers.controller.js', err);

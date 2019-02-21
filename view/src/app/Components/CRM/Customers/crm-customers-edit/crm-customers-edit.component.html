@@ -73,13 +73,35 @@
                         <input type="text" formControlName="NoOfEmployees" placeholder="No.Of Eployees">
                         </div>
                         <div class="col-sm-4 Form_Select" >
-                        <ng-select class="NgSelect ValueBold" formControlName="CompanyType" [searchable]="true" placeholder="Company Type">
-                            <ng-option *ngFor="let CompanyType of _CompanyTypes" [value]="CompanyType">{{ CompanyType }}</ng-option>
-                        </ng-select>
-                        <p class="error" *ngIf="Form.controls['CompanyType'].errors && !Form.controls['CompanyType'].pristine">
-                            <span *ngIf="Form.controls['CompanyType'].errors.required"> Company Type is required</span>
-                        </p>
+                            <ng-select class="NgSelect ValueBold" formControlName="CompanyType" (change)="CompanyTypeChange()" [searchable]="true" placeholder="Company Type">
+                                <ng-option *ngFor="let CompanyType of _CompanyTypes" [value]="CompanyType">{{ CompanyType }}</ng-option>
+                            </ng-select>
+                            <p class="error" *ngIf="Form.controls['CompanyType'].errors && !Form.controls['CompanyType'].pristine">
+                                <span *ngIf="Form.controls['CompanyType'].errors.required"> Company Type is required</span>
+                            </p>
                         </div>
+                        <ng-container *ngIf="AddLimitField">
+                            <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['TicketsLimit'].pristine && Form.controls['TicketsLimit'].errors, 'Form_Success': Form.controls['TicketsLimit'].valid && !Form.controls['TicketsLimit'].pristine }" >
+                               <input type="text" formControlName="TicketsLimit" placeholder="Tickets Limit">
+                               <p class="error" *ngIf="Form.controls['TicketsLimit'].errors && !Form.controls['TicketsLimit'].pristine">
+                                  <span *ngIf="Form.controls['TicketsLimit'].errors.required"> No Of Breack Downs is required</span>
+                               </p>
+                            </div>
+                            <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['AMCFrom'].pristine && Form.controls['AMCFrom'].errors, 'Form_Success': Form.controls['AMCFrom'].valid && !Form.controls['AMCFrom'].pristine }" >
+                                <input type="text" formControlName="AMCFrom" [matDatepicker]="Datepicker" (click)="Datepicker.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="AMC Duration From">
+                                <mat-datepicker #Datepicker></mat-datepicker>
+                                <p class="error" *ngIf="Form.controls['AMCFrom'].errors && !Form.controls['AMCFrom'].pristine">
+                                    <span *ngIf="Form.controls['AMCFrom'].errors.required"> AMC Duration From Date is required</span>
+                                </p>
+                            </div>
+                            <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['AMCTo'].pristine && Form.controls['AMCTo'].errors, 'Form_Success': Form.controls['AMCTo'].valid && !Form.controls['AMCTo'].pristine }" >
+                                <input type="text" formControlName="AMCTo" [matDatepicker]="DatepickerOne" (click)="DatepickerOne.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="AMC Duration To">
+                                <mat-datepicker #DatepickerOne></mat-datepicker>
+                                <p class="error" *ngIf="Form.controls['AMCTo'].errors && !Form.controls['AMCTo'].pristine">
+                                    <span *ngIf="Form.controls['AMCTo'].errors.required"> AMC Duration To Date is required</span>
+                                </p>
+                            </div>
+                         </ng-container>
                         <div class="col-sm-4 Form_Select">
                         <ng-select class="NgSelect ValueBold"
                                         [items]='_Industry_Types'

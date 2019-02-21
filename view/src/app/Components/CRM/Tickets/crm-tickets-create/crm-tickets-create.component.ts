@@ -40,16 +40,19 @@ export class CrmTicketsCreateComponent implements OnInit {
    _Machines: any[] =  [];
    _Tickets_Types: any[] =  [];
 
-   User_Type;
-   If_Employee;
+   User_Type: any;
+   If_Employee: any;
    Form: FormGroup;
    Uploading: Boolean = false;
    Sub_Loading: Boolean = true;
-   WorkShift_Info;
-   Availability_Info;
+   WorkShift_Info: any;
+   Availability_Info: any;
 
-   User_Id;
+   AMCValidation: Boolean = false;
+   AMCDurationError: Boolean = false;
+   AMCLimitError: Boolean = false;
 
+   User_Id: any;
 
    constructor(
             private modalService: BsModalService,
@@ -69,7 +72,7 @@ export class CrmTicketsCreateComponent implements OnInit {
             let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
             Info = Info.toString();
             // Get Customers List
-            this.Crm_Service.CrmCustomers_SimpleList({'Info': Info}).subscribe( response => {
+            this.Crm_Service.CrmCustomers_List({'Info': Info}).subscribe( response => {
                const ResponseData = JSON.parse(response['_body']);
                this.Sub_Loading = false;
                if (response['status'] === 200 && ResponseData['Status'] ) {
@@ -158,40 +161,80 @@ export class CrmTicketsCreateComponent implements OnInit {
          const Str_Date = (TicketOpenDate.getMonth() + 1 + '/' + TicketOpenDate.getDate() +  '/' + TicketOpenDate.getFullYear()).toString();
          const DateTime = new Date( Str_Date + ' ' + this.Form.controls['TicketOpenTime'].value);
 
-         const Data = {'User_Id' : this.User_Id, 'Customer_Id': Customer._id, 'Machine_Id': Machine._id, 'DateTime': DateTime };
-         let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
-         Info = Info.toString();
-         this.Sub_Loading = true;
-         this.Crm_Service.CrmTickets_IdleCheck({'Info': Info}).subscribe( response => {
-            const ResponseData = JSON.parse(response['_body']);
-            this.Sub_Loading = false;
-            if (response['status'] === 200 && ResponseData['Status'] ) {
-               const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Idle_Response'], 'SecretKeyOut@123');
-               const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-               this.WorkShift_Info = DecryptedData;
-               const CryptoBytes_Avail  = CryptoJS.AES.decrypt(ResponseData['Availability_Response'], 'SecretKeyOut@123');
-               const DecryptedData_Avail = JSON.parse(CryptoBytes_Avail.toString(CryptoJS.enc.Utf8));
-               this.Availability_Info = DecryptedData_Avail;
-               if (ResponseData['Idle_Stage'] ) {
-                  this.Form.controls['If_Idle'].setValue(true);
+         const _index = this._Customers.findIndex(obj => obj._id === Customer._id);
+         const CustomerType = this._Customers[_index]['CompanyType'];
+
+         if (CustomerType === 'PL') {
+            this.AMCValidation = false;
+            const Data = {'User_Id' : this.User_Id, 'Customer_Id': Customer._id, 'Machine_Id': Machine._id, 'DateTime': DateTime };
+            let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
+            Info = Info.toString();
+            this.Sub_Loading = true;
+            this.Crm_Service.CrmTickets_IdleCheck({'Info': Info}).subscribe( response => {
+               const ResponseData = JSON.parse(response['_body']);
+               this.Sub_Loading = false;
+               if (response['status'] === 200 && ResponseData['Status'] ) {
+                  const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Idle_Response'], 'SecretKeyOut@123');
+                  const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+                  this.WorkShift_Info = DecryptedData;
+                  const CryptoBytes_Avail  = CryptoJS.AES.decrypt(ResponseData['Availability_Response'], 'SecretKeyOut@123');
+                  const DecryptedData_Avail = JSON.parse(CryptoBytes_Avail.toString(CryptoJS.enc.Utf8));
+                  this.Availability_Info = DecryptedData_Avail;
+                  if (ResponseData['Idle_Stage'] ) {
+                     this.Form.controls['If_Idle'].setValue(true);
+                  } else {
+                     this.Form.controls['If_Idle'].setValue(false);
+                  }
+               } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+                  this.Form.controls['If_Idle'].setValue(null);
+                  this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+               } else if (response['status'] === 401 && !ResponseData['Status']) {
+                  this.Form.controls['If_Idle'].setValue(null);
+                  this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
                } else {
-                  this.Form.controls['If_Idle'].setValue(false);
+                  this.Form.controls['If_Idle'].setValue(null);
+                  this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Machine Idle Validate Error!, But not Identify!' });
                }
-            } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
-               this.Form.controls['If_Idle'].setValue(null);
-               this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
-            } else if (response['status'] === 401 && !ResponseData['Status']) {
-               this.Form.controls['If_Idle'].setValue(null);
-               this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
-            } else {
-               this.Form.controls['If_Idle'].setValue(null);
-               this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Machine Idle Validate Error!, But not Identify!' });
+            });
+         } else {
+            if (CustomerType === 'AMC') {
+               this.AMCValidation = true;
+               const AMCFrom = new Date(this._Customers[_index]['AMCFrom']);
+               const currentAMCto = new Date(this._Customers[_index]['AMCTo']);
+               const AMCTo = new Date(currentAMCto.setDate(currentAMCto.getDate() + 1));
+               if ( AMCFrom.valueOf() <= DateTime.valueOf() &&  DateTime.valueOf() <= AMCTo.valueOf() ) {
+                  this.AMCDurationError = false;
+                  const Data = {'User_Id' : this.User_Id, 'Customer_Id': Customer._id };
+                  let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
+                  Info = Info.toString();
+                  this.Sub_Loading = true;
+                  this.Crm_Service.CrmAMCTicketLimit_Check({'Info': Info}).subscribe( response => {
+                     const ResponseData = JSON.parse(response['_body']);
+                     this.Sub_Loading = false;
+                     if (response['status'] === 200 && ResponseData['Status'] ) {
+                        if (ResponseData['Availability'] ) {
+                           this.AMCLimitError = false;
+                        } else {
+                           this.AMCLimitError = true;
+                        }
+                     } else if (response['status'] === 400 || response['status'] === 417 || response['status'] === 401 && !ResponseData['Status']) {
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+                     } else {
+                        this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'AMC Validate Error!' });
+                     }
+                  });
+               } else {
+                  this.AMCDurationError = true;
+                  this.AMCLimitError = false;
+               }
             }
-         });
+            this.Form.controls['If_Idle'].setValue(true);
+         }
       } else {
          this.Form.controls['If_Idle'].setValue(null);
       }
    }
+
 
    formatDate(date) {
       const d = new Date(date);

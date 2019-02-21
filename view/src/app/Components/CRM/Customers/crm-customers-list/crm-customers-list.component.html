@@ -55,6 +55,7 @@
                         <h5>{{Customer.BillingAddress.Area}}, {{Customer.BillingAddress.City.City_Name}}, {{Customer.BillingAddress.State.State_Name}}</h5>
                      </div>
                      <span *ngIf="User_Type !== 'Employee'" [routerLink]="[ '/crm_customers_edit', Customer._id ]"><i class="material-icons settings">border_color</i></span>
+                     <span *ngIf="User_Type !== 'Employee'" style="right: 30px; color: #dd0a0a" (click)="DeleteCustomer(i, $event)"><i class="material-icons settings">delete_forever</i></span>
                   </div>
                </div>
             </div>

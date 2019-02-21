@@ -203,12 +203,13 @@ span i{
    height:35px;
    background-color: #516570;
    color: #fff;
+   justify-content: space-around;
    
 }
 .Menu_Bar .Menu li {
    border-right: 1px solid #3b4a52;
    display: block;
-   width: 20%;
+   width: 100%;
    height: 35px;
    line-height: 35px;
    text-align: center;

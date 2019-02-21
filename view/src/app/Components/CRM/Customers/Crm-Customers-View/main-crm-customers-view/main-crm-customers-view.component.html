@@ -121,10 +121,14 @@
                               <li [ngClass]="{'active': Active_Tab === 'Contact' }" (click)="Active_Tab_Change('Contact')"><span class="Menu_List">Contacts</span></li>
                               <!-- <li  [ngClass]="{'active': Active_Tab === 'Activity' }" (click)="Active_Tab_Change('Activity')"><span class="Menu_List">Activities</span></li> -->
                               <li [ngClass]="{'active': Active_Tab === 'Machines' }" (click)="Active_Tab_Change('Machines')"><span class="Menu_List">Machines</span></li>
-                              <li [ngClass]="{'active': Active_Tab === 'Machines_Working' }" (click)="Active_Tab_Change('Machines_Working')"><span class="Menu_List">Machine Shifts</span></li>
+                              <ng-container *ngIf="_Data['CompanyType'] === 'PL'">
+                                 <li [ngClass]="{'active': Active_Tab === 'Machines_Working' }" (click)="Active_Tab_Change('Machines_Working')"><span class="Menu_List">Machine Shifts</span></li>
+                              </ng-container>
                               <li [ngClass]="{'active': Active_Tab === 'Tickets' }" (click)="Active_Tab_Change('Tickets')"><span class="Menu_List">Tickets</span></li>
-                              <li [ngClass]="{'active': Active_Tab === 'MachineStatus' }" (click)="Active_Tab_Change('MachineStatus')"><span class="Menu_List">Machine Status</span></li>
-                              <li [ngClass]="{'active': Active_Tab === 'MachineChartReport' }" (click)="Active_Tab_Change('MachineChartReport')"><span class="Menu_List"> Machines Report</span></li>
+                              <ng-container *ngIf="_Data['CompanyType'] === 'PL'">
+                                 <li [ngClass]="{'active': Active_Tab === 'MachineStatus' }" (click)="Active_Tab_Change('MachineStatus')"><span class="Menu_List">Machine Status</span></li>
+                                 <li [ngClass]="{'active': Active_Tab === 'MachineChartReport' }" (click)="Active_Tab_Change('MachineChartReport')"><span class="Menu_List"> Machines Report</span></li>
+                              </ng-container>
                            </ul>
                         </div>
                      </div>
@@ -149,40 +153,47 @@
                         <app-machines-crm-customers-view [CustomerData]="_Data"></app-machines-crm-customers-view>
                      </div>
                   </div>
-                  <div class="row" *ngIf=" Active_Tab === 'Machines_Working' && !isEmptyObject(_Data)">
-                     <div class="col-sm-12">
-                        <app-machine-working-update [CustomerData]="_Data"></app-machine-working-update>
+                  <ng-container *ngIf="_Data['CompanyType'] === 'PL'">
+                     <div class="row" *ngIf=" Active_Tab === 'Machines_Working' && !isEmptyObject(_Data)">
+                        <div class="col-sm-12">
+                           <app-machine-working-update [CustomerData]="_Data"></app-machine-working-update>
+                        </div>
                      </div>
-                  </div>
+                  </ng-container>
                   <div class="row" *ngIf=" Active_Tab === 'Tickets' && !isEmptyObject(_Data)">
                      <div class="col-sm-12">
                            <app-tickets-crm-customers-view [CustomerData]="_Data"></app-tickets-crm-customers-view>
                      </div>
                   </div>
-                  <div class="row" *ngIf=" Active_Tab === 'MachineStatus' && !isEmptyObject(_Data)">
-                     <div class="col-sm-12">
-                        <app-machine-status-crm-customers-view [CustomerData]="_Data"></app-machine-status-crm-customers-view>
-                     </div>
-                  </div>
-                  <div class="row" *ngIf=" Active_Tab === 'MachineChartReport' && !isEmptyObject(_Data) ">
-                     <div class="col-sm-12">
-                        <app-machines-monthly-chart-report [CustomerData]="_Data"></app-machines-monthly-chart-report>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-sm-3">
-                  <div class="Main_MachineStatus">
-                     <div class="Header">
-                        <h5> Machines Status</h5>
-                     </div>
-                     <div class="Machine_Statuses">
-                        <div *ngFor="let item of _List; let i=index" class="Machine Tooltip" [ngStyle]="{'background-color' : item.Machine?.Color }">
-                           <div class="machineName "> {{item.Machine?.MachineName | slice:0:15}}{{item.Machine.MachineName?.length > 15 ? '...' : ' ' }}  <span class="TooltipText"> <span class="LevelOne"> {{item.Machine?.MachineName}} </span> <span class="LevelTwo"> {{item.Machine?.Status}}</span>   </span></div>
+                  <ng-container *ngIf="_Data['CompanyType'] === 'PL'">
+                     <div class="row" *ngIf=" Active_Tab === 'MachineStatus' && !isEmptyObject(_Data)">
+                        <div class="col-sm-12">
+                           <app-machine-status-crm-customers-view [CustomerData]="_Data"></app-machine-status-crm-customers-view>
                         </div>
                      </div>
-                  </div>
+                     <div class="row" *ngIf=" Active_Tab === 'MachineChartReport' && !isEmptyObject(_Data) ">
+                        <div class="col-sm-12">
+                           <app-machines-monthly-chart-report [CustomerData]="_Data"></app-machines-monthly-chart-report>
+                        </div>
+                     </div>
+                  </ng-container>
+               </div>
+               <div class="col-sm-3">
+                  <ng-container *ngIf="_Data['CompanyType'] === 'PL'">
+                     <div class="Main_MachineStatus">
+                        <div class="Header">
+                           <h5> Machines Status</h5>
+                        </div>
+                        <div class="Machine_Statuses">
+                           <div *ngFor="let item of _List; let i=index" class="Machine Tooltip" [ngStyle]="{'background-color' : item.Machine?.Color }">
+                              <div class="machineName "> {{item.Machine?.MachineName | slice:0:15}}{{item.Machine.MachineName?.length > 15 ? '...' : ' ' }}  <span class="TooltipText"> <span class="LevelOne"> {{item.Machine?.MachineName}} </span> <span class="LevelTwo"> {{item.Machine?.Status}}</span>   </span></div>
+                           </div>
+                        </div>
+                     </div>
+                     
+                     <br>
+                  </ng-container>
                   
-                  <br>
                   <div class="Log_Section">
                      <div class="Log_Header">
                         <h5> Recent </h5>

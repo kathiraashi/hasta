@@ -94,6 +94,9 @@
                            <button *ngIf="User_Type !== 'Employee'" [routerLink]="['/Crm_Machines_Edit', Machine._id]" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
                               <i class="material-icons">edit</i>
                            </button>
+                           <button *ngIf="User_Type !== 'Employee'" (click)="DeleteMachine(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                              <i class="material-icons">delete_forever</i>
+                           </button>
                         </td>
                      </tr>
                   </tbody>

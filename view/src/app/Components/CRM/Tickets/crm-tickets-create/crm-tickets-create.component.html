@@ -83,7 +83,7 @@
  
 
 <ng-template #ConfirmationModel>
-   <div class="Modal_Content">
+   <div *ngIf="!AMCValidation" class="Modal_Content">
       <div class="Modal_Header">
          <p *ngIf="Availability_Info === null"> Ticket Confirmation </p>
          <p *ngIf="Availability_Info && Availability_Info !== null"> Alert </p>
@@ -92,6 +92,22 @@
          <p *ngIf="Availability_Info === null && WorkShift_Info === null"> Are you Sure? <br> You want to Create a <b> Idle Ticket</b>.</p>
          <p *ngIf="WorkShift_Info && Availability_Info === null && WorkShift_Info !== null"> Are you Sure? <br> You want to Create a <b> Breakdown Ticket</b>. <br> Shift: <b>{{WorkShift_Info?.Start_Time}} - {{WorkShift_Info?.Stop_Time}}</b></p>
          <p *ngIf="Availability_Info && Availability_Info !== null"> Invalid Time! <br> Already Ticket <b>{{Availability_Info?.TicketId}}</b> is Processed . <br> From: <b>{{Availability_Info?.TicketOpenDate | date: 'medium'}} </b> <br> To: <b> {{Availability_Info?.TicketCloseDate | date: 'medium'}}</b></p>
+         <div class="Model_Footer">
+            <button class="Bg_Danger" mat-raised-button color="primary" (click)="modalRef.hide()"> Cancel </button>
+            <button *ngIf="!Availability_Info || Availability_Info === null" mat-raised-button color="primary" (click)="Submit(); modalRef.hide()"> Proceed </button>
+         </div>
+      </div>
+   </div>
+
+   <div *ngIf="AMCValidation" class="Modal_Content">
+      <div class="Modal_Header">
+         <p *ngIf="!AMCDurationError && !AMCLimitError"> Ticket Confirmation </p>
+         <p *ngIf="AMCDurationError || AMCLimitError "> Alert </p>
+      </div>
+      <div class="Model_Body">
+         <p *ngIf="!AMCDurationError && !AMCLimitError"> Are you Sure? <br> You want to Create a <b> New Ticket</b>.</p>
+         <p *ngIf="AMCDurationError"> AMC Duration Completed! <br> If you want to overwrite, <b> Click to proceed. </b> </p>
+         <p *ngIf="AMCLimitError"> AMC Ticket Limit Finished! <br> If you want to overwrite, <b> Click to proceed. </b></p>
          <div class="Model_Footer">
             <button class="Bg_Danger" mat-raised-button color="primary" (click)="modalRef.hide()"> Cancel </button>
             <button *ngIf="!Availability_Info || Availability_Info === null" mat-raised-button color="primary" (click)="Submit(); modalRef.hide()"> Proceed </button>

@@ -87,6 +87,44 @@
                </div>
             </div>
          </div>
+         <ng-container *ngIf="CustomerData['CompanyType'] === 'AMC'">
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="Customer_Details_Title">
+                     <h5> Tickets Limit <span>:</span></h5>
+                  </div>
+               </div>
+               <div class="col-sm-8">
+                  <div class="Customer_Details_Value">
+                     <h5 >{{CustomerData['TicketsLimit']}}</h5>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="Customer_Details_Title">
+                     <h5> AMC From <span>:</span></h5>
+                  </div>
+               </div>
+               <div class="col-sm-8">
+                  <div class="Customer_Details_Value">
+                     <h5 >{{CustomerData['AMCFrom'] | date:'longDate'}}</h5>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="Customer_Details_Title">
+                     <h5> AMC To <span>:</span></h5>
+                  </div>
+               </div>
+               <div class="col-sm-8">
+                  <div class="Customer_Details_Value">
+                     <h5 >{{CustomerData['AMCTo'] | date:'longDate'}}</h5>
+                  </div>
+               </div>
+            </div>
+         </ng-container>
          <div class="row">
             <div class="col-sm-4">
                <div class="Customer_Details_Title">

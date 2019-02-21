@@ -5,6 +5,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import { map } from 'rxjs/operators';
 
+import {NativeDateAdapter} from '@angular/material';
+import {DateAdapter} from '@angular/material/core';
+export class MyDateAdapter extends NativeDateAdapter {
+   format(date: Date, displayFormat: Object): string {
+        const day = date.getDate();
+       const month = date.getMonth() + 1;
+       const year = date.getFullYear();
+       return `${day}-${month}-${year}`;
+   }
+}
+
 import { LoginService } from './../../../../services/LoginService/login.service';
 import { AdminService } from './../../../../services/Admin/admin.service';
 import { CrmSettingsService } from './../../../../services/settings/crmSettings/crm-settings.service';
@@ -14,7 +25,8 @@ import { CrmService } from './../../../../services/Crm/crm.service';
 @Component({
   selector: 'app-crm-customers-edit',
   templateUrl: './crm-customers-edit.component.html',
-  styleUrls: ['./crm-customers-edit.component.css']
+  styleUrls: ['./crm-customers-edit.component.css'],
+  providers: [{provide: DateAdapter, useClass: MyDateAdapter}]
 })
 export class CrmCustomersEditComponent implements OnInit {
 
@@ -30,12 +42,14 @@ export class CrmCustomersEditComponent implements OnInit {
   ShopFloorAllStateOfCountry: any[];
   ShopFloorAllCityOfState:  any[];
 
-  ShopFloor_State;
+  ShopFloor_State: any;
+
+  AddLimitField: Boolean = false;
 
   Form: FormGroup;
 
-  User_Id;
-  Customer_Id;
+  User_Id: any;
+  Customer_Id: any;
   _Data;
   Loader: Boolean = true;
 
@@ -115,7 +129,6 @@ export class CrmCustomersEditComponent implements OnInit {
                 this.UpdateForm();
                 this.IndustryTypeUpdate();
                 this.OwnershipTypeUpdate();
-                console.log(DecryptedData);
              } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                 this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
              } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -166,6 +179,14 @@ export class CrmCustomersEditComponent implements OnInit {
     this.Form.controls['Website'].setValue(this._Data['Website']);
     this.Form.controls['NoOfEmployees'].setValue(this._Data['NoOfEmployees']);
     this.Form.controls['CompanyType'].setValue(this._Data['CompanyType']);
+    if (this._Data['CompanyType'] === 'AMC') {
+      this.CompanyTypeChange();
+      setTimeout(() => {
+         this.Form.controls['TicketsLimit'].setValue(this._Data['TicketsLimit']);
+         this.Form.controls['AMCFrom'].setValue(this._Data['AMCFrom']);
+         this.Form.controls['AMCTo'].setValue(this._Data['AMCTo']);
+      }, 500);
+    }
     this.Form.controls['StateCode'].setValue(this._Data['StateCode']);
     this.Form.controls['GSTNo'].setValue(this._Data['GSTNo']);
     this.Form.controls['Notes'].setValue(this._Data['Notes']);
@@ -267,6 +288,24 @@ export class CrmCustomersEditComponent implements OnInit {
       this.Form.controls['OwnershipType'].setValue(this._Data['OwnershipType']);
     }
   }
+
+  NotAllow(): boolean {return false; }
+
+
+  CompanyTypeChange() {
+   const type = this.Form.controls['CompanyType'].value;
+   if (type === 'AMC') {
+      this.Form.addControl('TicketsLimit', new FormControl('', Validators.required));
+      this.Form.addControl('AMCFrom', new FormControl(null, Validators.required));
+      this.Form.addControl('AMCTo', new FormControl(null, Validators.required));
+      this.AddLimitField = true;
+   } else {
+      this.Form.removeControl('TicketsLimit');
+      this.Form.removeControl('AMCFrom');
+      this.Form.removeControl('AMCTo');
+      this.AddLimitField = false;
+   }
+}
 
   BillingCountry_Change() {
      const SelectedCountry = this.Form.controls['BillingCountry'].value;

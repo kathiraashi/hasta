@@ -5,6 +5,17 @@ import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import { map } from 'rxjs/operators';
 
+import {NativeDateAdapter} from '@angular/material';
+import {DateAdapter} from '@angular/material/core';
+export class MyDateAdapter extends NativeDateAdapter {
+   format(date: Date, displayFormat: Object): string {
+        const day = date.getDate();
+       const month = date.getMonth() + 1;
+       const year = date.getFullYear();
+       return `${day}-${month}-${year}`;
+   }
+}
+
 import { LoginService } from './../../../../services/LoginService/login.service';
 import { AdminService } from './../../../../services/Admin/admin.service';
 import { CrmSettingsService } from './../../../../services/settings/crmSettings/crm-settings.service';
@@ -14,11 +25,12 @@ import { CrmService } from './../../../../services/Crm/crm.service';
 @Component({
   selector: 'app-crm-customers-create',
   templateUrl: './crm-customers-create.component.html',
-  styleUrls: ['./crm-customers-create.component.css']
+  styleUrls: ['./crm-customers-create.component.css'],
+  providers: [{provide: DateAdapter, useClass: MyDateAdapter}]
 })
 export class CrmCustomersCreateComponent implements OnInit {
 
-   _CompanyTypes: any[] = ['PL', 'BD', 'AMC'];
+   _CompanyTypes: any[] = ['PL', 'BR', 'AMC'];
    _Industry_Types: any[] =  [];
    _Ownership_Types: any[] =  [];
 
@@ -30,11 +42,13 @@ export class CrmCustomersCreateComponent implements OnInit {
    ShopFloorAllStateOfCountry: any[];
    ShopFloorAllCityOfState:  any[];
 
-   ShopFloor_State;
+   AddLimitField: Boolean = false;
+
+   ShopFloor_State: any;
 
    Form: FormGroup;
 
-   User_Id;
+   User_Id: any;
 
    constructor(
       public Service: AdminService,
@@ -124,6 +138,23 @@ export class CrmCustomersCreateComponent implements OnInit {
          ShopFloorCity: new FormControl(null, Validators.required),
          ShopFloorZipCode: new FormControl('', Validators.required),
       });
+   }
+
+   NotAllow(): boolean {return false; }
+
+   CompanyTypeChange() {
+      const type = this.Form.controls['CompanyType'].value;
+      if (type === 'AMC') {
+         this.Form.addControl('TicketsLimit', new FormControl('', Validators.required));
+         this.Form.addControl('AMCFrom', new FormControl(null, Validators.required));
+         this.Form.addControl('AMCTo', new FormControl(null, Validators.required));
+         this.AddLimitField = true;
+      } else {
+         this.Form.removeControl('TicketsLimit');
+         this.Form.removeControl('AMCFrom');
+         this.Form.removeControl('AMCTo');
+         this.AddLimitField = false;
+      }
    }
 
    BillingCountry_Change() {
