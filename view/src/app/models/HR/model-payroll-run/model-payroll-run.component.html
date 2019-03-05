@@ -28,12 +28,18 @@
                   <div class="Data"> {{ Data?.No_Of_Days - Data?.No_Of_Absent - Data?.No_Of_UnPaidLeaves }}</div>
                </div>
             </div>
+            <div class="col-sm-6 text-right">
+               <div class="Add-More-Buttons">
+                  <button (click)="Earnings_Add()" mat-raised-button color="primary"> Add More Earnings </button>
+                  <button (click)="Detections_Add()" mat-raised-button color="primary"> Add More Detections </button>
+               </div>
+            </div>
          </div>
 
 
          <div class="row" *ngIf="_MasterDetails">
             <div class="col-sm-6">
-               <h5 class="GroupHeader"> Payable </h5>
+               <h5 class="GroupHeader"> Earnings </h5>
                <div class="view_item">
                   <div class="Static"></div>
                   <div class="dots"></div>
@@ -78,7 +84,7 @@
                </div>
             </div>
             <div class="col-sm-6">
-               <h5 class="GroupHeader"> Detection Details </h5>
+               <h5 class="GroupHeader"> Detections </h5>
                <div class="view_item">
                   <div class="Static"></div>
                   <div class="dots"></div>
@@ -118,6 +124,117 @@
             </div>
          </div>
 
+         <div class="row" *ngIf="_MasterDetails">
+            <div class="col-sm-6">
+               <form [formGroup]="Form">
+                  <div class="row" *ngIf="Form.controls['More_Earnings']['controls'].length > 0 || Form.controls['More_Detections']['controls'].length > 0 ">
+                     <div class="col-sm-12">
+                        <h5 class="GroupHeader"> More Earnings </h5>
+                     </div>
+                  </div>
+                  <ng-container formArrayName="More_Earnings" >
+                     <div class="row" *ngFor="let More_Earning of Form.controls['More_Earnings']['controls']; let i=index" [formGroup]="More_Earning">
+                        <div class="col-sm-1 Form_Input" style="padding-right: 0px; line-height: 30px;">
+                           <label> {{i + 1}} )</label>
+                        </div>
+                        <div class="col-sm-6 Form_Input">
+                           <ng-select class="NgSelect" 
+                              [items]="_EarningsList" 
+                              bindLabel="Earnings_Type"
+                              bindValue="_id"
+                              formControlName="Earnings"
+                              [searchable]="true" 
+                              placeholder="Select Earnings">
+                           </ng-select>
+                        </div>
+                        <div class="col-sm-4 Form_Input" style="padding-right: 0px;">
+                           <input type="number" (change)="calculate()" formControlName="Amount" placeholder="Amount">
+                        </div>
+                        <div class="col-sm-1" style="padding-left: 5px;">
+                           <button (click)="Remove_Earnings(i)" mat-icon-button color="warn" style="width: 25px;"> <i class="material-icons">cancel</i> </button>
+                        </div>
+                     </div>
+                  </ng-container>
+               </form>
+            </div>
+            <div class="col-sm-6">
+               <form [formGroup]="Form">
+                  <div class="row" *ngIf="Form.controls['More_Earnings']['controls'].length > 0 || Form.controls['More_Detections']['controls'].length > 0 ">
+                     <div class="col-sm-12">
+                        <h5 class="GroupHeader"> More Detections </h5>
+                     </div>
+                  </div>
+                  <ng-container formArrayName="More_Detections" >
+                     <div class="row" *ngFor="let More_Detection of Form.controls['More_Detections']['controls']; let i=index" [formGroup]="More_Detection">
+                        <div class="col-sm-1 Form_Input" style="padding-right: 0px; line-height: 30px;">
+                           <label> {{i + 1}} )</label>
+                        </div>
+                        <div class="col-sm-6 Form_Input">
+                           <ng-select class="NgSelect" 
+                              [items]="_DetectionsList" 
+                              bindLabel="Detections_Type"
+                              bindValue="_id"
+                              formControlName="Detections"
+                              [searchable]="true" 
+                              placeholder="Select Detections">
+                           </ng-select>
+                        </div>
+                        <div class="col-sm-4 Form_Input" style="padding-right: 0px;">
+                           <input type="number" (change)="calculate()" formControlName="Amount" placeholder="Amount">
+                        </div>
+                        <div class="col-sm-1" style="padding-left: 5px;">
+                           <button (click)="Remove_Detections(i)" mat-icon-button color="warn" style="width: 25px;"> <i class="material-icons">cancel</i> </button>
+                        </div>
+                     </div>
+                  </ng-container>
+               </form>
+            </div>
+         </div>
+         <br>
+         <div class="row" *ngIf="_MasterDetails">
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
+               <form [formGroup]="Form">
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <h5 class="GroupHeader"> Total </h5>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-6 Form_Input" style="line-height: 30px; margin-bottom: 0px;">
+                        <label> Total Earnings : </label>
+                     </div>
+                     <div class="col-sm-6 Form_Input" style="line-height: 30px; margin-bottom: 0px;">
+                        <label> Rs. {{Form.controls['Total_Earning'].value}} </label>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-6 Form_Input" style="line-height: 30px; margin-bottom: 0px;">
+                        <label> Total Detection : </label>
+                     </div>
+                     <div class="col-sm-6 Form_Input" style="line-height: 30px; margin-bottom: 0px;">
+                        <label> Rs. {{Form.controls['Total_Detection'].value}} </label>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-6 Form_Input" style="line-height: 30px; margin-bottom: 0px;">
+                        <label> Final Salary : </label>
+                     </div>
+                     <div class="col-sm-6 Form_Input" style="line-height: 30px; margin-bottom: 0px; ">
+                        <label> Rs. {{Form.controls['Total_Salary'].value}} </label>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+
       </div>
+   </div>
+   <div class="Model_Footer" *ngIf="_MasterDetails">
+      <button type="button" (click)="Submit()" [disabled]="Form.status !== 'VALID' || Uploading"  mat-raised-button color="primary">
+         <span *ngIf="!Uploading"> Submit </span>
+         <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+      </button>
    </div>
 </div>

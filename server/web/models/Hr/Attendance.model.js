@@ -58,4 +58,4 @@ var VarAttendance_Report = mongoose.model('Attendance_Report', AttendanceReportS
 module.exports = {
    Employee_AttendanceSchema : VarEmployee_Attendance,
    AttendanceReportSchema : VarAttendance_Report
-}
+};

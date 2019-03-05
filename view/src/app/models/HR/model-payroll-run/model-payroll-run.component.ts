@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
@@ -70,7 +70,6 @@ export class ModelPayrollRunComponent implements OnInit {
 
   ngOnInit() {
       this.onClose = new Subject();
-      console.log(this.Data);
       const Data = { 'User_Id' : this.User_Id, Employee: this.Data['Employee']['_id']};
       let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
       Info = Info.toString();
@@ -80,7 +79,6 @@ export class ModelPayrollRunComponent implements OnInit {
             const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
             const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
             this._MasterDetails = DecryptedData;
-            console.log(DecryptedData);
             this.Generate_Form();
          } else if (response['status'] === 400 || response['status'] === 401 || response['status'] === 417 && !ResponseData['Status']) {
             this.Toastr.NewToastrMessage({Type: 'Error', Message: response['Message']});
@@ -157,14 +155,106 @@ export class ModelPayrollRunComponent implements OnInit {
          Medical_Insurance: new FormControl(Medical_Insurance, Validators.required),
          TDS: new FormControl(TDS, Validators.required),
 
-         Total_Payable: new FormControl({value: 1000, disabled: true}, Validators.required),
-         Total_Detectable: new FormControl({value: 0, disabled: true}, Validators.required),
-         Monthly_Salary: new FormControl({value: 1000, disabled: true}, [Validators.required, Validators.min(1000)]),
+         More_Earnings: new FormArray([]),
+         More_Detections: new FormArray([]),
+
+         Total_Earning: new FormControl(0, Validators.required),
+         Total_Detection: new FormControl(0, Validators.required),
+
+         Total_Salary: new FormControl(0, Validators.required),
          Created_By: new FormControl(this.User_Id, Validators.required),
       });
+      this.calculate();
+   }
 
-      console.log(Total_NoOf_Days, Total_NoOf_Payable, Total_NoOf_UnPayable);
-      console.log(this.Form);
+   Earnings_Add() {
+      const FormArr = <FormArray>this.Form.controls['More_Earnings'];
+      FormArr.push(this.Earnings_Control());
+   }
+   Earnings_Control() {
+      return new FormGroup({
+         Earnings: new FormControl(null, Validators.required ),
+         Amount: new FormControl(0, Validators.required )
+      });
+   }
+   Remove_Earnings(_index: number) {
+      const control = <FormArray>this.Form.controls['More_Earnings'];
+      control.removeAt(_index);
+      this.calculate();
+   }
+   Detections_Add() {
+      const FormArr = <FormArray>this.Form.controls['More_Detections'];
+      FormArr.push(this.Detections_Control());
+   }
+   Detections_Control() {
+      return new FormGroup({
+         Detections: new FormControl(null, Validators.required ),
+         Amount: new FormControl(0, Validators.required )
+      });
+   }
+   Remove_Detections(_index: number) {
+      const control = <FormArray>this.Form.controls['More_Detections'];
+      control.removeAt(_index);
+      this.calculate();
+   }
+
+   calculate() {
+      let Total_Earning = 0;
+      let Total_Detection = 0;
+
+      Total_Earning = Total_Earning + this.Form.controls['Basic_Pay'].value;
+      Total_Earning = Total_Earning + this.Form.controls['HRA'].value;
+      Total_Earning = Total_Earning + this.Form.controls['Conveyance'].value;
+      Total_Earning = Total_Earning + this.Form.controls['Medical_Reimbursement'].value;
+      Total_Earning = Total_Earning + this.Form.controls['Food_Allowance'].value;
+      Total_Earning = Total_Earning + this.Form.controls['Other_Allowance'].value;
+
+      Total_Detection = Total_Detection + this.Form.controls['Professional_Tax'].value;
+      Total_Detection = Total_Detection + this.Form.controls['Provident_Fund'].value;
+      Total_Detection = Total_Detection + this.Form.controls['Employee_State_Insurance'].value;
+      Total_Detection = Total_Detection + this.Form.controls['Medical_Insurance'].value;
+      Total_Detection = Total_Detection + this.Form.controls['TDS'].value;
+
+      const FormArr = <FormArray>this.Form.controls['More_Earnings']['controls'];
+      for (let index = 0; index < FormArr.length; index++) {
+         Total_Earning = Total_Earning + FormArr[index]['value']['Amount'];
+      }
+
+      const FormArr_1 = <FormArray>this.Form.controls['More_Detections']['controls'];
+      for (let index = 0; index < FormArr_1.length; index++) {
+         Total_Detection = Total_Detection + FormArr_1[index]['value']['Amount'];
+      }
+
+      this.Form.controls['Total_Earning'].setValue(Total_Earning);
+      this.Form.controls['Total_Detection'].setValue(Total_Detection);
+      this.Form.controls['Total_Salary'].setValue(Total_Earning - Total_Detection);
+
+   }
+
+   Submit() {
+      if (this.Form.valid && !this.Uploading) {
+         this.Uploading = true;
+         const Data = this.Form.getRawValue();
+         let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
+         Info = Info.toString();
+         this.Service.Payroll_Create({'Info': Info}).subscribe( response => {
+            this.Uploading = false;
+            const ReceivingData = JSON.parse(response['_body']);
+            if (response['status'] === 200 && ReceivingData.Status) {
+               this.Toastr.NewToastrMessage({ Type: 'Success', Message: 'Payroll Successfully Created' });
+               this.onClose.next({Status: true, Message: 'Payroll Successfully Created' });
+               this.bsModalRef.hide();
+            } else if (response['status'] === 400 || response['status'] === 417 || response['status'] === 401 && !ReceivingData.Status) {
+               this.Toastr.NewToastrMessage( {  Type: 'Error', Message: ReceivingData['Message'] } );
+               this.onClose.next({Status: false, Message: 'Bad Request Error!'});
+               this.bsModalRef.hide();
+            } else {
+               this.Toastr.NewToastrMessage( {  Type: 'Error', Message: 'Error Not Identify!, Creating Payroll!'} );
+               this.onClose.next({Status: false, Message: 'UnExpected Error!'});
+               this.bsModalRef.hide();
+            }
+         });
+      }
    }
 
 }

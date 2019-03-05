@@ -76,4 +76,33 @@ export class PayrollService {
    }
 
 
+   public Payroll_Create(Info: any): Observable<any[]> {
+      if (this.Service.If_LoggedIn()) {
+         this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+         sessionStorage.setItem('SessionKey', btoa(Date()));
+         return this.http.post(API_URL + 'Payroll_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+      } else {
+         return this.ValidateEveryRequest();
+      }
+   }
+   public Payroll_List(Info: any): Observable<any[]> {
+      if (this.Service.If_LoggedIn()) {
+         this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+         sessionStorage.setItem('SessionKey', btoa(Date()));
+         return this.http.post(API_URL + 'Payroll_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+      } else {
+         return this.ValidateEveryRequest();
+      }
+   }
+   public Payroll_View(Info: any): Observable<any[]> {
+      if (this.Service.If_LoggedIn()) {
+         this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+         sessionStorage.setItem('SessionKey', btoa(Date()));
+         return this.http.post(API_URL + 'Payroll_View', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+      } else {
+         return this.ValidateEveryRequest();
+      }
+   }
+
+
 }
