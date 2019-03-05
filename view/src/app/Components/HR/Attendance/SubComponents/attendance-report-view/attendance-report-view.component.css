@@ -5,7 +5,7 @@
 /* ************************************ View Style ******************************* */
 .view_item {
    display: grid;
-   grid-template-columns: 150px 15px auto;
+   grid-template-columns: 185px 15px auto;
 }
 .view_item .Static{
    font-weight: 700;
@@ -85,14 +85,29 @@
 }
 /* Company Details */
 .Company_Details{
+   line-height: 30px;
    background-color: #fff;
-   padding: 20px;
-   width: 100%;
-   border-radius: 5px;
-   border-top: 2px solid #49B660;
-   box-shadow: 3px 2px 2px #b9b0b0;
+   border: 1px solid #fff;
+   padding: 15px;
+   box-shadow: 3px 3px 4px #bfb6b6;
+   margin: 0px;
+   position: relative;
 }
-/* --------------   Page Identity Section  ----------------- */
+.Company_Details .BoxHeader{
+   margin-bottom: 15px;
+   font-weight: 700;
+   font-size: 18px;
+   color: #4f6a7a;
+   letter-spacing: 0.3px;
+   text-decoration: underline;
+   position: relative;
+ }
+ span.Payroll-btn {
+   position: absolute;
+   right: 15px;
+   top: 15px;
+}
+
  /* --------------   Page Identity Section  ----------------- */
  .Page_Identity{
    display: flex;

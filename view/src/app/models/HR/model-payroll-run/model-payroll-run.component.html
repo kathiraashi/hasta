@@ -1,0 +1,123 @@
+<div class="Modal_Content" *ngIf="Type">
+   <div class="Modal_Header">
+      <p> Run Payroll </p>
+      <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <div class="Model_Body">
+      <div class="Model_Body">
+         <div class="row">
+            <div class="col-sm-6">
+               <div class="view_item">
+                  <div class="Static"> Employee </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> {{Data.Employee?.EmployeeName}}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Payroll Month </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> {{ Data.MonthYear | date: 'MMMM y' }}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Total No.Of Days </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> {{Data.No_Of_Days}}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Payable Dates </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> {{ Data?.No_Of_Days - Data?.No_Of_Absent - Data?.No_Of_UnPaidLeaves }}</div>
+               </div>
+            </div>
+         </div>
+
+
+         <div class="row" *ngIf="_MasterDetails">
+            <div class="col-sm-6">
+               <h5 class="GroupHeader"> Payable </h5>
+               <div class="view_item">
+                  <div class="Static"></div>
+                  <div class="dots"></div>
+                  <div class="Data"> <b> Assigned </b> </div>
+                  <div class="Data_1"> <b> Earned </b> </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Basic Pay </div>
+                  <div class="dots"> : </div>
+                  <div class="Data">Rs {{_MasterDetails.Basic_Pay}}</div>
+                  <div *ngIf="Form.controls['Basic_Pay']" class="Data_1">Rs {{ Form.controls['Basic_Pay'].value }}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> HRA </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _calculation(_MasterDetails.HRA_Type, _MasterDetails.HRA) }} </div>
+                  <div *ngIf="Form.controls['HRA']" class="Data_1">Rs {{ Form.controls['HRA'].value }}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Conveyance </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Conveyance_Type, _MasterDetails.Conveyance) }} </div>
+                  <div *ngIf="Form.controls['Conveyance']" class="Data_1">Rs {{ Form.controls['Conveyance'].value }}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Medical Reimbursement </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Medical_Reimbursement_Type, _MasterDetails.Medical_Reimbursement) }} </div>
+                  <div *ngIf="Form.controls['Medical_Reimbursement']" class="Data_1">Rs {{ Form.controls['Medical_Reimbursement'].value }}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Food Allowance </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Food_Allowance_Type, _MasterDetails.Food_Allowance) }} </div>
+                  <div *ngIf="Form.controls['Food_Allowance']" class="Data_1">Rs {{ Form.controls['Food_Allowance'].value }}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Other Allowance </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Other_Allowance_Type, _MasterDetails.Other_Allowance) }} </div>
+                  <div *ngIf="Form.controls['Other_Allowance']" class="Data_1">Rs {{ Form.controls['Other_Allowance'].value }}</div>
+               </div>
+            </div>
+            <div class="col-sm-6">
+               <h5 class="GroupHeader"> Detection Details </h5>
+               <div class="view_item">
+                  <div class="Static"></div>
+                  <div class="dots"></div>
+                  <div class="Data"> <b> Assigned </b> </div>
+                  <div class="Data_1"> <b> Detected </b> </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Professional Tax </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Professional_Tax_Type, _MasterDetails.Professional_Tax) }} </div>
+                  <div *ngIf="Form.controls['Professional_Tax']" class="Data_1">Rs {{ Form.controls['Professional_Tax'].value }}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Provident Fund </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Provident_Fund_Type, _MasterDetails.Provident_Fund) }} </div>
+                  <div *ngIf="Form.controls['Provident_Fund']" class="Data_1">Rs {{ Form.controls['Provident_Fund'].value }}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Employee State Insurance </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Employee_State_Insurance_Type, _MasterDetails.Employee_State_Insurance) }} </div>
+                  <div *ngIf="Form.controls['Employee_State_Insurance']" class="Data_1">Rs {{ Form.controls['Employee_State_Insurance'].value }}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Medical Insurance </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Medical_Insurance_Type, _MasterDetails.Medical_Insurance) }} </div>
+                  <div *ngIf="Form.controls['Medical_Insurance']" class="Data_1">Rs {{ Form.controls['Medical_Insurance'].value }}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> TDS </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _calculation(_MasterDetails.TDS_Type, _MasterDetails.TDS) }}  </div>
+                  <div *ngIf="Form.controls['TDS']" class="Data_1">Rs {{ Form.controls['TDS'].value }}</div>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+</div>

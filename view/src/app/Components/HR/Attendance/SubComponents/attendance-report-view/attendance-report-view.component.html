@@ -31,6 +31,11 @@
       <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
          <!-- Company details -->
          <div class="Company_Details">
+            <h5 class="BoxHeader"> Basic Report </h5>
+            <span class="Payroll-btn" *ngIf="_Data">
+               <button *ngIf="!_Data.Payroll_Generated" (click)="RunPayroll()" mat-raised-button color="primary"> Run Payroll </button>
+            </span>
+            <br>
             <div class="row">
                <div class="col-sm-4">
                   <div class="view_item">
@@ -59,7 +64,7 @@
                      <div class="Data"> {{_Data?.No_Of_Days}} </div>
                   </div>
                </div>
-               <div class="col-sm-4">
+               <div class="col-sm-3">
                   <div class="view_item">
                      <div class="Static"> No Of Holidays: </div>
                      <div class="dots"> : </div>
@@ -86,7 +91,7 @@
                      <div class="Data"> {{_Data?.No_Of_Leaves}} </div>
                   </div>
                </div>
-               <div class="col-sm-4">
+               <div class="col-sm-5">
                   <div class="view_item">
                      <div class="Static"> Allowed Leaves in Year </div>
                      <div class="dots"> : </div>
@@ -98,71 +103,71 @@
                      <div class="Data"> {{_Data?.No_Of_Previous_Leaves}} </div>
                   </div>
                   <div class="view_item">
-                     <div class="Static"> Un Payeble Leaves </div>
+                     <div class="Static"> Un Payable Leaves </div>
                      <div class="dots"> : </div>
                      <div class="Data"> {{_Data?.No_Of_UnPaidLeaves}} </div>
                   </div>
                   <div class="view_item">
-                     <div class="Static"> Total Payeble Days </div>
+                     <div class="Static"> Total Payable Days </div>
                      <div class="dots"> : </div>
                      <div class="Data"> {{_Data?.No_Of_Days - _Data?.No_Of_Absent - _Data?.No_Of_UnPaidLeaves }} </div>
                   </div>
                   <div class="view_item">
-                     <div class="Static"> Total Un Payeble Days </div>
+                     <div class="Static"> Total Un Payable Days </div>
                      <div class="dots"> : </div>
-                     <div class="Data"> {{_Data?.No_Of_Days - _Data?.No_Of_Leaves - _Data?.No_Of_Holiday - _Data?.No_Of_WeekOff - _Data?.No_Of_Present }} </div>
+                     <div class="Data"> {{_Data?.No_Of_Days - (_Data?.No_Of_Days - _Data?.No_Of_Absent - _Data?.No_Of_UnPaidLeaves) }} </div>
                   </div>
                </div>
             </div>
          </div>
          <br>
-         <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Attendance
-            <span style="color:#516570;font-size:20px;font-weight: 600;"> Details</span>
-         </h5>
-         <!-- Table Section -->
-         <div class="Table_Section">
-            <table>
-               <thead>
-                  <tr>
-                     <th>S.no</th>
-                     <th> Date </th>
-                     <th> Present </th>
-                     <th> Absent </th>
-                     <th> WeekOff </th>
-                     <th> Holiday </th>
-                     <th> Leave </th>
-                     <th> Leave Type </th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr *ngFor="let item of _List; let i=index">
-                     <td>
-                        <span class="S_no"> {{i + 1}} </span>
-                     </td>
-                     <td>
-                        <span class="Style_1"> {{ item?.Date | date: 'd-M-y'}} </span>
-                     </td>
-                     <td>
-                        <span class="Style_1"> {{ item?.Attendance === 'Present' ? 'Yes' : '-' }} </span>
-                     </td>
-                     <td>
-                        <span class="Style_1"> {{ item?.If_Absent === true ? 'Yes' : '-' }} </span>
-                     </td>
-                     <td>
-                        <span class="Style_1"> {{ item?.Attendance === 'Week Off' ? 'Yes' : '-' }} </span>
-                     </td>
-                     <td>
-                        <span class="Style_1"> {{ item?.If_Holiday === true ? 'Yes' : '-' }} </span>
-                     </td>
-                     <td>
-                        <span class="Style_1"> {{ item?.If_Leave === true ? 'Yes' : '-' }} </span>
-                     </td>
-                     <td>
-                        <span class="Style_1"> {{ item?.If_Leave === true ? item?.Leave_Type?.Name : '-' }} </span>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
+         <div class="Company_Details">
+            <h5 class="BoxHeader"> Complete Report </h5>
+            <!-- Table Section -->
+            <div class="Table_Section">
+               <table>
+                  <thead>
+                     <tr>
+                        <th>S.no</th>
+                        <th> Date </th>
+                        <th> Present </th>
+                        <th> Absent </th>
+                        <th> WeekOff </th>
+                        <th> Holiday </th>
+                        <th> Leave </th>
+                        <th> Leave Type </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let item of _List; let i=index">
+                        <td>
+                           <span class="S_no"> {{i + 1}} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{ item?.Date | date: 'd-M-y'}} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{ item?.Attendance === 'Present' ? 'Yes' : '-' }} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{ item?.If_Absent === true ? 'Yes' : '-' }} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{ item?.Attendance === 'Week Off' ? 'Yes' : '-' }} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{ item?.If_Holiday === true ? 'Yes' : '-' }} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{ item?.If_Leave === true ? 'Yes' : '-' }} </span>
+                        </td>
+                        <td>
+                           <span class="Style_1"> {{ item?.If_Leave === true ? item?.Leave_Type?.Name : '-' }} </span>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
          </div>
          <br>
          <br>

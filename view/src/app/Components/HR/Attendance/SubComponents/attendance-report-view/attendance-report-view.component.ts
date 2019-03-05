@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import * as CryptoJS from 'crypto-js';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { ToastrService } from './../../../../../services/common-services/toastr-service/toastr.service';
 import { AttendanceService } from './../../../../../services/Hr/Attendance/attendance.service';
 
 import { LoginService } from './../../../../../services/LoginService/login.service';
+
+import { ModelPayrollRunComponent } from './../../../../../models/HR/model-payroll-run/model-payroll-run.component';
 
 @Component({
   selector: 'app-attendance-report-view',
@@ -17,8 +21,10 @@ export class AttendanceReportViewComponent implements OnInit {
 
   User_Id: any;
 
+  bsModalRef: BsModalRef;
+
   Loader: Boolean = true;
-  _Data = {};
+  _Data: any;
   _List: any[] = [];
   Report_Id: any;
 
@@ -26,7 +32,8 @@ export class AttendanceReportViewComponent implements OnInit {
                 public Service: AttendanceService,
                 public router: Router,
                 private active_route: ActivatedRoute,
-                public Login_Service: LoginService
+                public Login_Service: LoginService,
+                private modalService: BsModalService
               ) {
                 this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
                 this.active_route.url.subscribe((u) => {
@@ -55,5 +62,19 @@ export class AttendanceReportViewComponent implements OnInit {
 
   ngOnInit() {
   }
+
+
+   RunPayroll() {
+      const initialState = {
+         Type: 'Create',
+         Data: this._Data
+      };
+      this.bsModalRef = this.modalService.show(ModelPayrollRunComponent, Object.assign({initialState}, { ignoreBackdropClick: true, class: 'modal-lg max-width-80' }));
+      this.bsModalRef.content.onClose.subscribe(response => {
+         if (response.Status) {
+            this._Data['Payroll_Generated'] = true;
+         }
+      });
+   }
 
 }
