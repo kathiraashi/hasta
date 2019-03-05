@@ -133,23 +133,21 @@ export class ModelAttendanceReportCreateComponent implements OnInit {
          this.Attendance_Service.Attendance_Report_Create({'Info': Info}).subscribe( response => {
            this.Uploading = false;
             const ReceivingData = JSON.parse(response['_body']);
-            console.log(ReceivingData);
-
-            // if (response['status'] === 200 && ReceivingData.Status) {
-            //    const CryptoBytes  = CryptoJS.AES.decrypt(ReceivingData['Response'], 'SecretKeyOut@123');
-            //    const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-            //    this.Toastr.NewToastrMessage( {  Type: 'Success',  Message: 'Attendance Report Successfully Generated' });
-            //    this.onClose.next({Status: true, Response: DecryptedData});
-            //    this.bsModalRef.hide();
-            // } else if (response['status'] === 400 || response['status'] === 417 || response['status'] === 401 && !ReceivingData.Status) {
-            //  this.Toastr.NewToastrMessage( {  Type: 'Error', Message: ReceivingData['Message'] } );
-            //    this.onClose.next({Status: false});
-            //    this.bsModalRef.hide();
-            // } else {
-            //  this.Toastr.NewToastrMessage( {  Type: 'Error', Message: 'Attendance Report Not Created!, Error Not Identify!,' });
-            //    this.onClose.next({Status: false, Message: 'UnExpected Error!'});
-            //    this.bsModalRef.hide();
-            // }
+            if (response['status'] === 200 && ReceivingData.Status) {
+               const CryptoBytes  = CryptoJS.AES.decrypt(ReceivingData['Response'], 'SecretKeyOut@123');
+               const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+               this.Toastr.NewToastrMessage( {  Type: 'Success',  Message: 'Attendance Report Successfully Generated' });
+               this.onClose.next({Status: true, Response: DecryptedData});
+               this.bsModalRef.hide();
+            } else if (response['status'] === 400 || response['status'] === 417 || response['status'] === 401 && !ReceivingData.Status) {
+             this.Toastr.NewToastrMessage( {  Type: 'Error', Message: ReceivingData['Message'] } );
+               this.onClose.next({Status: false});
+               this.bsModalRef.hide();
+            } else {
+             this.Toastr.NewToastrMessage( {  Type: 'Error', Message: 'Attendance Report Not Created!, Error Not Identify!,' });
+               this.onClose.next({Status: false, Message: 'UnExpected Error!'});
+               this.bsModalRef.hide();
+            }
          });
       }
    }

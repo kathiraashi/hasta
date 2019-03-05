@@ -12,6 +12,9 @@ module.exports = function(app){
    // Attendance Report
       app.post('/API/Attendance/Attendance_Report_Validate', Controller.Attendance_Report_Validate);
       app.post('/API/Attendance/Attendance_Report_Create', Controller.Attendance_Report_Create);
+      app.post('/API/Attendance/Attendance_Report_List', Controller.Attendance_Report_List);
+      app.post('/API/Attendance/Attendance_Report_View', Controller.Attendance_Report_View);
+      app.post('/API/Attendance/Attendance_Report_Delete', Controller.Attendance_Report_Delete);
 
 
 };

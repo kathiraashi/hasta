@@ -195,7 +195,7 @@ const appRoutes: Routes = [
       data: {   animation: { value: 'crm_ticket_create'}   }
    },
    {
-      path: 'Attendance_Report_View',
+      path: 'Attendance_Report_View/:Report_Id',
       component: AttendanceReportViewComponent,
       canActivate: [AuthGuard],
       data: {   animation: { value: 'Attendance_Report_View'}   }

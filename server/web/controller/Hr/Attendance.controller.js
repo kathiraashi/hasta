@@ -2,6 +2,7 @@ var CryptoJS = require("crypto-js");
 var HrAttendanceModel = require('./../../models/Hr/Attendance.model.js');
 var HrmsLeavesModel = require('./../../models/Hrms/Leaves.model.js');
 var HrEmployeeModel = require('./../../models/Hr/Employee.model.js');
+var PayrollModel = require('./../../models/Hr/Payroll.model.js');
 var HrmsSettingsModel = require('./../../models/settings/Hr_Settings.model.js');
 var ErrorManagement = require('./../../../handling/ErrorHandling.js');
 var mongoose = require('mongoose');
@@ -255,19 +256,17 @@ exports.Attendance_Report_Create = function(req, res) {
 
       var From = new Date(ReceivingData.From);
       var To = new Date(ReceivingData.To);
-
+      var Temp_From = new Date(ReceivingData.From);
       var DatArr = [];
-      while (From <= To) {
-         DatArr.push(new Date(From));
-         From.setDate(From.getDate() + 1);
+      while (Temp_From <= To) {
+         DatArr.push(new Date(Temp_From));
+         Temp_From.setDate(Temp_From.getDate() + 1);
       }
-
       var Presents = 0;
       var Absents = 0;
       var WeekOffs = 0;
       var Leaves = 0;
       var Holidays = 0;
-
       HrEmployeeModel.EmployeeSchema.findOne({_id: mongoose.Types.ObjectId(ReceivingData.Employee) }, {}, {})
          .exec( function(err, result) {
             if(err) {
@@ -277,50 +276,88 @@ exports.Attendance_Report_Create = function(req, res) {
                Promise.all(
                   DatArr.map(obj => DateDetailsFind(obj)),
                ).then(response => {
-
                   var YearsFirstDay = new Date(result.DateOfJoining);
-                  // var YearsLastDay = new Date(YearsFirstDay.getFullYear() + 1, YearsFirstDay.getMonth(), YearsFirstDay.getDate());
-
-                  // var Current_Date_Status = new Date(From.getFullYear(), YearsFirstDay.getMonth(), YearsFirstDay.getDate())
-                  
-                  // if (Current_Date_Status.valueOf() >= From.valueOf()) {
-                     
-                  // }
-
+                  var YearsLastDay = new Date(YearsFirstDay.getFullYear() + 1, YearsFirstDay.getMonth(), YearsFirstDay.getDate());
+                  if(YearsLastDay.valueOf() < From.valueOf()) {
+                     var YearsFirstDay = new Date(From.getFullYear(), YearsFirstDay.getMonth(), YearsFirstDay.getDate())
+                  }
                   Promise.all([
                      HrmsLeavesModel.LeavesSchema.find(
                         { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),
-                           $and: [  { From_Date : { $gte: new Date(YearsFirstDay) } },
-                                    { To_Date: { $lt: new Date(From) } } ,
+                           $and: [  { From_Date : { $gte: YearsFirstDay } },
+                                    { To_Date: { $lt: From } } ,
                                     { Current_Status: {$ne: 'Draft'} }, 
                                     { Current_Status: {$ne: 'Rejected'} },],
                            'If_Deleted': false 
                         }, {}, {sort: { createdAt: 1 }})
                         .populate({path: 'Leave_Type', select:['Name', 'Leave_Type']}).exec(),
-                     HrmsLeavesModel.LeavesSchema.find(
-                        { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),
-                           $and: [  { From_Date : { $gte: new Date(From) } },
-                                    { To_Date: { $lte: new Date(To) } } ,
-                                    { Current_Status: {$ne: 'Draft'} }, 
-                                    { Current_Status: {$ne: 'Rejected'} },],
-                           'If_Deleted': false 
-                        }, {}, {sort: { createdAt: 1 }})
-                        .populate({path: 'Leave_Type', select:['Name', 'Leave_Type']}).exec()
+                        PayrollModel.Employee_PayrollMasterSchema.findOne( { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee), 'If_Deleted': false }, {}, {}).exec()
                   ]).then(response_1 => {
-                     var Leaves_Count = 0;
+                     var Previous_Leaves_Count = 0;
+                     var PaidLeaves_inYear = 0;
+                     var UnPaidLeaves = 0;
                      response_1[0].map(obj => {
                         const Count = Math.ceil((new Date(obj.To_Date) - new Date(obj.From_Date)) / 86400000) + 1;
-                        Leaves_Count = Leaves_Count + Count;
-                     })
+                        Previous_Leaves_Count = Previous_Leaves_Count + Count;
+                     });
+                     if (response_1[1] !== null ) {
+                        PaidLeaves_inYear = response_1[1]['PaidLeaves_inYear'];
+                     }
+                     if (Previous_Leaves_Count <= PaidLeaves_inYear ) {
+                        if ((Previous_Leaves_Count + Leaves) > PaidLeaves_inYear) {
+                           UnPaidLeaves = (Previous_Leaves_Count + Leaves) - PaidLeaves_inYear;
+                        }
+                     } else {
+                        UnPaidLeaves = Leaves;
+                     }
+                     var Create_Attendance_Report = new HrAttendanceModel.AttendanceReportSchema({
+                        Employee: mongoose.Types.ObjectId(ReceivingData.Employee),
+                        From_Date: new Date(ReceivingData.From),
+                        To_Date: new Date(ReceivingData.To),
+                        MonthYear: new Date(ReceivingData.Month),
+                        No_Of_Days: DatArr.length,
+                        No_Of_Present: Presents,
+                        No_Of_Absent: Absents,
+                        No_Of_WeekOff: WeekOffs,
+                        No_Of_Holiday: Holidays,
+                        No_Of_Leaves: Leaves,
+                        No_Of_PaidLeaves_inYear: PaidLeaves_inYear,
+                        No_Of_UnPaidLeaves: UnPaidLeaves,
+                        No_Of_Previous_Leaves: Previous_Leaves_Count,
+                        Detailed_Report: response,
+                        Payroll_Generated: false,
+                        Created_By: mongoose.Types.ObjectId(ReceivingData.User_Id),
+                        Active_Status: true,
+                        If_Deleted: false
+                     });
+                     Create_Attendance_Report.save(function(err, result) {
+                        if(err) {
+                           ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR Attendance Report Creation Query Error', 'Attendance.controller.js');
+                           res.status(417).send({Status: false, Message: "Some error occurred while creating the Attendance Report!."});
+                        } else {
+                           HrAttendanceModel.AttendanceReportSchema
+                              .findOne({'_id': result._id })
+                              .populate( { path: 'Created_By', select: 'Name'})
+                              .populate( { path: 'Employee', select: 'EmployeeName'})
+                              .exec(function(err_1, result_1) {
+                              if(err_1) {
+                                 ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance Report Find Query Error', 'Attendance.controller.js', err_1);
+                                 res.status(417).send({status: false, Message: "Some error occurred while Find The Attendance Report!."});
+                              } else {
+                                 var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
+                                 ReturnData = ReturnData.toString();
+                                 res.status(200).send({Status: true, Response: ReturnData });
+                              }
+                           });
+                        }
+                     });
+                     // res.status(200).send({Status: true, Available: true, response: response, basic_response: Basic_Data });
                   }).catch(catch_err => {
-                     console.log(catch_err);
+                     res.status(200).send({Status: false, Available: false, Message: catch_err });
                   });
-                  res.status(200).send({Status: false, Available: true, response: response });
                }).catch(catch_err => {
-                  console.log(catch_err);
-                  res.status(200).send({Status: false, Available: false, catch_err: catch_err });
+                  res.status(200).send({Status: false, Available: false, Message: catch_err });
                });
-
 
                function DateDetailsFind(Obj) {
                   return new Promise( (resole, reject) => {
@@ -386,5 +423,86 @@ exports.Attendance_Report_Create = function(req, res) {
                }
             }
          })
+   }
+};
+
+
+exports.Attendance_Report_List = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else {
+      HrAttendanceModel.AttendanceReportSchema
+         .find({'If_Deleted': false }, {Detailed_Report: 0}, {sort: { MonthYear: -1 }})
+         .populate( { path: 'Created_By', select: 'Name'})
+         .populate( { path: 'Employee', select: 'EmployeeName'})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance Report List Find Query Error', 'Attendance.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Attendance Reports List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+
+
+exports.Attendance_Report_View = function(req, res) {
+
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Report_Id || ReceivingData.Report_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Attendance Report Details can not be empty" });
+   } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else {
+      HrAttendanceModel.AttendanceReportSchema
+      .findOne({'_id': mongoose.Types.ObjectId(ReceivingData.Report_Id) })
+      .populate( { path: 'Created_By', select: 'Name'})
+      .populate( { path: 'Employee', select: 'EmployeeName'})
+      .populate( { path: 'Detailed_Report.Leave_Type', select: ['Name', 'Leave_Type']})
+      .exec(function(err_1, result_1) {
+      if(err_1) {
+         ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance Report Find Query Error', 'Attendance.controller.js', err_1);
+         res.status(417).send({status: false, Message: "Some error occurred while Find The Attendance Report!."});
+      } else {
+         var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result_1), 'SecretKeyOut@123');
+         ReturnData = ReturnData.toString();
+         res.status(200).send({Status: true, Response: ReturnData });
+      }
+   });
+   }
+};
+
+
+exports.Attendance_Report_Delete = function(req, res) {
+
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Report_Id || ReceivingData.Report_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Attendance Report Details can not be empty" });
+   } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else {
+      Promise.all([
+         HrAttendanceModel.AttendanceReportSchema.update(
+            { _id : mongoose.Types.ObjectId(ReceivingData.Report_Id)  },
+            {  $set: { If_Deleted : true } }).exec(),
+         // CrmCustomersModel.CrmTicketsSchema.updateMany(
+         //    { Machine : mongoose.Types.ObjectId(ReceivingData.Machine_Id)  },
+         //    {  $set: { If_Deleted : true } }).exec(),
+      ]).then( result => {
+         res.status(200).send({Status: true, Message: 'Attendance Report Successfully Hided'  });
+      }).catch(err => {
+         ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance Report Delete Query Error', 'Attendance.controller.js', err);
+         res.status(400).send({Status: false, Message: "Some error occurred while hide the Attendance Report!."});
+      });
    }
 };

@@ -16,149 +16,40 @@
    <table>
       <thead>
          <tr>
-            <th>S.no</th>
-            <th>Employee Name</th>
-            <th>Category</th>
-            <th>From Date</th>
-            <th>To Date</th>
-            <th>Month</th>
-            <th>Hours</th>
-            <th>Action</th>
+            <th> S.no </th>
+            <th> Employee Name </th>
+            <th> Month </th>
+            <th> From Date </th>
+            <th> To Date </th>
+            <th> Payroll Generatd </th>
+            <th> Action </th>
          </tr>
       </thead>
       <tbody>
-         <tr>
+         <tr *ngFor="let report of _List; let i=index">
             <td>
-               <span class="S_no"> 1 </span>
+               <span class="S_no"> {{ i + 1 }} </span>
             </td>
             <td>
-               <span class="Style_1">Employee Name</span>
+               <span class="Style_1"> {{report?.Employee?.EmployeeName}} </span>
             </td>
             <td>
-               <span class="Style_1"> Category</span>
+               <span class="Style_1">{{report?.MonthYear | date:'MMMM  y'}}</span>
             </td>
             <td>
-               <span class="Style_1">25.08.17</span>
+               <span class="Style_1">{{report?.From_Date | date:'d-M-y'}}</span>
             </td>
             <td>
-               <span class="Style_1">18.09.17</span>
+               <span class="Style_1">{{report?.To_Date | date:'d-M-y'}}</span>
             </td>
             <td>
-               <span class="Style_1">Jan</span>
+               <span class="Style_1"> {{ report?.Payroll_Generated === true ? 'yes' : 'No' }} </span>
             </td>
             <td>
-               <span class="Style_1">4hrs</span>
-            </td>
-            <td>
-               <button [routerLink]="['/Attendance_Report_View']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+               <button [routerLink]="['/Attendance_Report_View', report._id]" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
                   <i class="material-icons">zoom_in</i>
                </button>
-               <button (click)="CreateAttendanceReport()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                  <i class="material-icons">edit</i>
-               </button>
-               <button (click)=" DeleteAttendanceReport()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                  <i class="material-icons">delete_forever</i>
-               </button>
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <span class="S_no"> 2 </span>
-            </td>
-            <td>
-               <span class="Style_1">Employee Name</span>
-            </td>
-            <td>
-               <span class="Style_1"> Category</span>
-            </td>
-            <td>
-               <span class="Style_1">25.08.17</span>
-            </td>
-            <td>
-               <span class="Style_1">18.09.17</span>
-            </td>
-            <td>
-               <span class="Style_1">Jan</span>
-            </td>
-            <td>
-               <span class="Style_1">4hrs</span>
-            </td>
-            <td>
-               <button [routerLink]="['/Attendance_Report_View']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                  <i class="material-icons">zoom_in</i>
-               </button>
-               <button (click)="CreateAttendanceReport()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                  <i class="material-icons">edit</i>
-               </button>
-               <button (click)=" DeleteAttendanceReport()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                  <i class="material-icons">delete_forever</i>
-               </button>
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <span class="S_no"> 3 </span>
-            </td>
-            <td>
-               <span class="Style_1">Employee Name</span>
-            </td>
-            <td>
-               <span class="Style_1"> Category</span>
-            </td>
-            <td>
-               <span class="Style_1">25.08.17</span>
-            </td>
-            <td>
-               <span class="Style_1">18.09.17</span>
-            </td>
-            <td>
-               <span class="Style_1">Jan</span>
-            </td>
-            <td>
-               <span class="Style_1">4hrs</span>
-            </td>
-            <td>
-               <button [routerLink]="['/Attendance_Report_View']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                  <i class="material-icons">zoom_in</i>
-               </button>
-               <button (click)="CreateAttendanceReport()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                  <i class="material-icons">edit</i>
-               </button>
-               <button (click)=" DeleteAttendanceReport()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
-                  <i class="material-icons">delete_forever</i>
-               </button>
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <span class="S_no"> 4 </span>
-            </td>
-            <td>
-               <span class="Style_1">Employee Name</span>
-            </td>
-            <td>
-               <span class="Style_1"> Category</span>
-            </td>
-            <td>
-               <span class="Style_1">25.08.17</span>
-            </td>
-            <td>
-               <span class="Style_1">18.09.17</span>
-            </td>
-            <td>
-               <span class="Style_1">Jan</span>
-            </td>
-            <td>
-               <span class="Style_1">4hrs</span>
-            </td>
-            <td>
-               <button [routerLink]="['/Attendance_Report_View']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                  <i class="material-icons">zoom_in</i>
-               </button>
-               <button (click)="CreateAttendanceReport()" class="Table_Action_mini Bg_warning" mat-mini-fab color="primary">
-                  <i class="material-icons">edit</i>
-               </button>
-               <button (click)=" DeleteAttendanceReport()" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+               <button (click)=" DeleteAttendanceReport(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
                   <i class="material-icons">delete_forever</i>
                </button>
             </td>

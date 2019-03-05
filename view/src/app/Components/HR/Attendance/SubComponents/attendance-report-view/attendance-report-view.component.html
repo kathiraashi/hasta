@@ -1,310 +1,171 @@
 <div class="Main_Section" style="margin-top:100px">
    <div class="container-fluid">
-         <div class="Page_Identity">
-            <div class="Page_Track">
-               <ul >
-                  <li class="HeaderName">HR</li>
-                  <li class="arrow">>></li>
-                  <li class="LinkName" [routerLink]="['/main_Attendance']">Attendance</li>
-                  <li class="arrow">>></li>
-                  <li>Attendance View</li>
-               </ul>
+      <div class="Page_Identity">
+         <div class="Page_Name">
+            <h5> ATTENDANCE REPORT</h5>
+         </div>
+         <div class="Page_Track">
+            <ul >
+               <li class="HeaderName">HR</li>
+               <li class="arrow">>></li>
+               <li class="LinkName" [routerLink]="['/main_Attendance']">Attendance</li>
+               <li class="arrow">>></li>
+               <li>Attendance Report View</li>
+            </ul>
+         </div>
+      </div>
+      <!-- Loader -->
+      <div [ngClass]="{'Hide': !Loader}" class="DataLoaderStyle_1">
+         <div class="Loading">
+            <div class="spinner">
+               <div class="rect1"></div>
+               <div class="rect2"></div>
+               <div class="rect3"></div>
+               <div class="rect4"></div>
+               <div class="rect5"></div>
+               <div class="rect6"></div>
             </div>
          </div>
+      </div>
+      <!-- Main Data -->
+      <div class="LoadedDataStyle_1" [ngClass]="{'Show': !Loader}">
          <!-- Company details -->
          <div class="Company_Details">
-               <span><button class="Payroll_Run">Payroll Run</button></span><br>
             <div class="row">
                <div class="col-sm-4">
-            <div class="view_item">
-               <div class="Static">Name </div>
-               <div class="dots"> : </div>
-               <div class=" Data"> Name</div>
-            </div>
-            <div class="view_item">
-               <div class="Static">Category: </div>
-               <div class="dots"> : </div>
-               <div class="Data"> Category</div>
+                  <div class="view_item">
+                     <div class="Static"> Employee Name </div>
+                     <div class="dots"> : </div>
+                     <div class=" Data"> {{ _Data?.Employee?.EmployeeName }} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Report Month: </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{ _Data?.MonthYear | date:'MMMM y' }} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> From Date </div>
+                     <div class="dots"> : </div>
+                     <div class=" Data"> {{ _Data?.From_Date | date:'d-M-y' }} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> To Date </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{ _Data?.To_Date | date:'d-M-y' }} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Total No Of Days </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_Days}} </div>
+                  </div>
+               </div>
+               <div class="col-sm-4">
+                  <div class="view_item">
+                     <div class="Static"> No Of Holidays: </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_Holiday}} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> No Of WeekOffs: </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_WeekOff}} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> No Of Present </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_Present}} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> No Of Absent: </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_Absent}} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> No Of Leaves: </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_Leaves}} </div>
+                  </div>
+               </div>
+               <div class="col-sm-4">
+                  <div class="view_item">
+                     <div class="Static"> Allowed Leaves in Year </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_PaidLeaves_inYear}} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Already Approved Leaves </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_Previous_Leaves}} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Un Payeble Leaves </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_UnPaidLeaves}} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Total Payeble Days </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_Days - _Data?.No_Of_Absent - _Data?.No_Of_UnPaidLeaves }} </div>
+                  </div>
+                  <div class="view_item">
+                     <div class="Static"> Total Un Payeble Days </div>
+                     <div class="dots"> : </div>
+                     <div class="Data"> {{_Data?.No_Of_Days - _Data?.No_Of_Leaves - _Data?.No_Of_Holiday - _Data?.No_Of_WeekOff - _Data?.No_Of_Present }} </div>
+                  </div>
+               </div>
             </div>
          </div>
-         <div class="col-sm-4">
-            <div class="view_item">
-               <div class="Static">From Date: </div>
-               <div class="dots"> : </div>
-               <div class=" Data"> 28.08.18</div>
-            </div>
-            <div class="view_item">
-               <div class="Static">To Date: </div>
-               <div class="dots"> : </div>
-               <div class="Data">29.09.18</div>
-            </div>
+         <br>
+         <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Attendance
+            <span style="color:#516570;font-size:20px;font-weight: 600;"> Details</span>
+         </h5>
+         <!-- Table Section -->
+         <div class="Table_Section">
+            <table>
+               <thead>
+                  <tr>
+                     <th>S.no</th>
+                     <th> Date </th>
+                     <th> Present </th>
+                     <th> Absent </th>
+                     <th> WeekOff </th>
+                     <th> Holiday </th>
+                     <th> Leave </th>
+                     <th> Leave Type </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let item of _List; let i=index">
+                     <td>
+                        <span class="S_no"> {{i + 1}} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{ item?.Date | date: 'd-M-y'}} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{ item?.Attendance === 'Present' ? 'Yes' : '-' }} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{ item?.If_Absent === true ? 'Yes' : '-' }} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{ item?.Attendance === 'Week Off' ? 'Yes' : '-' }} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{ item?.If_Holiday === true ? 'Yes' : '-' }} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{ item?.If_Leave === true ? 'Yes' : '-' }} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{ item?.If_Leave === true ? item?.Leave_Type?.Name : '-' }} </span>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
          </div>
-            <div class="col-sm-4">
-            <div class="view_item">
-               <div class="Static">Month : </div>
-               <div class="dots"> : </div>
-               <div class="Data"> June</div>
-            </div>
-            <div class="view_item">
-               <div class="Static">Hours: </div>
-               <div class="dots"> : </div>
-               <div class="Data"> 4hrs</div>
-            </div>
-            </div>
-            </div>
-         </div><br>
-      <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Attendance
-         <span style="color:#516570;font-size:20px;font-weight: 600;"> Details</span>
-      </h5>
-      <!-- Table Section -->
-      <div class="Table_Section">
-         <table>
-            <thead>
-               <tr>
-                  <th>S.no</th>
-                  <th>Employee Name</th>
-                  <th>Code</th>
-                  <th>Working days</th>
-                  <th>Present days</th>
-                  <th>Leave</th>
-                  <th>Paid Leaves</th>
-                  <th>Payable Days</th>
-                  <th>OT Hours</th>
-                  <th>Total Hours</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>
-                     <span class="S_no"> 1 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">30days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">25days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">5days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">2days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">3days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">2hrs</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">8hrs</span>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 2 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">30days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">25days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">5days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">2days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">3days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">2hrs</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">8hrs</span>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 3 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">30days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">25days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">5days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">2days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">3days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">2hrs</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">8hrs</span>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 4 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">30days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">25days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">5days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">2days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">3days</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">2hrs</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">8hrs</span>
-                  </td>
-               </tr>
-            </tbody>
-         </table>
-      </div>
-      <br>
-      <!-- Payroll Details -->
-      <h5 style="color:#49B660;font-size:20px;font-weight: 600;">Payroll
-         <span style="color:#516570;font-size:20px;font-weight: 600;"> Details</span>
-      </h5>
-      <div class="Table_Section">
-         <table>
-            <thead>
-               <tr>
-                  <th>S.no</th>
-                  <th>Employee Name</th>
-                  <th>Code</th>
-                  <th>Gross Pay</th>
-                  <th>Detection</th>
-                  <th>Net Salary</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>
-                     <span class="S_no"> 1 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Gross Pay</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Detection</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Net Salary</span>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 2 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Gross Pay</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Detection</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Net Salary</span>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 3 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Gross Pay</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Detection</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Net Salary</span>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 4 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Gross Pay</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Detection</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Net Salary</span>
-                  </td>
-               </tr>
-            </tbody>
-         </table>
+         <br>
+         <br>
       </div>
    </div>
 </div>
