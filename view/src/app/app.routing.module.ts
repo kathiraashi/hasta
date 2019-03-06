@@ -201,7 +201,7 @@ const appRoutes: Routes = [
       data: {   animation: { value: 'Attendance_Report_View'}   }
    },
    {
-      path: 'Payroll_View',
+      path: 'Payroll_View/:Payroll_Id',
       component: PayrollViewComponent,
       canActivate: [AuthGuard],
       data: {   animation: { value: 'Payroll_View'}   }

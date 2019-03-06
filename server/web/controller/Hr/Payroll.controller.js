@@ -285,7 +285,7 @@ exports.Payroll_List = function(req, res) {
    }else {
       HrPayrollModel.Payroll
       .find({ 'If_Deleted': false }, {}, {sort: { updatedAt: -1 }})
-      .populate({ path: 'Employee', select: ['EmployeeName'] })
+      .populate({ path: 'Employee', select: ['EmployeeName', 'EmployeeCode'] })
       .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
       .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
       .exec(function(err, result) {
@@ -315,7 +315,9 @@ exports.Payroll_View = function(req, res) {
    }else {
       HrPayrollModel.Payroll
          .findOne({ 'If_Deleted': false, '_id': mongoose.Types.ObjectId(ReceivingData.Payroll_Id) }, {}, {})
-         .populate({ path: 'Employee', select: ['EmployeeName'] })
+         .populate({ path: 'Employee', select: ['EmployeeName', 'EmployeeCode'] })
+         .populate({ path: 'More_Earnings.Earnings', select: ['Earnings_Type'] })
+         .populate({ path: 'More_Detections.Detections', select: ['Detections_Type'] })
          .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
          .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
          .exec(function(err, result) {
@@ -327,6 +329,35 @@ exports.Payroll_View = function(req, res) {
             ReturnData = ReturnData.toString();
             res.status(200).send({Status: true, Response: ReturnData });
          }
+      });
+   }
+};
+
+
+exports.Payroll_Delete = function(req, res) {
+
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Payroll_Id || ReceivingData.Payroll_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Payroll Details can not be empty" });
+   } else if(!ReceivingData.Report_Id || ReceivingData.Report_Id === '' ) {
+         res.status(400).send({Status: false, Message: "Attendance Report Details can not be empty" });
+   } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else {
+      Promise.all([
+         HrAttendanceModel.AttendanceReportSchema.update(
+            { _id : mongoose.Types.ObjectId(ReceivingData.Report_Id)  },
+            {  $set: { Payroll_Generated : false } }).exec(),
+         PayrollModel.Payroll.updateMany(
+            { _id : mongoose.Types.ObjectId(ReceivingData.Payroll_Id)  },
+            {  $set: { If_Deleted : true } }).exec(),
+      ]).then( result => {
+         res.status(200).send({Status: true, Message: 'Attendance Report Successfully Hided'  });
+      }).catch(err => {
+         ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Payroll Delete Query Error', 'Payroll.controller.js', err);
+         res.status(400).send({Status: false, Message: "Some error occurred while hide the Payroll!."});
       });
    }
 };

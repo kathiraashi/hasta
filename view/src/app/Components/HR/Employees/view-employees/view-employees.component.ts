@@ -15,8 +15,8 @@ import { LoginService } from './../../../../services/LoginService/login.service'
 })
 export class ViewEmployeesComponent implements OnInit {
 
-   // File_Url = 'http://159.89.163.252:4000/API/Uploads/';
-   File_Url = 'http://localhost:4000/API/Uploads/';
+   File_Url = 'http://159.89.163.252:4000/API/Uploads/';
+   // File_Url = 'http://localhost:4000/API/Uploads/';
 
    User_Id;
 

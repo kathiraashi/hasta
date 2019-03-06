@@ -28,138 +28,44 @@
             <thead>
                <tr>
                <th>S.no</th>
-               <th>Employee Name</th>
-               <th>Code</th>
-               <th>Category</th>
-               <th>Month</th>
-               <th>Gross Pay</th>
-               <th>Detection</th>
-               <th>Net Pay</th>
-               <th>Action</th>
+               <th> Employee Name </th>
+               <th> Employee Code </th>
+               <th> Month </th>
+               <th> Earnings </th>
+               <th> Dedections </th>
+               <th> Payable Amount </th>
+               <th> Action </th>
                </tr>
             </thead>
             <tbody>
-               <tr>
+               <tr *ngFor="let item of _List; let i=index">
                   <td>
-                     <span class="S_no"> 1 </span>
+                     <span class="S_no"> {{i + 1}} </span>
                   </td>
                   <td>
-                     <span class="Style_1">Employee Name</span>
+                     <span class="Style_1"> {{item?.Employee?.EmployeeName}} </span>
                   </td>
                   <td>
-                     <span class="Style_1"> Code</span>
+                     <span class="Style_1"> {{item?.Employee?.EmployeeCode}} </span>
                   </td>
                   <td>
-                     <span class="Style_1">Category</span>
+                     <span class="Style_1"> {{item?.Month | date:'MMMM y'}} </span>
                   </td>
                   <td>
-                     <span class="Style_1">Month</span>
+                     <span class="Style_1"> Rs. {{item?.Total_Earning}} </span>
                   </td>
                   <td>
-                     <span class="Style_1">Gross Pay</span>
+                     <span class="Style_1"> Rs. {{item?.Total_Detection}} </span>
                   </td>
                   <td>
-                     <span class="Style_1">Detection</span>
+                     <span class="Style_1"> Rs. {{item?.Total_Salary}} </span>
                   </td>
                   <td>
-                     <span class="Style_1">Net Pay</span>
-                  </td>
-                  <td>
-                     <button [routerLink]="['/Payroll_View']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
+                     <button [routerLink]="['/Payroll_View', item._id]" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
                         <i class="material-icons">zoom_in</i>
                      </button>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 2 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Category</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Month</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Gross Pay</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Detection</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Net Pay</span>
-                  </td>
-                  <td>
-                     <button [routerLink]="['/Payroll_View']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
-                     </button>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 3 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Category</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Month</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Gross Pay</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Detection</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Net Pay</span>
-                  </td>
-                  <td>
-                     <button [routerLink]="['/Payroll_View']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
-                     </button>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="S_no"> 4 </span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Employee Name</span>
-                  </td>
-                  <td>
-                     <span class="Style_1"> Code</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Category</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Month</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Gross Pay</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Detection</span>
-                  </td>
-                  <td>
-                     <span class="Style_1">Net Pay</span>
-                  </td>
-                  <td>
-                     <button [routerLink]="['/Payroll_View']" class="Table_Action_mini Bg_Info" mat-mini-fab color="primary">
-                        <i class="material-icons">zoom_in</i>
+                     <button (click)="DeletePayroll(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                        <i class="material-icons">delete_forever</i>
                      </button>
                   </td>
                </tr>

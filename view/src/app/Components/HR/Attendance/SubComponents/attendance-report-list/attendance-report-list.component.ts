@@ -88,6 +88,7 @@ export class AttendanceReportListComponent implements OnInit {
                this.Loader = false;
                if (response['status'] === 200 && ResponseData['Status'] ) {
                   this._List.splice(_index, 1);
+                  this.Toastr.NewToastrMessage({ Type: 'Success', Message: 'Attendance Report Successfully Removed' });
                } else if (response['status'] === 400 || response['status'] === 417 || response['status'] === 401 && !ResponseData['Status']) {
                   this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                } else {

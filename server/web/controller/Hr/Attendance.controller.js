@@ -495,9 +495,9 @@ exports.Attendance_Report_Delete = function(req, res) {
          HrAttendanceModel.AttendanceReportSchema.update(
             { _id : mongoose.Types.ObjectId(ReceivingData.Report_Id)  },
             {  $set: { If_Deleted : true } }).exec(),
-         // CrmCustomersModel.CrmTicketsSchema.updateMany(
-         //    { Machine : mongoose.Types.ObjectId(ReceivingData.Machine_Id)  },
-         //    {  $set: { If_Deleted : true } }).exec(),
+         PayrollModel.Payroll.updateMany(
+            { Attendance_Report : mongoose.Types.ObjectId(ReceivingData.Report_Id)  },
+            {  $set: { If_Deleted : true } }).exec(),
       ]).then( result => {
          res.status(200).send({Status: true, Message: 'Attendance Report Successfully Hided'  });
       }).catch(err => {

@@ -62,12 +62,12 @@ var PayrollSchema = mongoose.Schema({
    TDS: { type : String , required : true},
 
    More_Earnings: [{
-      Earnings: { type : String , required : true},
+      Earnings: { type : Schema.Types.ObjectId , ref : 'Earnings'},
       Amount: { type : String , required : true},
    }],
 
    More_Detections: [{
-      Detections: { type : String , required : true},
+      Detections: { type : Schema.Types.ObjectId , ref : 'Detections'},
       Amount: { type : String , required : true},
    }],
 

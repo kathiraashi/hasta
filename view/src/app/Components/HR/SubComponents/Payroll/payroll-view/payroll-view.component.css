@@ -1,12 +1,30 @@
-/* Company Details */
-   .Company_Details{
-      background-color: #fff;
-      padding: 20px;
-      width: 100%;
-      border-radius: 5px;
-      border-top: 2px solid #49B660;
-      box-shadow: 3px 2px 2px #b9b0b0;
-   }
+.Company_Details{
+   line-height: 30px;
+   background-color: #fff;
+   border: 1px solid #fff;
+   padding: 15px;
+   box-shadow: 3px 3px 4px #bfb6b6;
+   margin: 0px;
+   position: relative;
+}
+.Company_Details .BoxHeader{
+   margin-bottom: 15px;
+   font-weight: 700;
+   font-size: 18px;
+   color: #4f6a7a;
+   letter-spacing: 0.3px;
+   text-decoration: underline;
+   position: relative;
+ }
+ .GroupHeader{
+   border-bottom: 1px dashed #cccccc;
+   font-weight: 700;
+   font-size: 20px;
+   color: #4f6a7a;
+   letter-spacing: 0.3px;
+   margin: 15px 0px;
+   padding-bottom: 6px;
+}
 /* --------------   Page Identity Section  ----------------- */
 .Page_Identity{
    display: flex;
@@ -56,7 +74,8 @@
 /* ************************************ View Style ******************************* */
 .view_item {
    display: grid;
-   grid-template-columns: 150px 15px auto;
+   grid-template-columns: 200px 15px auto;
+   padding-left: 15px;
 }
 .view_item .Static{
    font-weight: 700;

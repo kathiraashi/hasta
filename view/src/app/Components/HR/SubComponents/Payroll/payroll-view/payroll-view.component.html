@@ -14,122 +14,125 @@
       </div>
       <!-- Company Details -->
       <div class="Company_Details">
-         <div class="View_Section">
-            <div class="row">
-               <div class="col-sm-4">
-                  <div class="view_item">
-                     <div class="Static">Employee </div>
-                     <div class="dots"> : </div>
-                     <div class="Data"> Employee</div>
-                  </div>
+         <div class="row">
+            <div class="col-sm-6">
+               <div class="view_item">
+                  <div class="Static"> Employee Name </div>
+                  <div class="dots"> : </div>
+                  <div class=" Data"> {{ _Data?.Employee?.EmployeeName }} </div>
                </div>
-               <div class="col-sm-4">
-                  <div class="view_item">
-                     <div class="Static">Code </div>
-                     <div class="dots"> : </div>
-                     <div class="Data"> code</div>
-                  </div>
+               <div class="view_item">
+                  <div class="Static"> Employee Code </div>
+                  <div class="dots"> : </div>
+                  <div class=" Data"> {{ _Data?.Employee?.EmployeeCode }} </div>
                </div>
-               <div class="col-sm-4">
-                  <div class="view_item">
-                     <div class="Static">Payslip Month: </div>
-                     <div class="dots">  </div>
-                     <div class="Data">jan</div>
-                  </div>
+               <div class="view_item">
+                  <div class="Static"> Month: </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> {{ _Data?.Month | date:'MMMM y' }} </div>
+               </div>
+            </div>
+            <div class="col-sm-6">
+            </div>
+         </div>
+         <br>
+         <div class="row">
+            <div class="col-sm-6">
+               <h5 class="GroupHeader"> Earnings </h5>
+               <div class="view_item">
+                  <div class="Static"> Basic Pay </div>
+                  <div class="dots"> : </div>
+                  <div class="Data">Rs {{_Data?.Basic_Pay}}</div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> HRA </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.HRA }} </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Conveyance </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.Conveyance }} </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Medical Reimbursement </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.Medical_Reimbursement }} </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Food Allowance </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.Food_Allowance }} </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Other Allowance </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{_Data?.Other_Allowance }} </div>
+               </div>
+               <div class="view_item" *ngFor="let Earning of _Data?.More_Earnings; let i=index">
+                  <div class="Static"> {{Earning?.Earnings?.Earnings_Type}} </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{Earning?.Amount }} </div>
+               </div>
+            </div>
+            <div class="col-sm-6">
+               <h5 class="GroupHeader"> Detections </h5>
+               <div class="view_item">
+                  <div class="Static"> Professional Tax </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.Professional_Tax }} </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Provident Fund </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.Provident_Fund }} </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Employee State Insurance </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.Employee_State_Insurance }} </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Medical Insurance </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.Medical_Insurance }} </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> TDS </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.TDS }}  </div>
+               </div>
+               <div class="view_item" *ngFor="let Detection of _Data?.More_Detections; let i=index">
+                  <div class="Static"> {{Detection?.Detections?.Detections_Type}} </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{Detection?.Amount }} </div>
+               </div>
+            </div>
+         </div>
+         <br>
+         <div class="row">
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
+               <h5 class="GroupHeader"> Total </h5>
+               <div class="view_item">
+                  <div class="Static"> Total Earnings </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.Total_Earning }}  </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Total Detections </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.Total_Detection }}  </div>
+               </div>
+               <div class="view_item">
+                  <div class="Static"> Amount Payable </div>
+                  <div class="dots"> : </div>
+                  <div class="Data"> Rs {{ _Data?.Total_Salary }}  </div>
                </div>
             </div>
          </div>
       </div>
       <br>
-      <!-- table section -->
-      <div class="Table_Section">
-         <div class="Table_Section1">
-            <table class="table_section">
-               <thead class="table_head">
-                  <tr>
-                     <th colspan="2" scope="colgroup">Earnings</th>
-                     <th colspan="2" scope="colgroup">Detection</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr>
-                     <td scope="col" style="color:#4E6A7A;">Basic Pay:</td>
-                     <td class="Form_Input" scope="col">30000</td>
-                     <td scope="col" style="color:#4E6A7A;">ESI:</td>
-                     <td scope="col" class="Form_Input">4000</td>
-                  </tr>
-                  <tr>
-                     <td scope="col"></td>
-                     <td class="Form_Input" scope="col"></td>
-                     <td scope="col" style="color:#4E6A7A;">PF:</td>
-                     <td scope="col" class="Form_Input">2500</td>  
-                  </tr>
-               </tbody>
-            </table>
-            <br>
-            <div class="row">
-               <div class="col-sm-6">
-                  <div class="row">
-                     <div class="col-sm-6 Form_Input">
-                        <label>Total Earnings:</label>
-                     </div>
-                     <div class="col-sm-6 Form_Input">
-                        0
-                     </div>
-                  </div>
-               </div>
-               <div class="col-sm-6">
-                  <div class="row">
-                     <div class="col-sm-6 Form_Input" >
-                        0
-                     </div>
-                     <div class="col-sm-6 Form_Input">
-                        0
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-sm-6">
-                  <div class="row">
-                     <div class="col-sm-6">
-                     </div>
-                     <div class="col-sm-6 ">
-                     </div>
-                  </div>
-               </div>
-               <div class="col-sm-6">
-                  <div class="row">
-                     <div class="col-sm-6 Form_Input" >
-                        <label>Net Income:</label>
-                     </div>
-                     <div class="col-sm-6 Form_Input">
-                        200000
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-sm-6">
-                  <div class="row">
-                     <div class="col-sm-6">
-                     </div>
-                     <div class="col-sm-6 ">
-                     </div>
-                  </div>
-               </div>
-               <div class="col-sm-6">
-                  <div class="row">
-                     <div class="col-sm-6 Form_Input" >
-                        <label>Amount Payable:</label>
-                     </div>
-                     <div class="col-sm-6 Form_Input">
-                        100000
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
    </div>
 </div>
