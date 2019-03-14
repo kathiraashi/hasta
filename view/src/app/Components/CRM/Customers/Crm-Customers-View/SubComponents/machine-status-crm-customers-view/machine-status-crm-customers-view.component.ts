@@ -21,7 +21,7 @@ import { CrmService } from './../../../../../../services/Crm/crm.service';
 import { ModelMachineSingleChartComponent } from './../../../../../../models/CRM/Customers/model-machine-single-chart/model-machine-single-chart.component';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { LoginService } from './../../../../../../services/LoginService/login.service';
 
 import * as d3 from 'd3';

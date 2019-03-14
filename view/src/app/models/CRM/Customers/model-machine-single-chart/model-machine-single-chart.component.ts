@@ -20,7 +20,7 @@ import { ToastrService } from './../../../../services/common-services/toastr-ser
 import { CrmService } from './../../../../services/Crm/crm.service';
 import { LoginService } from './../../../../services/LoginService/login.service';
 
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import * as d3 from 'd3';
 import { scaleLinear, scaleBand } from 'd3-scale';

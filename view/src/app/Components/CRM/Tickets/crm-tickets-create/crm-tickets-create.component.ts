@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import {NativeDateAdapter} from '@angular/material';
 import {DateAdapter} from '@angular/material/core';

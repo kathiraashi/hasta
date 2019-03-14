@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/fo
 import { Subject } from 'rxjs';
 
 import * as CryptoJS from 'crypto-js';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import {NativeDateAdapter} from '@angular/material';
 import {DateAdapter} from '@angular/material/core';

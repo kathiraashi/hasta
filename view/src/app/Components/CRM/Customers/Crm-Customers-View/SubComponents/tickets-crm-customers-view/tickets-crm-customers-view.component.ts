@@ -6,7 +6,7 @@ import { ToastrService } from './../../../../../../services/common-services/toas
 import { CrmService } from './../../../../../../services/Crm/crm.service';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ModelTicketsCrmCustomersComponent } from '../../../../../../models/CRM/Customers/model-tickets-crm-customers/model-tickets-crm-customers.component';
 import { DeleteConfirmationComponent } from '../../../../../Common-Components/delete-confirmation/delete-confirmation.component';

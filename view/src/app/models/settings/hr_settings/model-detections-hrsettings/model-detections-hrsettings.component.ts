@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import * as CryptoJS from 'crypto-js';
 
 import { HrSettingsService } from './../../../../services/settings/HrSettings/hr-settings.service';

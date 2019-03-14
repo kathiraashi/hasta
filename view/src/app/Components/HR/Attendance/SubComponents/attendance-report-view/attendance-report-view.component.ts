@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import * as CryptoJS from 'crypto-js';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ToastrService } from './../../../../../services/common-services/toastr-service/toastr.service';
 import { AttendanceService } from './../../../../../services/Hr/Attendance/attendance.service';
