@@ -118,7 +118,8 @@ export class ModelPayrollRunComponent implements OnInit {
             ReturnData =  (Basic / 100) * value;
          }
          if (UnPayable) {
-            ReturnData = Math.round((ReturnData / Total_NoOf_Days) * Total_NoOf_Payable);
+            // ReturnData = Math.round((ReturnData / Total_NoOf_Days) * Total_NoOf_Payable);
+            ReturnData = Math.round((ReturnData / 26) * Total_NoOf_Payable);
          }
          return ReturnData;
       }
@@ -129,11 +130,11 @@ export class ModelPayrollRunComponent implements OnInit {
       const Medical_Reimbursement = Common_calculation(this._MasterDetails['Medical_Reimbursement_Type'], this._MasterDetails['Medical_Reimbursement'], this._MasterDetails['Basic_Pay']);
       const Food_Allowance = Common_calculation(this._MasterDetails['Food_Allowance_Type'], this._MasterDetails['Food_Allowance'], this._MasterDetails['Basic_Pay']);
       const Other_Allowance = Common_calculation(this._MasterDetails['Other_Allowance_Type'], this._MasterDetails['Other_Allowance'], this._MasterDetails['Basic_Pay']);
-      const Professional_Tax = Common_calculation(this._MasterDetails['Professional_Tax_Type'], this._MasterDetails['Professional_Tax'], this._MasterDetails['Basic_Pay']);
-      const Provident_Fund = Common_calculation(this._MasterDetails['Provident_Fund_Type'], this._MasterDetails['Provident_Fund'], this._MasterDetails['Basic_Pay']);
-      const Employee_State_Insurance = Common_calculation(this._MasterDetails['Employee_State_Insurance_Type'], this._MasterDetails['Employee_State_Insurance'], this._MasterDetails['Basic_Pay']);
-      const Medical_Insurance = Common_calculation(this._MasterDetails['Medical_Insurance_Type'], this._MasterDetails['Medical_Insurance'], this._MasterDetails['Basic_Pay']);
-      const TDS = Common_calculation(this._MasterDetails['TDS_Type'], this._MasterDetails['TDS'], this._MasterDetails['Basic_Pay']);
+      const Professional_Tax =  this._calculation(this._MasterDetails['Professional_Tax_Type'], this._MasterDetails['Professional_Tax']);
+      const Provident_Fund =  this._calculation(this._MasterDetails['Provident_Fund_Type'], this._MasterDetails['Provident_Fund']);
+      const Employee_State_Insurance =  this._calculation(this._MasterDetails['Employee_State_Insurance_Type'], this._MasterDetails['Employee_State_Insurance']);
+      const Medical_Insurance =  this._calculation(this._MasterDetails['Medical_Insurance_Type'], this._MasterDetails['Medical_Insurance']);
+      const TDS = this._calculation(this._MasterDetails['TDS_Type'], this._MasterDetails['TDS']);
 
 
       this.Form = new FormGroup({
@@ -202,18 +203,18 @@ export class ModelPayrollRunComponent implements OnInit {
       let Total_Earning = 0;
       let Total_Detection = 0;
 
-      Total_Earning = Total_Earning + this.Form.controls['Basic_Pay'].value;
-      Total_Earning = Total_Earning + this.Form.controls['HRA'].value;
-      Total_Earning = Total_Earning + this.Form.controls['Conveyance'].value;
-      Total_Earning = Total_Earning + this.Form.controls['Medical_Reimbursement'].value;
-      Total_Earning = Total_Earning + this.Form.controls['Food_Allowance'].value;
-      Total_Earning = Total_Earning + this.Form.controls['Other_Allowance'].value;
+      Total_Earning = Total_Earning + Number(this.Form.controls['Basic_Pay'].value);
+      Total_Earning = Total_Earning + Number(this.Form.controls['HRA'].value);
+      Total_Earning = Total_Earning + Number(this.Form.controls['Conveyance'].value);
+      Total_Earning = Total_Earning + Number(this.Form.controls['Medical_Reimbursement'].value);
+      Total_Earning = Total_Earning + Number(this.Form.controls['Food_Allowance'].value);
+      Total_Earning = Total_Earning + Number(this.Form.controls['Other_Allowance'].value);
 
-      Total_Detection = Total_Detection + this.Form.controls['Professional_Tax'].value;
-      Total_Detection = Total_Detection + this.Form.controls['Provident_Fund'].value;
-      Total_Detection = Total_Detection + this.Form.controls['Employee_State_Insurance'].value;
-      Total_Detection = Total_Detection + this.Form.controls['Medical_Insurance'].value;
-      Total_Detection = Total_Detection + this.Form.controls['TDS'].value;
+      Total_Detection = Total_Detection + Number(this.Form.controls['Professional_Tax'].value);
+      Total_Detection = Total_Detection + Number(this.Form.controls['Provident_Fund'].value);
+      Total_Detection = Total_Detection + Number(this.Form.controls['Employee_State_Insurance'].value);
+      Total_Detection = Total_Detection + Number(this.Form.controls['Medical_Insurance'].value);
+      Total_Detection = Total_Detection + Number(this.Form.controls['TDS'].value);
 
       const FormArr = <FormArray>this.Form.controls['More_Earnings']['controls'];
       for (let index = 0; index < FormArr.length; index++) {

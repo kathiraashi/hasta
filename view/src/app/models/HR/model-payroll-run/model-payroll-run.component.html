@@ -84,42 +84,42 @@
                </div>
             </div>
             <div class="col-sm-6">
-               <h5 class="GroupHeader"> Detections </h5>
-               <div class="view_item">
+               <h5 class="GroupHeader"> Deductions </h5>
+               <div class="view_item_new">
                   <div class="Static"></div>
                   <div class="dots"></div>
-                  <div class="Data"> <b> Assigned </b> </div>
-                  <div class="Data_1"> <b> Detected </b> </div>
+                  <!-- <div class="Data"> <b> Assigned </b> </div> -->
+                  <div class="Data"> <b> Deducted </b> </div>
                </div>
-               <div class="view_item">
+               <div class="view_item_new">
                   <div class="Static"> Professional Tax </div>
                   <div class="dots"> : </div>
-                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Professional_Tax_Type, _MasterDetails.Professional_Tax) }} </div>
-                  <div *ngIf="Form.controls['Professional_Tax']" class="Data_1">Rs {{ Form.controls['Professional_Tax'].value }}</div>
+                  <!-- <div class="Data"> Rs {{ _calculation(_MasterDetails.Professional_Tax_Type, _MasterDetails.Professional_Tax) }} </div> -->
+                  <div *ngIf="Form.controls['Professional_Tax']" class="Data">Rs {{ Form.controls['Professional_Tax'].value }}</div>
                </div>
-               <div class="view_item">
+               <div class="view_item_new">
                   <div class="Static"> Provident Fund </div>
                   <div class="dots"> : </div>
-                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Provident_Fund_Type, _MasterDetails.Provident_Fund) }} </div>
-                  <div *ngIf="Form.controls['Provident_Fund']" class="Data_1">Rs {{ Form.controls['Provident_Fund'].value }}</div>
+                  <!-- <div class="Data"> Rs {{ _calculation(_MasterDetails.Provident_Fund_Type, _MasterDetails.Provident_Fund) }} </div> -->
+                  <div *ngIf="Form.controls['Provident_Fund']" class="Data">Rs {{ Form.controls['Provident_Fund'].value }}</div>
                </div>
-               <div class="view_item">
+               <div class="view_item_new">
                   <div class="Static"> Employee State Insurance </div>
                   <div class="dots"> : </div>
-                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Employee_State_Insurance_Type, _MasterDetails.Employee_State_Insurance) }} </div>
-                  <div *ngIf="Form.controls['Employee_State_Insurance']" class="Data_1">Rs {{ Form.controls['Employee_State_Insurance'].value }}</div>
+                  <!-- <div class="Data"> Rs {{ _calculation(_MasterDetails.Employee_State_Insurance_Type, _MasterDetails.Employee_State_Insurance) }} </div> -->
+                  <div *ngIf="Form.controls['Employee_State_Insurance']" class="Data">Rs {{ Form.controls['Employee_State_Insurance'].value }}</div>
                </div>
-               <div class="view_item">
+               <div class="view_item_new">
                   <div class="Static"> Medical Insurance </div>
                   <div class="dots"> : </div>
-                  <div class="Data"> Rs {{ _calculation(_MasterDetails.Medical_Insurance_Type, _MasterDetails.Medical_Insurance) }} </div>
-                  <div *ngIf="Form.controls['Medical_Insurance']" class="Data_1">Rs {{ Form.controls['Medical_Insurance'].value }}</div>
+                  <!-- <div class="Data"> Rs {{ _calculation(_MasterDetails.Medical_Insurance_Type, _MasterDetails.Medical_Insurance) }} </div> -->
+                  <div *ngIf="Form.controls['Medical_Insurance']" class="Data">Rs {{ Form.controls['Medical_Insurance'].value }}</div>
                </div>
-               <div class="view_item">
+               <div class="view_item_new">
                   <div class="Static"> TDS </div>
                   <div class="dots"> : </div>
-                  <div class="Data"> Rs {{ _calculation(_MasterDetails.TDS_Type, _MasterDetails.TDS) }}  </div>
-                  <div *ngIf="Form.controls['TDS']" class="Data_1">Rs {{ Form.controls['TDS'].value }}</div>
+                  <!-- <div class="Data"> Rs {{ _calculation(_MasterDetails.TDS_Type, _MasterDetails.TDS) }}  </div> -->
+                  <div *ngIf="Form.controls['TDS']" class="Data">Rs {{ Form.controls['TDS'].value }}</div>
                </div>
             </div>
          </div>

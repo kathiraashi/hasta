@@ -167,7 +167,18 @@
    grid-template-columns: auto 25px 150px 150px;
    align-items: center;
 }
+.view_item_new {
+   display: grid;
+   grid-template-columns: auto 25px 150px;
+   align-items: center;
+}
 .view_item .Static{
+   font-weight: 700;
+   color: #4f6a7a;
+   margin-bottom: 10px;
+   font-size: 15px;
+}
+.view_item_new .Static{
    font-weight: 700;
    color: #4f6a7a;
    margin-bottom: 10px;
@@ -179,7 +190,19 @@
    margin-bottom: 10px;
    font-size: 15px;
 }
+.view_item_new .dots{
+   font-weight: 800;
+   color: #4f6a7a;
+   margin-bottom: 10px;
+   font-size: 15px;
+}
 .view_item .Data{
+   font-weight: 500;
+   color: #4f6a7a;
+   margin-bottom: 10px;
+   font-size: 14px;
+}
+.view_item_new .Data{
    font-weight: 500;
    color: #4f6a7a;
    margin-bottom: 10px;
