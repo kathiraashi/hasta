@@ -6,6 +6,7 @@ var Employee_AttendanceSchema = mongoose.Schema({
    Employee: { type : Schema.Types.ObjectId , ref : 'Employees'},
    Attendance_Date: { type : Date , required : true},
    Attendance: { type : String}, // Present, Week Off
+  // Attendance_Status: { type : String}, // Pending, Approved, Rejected
    Created_By: { type : Schema.Types.ObjectId , ref : 'User_Management'},
    Active_Status: { type : Boolean , required : true},
    If_Deleted: { type : Boolean , required : true }

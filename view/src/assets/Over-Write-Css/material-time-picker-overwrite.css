@@ -58,3 +58,6 @@
 .timepicker-overlay{
    z-index: 1007 !important;
 }
+.timepicker__header ngx-material-timepicker-dial{
+   width: 100%;
+}
