@@ -151,22 +151,22 @@ export class ModelTicketsActivityCreateComponent implements OnInit {
       });
 
 
-      if (this._Data['CurrentStatus'] && typeof this._Data['CurrentStatus'] === 'object' && Object.keys(this._Data['CurrentStatus']).length === 2) {
-         if (this._Data['CurrentStatus']['Type'] === 'Type_0') {
-            this._Statuses = this._Statuses.slice(0, 1);
-         } else {
-            this._Statuses.splice(0, 1);
-         }
-         if (this._Data['CurrentStatus']['Type'] === 'Type_3') {
-            this._Statuses = this._Statuses.slice(2, 3);
-         } else {
-            this._Statuses.splice(2, 1);
-         }
-      } else {
-         this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Technical Error!' });
-         this.onClose.next({Status: false});
-         this.bsModalRef.hide();
-      }
+      // if (this._Data['CurrentStatus'] && typeof this._Data['CurrentStatus'] === 'object' && Object.keys(this._Data['CurrentStatus']).length === 2) {
+      //    if (this._Data['CurrentStatus']['Type'] === 'Type_0') {
+      //       this._Statuses = this._Statuses.slice(0, 1);
+      //    } else {
+      //       this._Statuses.splice(0, 1);
+      //    }
+      //    if (this._Data['CurrentStatus']['Type'] === 'Type_3') {
+      //       this._Statuses = this._Statuses.slice(2, 3);
+      //    } else {
+      //       this._Statuses.splice(2, 1);
+      //    }
+      // } else {
+      //    this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Technical Error!' });
+      //    this.onClose.next({Status: false});
+      //    this.bsModalRef.hide();
+      // }
    }
 
    MinTimeCalculate(value) {

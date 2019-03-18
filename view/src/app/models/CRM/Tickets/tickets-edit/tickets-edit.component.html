@@ -1,0 +1,30 @@
+<!-- If Create Or Edit The Controller Type -->
+<div class="Modal_Content" *ngIf="Ticket_Info['_id']">
+   <div class="Modal_Header">
+      <p> Edit Ticket </p>
+      <span *ngIf="!Uploading" data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
+   </div>
+   <form [formGroup]="Form" (ngSubmit)="Update()">
+      <div class="Model_Body">
+         <div class="row">
+            <div class="col-sm-12 Form_Input">
+               <label> Ticket Id :</label>
+               <input type="text" formControlName="TicketId">
+            </div>
+            <div class="col-sm-12 Form_TextArea" [ngClass]="{'Form_Err': !Form.controls['Issue'].pristine && Form.controls['Issue'].errors, 'Form_Success': Form.controls['Issue'].valid && !Form.controls['Issue'].pristine }">
+               <label> Issue:</label>
+               <textarea formControlName="Issue"></textarea>
+               <p class="error" *ngIf="Form.controls['Issue'].errors && !Form.controls['Issue'].pristine">
+                  <span *ngIf="Form.controls['Issue'].errors.required"> Issue is required</span>
+               </p>
+            </div>
+         </div>
+      </div>
+      <div class="Model_Footer">
+         <button type="submit" [disabled]="Form.status !== 'VALID' || Uploading" mat-raised-button color="primary">
+            <span *ngIf="!Uploading">Update</span>
+            <span *ngIf="Uploading" class="UploadingBtn"> <i class="fa fa-refresh fa-spin"></i> Loading... </span>
+         </button>
+      </div>
+   </form>
+</div>

@@ -31,7 +31,7 @@ var app = express();
 // DB Connection
 
    mongoose.connect('mongodb://kathiraashi:kathir143@ds249311.mlab.com:49311/hasta', {useNewUrlParser: true,  useCreateIndex: true});
-   // mongoose.connect('mongodb://aashiHasta:aashiHasta123@localhost/hasta');
+   // mongoose.connect('mongodb://aashiHasta:aashiHasta123@localhost/hasta', {useNewUrlParser: true,  useCreateIndex: true});
    mongoose.connection.on('error', function(err) {
       ErrorManagement.ErrorHandling.ErrorLogCreation('', 'Mongodb Connection Error', 'Server.js', err);
    });

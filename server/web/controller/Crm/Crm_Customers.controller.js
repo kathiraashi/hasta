@@ -1,3 +1,4 @@
+
 var CryptoJS = require("crypto-js");
 var CrmCustomersModel = require('./../../models/Crm/CrmCustomers.model.js');
 var HrModel = require('./../../models/Hr/Employee.model.js');
@@ -1420,7 +1421,6 @@ exports.CrmMachine_WorkingHours_Update = function(req, res) {
       });
    }
 };
-
 exports.CrmMachinesList_ForWorking = function(req, res) {
    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
@@ -1694,6 +1694,91 @@ exports.CrmTickets_Create = function(req, res) {
                   res.status(200).send({Status: true, Message:'Ticket "(' + result_1.TicketId + ')" Successfully Created' });
                }
             });
+         }
+      });
+   }
+};
+exports.CrmTickets_Update = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if(!ReceivingData.Ticket_Id || ReceivingData.Ticket_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Ticket Details can not be empty" });
+   // } else if(!ReceivingData.TicketOpenDate || ReceivingData.TicketOpenDate === '' ) {
+   //    res.status(400).send({Status: false, Message: "Date can not be empty" });
+   } else if(!ReceivingData.Issue || ReceivingData.Issue === '' ) {
+      res.status(400).send({Status: false, Message: "Issue can not be empty" });
+   } else {
+      CrmCustomersModel.CrmTicketsSchema
+      .updateOne({ _id : mongoose.Types.ObjectId(ReceivingData.Ticket_Id) }, { $set: { Issue : ReceivingData.Issue } } )
+      .exec( function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Data Update Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Update The Crm Ticket Data!."});
+         } else {
+            CrmCustomersModel.CrmTicketsSchema
+               .findOne({'_id': ReceivingData.Ticket_Id }, {}, {})
+               .populate({ path: 'Customer', select: ['CompanyName'] })
+               .populate({ path: 'Machine', select: ['MachineName'] })
+               .populate({ path: 'TicketType', select: ['Ticket_Type'] })
+               .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+               .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+               .exec(function(err, result) {
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Data Find Query Error', 'Crm_Customers.controller.js', err);
+                  res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Data!."});
+               } else {
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+                  ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Response: ReturnData });
+               }
+            });
+         } 
+      })
+   }
+};
+exports.CrmTickets_Delete = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if(!ReceivingData.Ticket_Id || ReceivingData.Ticket_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Ticket Details can not be empty" });
+   } else {
+      CrmCustomersModel.CrmTicketsSchema
+      .findOne({'_id': ReceivingData.Ticket_Id }, {}, {}, function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Data Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Data!."});
+         } else {
+            if (result !== null) {
+               if (!result.TicketCloseDate) {
+                  CrmCustomersModel.CrmMachinesSchema.updateOne(
+                     { _id : mongoose.Types.ObjectId(result.Machine)  },
+                     { $set: { Open_Ticket : false } }
+                  ).exec();
+               };
+               Promise.all([
+                  CrmCustomersModel.CrmTicketsSchema
+                     .updateOne( { _id : mongoose.Types.ObjectId(ReceivingData.Ticket_Id) },
+                                 {  $set: {  If_Deleted: true, Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.User_Id) } }).exec(),
+                  CrmCustomersModel.CrmTicketActivitiesSchema
+                     .updateMany( { Ticket : mongoose.Types.ObjectId(ReceivingData.Ticket_Id) },
+                                 {  $set: {  If_Deleted: true, Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.User_Id) } }).exec(),
+                  CrmCustomersModel.CrmMachinesActivitiesSchema
+                     .updateMany( { Ticket_DbId : mongoose.Types.ObjectId(ReceivingData.Ticket_Id) },
+                                 {  $set: {  If_Deleted: true } }).exec(),
+               ]).then(response => {
+                  res.status(200).send({Status: true, Message: "Ticket Successfully Deleted" });
+               }).catch(catch_err => {
+                  res.status(417).send({Status: false, Message: "Ticket Deleted Failed!" });
+               });
+            } else {
+               res.status(400).send({status: false, Message: "Ticket Details can not be valid!."});
+            }
          }
       });
    }
@@ -2191,6 +2276,70 @@ exports.CrmTicketActivities_Create = function(req, res) {
             res.status(200).send({Status: false, Message: "Activity Date Time Affect the Another Ticket"});
          }
       }) 
+   }
+};
+exports.CrmTicketActivities_Update = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if(!ReceivingData.TicketActivity_Id || ReceivingData.TicketActivity_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Ticket Activity Details can not be empty" });
+   } else if(!ReceivingData.Description || ReceivingData.Description === '' ) {
+      res.status(400).send({Status: false, Message: "Description can not be empty" });
+   } else {
+      CrmCustomersModel.CrmTicketActivitiesSchema
+      .updateOne({ _id : mongoose.Types.ObjectId(ReceivingData.TicketActivity_Id) }, { $set: { Description : ReceivingData.Description } } )
+      .exec( function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Activity Data Update Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Update The Crm Ticket Activity Data!."});
+         } else {
+            CrmCustomersModel.CrmTicketActivitiesSchema
+               .findOne({'_id': ReceivingData.TicketActivity_Id }, {}, {})
+               .populate({ path: 'Customer', select: ['CompanyName'] })
+               .populate({ path: 'Machine', select: ['MachineName'] })
+               .populate({ path: 'Ticket', select: ['TicketId'] })
+               .populate({ path: 'Contact', select: ['Name'] })
+               .populate({ path: 'Employee', select: ['EmployeeName'] })
+               .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+               .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+               .exec(function(err, result) {
+               if(err) {
+                  ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Ticket Activity Data Find Query Error', 'Crm_Customers.controller.js', err);
+                  res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Ticket Activity Data!."});
+               } else {
+                  var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+                  ReturnData = ReturnData.toString();
+                  res.status(200).send({Status: true, Response: ReturnData });
+               }
+            });
+         } 
+      })
+   }
+};
+exports.CrmTicketActivities_Delete = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if(!ReceivingData.TicketActivity_Id || ReceivingData.TicketActivity_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Ticket Activity Details can not be empty" });
+   } else {
+      Promise.all([
+         CrmCustomersModel.CrmTicketActivitiesSchema
+            .updateMany( { _id : mongoose.Types.ObjectId(ReceivingData.TicketActivity_Id) },
+                        {  $set: {  If_Deleted: true, Last_Modified_By: mongoose.Types.ObjectId(ReceivingData.User_Id) } }).exec(),
+         CrmCustomersModel.CrmMachinesActivitiesSchema
+            .updateMany( { Ticket_Activity_DbId : mongoose.Types.ObjectId(ReceivingData.TicketActivity_Id) },
+                        {  $set: {  If_Deleted: true } }).exec(),
+      ]).then(response => {
+         res.status(200).send({Status: true, Message: "Ticket Activity Successfully Deleted" });
+      }).catch(catch_err => {
+         res.status(417).send({Status: false, Message: "Ticket Activity Deleted Failed!" });
+      });
    }
 };
 exports.CustomerBased_Employees = function(req, res) {

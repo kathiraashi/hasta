@@ -59,6 +59,8 @@ module.exports = function(app) {
 
 
    app.post('/API/CrmCustomers/CrmTickets_Create', Controller.CrmTickets_Create);
+   app.post('/API/CrmCustomers/CrmTickets_Update', Controller.CrmTickets_Update);
+   app.post('/API/CrmCustomers/CrmTickets_Delete', Controller.CrmTickets_Delete);
    app.post('/API/CrmCustomers/CrmTickets_IdleCheck', Controller.CrmTickets_IdleCheck);
    app.post('/API/CrmCustomers/CrmAMCTicketLimit_Check', Controller.CrmAMCTicketLimit_Check);
    app.post('/API/CrmCustomers/CrmTickets_List', Controller.CrmTickets_List);
@@ -70,6 +72,8 @@ module.exports = function(app) {
 
 
    app.post('/API/CrmCustomers/CrmTicketActivities_Create', Controller.CrmTicketActivities_Create);
+   app.post('/API/CrmCustomers/CrmTicketActivities_Update', Controller.CrmTicketActivities_Update);
+   app.post('/API/CrmCustomers/CrmTicketActivities_Delete', Controller.CrmTicketActivities_Delete);
    app.post('/API/CrmCustomers/CustomerBased_Employees', Controller.CustomerBased_Employees);
    app.post('/API/CrmCustomers/CrmTicketActivities_List', Controller.CrmTicketActivities_List);
 

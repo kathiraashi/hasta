@@ -166,6 +166,8 @@ import { MachineWorkingUpdateComponent } from './Components/CRM/Customers/Crm-Cu
 import { CrmCustomersEditComponent } from './Components/CRM/Customers/crm-customers-edit/crm-customers-edit.component';
 import { CrmMachinesEditComponent } from './Components/CRM/Machines/crm-machines-edit/crm-machines-edit.component';
 import { ModelPayrollRunComponent } from './models/HR/model-payroll-run/model-payroll-run.component';
+import { TicketsEditComponent } from './models/CRM/Tickets/tickets-edit/tickets-edit.component';
+import { TicketActivitiesEditComponent } from './models/CRM/Tickets/ticket-activities-edit/ticket-activities-edit.component';
 
 
 
@@ -309,7 +311,9 @@ import { ModelPayrollRunComponent } from './models/HR/model-payroll-run/model-pa
            MachineWorkingUpdateComponent,
            CrmCustomersEditComponent,
            CrmMachinesEditComponent,
-           ModelPayrollRunComponent
+           ModelPayrollRunComponent,
+           TicketsEditComponent,
+           TicketActivitiesEditComponent
    ],
    imports: [
       // Default Modules
@@ -376,7 +380,9 @@ import { ModelPayrollRunComponent } from './models/HR/model-payroll-run/model-pa
     ModelDesignationHrsettingsComponent,
     ModelPayrollMasterComponent,
     ModelHolidayHrsettingsComponent,
-    ModelPayrollRunComponent
+    ModelPayrollRunComponent,
+    TicketsEditComponent,
+    TicketActivitiesEditComponent
     ],
    bootstrap: [AppComponent]
 })
