@@ -4,11 +4,18 @@ var Schema = mongoose.Schema;
 // Leaves Schema
 var ExpensesSchema = mongoose.Schema({
    Employee: { type : Schema.Types.ObjectId , ref : 'Employees'},
-   Expenses_Type: { type : Schema.Types.ObjectId , ref : 'ExpensesType'},
-   Applied_Date: { type : Date , required : true},
-   Required_Date: { type : Date},
-   Description: { type : String , required : true},
-   Amount: { type : String , required : true},
+   Total_Expenses: { type : String , required : true},
+   Total_Approved_Expenses: { type : String , required : true},
+   Total_Paid_Expenses: { type : String , required : true},
+   Expenses_Array: [{
+      Date: { type : Date , required : true},
+      Amount: { type : String , required : true},
+      Approved_Amount: { type : String , required : true},
+      Paid_Amount: { type : String , required : true},
+      Expenses_Type: { type : Schema.Types.ObjectId , ref : 'ExpensesType'},
+      Description: { type : String , required : true},
+   }],
+   Documents: { type : Array },
    Current_Status: { type : String , required : true},
    Stage: { type : String , required : true}, // Stage_1: Draft, Stage_2: Send To Approve, Stage_3: Send To Modify, Stage_4: Send To Again Approve, Stage_5: Approved, Stage_6: Rejected;
    Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },

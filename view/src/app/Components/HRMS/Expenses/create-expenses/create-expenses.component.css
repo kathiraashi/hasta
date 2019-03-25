@@ -90,6 +90,7 @@ a {
 .Form_TextArea textarea {
    padding: 4px 10px;
    width: 100%;
+   height: 50px;
    outline: none;
    border: 1px solid #e8e8e8;
    color: rgb(79, 107, 123);
@@ -118,6 +119,9 @@ a {
    margin-bottom: 5px;
    font-weight: 700;
    color: #4e6a7a;
+}
+.Form_Select{
+   margin-bottom: 20px;
 }
 .Form_Select select{
    width: 100%;
@@ -152,6 +156,24 @@ a {
    background-color: rgba(62, 59, 59, 0.13);
    height: 45px;
    text-align: right
+}
+.Info{
+   margin: 0px;
+   color: rgba(62, 59, 59, 0.63);
+   font-weight: 500;
+   text-align: right;
+   font-size: 13px;
+   word-spacing: 1px;
+   letter-spacing: 0.4px;
+}
+p.Cal_Info {
+   font-size: 15px;
+   margin-bottom: 0px;
+   font-weight: 500;
+   color: #4e6a7a;
+}
+p.Cal_Info span{
+   font-weight: 700;
 }
 
 

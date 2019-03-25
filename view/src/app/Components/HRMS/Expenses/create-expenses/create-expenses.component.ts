@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
+import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import * as CryptoJS from 'crypto-js';
@@ -29,15 +29,17 @@ export class MyDateAdapter extends NativeDateAdapter {
 })
 export class CreateExpensesComponent implements OnInit {
 
-
+   @ViewChild('FileUpload') FileUpload: ElementRef;
    Today: Date = new Date();
    _EmployeeName: any[] =  [];
    _ExpensesTypes: any[] =  [];
    Form: FormGroup;
-   User_Id;
-   User_Type;
-   IfEmployeeId;
+   User_Id: any;
+   User_Type: any;
+   IfEmployeeId: any;
    MinDate: Date = new Date();
+   No_Of_Documents: Number = 0;
+   FormData: FormData = new FormData();
 
 
 
@@ -95,14 +97,12 @@ export class CreateExpensesComponent implements OnInit {
 
    ngOnInit() {
       this.Form = new FormGroup({
-         Employee: new FormControl({value: null}, Validators.required),
-         Expenses_Type: new FormControl(null, Validators.required),
-         Applied_Date: new FormControl(this.Today, Validators.required),
-         Required_Date: new FormControl(null),
-         Description: new FormControl('', Validators.required),
-         Amount: new FormControl('', [Validators.required, Validators.pattern('^[0-9\,\.\]*$')]),
+         Employee: new FormControl(null, Validators.required),
+         Expenses_Array: new FormArray([]),
+         Total_Expenses: new FormControl(0, Validators.required),
          User_Id: new FormControl(this.User_Id, Validators.required)
       });
+      this.Create_Expenses();
       if (this.User_Type === 'Employee') {
          const EmployeeId = this.Login_Service.LoginUser_Info()['Employee']['_id'];
          const EmployeeName = this.Login_Service.LoginUser_Info()['Employee']['EmployeeName'];
@@ -131,11 +131,58 @@ export class CreateExpensesComponent implements OnInit {
       this.MinDate = _date;
    }
 
+   Amount_Change() {
+      const Expenses_Array = <FormArray>this.Form.controls['Expenses_Array'];
+      let Amount = 0;
+      Expenses_Array.controls.map(_obj => {
+         const Expenses_Group = <FormGroup>_obj;
+         Amount = Amount + Expenses_Group.controls['Amount'].value;
+      });
+      this.Form.controls['Total_Expenses'].setValue(Amount);
+   }
+
+   fileChangeEvent(event: any) {
+      if (event.target.files && event.target.files.length > 0) {
+         this.FormData.delete('documents');
+         for (let index = 0; index < event.target.files.length; index++) {
+            const file = event.target.files[index];
+            this.FormData.append('documents', file, file.name);
+         }
+         this.No_Of_Documents = event.target.files.length;
+      } else {
+         this.FileUpload.nativeElement.value = null;
+         this.No_Of_Documents = 0;
+         this.FormData.delete('documents');
+      }
+    }
+
+
+   Create_Expenses() {
+      const control = <FormArray>this.Form.get('Expenses_Array');
+      control.push(this.NewExpensesFormGroup());
+   }
+   Remove_Expenses(_index: number) {
+      const control = <FormArray>this.Form.controls['Expenses_Array'];
+      control.removeAt(_index);
+      this.Amount_Change();
+   }
+
+   NewExpensesFormGroup() {
+      return new FormGroup({
+               Date: new FormControl(this.Today, Validators.required),
+               Amount: new FormControl(0, [Validators.required, Validators.pattern('^[0-9\,\.\]*$')]),
+               Expenses_Type: new FormControl(null, Validators.required),
+               Description: new FormControl('', Validators.required),
+            });
+   }
+
+
    Submit() {
       if (this.Form.valid) {
          let Info = CryptoJS.AES.encrypt(JSON.stringify(this.Form.getRawValue()), 'SecretKeyIn@123');
          Info = Info.toString();
-         this.Service.Expenses_Create({ 'Info': Info }).subscribe( response => {
+         this.FormData.set('Info', Info);
+         this.Service.Expenses_Create(this.FormData).subscribe( response => {
             const ResponseData = JSON.parse(response['_body']);
             if (response['status'] === 200 && ResponseData['Status'] ) {
                this.Toastr.NewToastrMessage({ Type: 'Success', Message: 'New Expenses Successfully Created' });

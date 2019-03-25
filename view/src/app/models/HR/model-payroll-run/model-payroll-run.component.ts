@@ -79,7 +79,13 @@ export class ModelPayrollRunComponent implements OnInit {
             const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
             const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
             this._MasterDetails = DecryptedData;
-            this.Generate_Form();
+            if (this._MasterDetails == null) {
+               this.Toastr.NewToastrMessage({Type: 'Error', Message: 'Payroll Master not created!'});
+               this.onClose.next({Status: false, Message: 'Payroll Master not created!'});
+               this.bsModalRef.hide();
+            } else {
+               this.Generate_Form();
+            }
          } else if (response['status'] === 400 || response['status'] === 401 || response['status'] === 417 && !ResponseData['Status']) {
             this.Toastr.NewToastrMessage({Type: 'Error', Message: response['Message']});
          } else {

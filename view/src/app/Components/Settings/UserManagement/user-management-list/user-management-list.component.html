@@ -35,6 +35,7 @@
                <th>User Type</th>
                <th>Last Modified By</th>
                <th>Status</th>
+               <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -69,6 +70,14 @@
                <td>
                   <span class="Style_1" *ngIf="item.Active_Status"> Active </span>
                   <span class="Style_1" *ngIf="!item.Active_Status"> Inactive </span>
+               </td>
+               <td>
+                  <button *ngIf="!item.Active_Status" (click)="User_Activate(i)" class="Table_Action_mini Bg_Success" mat-mini-fab color="primary">
+                     <i class="material-icons">visibility</i>
+                  </button>
+                  <button *ngIf="item.Active_Status" (click)="User_Deactivate(i)"  class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                     <i class="material-icons">visibility_off</i>
+                  </button>
                </td>
             </tr>
          </tbody>

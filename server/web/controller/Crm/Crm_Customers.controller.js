@@ -283,7 +283,7 @@ exports.CrmCustomers_Delete = function(req, res) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
    } else {
       Promise.all([
-         CrmCustomersModel.CrmCustomersSchema.updateone(
+         CrmCustomersModel.CrmCustomersSchema.updateOne(
             { _id : mongoose.Types.ObjectId(ReceivingData.Customer_Id)  },
             {  $set: { If_Deleted : true } }).exec(),
          CrmCustomersModel.CrmMachinesSchema.updateMany(
@@ -1835,7 +1835,7 @@ exports.CrmAMCTicketLimit_Check = function(req, res) {
          } else {
             if (result !== null) {
                CrmCustomersModel.CrmTicketsSchema
-                  .count({  'Customer': ReceivingData.Customer_Id, 
+                  .countDocuments({  'Customer': ReceivingData.Customer_Id, 
                            'If_Deleted': false,
                            $and: [  { TicketOpenDate: { $lte: result.AMCTo } },
                                     { TicketOpenDate: { $gte: result.AMCFrom } } ] })
@@ -2352,7 +2352,7 @@ exports.CustomerBased_Employees = function(req, res) {
          res.status(400).send({Status: false, Message: "Customer Details can not be empty" });
    } else {
       HrModel.EmployeeSchema
-         .find({'If_Deleted': false , 'Customers': mongoose.Types.ObjectId(ReceivingData.Customer_Id) }, { EmployeeName: 1}, {sort: { updatedAt: -1 }})
+         .find({'If_Deleted': false, 'Active_Status': true, 'Customers': mongoose.Types.ObjectId(ReceivingData.Customer_Id) }, { EmployeeName: 1}, {sort: { updatedAt: -1 }})
          .exec(function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee List Find Query Error', 'Crm_Customers.controller.js', err);

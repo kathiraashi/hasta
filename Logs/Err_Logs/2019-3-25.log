@@ -1,0 +1,2 @@
+[2019-03-25T13:42:21.223] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"Error: Route.post() requires a callback function but got a [object Undefined]"}
+[2019-03-25T18:42:46.159] [ERROR] Error - {"Error_Name":"","Error_Address":"","Error_Message":"ReferenceError: Expenses_Array is not defined"}

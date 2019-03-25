@@ -57,7 +57,7 @@ exports.PayrollMaster_Create = function(req, res) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR Payroll Master Creation Query Error', 'Payroll.controller.js');
             res.status(417).send({Status: false, Message: "Some error occurred while creating the HR Payroll Master !."});
          } else {
-            HrEmployeeModel.EmployeeSchema.update({_id: result.Employee}, { $set: { If_PayrollMaster: true }}).exec();
+            HrEmployeeModel.EmployeeSchema.updateOne({_id: result.Employee}, { $set: { If_PayrollMaster: true }}).exec();
             HrPayrollModel.Employee_PayrollMasterSchema
                .findOne({'_id': result._id})
                .populate({ path: 'Employee', select: ['EmployeeName'] })
@@ -267,7 +267,7 @@ exports.Payroll_Create = function(req, res) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR Payroll Creation Query Error', 'Payroll.controller.js');
             res.status(417).send({Status: false, Message: "Some error occurred while creating the Payroll !."});
          } else {
-            HrAttendanceModel.AttendanceReportSchema.update({_id: mongoose.Types.ObjectId(ReceivingData.Attendance_Report)}, { $set: { Payroll_Generated: true }}).exec();
+            HrAttendanceModel.AttendanceReportSchema.updateOne({_id: mongoose.Types.ObjectId(ReceivingData.Attendance_Report)}, { $set: { Payroll_Generated: true }}).exec();
             res.status(200).send({Status: true, Message: "Successfully Payroll Generated" });
          }
       });
@@ -347,7 +347,7 @@ exports.Payroll_Delete = function(req, res) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
    } else {
       Promise.all([
-         HrAttendanceModel.AttendanceReportSchema.update(
+         HrAttendanceModel.AttendanceReportSchema.updateOne(
             { _id : mongoose.Types.ObjectId(ReceivingData.Report_Id)  },
             {  $set: { Payroll_Generated : false } }).exec(),
          PayrollModel.Payroll.updateMany(

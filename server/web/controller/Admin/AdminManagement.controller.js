@@ -15,7 +15,7 @@ var crypto = require("crypto");
       if(!ReceivingData.User_Name || ReceivingData.User_Name === '' ) {
          res.status(400).send({Status: false, Message: "User Name can not be empty" });
       }else {
-         AdminModel.User_Management.findOne({'User_Name': { $regex : new RegExp("^" + ReceivingData.User_Name + "$", "i") }, 'Active_Status': true }, {}, {}, function(err, result) { // User Name Find Query
+         AdminModel.User_Management.findOne({'User_Name': { $regex : new RegExp("^" + ReceivingData.User_Name + "$", "i") } }, {}, {}, function(err, result) { // User Name Find Query
             if(err) {
                ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'User Name Find Query Error', 'AdminManagement.controller.js', err);
                res.status(417).send({status: false, Message: "Some error occurred while Find Users Name!."});
@@ -57,7 +57,11 @@ var crypto = require("crypto");
                         if (result_1 === null) {
                            res.status(200).send({ Status: false, Message: "Invalid account details!" });
                         }else{
-                           res.status(200).send({ Status: false, Message: "User Name and password do not match!" });
+                           if (result_1.Active_Status) {
+                              res.status(200).send({ Status: false, Message: "User Name and password do not match!" });
+                           } else {
+                              res.status(200).send({ Status: false, Message: "Your Account has Deactivated!" });
+                           }
                         }
                      }
                   });
@@ -66,7 +70,7 @@ var crypto = require("crypto");
                   var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), Key);
                   ReturnData = ReturnData.toString();
                   const NewReturnData = (ReturnData + Key).concat('==');
-                  AdminModel.User_Management.update(
+                  AdminModel.User_Management.updateOne(
                      { _id : result._id },
                      { $set: { LoginToken : Key, LoginTime: new Date().toString(), LastActiveTime: new Date() }}
                   ).exec((err_3, result_3) => {
@@ -122,7 +126,7 @@ var crypto = require("crypto");
                res.status(400).send({Status: false, Message: "Some error occurred while creating the User!."});
             } else {
                if (ReceivingData.User_Type === 'Employee' && ReceivingData.Employee !== undefined && ReceivingData.Employee !== '') {
-                  HrModel.EmployeeSchema.update({_id: ReceivingData.Employee}, { $set: { If_UserManage: true }}).exec();
+                  HrModel.EmployeeSchema.updateOne({_id: ReceivingData.Employee}, { $set: { If_UserManage: true }}).exec();
                }
                AdminModel.User_Management.findOne({_id: result._id }, {}, {})
                   .populate({path:'Employee', select:'EmployeeName'})
@@ -151,7 +155,7 @@ var crypto = require("crypto");
       if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
          res.status(400).send({Status: false, Message: "User Details can not be empty" });
       }else {
-         AdminModel.User_Management.find({'Active_Status': true }, {}, {sort: { updatedAt: -1 }})
+         AdminModel.User_Management.find({}, {}, {sort: { updatedAt: -1 }})
          .populate({path:'Employee', select:'EmployeeName'})
          .exec(function(err, result) { // Users Find Query
             if(err) {
@@ -167,6 +171,54 @@ var crypto = require("crypto");
    };
 
 
+// -------------------------------------------------- Users Deactivate -----------------------------------------------
+   exports.User_Deactivate = function(req, res) {
+      var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+      var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+   
+      if(!ReceivingData._Id || ReceivingData._Id === '' ) {
+         res.status(400).send({Status: false, Message: "User Details can not be empty" });
+      } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+         res.status(400).send({Status: false, Message: "User Details can not be empty" });
+      } else {
+         AdminModel.User_Management.updateOne(
+            { _id : mongoose.Types.ObjectId(ReceivingData._Id)  },
+            {  $set: { Active_Status : false } }
+         ).exec( function(err, result) {
+            if(err) {
+               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'User Activate Query Error', 'AdminManagement.controller.js', err);
+               res.status(400).send({Status: false, Message: "Some error occurred while Activate the User!."});
+            } else {
+               res.status(200).send({Status: true, Message: 'User Successfully Deactivated!'  });
+            }
+         });
+      }
+   };
+   
+
+// -------------------------------------------------- Users Activate -----------------------------------------------
+   exports.User_Activate = function(req, res) {
+      var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+      var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+   
+      if(!ReceivingData._Id || ReceivingData._Id === '' ) {
+         res.status(400).send({Status: false, Message: "User Details can not be empty" });
+      } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+         res.status(400).send({Status: false, Message: "User Details can not be empty" });
+      } else {
+         AdminModel.User_Management.updateOne(
+            { _id : mongoose.Types.ObjectId(ReceivingData._Id)  },
+            {  $set: { Active_Status : true } }
+         ).exec( function(err, result) {
+            if(err) {
+               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'User Activate Query Error', 'AdminManagement.controller.js', err);
+               res.status(400).send({Status: false, Message: "Some error occurred while Activate the User!."});
+            } else {
+               res.status(200).send({Status: true, Message: 'User Successfully Activated!'  });
+            }
+         });
+      }
+   };
 
 
 // -------------------------------------------------- Countries List----------------------------------------------------------

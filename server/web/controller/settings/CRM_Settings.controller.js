@@ -91,8 +91,8 @@ var mongoose = require('mongoose');
                               .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
                               .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
                               .exec(),
-               CRMSettingsModel.IndustryTypeSchema.count({'If_Deleted': false, 'createdAt': { $lte: Last_Creation } }).exec(),
-               CRMSettingsModel.IndustryTypeSchema.count( {'If_Deleted': false, 'createdAt' : { $gt: Last_Creation } } ).exec()
+               CRMSettingsModel.IndustryTypeSchema.countDocuments({'If_Deleted': false, 'createdAt': { $lte: Last_Creation } }).exec(),
+               CRMSettingsModel.IndustryTypeSchema.countDocuments( {'If_Deleted': false, 'createdAt' : { $gt: Last_Creation } } ).exec()
             ]).then(result => {
                var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result[0]), 'SecretKeyOut@123');
                ReturnData = ReturnData.toString();

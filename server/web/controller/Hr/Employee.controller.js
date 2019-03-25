@@ -1,4 +1,5 @@
 var CryptoJS = require("crypto-js");
+var AdminModel = require('./../../models/Admin/AdminManagement.model.js');
 var HrModel = require('./../../models/Hr/Employee.model.js');
 var ErrorManagement = require('./../../../handling/ErrorHandling.js');
 var mongoose = require('mongoose');
@@ -226,6 +227,55 @@ exports.Employee_View = function(req, res) {
    }
 };
 
+exports.Employee_Deactivate = function(req, res) {
+
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Employee_Id || ReceivingData.Employee_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Employee Details can not be empty" });
+   } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else {
+      Promise.all([
+         HrModel.EmployeeSchema.updateOne(
+            { _id : mongoose.Types.ObjectId(ReceivingData.Employee_Id)  },
+            {  $set: { Active_Status : false } }).exec(),
+         AdminModel.User_Management.updateMany(
+            { Employee : mongoose.Types.ObjectId(ReceivingData.Employee_Id)  },
+            {  $set: { Active_Status : false } }).exec(),
+      ]).then( result => {
+         res.status(200).send({Status: true, Message: 'Employee Successfully Deactivated!'  });
+      }).catch(err => {
+         ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee Deactivate Query Error', 'Employee.controller.js', err);
+         res.status(400).send({Status: false, Message: "Some error occurred while Deactivate the Employee!."});
+      });
+   }
+};
+
+exports.Employee_Activate = function(req, res) {
+
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Employee_Id || ReceivingData.Employee_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Employee Details can not be empty" });
+   } else if(!ReceivingData.User_Id || ReceivingData.User_Id === '' ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else {
+      HrModel.EmployeeSchema.updateOne(
+         { _id : mongoose.Types.ObjectId(ReceivingData.Employee_Id)  },
+         {  $set: { Active_Status : true } }
+      ).exec( function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee Activate Query Error', 'Employee.controller.js', err);
+            res.status(400).send({Status: false, Message: "Some error occurred while Activate the Employee!."});
+         } else {
+            res.status(200).send({Status: true, Message: 'Employee Successfully Activated!'  });
+         }
+      });
+   }
+};
 
 exports.Employee_Update = function(req, res) {
    Employee_Files(req, res, function(upload_err) {
@@ -283,7 +333,7 @@ exports.Employee_Update = function(req, res) {
             ReceivingData.Designation = mongoose.Types.ObjectId(ReceivingData.Designation);
          }
 
-         HrModel.EmployeeSchema.update(
+         HrModel.EmployeeSchema.updateOne(
             { _id : mongoose.Types.ObjectId(ReceivingData.Employee_Id)  },
             {  $set: {
                   EmployeeName: ReceivingData.EmployeeName,
@@ -342,7 +392,7 @@ exports.Employee_SimpleList = function(req, res) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
    }else {
       HrModel.EmployeeSchema
-         .find({'If_Deleted': false}, { EmployeeName: 1 }, {sort: { updatedAt: -1 }})
+         .find({'If_Deleted': false, 'Active_Status': true}, { EmployeeName: 1 }, {sort: { updatedAt: -1 }})
          .exec(function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee List Find Query Error', 'Employee.controller.js', err);
@@ -364,7 +414,7 @@ exports.EmployeeList_WithoutUserManage = function(req, res) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
    }else {
       HrModel.EmployeeSchema
-         .find({'If_Deleted': false, If_UserManage: false }, { EmployeeName: 1 }, {sort: { updatedAt: -1 }})
+         .find({'If_Deleted': false, 'Active_Status': true, If_UserManage: false }, { EmployeeName: 1 }, {sort: { updatedAt: -1 }})
          .exec(function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee List Find Query Error', 'Employee.controller.js', err);
@@ -386,7 +436,7 @@ exports.EmployeeList_WithoutPayrollMaster = function(req, res) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
    }else {
       HrModel.EmployeeSchema
-         .find({'If_Deleted': false, If_PayrollMaster: false }, { EmployeeName: 1 }, {sort: { updatedAt: -1 }})
+         .find({'If_Deleted': false, 'Active_Status': true, If_PayrollMaster: false }, { EmployeeName: 1 }, {sort: { updatedAt: -1 }})
          .exec(function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee List Find Query Error', 'Employee.controller.js', err);

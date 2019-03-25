@@ -34,57 +34,86 @@
                      <span *ngIf="Form.controls['Employee'].errors.required">Employee is required</span>
                   </p>
                </div>
-               <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['Applied_Date'].pristine && Form.controls['Applied_Date'].errors, 'Form_Success': Form.controls['Applied_Date'].valid && !Form.controls['Applied_Date'].pristine }">
-                  <label> Date:</label>
-                  <input matInput [min]="Today" formControlName="Applied_Date" [matDatepicker]="DatePicker1" (dateChange)="FromDateChange($event.value)" (click)="DatePicker1.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date">
-                  <mat-datepicker #DatePicker1></mat-datepicker>
-                  <p class="error" *ngIf="Form.controls['Applied_Date'].errors && !Form.controls['Applied_Date'].pristine">
-                     <span *ngIf="Form.controls['Applied_Date'].errors.required">Date is required</span>
-                  </p>
-               </div>
                <div class="col-sm-4 Form_Input">
-                  <label>Required Date:</label>
-                  <input matInput [min]="MinDate" formControlName="Required_Date" [matDatepicker]="DatePicker2" (click)="DatePicker2.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Required Date">
-                  <mat-datepicker #DatePicker2></mat-datepicker>
-               </div>
-               <div class="col-sm-4 Form_Input" [ngClass]="{'Form_Err': !Form.controls['Amount'].pristine && Form.controls['Amount'].errors, 'Form_Success': Form.controls['Amount'].valid && !Form.controls['Amount'].pristine }">
-                  <label>Amount:</label>
-                  <input type="text" formControlName="Amount" placeholder="Amount">
-                  <p class="error" *ngIf="Form.controls['Amount'].errors && !Form.controls['Amount'].pristine">
-                     <span *ngIf="Form.controls['Amount'].errors.required">Amount is required</span>
+                  <label> Documents: </label>
+                  <input type="file" (change)="fileChangeEvent($event)" multiple #FileUpload placeholder="Documents"  accept=".PNG, .png, JPEG, .jpeg, JPG, .jpg, .doc, .DOC, .docx, .DOCX, .pdf, .PDF, .xlsx, .XLSX, .xls, .XLS, .csv, .CSV ">
+                  <p class="Info">
+                     <span >{{No_Of_Documents}} Documents Attached</span>
                   </p>
                </div>
-               <div class="col-sm-4 Form_Select" >
-                  <label>Expenses Type:</label>
-                  <ng-select class="NgSelect" 
-                              [items]="_ExpensesTypes" 
-                              bindLabel="Expenses_Type"
-                              bindValue="_id"
-                              formControlName="Expenses_Type"
-                              [searchable]="true" 
-                              placeholder="Expenses Type">
-                  </ng-select>
-                  <p class="error" *ngIf="Form.controls['Expenses_Type'].errors && !Form.controls['Expenses_Type'].pristine">
-                     <span *ngIf="Form.controls['Expenses_Type'].errors.required">Expenses Type is required</span>
-                  </p>
-               </div>
-               <div class="col-sm-4 Form_TextArea" [ngClass]="{'Form_Err': !Form.controls['Description'].pristine && Form.controls['Description'].errors, 'Form_Success': Form.controls['Description'].valid && !Form.controls['Description'].pristine }">
-                  <label>Description:</label>
-                  <textarea rows="3" formControlName="Description"></textarea>
-                  <p class="error" *ngIf="Form.controls['Description'].errors && !Form.controls['Description'].pristine">
-                     <span *ngIf="Form.controls['Description'].errors.required">Description is required</span>
-                  </p>
-               </div>
+               <div class="col-sm-4">
+
+               </div>               
             </div>
+            <ng-container formArrayName="Expenses_Array">
+               <div *ngFor="let Expenses of Form.controls['Expenses_Array']['controls']; let i = index" [formGroupName]="i" class="row"  style=" align-items: center;">
+                  <div class="col-sm-2 Form_Input" [ngClass]="{'Form_Err': !Expenses.controls['Date'].pristine && Expenses.controls['Date'].errors, 'Form_Success': Expenses.controls['Date'].valid && !Expenses.controls['Date'].pristine }">
+                     <label>Date:</label>
+                     <input matInput formControlName="Date" [matDatepicker]="DatePicker1" (dateChange)="DateChange($event.value)" (click)="DatePicker1.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date">
+                     <mat-datepicker #DatePicker1></mat-datepicker>
+                     <p class="error" *ngIf="Expenses.controls['Date'].errors && !Expenses.controls['Date'].pristine">
+                        <span *ngIf="Expenses.controls['Date'].errors.required">Date is required</span>
+                     </p>
+                  </div>
+                  <div class="col-sm-2 Form_Input" [ngClass]="{'Form_Err': !Expenses.controls['Amount'].pristine && Expenses.controls['Amount'].errors, 'Form_Success': Expenses.controls['Amount'].valid && !Expenses.controls['Amount'].pristine }">
+                     <label> Amount: </label>
+                     <input type="number" formControlName="Amount" (change)="Amount_Change()" (keypress)="OnlyNumber($event)" placeholder="Amount">
+                     <p class="error" *ngIf="Expenses.controls['Amount'].errors && !Expenses.controls['Amount'].pristine">
+                        <span *ngIf="Expenses.controls['Amount'].errors.required">Amount is required</span>
+                        <span *ngIf="Expenses.controls['Amount'].errors.pattern">Only Numbers are Allowed </span>
+                     </p>
+                  </div>
+                  <div class="col-sm-3 Form_Select" >
+                     <label>Expenses Type:</label>
+                     <ng-select class="NgSelect" 
+                                 [items]="_ExpensesTypes" 
+                                 bindLabel="Expenses_Type"
+                                 bindValue="_id"
+                                 formControlName="Expenses_Type"
+                                 [searchable]="true" 
+                                 placeholder="Expenses Type">
+                     </ng-select>
+                     <p class="error" *ngIf="Expenses.controls['Expenses_Type'].errors && !Expenses.controls['Expenses_Type'].pristine">
+                        <span *ngIf="Expenses.controls['Expenses_Type'].errors.required">Expenses Type is required</span>
+                     </p>
+                  </div>
+                  <div class="col-sm-4 Form_TextArea" [ngClass]="{'Form_Err': !Expenses.controls['Description'].pristine && Expenses.controls['Description'].errors, 'Form_Success': Expenses.controls['Description'].valid && !Expenses.controls['Description'].pristine }">
+                     <label>Description:</label>
+                     <textarea rows="3" formControlName="Description"></textarea>
+                     <p class="error" *ngIf="Expenses.controls['Description'].errors && !Expenses.controls['Description'].pristine">
+                        <span *ngIf="Expenses.controls['Description'].errors.required">Description is required</span>
+                     </p>
+                  </div>
+                  <div class="col-sm-1">
+                     <button [disabled]="Form.controls['Expenses_Array']['controls'].length < 2" [ngClass]="{'Bg_Danger': Form.controls['Expenses_Array']['controls'].length > 1}" class="Table_Action_mini" (click)="Remove_Expenses(i)" mat-mini-fab color="primary">
+                        <i class="material-icons">clear</i>
+                     </button>
+                  </div>
+               </div>
+            </ng-container>
          </form>
-         <div class="row" *ngIf="!Loader && _Data['Stage'] && _Data['Stage'] !== 'Stage_3'">
-            <div class="col-sm-12 text-right">
-               <button mat-raised-button [disabled]="!Form.valid && Form.invalid" color="primary" style = "top: 5px;" (click)="Submit()"> Update </button>
+         <h5 class="Previous_Documents_Header" *ngIf="Previous_Documents.length > 0"> Previous Uploaded Documents </h5>
+         <div *ngIf="Previous_Documents.length > 0" class="Previous_Documents">
+            <div *ngFor="let Document of Previous_Documents; let i=index">
+               <a href="{{File_Url}}/Expense_Documents/{{Document.filename}}" target="blank"> {{Document.filename}} </a>
+               <span (click)="Remove_Document(i)"> X </span>
             </div>
          </div>
-         <div class="row" *ngIf="!Loader && _Data['Stage'] && _Data['Stage'] === 'Stage_3'">
-            <div class="col-sm-12 text-right">
-               <button mat-raised-button [disabled]="!Form.valid && Form.invalid" color="primary" style = "top: 5px;" (click)="SubmitAndApprove()"> Send To Approve </button>
+         <hr>
+         <div class="row" style="align-items: center;">
+            <div class="col-sm-4 text-left">
+               <button mat-raised-button color="primary" style ="top: 5px;" (click)="Create_Expenses()"> Add More Expenses </button>
+            </div>
+            <div class="col-sm-6 text-right">
+               <p class="Cal_Info"> 
+                  Total Expenses : <span> Rs {{Form.controls['Total_Expenses'].value}}</span>
+               </p>
+            </div>
+            <div class="col-sm-2 text-right" *ngIf="!Loader && _Data['Stage'] && _Data['Stage'] !== 'Stage_3'">
+               <button mat-raised-button [disabled]="!Form.valid && Form.invalid" color="primary" style = "top: 5px;" (click)=" SubmitAndApprove()"> Send To Approve </button>
+            </div>
+            <div class="col-sm-2 text-right" *ngIf="!Loader && _Data['Stage'] && _Data['Stage'] === 'Stage_3'">
+               <button mat-raised-button [disabled]="!Form.valid && Form.invalid" color="primary" style = "top: 5px;" (click)=" Submit()"> Update </button>
             </div>
          </div>
       </div>

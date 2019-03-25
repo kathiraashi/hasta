@@ -43,11 +43,12 @@
                   <tr>
                      <th> S.no </th>
                      <th> Employee Name </th>
-                     <th> Date </th>
-                     <th> Required Date </th>
-                     <th> Expenses Type </th>
-                     <th> Amount </th>
-                     <th> Description </th>
+                     <!-- <th> No.Of Expenses </th> -->
+                     <th> Total Amount </th>
+                     <th> Approved Amount </th>
+                     <th> Paid Amount </th>
+                     <th> Unpaid Amount </th>
+                     <th> Created Date </th>
                      <th> Status </th>
                      <th> Action </th>
                   </tr>
@@ -60,20 +61,23 @@
                         <td>
                            <span class="Style_1">{{item.Employee?.EmployeeName}}</span>
                         </td>
+                        <!-- <td>
+                           <span class="Style_1"> {{item.Expenses_Array.length }}</span>
+                        </td> -->
                         <td>
-                           <span class="Style_1"> {{item.Applied_Date | date}}</span>
+                           <span class="Style_1"> Rs. {{item.Total_Expenses}}</span>
                         </td>
                         <td>
-                           <span class="Style_1"> {{item.Required_Date | date}}</span>
+                           <span class="Style_1"> Rs.{{item.Total_Approved_Expenses }}</span>
                         </td>
                         <td>
-                           <span class="Style_1">{{item.Expenses_Type?.Expenses_Type }}</span>
+                           <span class="Style_1"> Rs.{{item.Total_Paid_Expenses}}</span>
                         </td>
                         <td>
-                           <span class="Style_1">{{item.Amount}}</span>
+                           <span class="Style_1"> Rs.{{item.Total_Approved_Expenses - item.Total_Paid_Expenses}}</span>
                         </td>
                         <td>
-                           <span class="Style_1">{{item.Description}}</span>
+                           <span class="Style_1">{{item.createdAt | date:'medium'}}</span>
                         </td>
                         <td>
                            <span class="Style_1">{{item.Current_Status}}</span>

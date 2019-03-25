@@ -22,13 +22,13 @@ export class ExpensesListComponent implements OnInit {
    bsModalRef: BsModalRef;
    Loader: Boolean = true;
    _List: any[] = [];
-   User_Id;
-   User_Type;
-   IfEmployeeId;
+   User_Id: any;
+   User_Type: any;
+   IfEmployeeId: any;
 
    _ShowMenus: any[] = [];
 
-   Active_Id;
+   Active_Id: any;
 
    constructor(   private modalService: BsModalService,
                   private Toastr: ToastrService,
@@ -52,6 +52,7 @@ export class ExpensesListComponent implements OnInit {
                            const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                            const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                            this._List = DecryptedData;
+                           console.log(this._List);
                         } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                            this.Toastr.NewToastrMessage({Type: 'Error', Message: ResponseData['Message']});
                         } else if (response['status'] === 401 && !ResponseData['Status']) {
@@ -98,7 +99,7 @@ export class ExpensesListComponent implements OnInit {
          Type: 'View',
          _Data: this._List[_index]
       };
-      this.bsModalRef = this.modalService.show(ModelExpensesViewComponent, Object.assign({initialState}, { class: '' }));
+      this.bsModalRef = this.modalService.show(ModelExpensesViewComponent, Object.assign({initialState}, { class: 'modal-lg max-width-80' }));
    }
 
    EditExpenses() {

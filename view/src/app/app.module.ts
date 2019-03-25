@@ -29,6 +29,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
    import { HeaderComponent } from './Components/Common-Components/header/header.component';
    // delete-confirmation
    import { DeleteConfirmationComponent } from './Components/Common-Components/delete-confirmation/delete-confirmation.component';
+   import { ConfirmationComponent } from './Components/Common-Components/confirmation/confirmation.component';
    // Component Folder
       // DashBoard Component Folder
          import { DashboardComponent } from './Components/dashboard/dashboard.component';
@@ -211,6 +212,7 @@ import { TicketActivitiesEditComponent } from './models/CRM/Tickets/ticket-activ
     // Common-Components
         // delete-confirmation
                  DeleteConfirmationComponent,
+                 ConfirmationComponent,
     // CRM Folder
         // Customers
             // crm-customers-list
@@ -355,6 +357,7 @@ import { TicketActivitiesEditComponent } from './models/CRM/Tickets/ticket-activ
     ModelUserCreateUserManagementComponent,
     ModelDepartmentHrsettingsComponent,
     DeleteConfirmationComponent,
+    ConfirmationComponent,
     ModelTickettypeCrmsettingsComponent,
     ModelEarningsHrsettingsComponent,
     ModelDetectionsHrsettingsComponent,

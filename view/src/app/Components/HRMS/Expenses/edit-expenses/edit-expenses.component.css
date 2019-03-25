@@ -90,6 +90,7 @@ a {
 .Form_TextArea textarea {
    padding: 4px 10px;
    width: 100%;
+   height: 50px;
    outline: none;
    border: 1px solid #e8e8e8;
    color: rgb(79, 107, 123);
@@ -112,6 +113,9 @@ a {
 .Form_Input input:-ms-input-placeholder{
    color: #999999;
    font-weight: 400;
+}
+.Form_Select{
+   margin-bottom: 20px;
 }
 .Form_Select label {
    font-size: 14px;
@@ -154,6 +158,51 @@ a {
    text-align: right
 }
 
+.Info{
+   margin: 0px;
+   color: rgba(62, 59, 59, 0.63);
+   font-weight: 500;
+   text-align: right;
+   font-size: 13px;
+   word-spacing: 1px;
+   letter-spacing: 0.4px;
+}
+p.Cal_Info {
+   font-size: 15px;
+   margin-bottom: 0px;
+   font-weight: 500;
+   color: #4e6a7a;
+}
+p.Cal_Info span{
+   font-weight: 700;
+}
+h5.Previous_Documents_Header {
+   font-weight: 500;
+   font-size: 14px;
+   border-bottom: 1px solid rgba(206, 206, 206, 0.4);
+   padding: 10px 0px;
+   color: #4e6a7a;
+}
+.Previous_Documents {
+   align-items: center;
+   display: inline-flex;
+}
+.Previous_Documents div {
+   margin: 0px 10px;
+   background-color: #00000030;
+   padding: 2px 5px;
+   font-size: 14px;
+   border-radius: 15px;
+}
+.Previous_Documents div span {
+   padding: 0px 6px;
+   cursor: pointer;
+   background-color: red;
+   border-radius: 15px;
+   margin-left: 10px;
+   font-weight: 600;
+   color: #fff;
+}
 
 .error{
    margin: 0px;

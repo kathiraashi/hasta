@@ -4,6 +4,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ModelUserCreateUserManagementComponent } from './../../../../models/settings/user_management/model-user-create-user-management/model-user-create-user-management.component';
+import { ConfirmationComponent } from '../../../Common-Components/confirmation/confirmation.component';
 
 import { AdminService } from './../../../../services/Admin/admin.service';
 import { LoginService } from './../../../../services/LoginService/login.service';
@@ -21,8 +22,8 @@ export class UserManagementListComponent implements OnInit {
    bsModalRef: BsModalRef;
 
    _List: any[] = [];
-   User_Id;
-   User_Type;
+   User_Id: any;
+   User_Type: any;
 
    constructor(
                private modalService: BsModalService,
@@ -62,6 +63,59 @@ export class UserManagementListComponent implements OnInit {
       this.bsModalRef.content.onClose.subscribe(response => {
          if (response['Status']) {
             this._List.splice(0, 0, response['Response']);
+         }
+      });
+   }
+
+
+   User_Deactivate(_index: any) {
+      const initialState = {
+         Heading: 'Confirmation',
+         Text: 'Are you sure?',
+         Text_Line: 'You want to Deactivate this User.'
+      };
+      this.bsModalRef = this.modalService.show(ConfirmationComponent, Object.assign({initialState}, { class: 'modal-sm' }));
+      this.bsModalRef.content.onClose.subscribe(ResponseStatus => {
+         if (ResponseStatus['Status']) {
+            const Data = { _Id: this._List[_index]['_id'], 'User_Id' : this.User_Id };
+            let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
+            Info = Info.toString();
+            this.Service.User_Deactivate({ 'Info': Info }).subscribe(response => {
+               const ResponseData = JSON.parse(response['_body']);
+               if (response['status'] === 200 && ResponseData['Status'] ) {
+                  this._List[_index].Active_Status = false;
+               } else if (response['status'] === 400 || response['status'] === 417 || response['status'] === 401 && !ResponseData['Status']) {
+                  this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+               } else {
+                  this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'User Deactivate Error!, But not Identify!' });
+               }
+            });
+         }
+      });
+   }
+
+   User_Activate(_index: any) {
+      const initialState = {
+         Heading: 'Confirmation',
+         Text: 'Are you sure?',
+         Text_Line: 'You want to Activate this User.'
+      };
+      this.bsModalRef = this.modalService.show(ConfirmationComponent, Object.assign({initialState}, { class: 'modal-sm' }));
+      this.bsModalRef.content.onClose.subscribe(ResponseStatus => {
+         if (ResponseStatus['Status']) {
+            const Data = { _Id: this._List[_index]['_id'], 'User_Id' : this.User_Id };
+            let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
+            Info = Info.toString();
+            this.Service.User_Activate({ 'Info': Info }).subscribe(response => {
+               const ResponseData = JSON.parse(response['_body']);
+               if (response['status'] === 200 && ResponseData['Status'] ) {
+                  this._List[_index].Active_Status = true;
+               } else if (response['status'] === 400 || response['status'] === 417 || response['status'] === 401 && !ResponseData['Status']) {
+                  this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+               } else {
+                  this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'User Activate Error!, But not Identify!' });
+               }
+            });
          }
       });
    }

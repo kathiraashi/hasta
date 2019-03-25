@@ -37,7 +37,7 @@ export class TicketsEditComponent implements OnInit {
       this.onClose = new Subject();
 
       this.Form = new FormGroup({
-         TicketId: new FormControl(this.Ticket_Info['TicketId'], Validators.required),
+         TicketId: new FormControl({value: this.Ticket_Info['TicketId'], disabled: true}, Validators.required),
          Ticket_Id: new FormControl(this.Ticket_Info['_id'], Validators.required),
          Issue: new FormControl(this.Ticket_Info['Issue'], Validators.required),
          User_Id: new FormControl(this.User_Id),

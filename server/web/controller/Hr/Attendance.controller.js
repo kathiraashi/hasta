@@ -492,7 +492,7 @@ exports.Attendance_Report_Delete = function(req, res) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
    } else {
       Promise.all([
-         HrAttendanceModel.AttendanceReportSchema.update(
+         HrAttendanceModel.AttendanceReportSchema.updateOne(
             { _id : mongoose.Types.ObjectId(ReceivingData.Report_Id)  },
             {  $set: { If_Deleted : true } }).exec(),
          PayrollModel.Payroll.updateMany(

@@ -34,7 +34,7 @@ var Machine_Maintenance_Schedule = schedule.scheduleJob('0 0 0 * * *', function(
                      return NewObj;
                   });
                });
-               CrmCustomersModel.CrmMachinesMaintenanceSchema.collection.insert(InsertData, function(err_2, result_2){
+               CrmCustomersModel.CrmMachinesMaintenanceSchema.collection.insertMany(InsertData, function(err_2, result_2){
                   if(err_2) {
                      ErrorManagement.ErrorHandling.ErrorLogCreation('', 'CRM Machines Maintenance Schedule Create  Query Error', 'Schedules/Machine_Maintenance.js', err_2);
                   }

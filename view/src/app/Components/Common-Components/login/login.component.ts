@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 
 import { LoginService } from './../../../services/LoginService/login.service';
+import { ToastrService } from '../../../services/common-services/toastr-service/toastr.service';
+
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,8 @@ export class LoginComponent implements OnInit {
 
    constructor(
       private router: Router,
-      private service: LoginService
+      private service: LoginService,
+      private Toastr: ToastrService,
    ) { }
 
    ngOnInit() {
@@ -41,14 +44,10 @@ export class LoginComponent implements OnInit {
                const ReceivingData = JSON.parse(response['_body']);
                if (response['status'] === 200 && ReceivingData.Status) {
                   this.router.navigate(['/Crm_Customers_List']);
-               } else if (response['status'] === 200 && !ReceivingData.Status) {
-                  alert(ReceivingData.Message + '-1');
-               } else if (response['status'] === 400 && !ReceivingData.Status) {
-                  alert(ReceivingData.Message + '-2');
-               } else if (response['status'] === 417 && !ReceivingData.Status) {
-                  alert(ReceivingData.Message + '-3');
+               } else if (response['status'] === 200 || response['status'] === 417 || response['status'] === 400  && !ReceivingData.Status) {
+                  this.Toastr.NewToastrMessage({Type: 'Error', Message: ReceivingData.Message});
                } else {
-                  alert('Some Error Occurred!, Error Not Defined.');
+                  this.Toastr.NewToastrMessage({Type: 'Error', Message: 'Some Error Occurred!, Error Not Defined.'});
                }
             });
       }
