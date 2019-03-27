@@ -37,12 +37,13 @@ export class EditLeavesComponent implements OnInit {
    _EmployeeName: any[] =  [];
    _LeaveTypes: any[] =  [];
    Form: FormGroup;
-   User_Id;
-   User_Type;
-   IfEmployeeId;
+   User_Id: any;
+   Employee_Id: any;
+   User_Type: any;
+   IfEmployeeId: any;
    MinDate: Date = new Date();
 
-   Leave_Id;
+   Leave_Id: any;
 
   constructor(private Toastr: ToastrService,
                public SettingsService: HrmsSettingsServiceService,
@@ -53,6 +54,7 @@ export class EditLeavesComponent implements OnInit {
                public Hr_Service: HrService
             ) {
                this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+               this.User_Type = this.Login_Service.LoginUser_Info()['User_Type'];
                this.active_route.url.subscribe((u) => {
                   this.Leave_Id = this.active_route.snapshot.params['Leave_Id'];
                   const Data = {'User_Id' : this.User_Id, Leave_Id: this.Leave_Id };
@@ -67,6 +69,8 @@ export class EditLeavesComponent implements OnInit {
                         this.Loader = false;
                         setTimeout(() => {
                            this.UpdateFormValues();
+                           this.UpdateFormEmployee();
+                           this.UpdateFormLeaveTypes();
                         }, 500);
                      } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
@@ -84,23 +88,36 @@ export class EditLeavesComponent implements OnInit {
    let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
    Info = Info.toString();
    // Get Employees simple List
-      this.Hr_Service.Employee_SimpleList({'Info': Info}).subscribe( response => {
-         const ResponseData = JSON.parse(response['_body']);
-         if (response['status'] === 200 && ResponseData['Status'] ) {
-            const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
-            const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-            this._EmployeeName = DecryptedData;
-            setTimeout(() => {
-               this.UpdateFormEmployee();
-            }, 500);
-         } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
-            this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
-         } else if (response['status'] === 401 && !ResponseData['Status']) {
-            this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
-         } else {
-            this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Employees Simple List Getting Error!, But not Identify!' });
-         }
-      });
+      if (this.User_Type === 'Employee') {
+         const EmployeeId = this.Login_Service.LoginUser_Info()['Employee']['_id'];
+         const EmployeeName = this.Login_Service.LoginUser_Info()['Employee']['EmployeeName'];
+         this._EmployeeName.push({'EmployeeName': EmployeeName, '_id': EmployeeId });
+         setTimeout(() => {
+            if (EmployeeId !== undefined && EmployeeId !== null && EmployeeId !== '') {
+               this.Employee_Id = EmployeeId;
+               this.Form.controls['Employee'].setValue(EmployeeId);
+               this.Form.controls['Employee'].disable();
+            }
+         }, 500);
+      } else {
+         this.Hr_Service.Employee_SimpleList({'Info': Info}).subscribe( response => {
+            const ResponseData = JSON.parse(response['_body']);
+            if (response['status'] === 200 && ResponseData['Status'] ) {
+               const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
+               const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+               this._EmployeeName = DecryptedData;
+               setTimeout(() => {
+                  this.UpdateFormEmployee();
+               }, 500);
+            } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+               this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+            } else if (response['status'] === 401 && !ResponseData['Status']) {
+               this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
+            } else {
+               this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Employees Simple List Getting Error!, But not Identify!' });
+            }
+         });
+      }
       // Get Leave Name Simple List
       this.SettingsService.Leave_Type_SimpleList({'Info': Info}).subscribe( response => {
          const ResponseData = JSON.parse(response['_body']);
@@ -133,15 +150,15 @@ export class EditLeavesComponent implements OnInit {
 
    UpdateFormValues() {
       this.Form.controls['Leaves_Id'].setValue(this.Leave_Id);
-      this.Form.controls['Employee'].setValue(this._Data['Employee']);
-      this.Form.controls['Leave_Type'].setValue(this._Data['Leave_Type']);
+      // this.Form.controls['Employee'].setValue(this._Data['Employee']);
+      // this.Form.controls['Leave_Type'].setValue(this._Data['Leave_Type']);
       this.Form.controls['From_Date'].setValue(this._Data['From_Date']);
       this.Form.controls['To_Date'].setValue(this._Data['To_Date']);
       this.Form.controls['Purpose'].setValue(this._Data['Purpose']);
    }
 
    UpdateFormEmployee() {
-      if (this._EmployeeName.length > 0  && Object.keys(this._Data).length > 0) {
+      if (this.User_Type !== 'Employee' && this._EmployeeName.length > 0  && Object.keys(this._Data).length > 0) {
          this.Form.controls['Employee'].setValue(this._Data['Employee']);
          if (this._Data['Stage'] === 'Stage_3') {
             this.Form.controls['Employee'].disable();

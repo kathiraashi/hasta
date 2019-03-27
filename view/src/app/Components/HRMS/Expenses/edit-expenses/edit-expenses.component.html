@@ -109,10 +109,10 @@
                   Total Expenses : <span> Rs {{Form.controls['Total_Expenses'].value}}</span>
                </p>
             </div>
-            <div class="col-sm-2 text-right" *ngIf="!Loader && _Data['Stage'] && _Data['Stage'] !== 'Stage_3'">
+            <div class="col-sm-2 text-right" *ngIf="!Loader && _Data['Stage'] && _Data['Stage'] === 'Stage_3'">
                <button mat-raised-button [disabled]="!Form.valid && Form.invalid" color="primary" style = "top: 5px;" (click)=" SubmitAndApprove()"> Send To Approve </button>
             </div>
-            <div class="col-sm-2 text-right" *ngIf="!Loader && _Data['Stage'] && _Data['Stage'] === 'Stage_3'">
+            <div class="col-sm-2 text-right" *ngIf="!Loader && _Data['Stage'] && _Data['Stage'] !== 'Stage_3'">
                <button mat-raised-button [disabled]="!Form.valid && Form.invalid" color="primary" style = "top: 5px;" (click)=" Submit()"> Update </button>
             </div>
          </div>

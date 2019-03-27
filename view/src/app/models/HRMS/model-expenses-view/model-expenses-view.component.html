@@ -5,45 +5,97 @@
       <span data-dismiss="modal" (click)="bsModalRef.hide()">&times;</span>
    </div>
    <div class="Model_Body">
-      <div class="view_item">
-         <div class="Static"> Employee Name </div>
-         <div class="dots"> : </div>
-         <div class="Data">  {{_Data['Employee']?.EmployeeName}}</div>
+      <div class="row">
+         <div class="col-sm-8">
+            <div class="view_item">
+               <div class="Static"> Employee Name </div>
+               <div class="dots"> : </div>
+               <div class="Data">  {{_Data['Employee']?.EmployeeName}}</div>
+            </div>
+            <div class="view_item">
+               <div class="Static"> Total Expenses </div>
+               <div class="dots"> : </div>
+               <div class="Data"> Rs. {{_Data['Total_Expenses']}}</div>
+            </div>
+            <div class="view_item">
+               <div class="Static"> Total Approved Expenses </div>
+               <div class="dots"> : </div>
+               <div class="Data"> Rs. {{_Data['Total_Approved_Expenses']}} </div>
+            </div>
+            <div class="view_item">
+               <div class="Static"> Total Paid Expenses </div>
+               <div class="dots"> : </div>
+               <div class="Data"> Rs. {{_Data['Total_Paid_Expenses']}} </div>
+            </div>
+            <div class="view_item">
+               <div class="Static"> Status </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{_Data['Current_Status']}} </div>
+            </div>
+            <div class="view_item">
+               <div class="Static"> Created Date </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{_Data['createdAt'] | date:'medium'}} </div>
+            </div>
+            <div class="view_item">
+               <div class="Static"> Created By </div>
+               <div class="dots"> : </div>
+               <div class="Data"> {{_Data['Last_Modified_By']?.Name}} </div>
+            </div>
+         </div>
+         <div class="col-sm-4">
+
+         </div>
       </div>
-      <div class="view_item">
-         <div class="Static"> Date</div>
-         <div class="dots"> : </div>
-         <div class="Data">  {{_Data['Applied_Date'] | date:'d-M-yyyy'}}</div>
+      <h5 class="Previous_Documents_Header" *ngIf="_Data['Documents'].length > 0"> Uploaded Documents </h5>
+      <div *ngIf="_Data['Documents'].length > 0" class="Previous_Documents">
+         <div *ngFor="let Document of _Data['Documents']; let i=index">
+            <a href="{{File_Url}}/Expense_Documents/{{Document.filename}}" target="blank"> {{Document.filename}} </a>
+         </div>
       </div>
-      <div class="view_item">
-         <div class="Static">Required Date </div>
-         <div class="dots"> : </div>
-         <div class="Data">{{_Data['Required_Date'] | date:'d-M-yyyy'}}</div>
-      </div>
-      <div class="view_item">
-         <div class="Static"> Amount </div>
-         <div class="dots"> : </div>
-         <div class="Data"> {{_Data['Amount']}} </div>
-      </div>
-      <div class="view_item">
-         <div class="Static"> Expenses Type </div>
-         <div class="dots"> : </div>
-         <div class="Data"> {{_Data['Expenses_Type']?.Expenses_Type}} </div>
-      </div>
-      <div class="view_item">
-         <div class="Static">Description </div>
-         <div class="dots"> : </div>
-         <div class="Data"> {{_Data['Description']}} </div>
-      </div>
-      <div class="view_item">
-         <div class="Static"> Created Date </div>
-         <div class="dots"> : </div>
-         <div class="Data"> {{_Data['createdAt'] | date:'medium'}} </div>
-      </div>
-      <div class="view_item">
-         <div class="Static"> Created By </div>
-         <div class="dots"> : </div>
-         <div class="Data"> {{_Data['Last_Modified_By']?.Name}} </div>
+      <br>
+      <br>
+
+      <h5 class="Previous_Documents_Header" *ngIf="_Data['Expenses_Array'].length > 0"> Expenses Details </h5>
+      <div class="Table_Section">
+         <table>
+            <thead>
+               <tr>
+                  <th> S.no </th>
+                  <th> Date </th>
+                  <th> Amount </th>
+                  <th> Approved Amount </th>
+                  <th> Paid Amount </th>
+                  <th> Expenses Type </th>
+                  <th style="width: 35%;"> Description </th>
+               </tr>
+            </thead>
+            <tbody>
+                  <tr *ngFor="let item of _Data['Expenses_Array']; let i=index">
+                     <td>
+                        <span class="S_no">  {{ i + 1 }} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1">{{item.Date | date:'d-M-yyyy'}}</span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> Rs.{{item.Amount}}</span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> Rs.{{item.Approved_Amount }}</span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> Rs.{{item.Paid_Amount}}</span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{item.Expenses_Type?.Expenses_Type}}</span>
+                     </td>
+                     <td>
+                        <span class="Style_1" style="line-height: 16px; display: inline-block;"> {{item.Description}} </span>
+                     </td>
+                  </tr>
+            </tbody>
+         </table>
       </div>
    </div>
 </div>

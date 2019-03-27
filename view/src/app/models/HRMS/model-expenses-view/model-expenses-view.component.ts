@@ -9,8 +9,11 @@ import { LoginService } from '../../../services/LoginService/login.service';
 })
 export class ModelExpensesViewComponent implements OnInit {
 
+      File_Url = 'http://159.89.163.252:4000/API/Uploads/';
+      // File_Url = 'http://localhost:4000/API/Uploads/';
+
    Type: string;
-   User_Id;
+   User_Id: any;
    _Data: Object = {};
 
    constructor(public bsModalRef: BsModalRef,
@@ -19,6 +22,7 @@ export class ModelExpensesViewComponent implements OnInit {
    }
 
   ngOnInit() {
+     console.log(this._Data);
   }
 
 }

@@ -29,8 +29,8 @@ import { HrService } from './../../../../services/Hr/hr.service';
 })
 export class EditExpensesComponent implements OnInit {
 
-   // File_Url = 'http://159.89.163.252:4000/API/Uploads/';
-   File_Url = 'http://localhost:4000/API/Uploads/';
+   File_Url = 'http://159.89.163.252:4000/API/Uploads/';
+   // File_Url = 'http://localhost:4000/API/Uploads/';
 
 
    _Data = {};
@@ -43,6 +43,7 @@ export class EditExpensesComponent implements OnInit {
    User_Id: any;
    User_Type: any;
    IfEmployeeId: any;
+   Employee_Id: any;
    MinDate: Date = new Date();
    FormData: FormData = new FormData();
    Expenses_Id: any;
@@ -59,6 +60,7 @@ export class EditExpensesComponent implements OnInit {
                public Hr_Service: HrService
             ) {
                this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
+               this.User_Type = this.Login_Service.LoginUser_Info()['User_Type'];
                this.active_route.url.subscribe((u) => {
                   this.Expenses_Id = this.active_route.snapshot.params['Expenses_Id'];
                   const Data = {'User_Id' : this.User_Id, Expenses_Id: this.Expenses_Id };
@@ -72,6 +74,7 @@ export class EditExpensesComponent implements OnInit {
                         this._Data = DecryptedData;
                         this.Loader = false;
                         this.UpdateFormValues();
+                        this.UpdateFormEmployee();
                      } else if (response['status'] === 400 || response['status'] === 401 || response['status'] === 417 && !ResponseData['Status']) {
                         this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
                      } else {
@@ -86,23 +89,36 @@ export class EditExpensesComponent implements OnInit {
       let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
       Info = Info.toString();
       // Get Employees simple List
-      this.Hr_Service.Employee_SimpleList({'Info': Info}).subscribe( response => {
-         const ResponseData = JSON.parse(response['_body']);
-         if (response['status'] === 200 && ResponseData['Status'] ) {
-            const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
-            const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
-            this._EmployeeName = DecryptedData;
-            setTimeout(() => {
-               this.UpdateFormEmployee();
-            }, 500);
-         } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
-            this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
-         } else if (response['status'] === 401 && !ResponseData['Status']) {
-            this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
-         } else {
-            this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Employees Simple List Getting Error!, But not Identify!' });
-         }
-      });
+      if (this.User_Type === 'Employee') {
+         const EmployeeId = this.Login_Service.LoginUser_Info()['Employee']['_id'];
+         const EmployeeName = this.Login_Service.LoginUser_Info()['Employee']['EmployeeName'];
+         this._EmployeeName.push({'EmployeeName': EmployeeName, '_id': EmployeeId });
+         setTimeout(() => {
+            if (EmployeeId !== undefined && EmployeeId !== null && EmployeeId !== '') {
+               this.Employee_Id = EmployeeId;
+               this.Form.controls['Employee'].setValue(EmployeeId);
+               this.Form.controls['Employee'].disable();
+            }
+         }, 500);
+      } else {
+         this.Hr_Service.Employee_SimpleList({'Info': Info}).subscribe( response => {
+            const ResponseData = JSON.parse(response['_body']);
+            if (response['status'] === 200 && ResponseData['Status'] ) {
+               const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
+               const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+               this._EmployeeName = DecryptedData;
+               setTimeout(() => {
+                  this.UpdateFormEmployee();
+               }, 500);
+            } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+               this.Toastr.NewToastrMessage({ Type: 'Error', Message: ResponseData['Message'] });
+            } else if (response['status'] === 401 && !ResponseData['Status']) {
+               this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
+            } else {
+               this.Toastr.NewToastrMessage({ Type: 'Error', Message: 'Employees Simple List Getting Error!, But not Identify!' });
+            }
+         });
+      }
       // Get Expense Types Simple List
       this.SettingsService.Expenses_Type_SimpleList({'Info': Info}).subscribe( response => {
          const ResponseData = JSON.parse(response['_body']);
@@ -131,8 +147,8 @@ export class EditExpensesComponent implements OnInit {
    }
 
    UpdateFormEmployee() {
-      if (this._EmployeeName.length > 0  && Object.keys(this._Data).length > 0) {
-         this.Form.controls['Employee'].setValue(this._Data['Employee']);
+      if (this.User_Type !== 'Employee' && this._EmployeeName.length > 0  && Object.keys(this._Data).length > 0) {
+         this.Form.controls['Employee'].setValue(this._Data['Employee']['_id']);
          if (this._Data['Stage'] === 'Stage_3') {
             this.Form.controls['Employee'].disable();
          }
@@ -156,7 +172,7 @@ export class EditExpensesComponent implements OnInit {
       control.push(new FormGroup({
          Date: new FormControl(obj['Date'], Validators.required),
          Amount: new FormControl(obj['Amount'], [Validators.required, Validators.pattern('^[0-9\,\.\]*$')]),
-         Expenses_Type: new FormControl(obj['Expenses_Type'], Validators.required),
+         Expenses_Type: new FormControl(obj['Expenses_Type']['_id'], Validators.required),
          Description: new FormControl(obj['Description'], Validators.required),
       }));
    }
