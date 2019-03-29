@@ -178,17 +178,28 @@ var Expenses_Documents = multer({
          res.status(400).send({Status: false, Message: "Expenses Details can not be empty" });
       } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
          res.status(400).send({Status: false, Message: "User Details can not be empty" });
+      } else if (!ReceivingData.Total_Approved_Expenses || ReceivingData.Total_Approved_Expenses === ''  ) {
+         res.status(400).send({Status: false, Message: "Total Approved Amount can not be empty" });
+      } else if (!ReceivingData.Expenses_Array || ReceivingData.Expenses_Array.length <= 0  ) {
+         res.status(400).send({Status: false, Message: "Expenses can not be valid" });
       }else {
-         ExpensesModel.ExpensesSchema.findOne({'_id': mongoose.Types.ObjectId(ReceivingData.Expenses_Id)}, {}, {}, function(err, result) {
-            if(err) {
-               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Expenses FindOne Query Error', 'Expenses.controller.js', err);
-               res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Expenses!."});
-            } else {
-               if (result !== null) {
-                  result.Current_Status = 'Approved';
-                  result.Stage = 'Stage_5';
-                  result.Last_Modified_By = mongoose.Types.ObjectId(ReceivingData.User_Id);
-                  result.save(function(err_1, result_1) {
+         if (ReceivingData.Expenses_Array.length > 0) {
+            Promise.all(
+               ReceivingData.Expenses_Array.map(Obj => {
+                  return ExpensesModel.ExpensesSchema.updateOne(
+                     { _id : mongoose.Types.ObjectId(ReceivingData.Expenses_Id), "Expenses_Array._id": mongoose.Types.ObjectId(Obj.Expenses_Array_Id) },
+                     {  $set: { "Expenses_Array.$.Approved_Amount" : Obj.Approved_Amount } }
+                  ).exec();
+               })
+            ).then(response => {
+               ExpensesModel.ExpensesSchema.updateOne(
+                  { _id: mongoose.Types.ObjectId(ReceivingData.Expenses_Id) },
+                  { $set: {   Total_Approved_Expenses : ReceivingData.Total_Approved_Expenses,
+                              Current_Status : 'Approved',
+                              Stage: 'Stage_5',
+                              Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id)
+                           } 
+                  }, function(err_1, result_1) {
                      if(err_1) {
                         ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Expenses Update Query Error', 'Expenses.controller.js');
                         res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Update the Approved !."});
@@ -196,11 +207,13 @@ var Expenses_Documents = multer({
                         res.status(200).send({Status: true, Message: 'Successfully Approved'  });
                      }
                   });
-               } else {
-                  res.status(400).send({Status: false, Message: "Expenses Details can not be valid!" });
-               }
-            }
-         });
+            }).catch( catch_err => {
+               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Expenses Update Query Error', 'Expenses.controller.js', catch_err);
+               res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Update the Approved !."});
+            });
+         } else {
+            res.status(400).send({Status: false, Message: "Expenses Details can not be valid!" });
+         }
       }
    };
 

@@ -5,6 +5,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ModelExpensesViewComponent } from '../../../../models/HRMS/model-expenses-view/model-expenses-view.component';
+import { ModelExpensesApproveComponent } from '../../../../models/HRMS/model-expenses-approve/model-expenses-approve.component';
 import * as CryptoJS from 'crypto-js';
 
 import { HrmsServiceService } from './../../../../services/Hrms/hrms-service.service';
@@ -128,23 +129,40 @@ export class ExpensesListComponent implements OnInit {
 
    Approve() {
       const _index = this._List.findIndex(obj =>  this.Active_Id === obj._id);
-      const Data = { 'User_Id' : this.User_Id, 'Expenses_Id': this.Active_Id };
-      let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
-      Info = Info.toString();
-      this.Service.Expenses_Approve({'Info': Info}).subscribe( response => {
-         const ResponseData = JSON.parse(response['_body']);
-         this.Loader = false;
-         if (response['status'] === 200 && ResponseData['Status'] ) {
+      const initialState = {
+         Type: 'View',
+         _Data: this._List[_index]
+      };
+      this.bsModalRef = this.modalService.show(ModelExpensesApproveComponent, Object.assign({initialState}, { class: 'modal-lg max-width-85' }));
+      this.bsModalRef.content.onClose.subscribe(ResponseStatus => {
+         if (ResponseStatus['Status']) {
             this._List[_index].Current_Status = 'Approved';
             this._List[_index].Stage = 'Stage_5';
-         } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
-            this.Toastr.NewToastrMessage({Type: 'Error', Message: ResponseData['Message']});
-         } else if (response['status'] === 401 && !ResponseData['Status']) {
-            this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
-         } else {
-         this.Toastr.NewToastrMessage( {  Type: 'Error', Message: 'Some Error Occurred!, But not Identify!'  });
+            this._List[_index].Total_Approved_Expenses = ResponseStatus['Response']['Total_Approved_Expenses'];
+            ResponseStatus['Response']['Expenses_Array'].map(obj => {
+               const List_index = this._List[_index]['Expenses_Array'].findIndex(list_obj =>  obj['Expenses_Array_Id'] === list_obj._id);
+               this._List[_index]['Expenses_Array'][List_index]['Approved_Amount'] = obj['Approved_Amount'];
+            });
          }
       });
+      // const _index = this._List.findIndex(obj =>  this.Active_Id === obj._id);
+      // const Data = { 'User_Id' : this.User_Id, 'Expenses_Id': this.Active_Id };
+      // let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
+      // Info = Info.toString();
+      // this.Service.Expenses_Approve({'Info': Info}).subscribe( response => {
+      //    const ResponseData = JSON.parse(response['_body']);
+      //    this.Loader = false;
+      //    if (response['status'] === 200 && ResponseData['Status'] ) {
+      //       this._List[_index].Current_Status = 'Approved';
+      //       this._List[_index].Stage = 'Stage_5';
+      //    } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
+      //       this.Toastr.NewToastrMessage({Type: 'Error', Message: ResponseData['Message']});
+      //    } else if (response['status'] === 401 && !ResponseData['Status']) {
+      //       this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
+      //    } else {
+      //    this.Toastr.NewToastrMessage( {  Type: 'Error', Message: 'Some Error Occurred!, But not Identify!'  });
+      //    }
+      // });
    }
 
    Reject() {

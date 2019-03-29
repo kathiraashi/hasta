@@ -9,8 +9,8 @@ import { LoginService } from '../../../services/LoginService/login.service';
 })
 export class ModelExpensesViewComponent implements OnInit {
 
-      File_Url = 'http://159.89.163.252:4000/API/Uploads/';
-      // File_Url = 'http://localhost:4000/API/Uploads/';
+   File_Url = 'http://159.89.163.252:4000/API/Uploads/';
+   // File_Url = 'http://localhost:4000/API/Uploads/';
 
    Type: string;
    User_Id: any;
@@ -21,8 +21,7 @@ export class ModelExpensesViewComponent implements OnInit {
       this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
    }
 
-  ngOnInit() {
-     console.log(this._Data);
-  }
+   ngOnInit() {
+   }
 
 }
