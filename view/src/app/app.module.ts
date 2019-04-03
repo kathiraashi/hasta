@@ -170,6 +170,7 @@ import { ModelPayrollRunComponent } from './models/HR/model-payroll-run/model-pa
 import { TicketsEditComponent } from './models/CRM/Tickets/tickets-edit/tickets-edit.component';
 import { TicketActivitiesEditComponent } from './models/CRM/Tickets/ticket-activities-edit/ticket-activities-edit.component';
 import { ModelExpensesApproveComponent } from './models/HRMS/model-expenses-approve/model-expenses-approve.component';
+import { ModelExpensesPayComponent } from './models/HRMS/model-expenses-pay/model-expenses-pay.component';
 
 
 
@@ -317,7 +318,8 @@ import { ModelExpensesApproveComponent } from './models/HRMS/model-expenses-appr
            ModelPayrollRunComponent,
            TicketsEditComponent,
            TicketActivitiesEditComponent,
-           ModelExpensesApproveComponent
+           ModelExpensesApproveComponent,
+           ModelExpensesPayComponent
    ],
    imports: [
       // Default Modules
@@ -388,7 +390,8 @@ import { ModelExpensesApproveComponent } from './models/HRMS/model-expenses-appr
     ModelPayrollRunComponent,
     TicketsEditComponent,
     TicketActivitiesEditComponent,
-    ModelExpensesApproveComponent
+    ModelExpensesApproveComponent,
+    ModelExpensesPayComponent
     ],
    bootstrap: [AppComponent]
 })

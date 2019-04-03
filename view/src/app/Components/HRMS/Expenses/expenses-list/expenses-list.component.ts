@@ -6,6 +6,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ModelExpensesViewComponent } from '../../../../models/HRMS/model-expenses-view/model-expenses-view.component';
 import { ModelExpensesApproveComponent } from '../../../../models/HRMS/model-expenses-approve/model-expenses-approve.component';
+import { ModelExpensesPayComponent } from '../../../../models/HRMS/model-expenses-pay/model-expenses-pay.component';
 import * as CryptoJS from 'crypto-js';
 
 import { HrmsServiceService } from './../../../../services/Hrms/hrms-service.service';
@@ -83,7 +84,10 @@ export class ExpensesListComponent implements OnInit {
       if (Stage === 'Stage_3') {
          this._ShowMenus = ['ModifyData'];
       }
-      if (Stage === 'Stage_5' || Stage === 'Stage_6') {
+      if (Stage === 'Stage_5' || Stage === 'Stage_7') {
+         this._ShowMenus = ['Payment'];
+      }
+      if (Stage === 'Stage_6' || Stage === 'Stage_8') {
          this._ShowMenus = [];
       }
    }
@@ -145,24 +149,31 @@ export class ExpensesListComponent implements OnInit {
             });
          }
       });
-      // const _index = this._List.findIndex(obj =>  this.Active_Id === obj._id);
-      // const Data = { 'User_Id' : this.User_Id, 'Expenses_Id': this.Active_Id };
-      // let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
-      // Info = Info.toString();
-      // this.Service.Expenses_Approve({'Info': Info}).subscribe( response => {
-      //    const ResponseData = JSON.parse(response['_body']);
-      //    this.Loader = false;
-      //    if (response['status'] === 200 && ResponseData['Status'] ) {
-      //       this._List[_index].Current_Status = 'Approved';
-      //       this._List[_index].Stage = 'Stage_5';
-      //    } else if (response['status'] === 400 || response['status'] === 417 && !ResponseData['Status']) {
-      //       this.Toastr.NewToastrMessage({Type: 'Error', Message: ResponseData['Message']});
-      //    } else if (response['status'] === 401 && !ResponseData['Status']) {
-      //       this.Toastr.NewToastrMessage({ Type: 'Error',  Message: ResponseData['Message'] });
-      //    } else {
-      //    this.Toastr.NewToastrMessage( {  Type: 'Error', Message: 'Some Error Occurred!, But not Identify!'  });
-      //    }
-      // });
+   }
+
+   payment() {
+      const _index = this._List.findIndex(obj =>  this.Active_Id === obj._id);
+      const initialState = {
+         Type: 'View',
+         _Data: this._List[_index]
+      };
+      this.bsModalRef = this.modalService.show(ModelExpensesPayComponent, Object.assign({initialState}, { class: 'modal-lg max-width-85' }));
+      this.bsModalRef.content.onClose.subscribe(ResponseStatus => {
+         if (ResponseStatus['Status']) {
+            if (parseFloat(ResponseStatus['Response']['Total_Approved_Expenses'].toString()) === parseFloat(ResponseStatus['Response']['Total_Paid_Expenses'].toString())) {
+               this._List[_index].Current_Status = 'Payment Completed';
+               this._List[_index].Stage = 'Stage_8';
+            } else {
+               this._List[_index].Current_Status = 'Payment Pending';
+               this._List[_index].Stage = 'Stage_7';
+            }
+            this._List[_index].Total_Paid_Expenses = ResponseStatus['Response']['Total_Paid_Expenses'];
+            ResponseStatus['Response']['Expenses_Array'].map(obj => {
+               const List_index = this._List[_index]['Expenses_Array'].findIndex(list_obj =>  obj['Expenses_Array_Id'] === list_obj._id);
+               this._List[_index]['Expenses_Array'][List_index]['Paid_Amount'] = obj['Paid_Amount'];
+            });
+         }
+      });
    }
 
    Reject() {

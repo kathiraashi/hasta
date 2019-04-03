@@ -41,7 +41,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'LeaveDate_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'LeaveDate_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -50,7 +50,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Leaves_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Leaves_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -61,9 +61,9 @@ export class HrmsServiceService {
             sessionStorage.setItem('SessionKey', btoa(Date()));
             const User_Type = this.Service.LoginUser_Info()['User_Type'];
             if (User_Type === 'Employee') {
-               return this.http.post(API_URL + 'LeavesList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+               return this.http.post(Live_API_URL + 'LeavesList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
             } else {
-               return this.http.post(API_URL + 'Leaves_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+               return this.http.post(Live_API_URL + 'Leaves_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
             }
          }  else {
             return this.ValidateEveryRequest();
@@ -73,7 +73,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Leave_View', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Leave_View', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -82,7 +82,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Leaves_Update', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Leaves_Update', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -91,7 +91,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Leave_SendToApprove', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Leave_SendToApprove', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -100,7 +100,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Leave_SendToModify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Leave_SendToModify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -109,7 +109,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Leaves_Modify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Leaves_Modify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -118,7 +118,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Leave_Rejected', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Leave_Rejected', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -127,7 +127,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Leave_Approve', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Leave_Approve', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -140,7 +140,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Expenses_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Expenses_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -151,9 +151,9 @@ export class HrmsServiceService {
             sessionStorage.setItem('SessionKey', btoa(Date()));
             const User_Type = this.Service.LoginUser_Info()['User_Type'];
             if (User_Type === 'Employee') {
-               return this.http.post(API_URL + 'ExpensesList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+               return this.http.post(Live_API_URL + 'ExpensesList_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
             } else {
-               return this.http.post(API_URL + 'Expenses_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+               return this.http.post(Live_API_URL + 'Expenses_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
             }
          }  else {
             return this.ValidateEveryRequest();
@@ -163,7 +163,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Expenses_View', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Expenses_View', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -172,7 +172,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Expenses_Update', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Expenses_Update', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -181,7 +181,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Expenses_SendToApprove', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Expenses_SendToApprove', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -190,7 +190,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Expenses_SendToModify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Expenses_SendToModify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -199,7 +199,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Expenses_Modify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Expenses_Modify', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -208,7 +208,7 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Expenses_Rejected', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Expenses_Rejected', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -217,7 +217,16 @@ export class HrmsServiceService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(API_URL + 'Expenses_Approve', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(Live_API_URL + 'Expenses_Approve', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public Expenses_Pay(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(Live_API_URL + 'Expenses_Pay', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }

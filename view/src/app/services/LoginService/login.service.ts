@@ -17,7 +17,7 @@ export class LoginService {
 
 
    public User_Login_Validate(Info: any): Observable<any[]> {
-      return this.http.post(API_URL + 'User_Login_Validate', Info)
+      return this.http.post(Live_API_URL + 'User_Login_Validate', Info)
       .pipe( map( response => {
          const ReceivingData = JSON.parse(response['_body']);
          if (response['status'] === 200 && ReceivingData.Status) {

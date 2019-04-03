@@ -41,7 +41,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Attendance_Log', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Attendance_Log', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -50,7 +50,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'WeekOff_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'WeekOff_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -59,7 +59,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'AttendanceDate_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'AttendanceDate_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -68,7 +68,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Attendance_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Attendance_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -77,7 +77,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Complete_Attendance_Log', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Complete_Attendance_Log', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -87,7 +87,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Attendance_Report_Validate', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Attendance_Report_Validate', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -97,7 +97,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Attendance_Report_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Attendance_Report_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -107,7 +107,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Attendance_Report_Save', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Attendance_Report_Save', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -117,7 +117,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Attendance_Report_View', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Attendance_Report_View', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -127,7 +127,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Attendance_Report_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Attendance_Report_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -137,7 +137,7 @@ export class AttendanceService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Attendance_Report_Delete', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Attendance_Report_Delete', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }

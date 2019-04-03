@@ -83,10 +83,10 @@
                            <span class="Style_1">{{item.Current_Status}}</span>
                         </td>
                         <td>
-                           <ng-container *ngIf="item.Stage === 'Stage_5' || item.Stage === 'Stage_6'">
+                           <ng-container *ngIf="item.Stage === 'Stage_6' || item.Stage === 'Stage_8'">
                               <button mat-raised-button color="primary" (click)="Active_Id_Change(i); ViewExpenses()" > View </button>
                            </ng-container>
-                           <ng-container *ngIf="item.Stage !== 'Stage_5' && item.Stage !== 'Stage_6'">
+                           <ng-container *ngIf="item.Stage !== 'Stage_6' && item.Stage !== 'Stage_8'">
                               <button mat-raised-button color="primary" (click)="Active_Id_Change(i)" [matMenuTriggerFor] = "Action" > Action </button>
                            </ng-container>
                         </td>
@@ -121,5 +121,8 @@
    </button>
    <button *ngIf="IfShowMenu('SendToModify')" mat-menu-item (click)="SendToModify()">
       <span> Modify </span>
+   </button>
+   <button *ngIf="IfShowMenu('Payment')" mat-menu-item (click)="payment()">
+      <span> Payment </span>
    </button>
 </mat-menu>

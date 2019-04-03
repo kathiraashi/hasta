@@ -217,6 +217,61 @@ var Expenses_Documents = multer({
       }
    };
 
+   exports.Expenses_Pay = function(req, res) {
+      var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+      var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+   
+      if(!ReceivingData.Expenses_Id || ReceivingData.Expenses_Id === '' ) {
+         res.status(400).send({Status: false, Message: "Expenses Details can not be empty" });
+      } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+         res.status(400).send({Status: false, Message: "User Details can not be empty" });
+      } else if (!ReceivingData.Total_Approved_Expenses || ReceivingData.Total_Approved_Expenses === ''  ) {
+         res.status(400).send({Status: false, Message: "Total Approved Amount can not be empty" });
+      } else if (!ReceivingData.Total_Paid_Expenses || ReceivingData.Total_Paid_Expenses === ''  ) {
+         res.status(400).send({Status: false, Message: "Total Paid Amount can not be empty" });
+      } else if (!ReceivingData.Expenses_Array || ReceivingData.Expenses_Array.length <= 0  ) {
+         res.status(400).send({Status: false, Message: "Expenses can not be valid" });
+      }else {
+         if (ReceivingData.Expenses_Array.length > 0) {
+            Promise.all(
+               ReceivingData.Expenses_Array.map(Obj => {
+                  return ExpensesModel.ExpensesSchema.updateOne(
+                     { _id : mongoose.Types.ObjectId(ReceivingData.Expenses_Id), "Expenses_Array._id": mongoose.Types.ObjectId(Obj.Expenses_Array_Id) },
+                     {  $set: { "Expenses_Array.$.Paid_Amount" : Obj.Paid_Amount } }
+                  ).exec();
+               })
+            ).then(response => {
+               var paid_status = 'Payment Pending';
+               var paid_stage = 'Stage_7';
+               if ( parseFloat(ReceivingData.Total_Approved_Expenses.toString()) === parseFloat(ReceivingData.Total_Paid_Expenses.toString())) {
+                  paid_status = 'Payment Completed';
+                  paid_stage = 'Stage_8';
+               }
+               ExpensesModel.ExpensesSchema.updateOne(
+                  { _id: mongoose.Types.ObjectId(ReceivingData.Expenses_Id) },
+                  { $set: {   Total_Paid_Expenses : ReceivingData.Total_Paid_Expenses,
+                              Current_Status : paid_status,
+                              Stage: paid_stage,
+                              Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id)
+                           } 
+                  }, function(err_1, result_1) {
+                     if(err_1) {
+                        ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Expenses Update Query Error', 'Expenses.controller.js');
+                        res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Update the Payment !."});
+                     } else {
+                        res.status(200).send({Status: true, Message: 'Payment Update Successful'  });
+                     }
+                  });
+            }).catch( catch_err => {
+               ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Expenses Update Query Error', 'Expenses.controller.js', catch_err);
+               res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Update the Payment !."});
+            });
+         } else {
+            res.status(400).send({Status: false, Message: "Expenses Details can not be valid!" });
+         }
+      }
+   };
+
    exports.Expenses_Rejected = function(req, res) {
       var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
       var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));

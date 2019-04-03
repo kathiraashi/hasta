@@ -42,7 +42,7 @@ export class PayrollService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'PayrollMaster_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'PayrollMaster_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -51,7 +51,7 @@ export class PayrollService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'PayrollMaster_View', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'PayrollMaster_View', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -60,7 +60,7 @@ export class PayrollService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'PayrollMaster_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'PayrollMaster_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -69,7 +69,7 @@ export class PayrollService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'PayrollMaster_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'PayrollMaster_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -80,7 +80,7 @@ export class PayrollService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Payroll_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Payroll_Create', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -89,7 +89,7 @@ export class PayrollService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Payroll_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Payroll_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -98,7 +98,7 @@ export class PayrollService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Payroll_View', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Payroll_View', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -107,7 +107,7 @@ export class PayrollService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Payroll_Delete', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Payroll_Delete', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }

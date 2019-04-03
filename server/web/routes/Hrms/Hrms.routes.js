@@ -26,6 +26,7 @@ module.exports = function(app){
    app.post('/API/Hrms/Expenses_SendToModify', Expenses_Controller.Expenses_SendToModify);
    app.post('/API/Hrms/Expenses_Rejected', Expenses_Controller.Expenses_Rejected);
    app.post('/API/Hrms/Expenses_Approve', Expenses_Controller.Expenses_Approve);
+   app.post('/API/Hrms/Expenses_Pay', Expenses_Controller.Expenses_Pay);
    app.post('/API/Hrms/Expenses_View', Expenses_Controller.Expenses_View);
    app.post('/API/Hrms/Expenses_Update', Expenses_Controller.Expenses_Update);
    app.post('/API/Hrms/Expenses_Modify', Expenses_Controller.Expenses_Modify);

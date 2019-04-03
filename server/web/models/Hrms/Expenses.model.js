@@ -17,7 +17,7 @@ var ExpensesSchema = mongoose.Schema({
    }],
    Documents: { type : Array },
    Current_Status: { type : String , required : true},
-   Stage: { type : String , required : true}, // Stage_1: Draft, Stage_2: Send To Approve, Stage_3: Send To Modify, Stage_4: Send To Again Approve, Stage_5: Approved, Stage_6: Rejected;
+   Stage: { type : String , required : true}, // Stage_1: Draft, Stage_2: Send To Approve, Stage_3: Send To Modify, Stage_4: Send To Again Approve, Stage_5: Approved, Stage_6: Rejected, Stage_7: Payment Pending, Stage_8: Payment Completed;
    Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
    Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
    Active_Status: { type : Boolean , required : true},
@@ -29,4 +29,4 @@ var VarExpenses = mongoose.model('Expenses', ExpensesSchema, 'Expenses_List');
 
 module.exports = {
    ExpensesSchema : VarExpenses
-}
+};

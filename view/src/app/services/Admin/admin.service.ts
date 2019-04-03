@@ -40,7 +40,7 @@ export class AdminService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'User_Name_Validate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'User_Name_Validate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -50,7 +50,7 @@ export class AdminService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'User_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'User_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -61,7 +61,7 @@ export class AdminService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Users_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Users_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -71,7 +71,7 @@ export class AdminService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'User_Activate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'User_Activate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -81,7 +81,7 @@ export class AdminService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'User_Deactivate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'User_Deactivate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -92,7 +92,7 @@ export class AdminService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Country_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'Country_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -101,7 +101,7 @@ export class AdminService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'State_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'State_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
@@ -110,7 +110,7 @@ export class AdminService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'City_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         return this.http.post(Live_API_URL + 'City_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
       } else {
          return this.ValidateEveryRequest();
       }
