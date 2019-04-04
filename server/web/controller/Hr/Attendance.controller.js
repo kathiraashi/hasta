@@ -22,7 +22,7 @@ exports.AttendanceDate_AsyncValidate = function(req, res) {
       res.status(400).send({Status: false, Message: "User Details can not be empty" });
    }else {
       HrAttendanceModel.Employee_AttendanceSchema
-      .findOne( { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee), 'Attendance_Date' : new Date(ReceivingData.Date), 'If_Deleted': false }, {}, {}, function(err, result) {
+      .findOne( { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee), 'Attendance_Date' : new Date(ReceivingData.Date), 'If_Deleted': false, 'Attendance_Status': { "$ne": 'Rejected' } }, {}, {}, function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Employee Attendance Date Validate Query Error', 'Attendance.controller.js', err);
             res.status(417).send({status: false, Message: "Some error occurred while Validate Employee Attendance Date !."});
@@ -89,6 +89,7 @@ exports.WeekOff_AsyncValidate = function(req, res) {
          .findOne( { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),
                      'Attendance' : 'Week Off',
                      'If_Deleted': false,
+                     'Attendance_Status': { "$ne": 'Rejected' },
                      $and: [ { 'Attendance_Date': { $gte: Week_First } }, { 'Attendance_Date': { $lte: Week_Last } } ]
                   }, {}, {}, function(err, result) {
             if(err) {
@@ -129,6 +130,7 @@ exports.Attendance_Create = function(req, res) {
          Attendance_Date: ReceivingData.Date,
          Attendance: ReceivingData.Attendance,
          Created_By: mongoose.Types.ObjectId(ReceivingData.User_Id),
+         Attendance_Status: 'Pending',
          Active_Status: true,
          If_Deleted: false
       });
@@ -156,6 +158,72 @@ exports.Attendance_Create = function(req, res) {
    }
 };
 
+exports.Attendance_Approve = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Attendance_Id || ReceivingData.Attendance_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Attendance Details can not be valid" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else {
+      HrAttendanceModel.Employee_AttendanceSchema.findOne({'_id': mongoose.Types.ObjectId(ReceivingData.Attendance_Id)}, {}, {}, function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance FindOne Query Error', 'Attendance.controller.js', err);
+            res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Attendance Approve!."});
+         } else {
+            if (result !== null) {
+               result.Attendance_Status = 'Approved';
+               result.Last_Modified_By = mongoose.Types.ObjectId(ReceivingData.User_Id);
+               result.save(function(err_1, result_1) {
+                  if(err_1) {
+                     ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance Update Query Error', 'Attendance.controller.js');
+                     res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Update the Attendance Approve!."});
+                  } else {
+                     res.status(200).send({Status: true, Message: 'Successfully Approved'  });
+                  }
+               });
+            } else {
+               res.status(400).send({Status: false, Message: "Attendance Details can not be valid!" });
+            }
+         }
+      });
+   }
+};
+
+exports.Attendance_Reject = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if(!ReceivingData.Attendance_Id || ReceivingData.Attendance_Id === '' ) {
+      res.status(400).send({Status: false, Message: "Attendance Details can not be valid" });
+   } else if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else {
+      HrAttendanceModel.Employee_AttendanceSchema.findOne({'_id': mongoose.Types.ObjectId(ReceivingData.Attendance_Id)}, {}, {}, function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance FindOne Query Error', 'Attendance.controller.js', err);
+            res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The Attendance Reject!."});
+         } else {
+            if (result !== null) {
+               result.Attendance_Status = 'Rejected';
+               result.Last_Modified_By = mongoose.Types.ObjectId(ReceivingData.User_Id);
+               result.save(function(err_1, result_1) {
+                  if(err_1) {
+                     ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance Update Query Error', 'Attendance.controller.js');
+                     res.status(417).send({Status: false, Error: err_1, Message: "Some error occurred while Update the Attendance Reject!."});
+                  } else {
+                     res.status(200).send({Status: true, Message: 'Successfully Rejected'  });
+                  }
+               });
+            } else {
+               res.status(400).send({Status: false, Message: "Attendance Details can not be valid!" });
+            }
+         }
+      });
+   }
+};
+
 exports.Attendance_Log = function(req, res) {
    var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
    var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
@@ -169,6 +237,30 @@ exports.Attendance_Log = function(req, res) {
          .find({'If_Deleted': false, Employee: mongoose.Types.ObjectId(ReceivingData.Employee_Id) }, {}, {sort: { Attendance_Date: -1 }})
          .populate( { path: 'Created_By', select: 'Name'})
          .populate( { path: 'Employee', select: 'EmployeeName'})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance List Find Query Error', 'Attendance.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Attendance List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+
+exports.Complete_Attendance_Pending_Log = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else {
+      HrAttendanceModel.Employee_AttendanceSchema
+         .find({'If_Deleted': false, 'Attendance_Status': 'Pending' }, {}, {sort: { Attendance_Date: -1 }})
+         .populate( { path: 'Employee', select: 'EmployeeName'})
+         .populate( { path: 'Created_By', select: 'Name'})
          .exec(function(err, result) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'Attendance List Find Query Error', 'Attendance.controller.js', err);
@@ -274,7 +366,7 @@ exports.Attendance_Report_Create = function(req, res) {
                res.status(417).send({Status: false, Message: "Some error occurred while creating the Attendance!."});
             } else {
                Promise.all(
-                  DatArr.map(obj => DateDetailsFind(obj)),
+                  DatArr.map(obj => DateDetailsFind(obj))
                ).then(response => {
                   var YearsFirstDay = new Date(result.DateOfJoining);
                   var YearsLastDay = new Date(YearsFirstDay.getFullYear() + 1, YearsFirstDay.getMonth(), YearsFirstDay.getDate());
@@ -365,7 +457,8 @@ exports.Attendance_Report_Create = function(req, res) {
                         HrAttendanceModel.Employee_AttendanceSchema.findOne(
                            { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),
                               'Attendance_Date' : new Date(Obj),
-                              'If_Deleted': false
+                              'If_Deleted': false,
+                              'Attendance_Status': { "$ne": 'Rejected' }
                            }, {}, {}).exec(),
                         HrmsLeavesModel.LeavesSchema.findOne(
                            { 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee),

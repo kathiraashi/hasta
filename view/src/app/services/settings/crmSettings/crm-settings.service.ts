@@ -41,7 +41,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'IndustryType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'IndustryType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -50,7 +50,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Industry_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Industry_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -59,7 +59,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Industry_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Industry_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -68,7 +68,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Industry_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Industry_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -77,7 +77,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Industry_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Industry_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -86,7 +86,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Industry_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Industry_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -98,7 +98,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(Live_API_URL + 'OwnershipType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         return this.http.post(API_URL + 'OwnershipType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -107,7 +107,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Ownership_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Ownership_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -116,7 +116,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Ownership_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Ownership_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -125,7 +125,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Ownership_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Ownership_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -134,7 +134,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Ownership_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Ownership_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -143,7 +143,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(Live_API_URL + 'Ownership_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         return this.http.post(API_URL + 'Ownership_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -155,7 +155,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'ActivityType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'ActivityType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -164,7 +164,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -173,7 +173,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -182,7 +182,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -191,7 +191,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -200,7 +200,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -212,7 +212,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'ActivityStatus_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'ActivityStatus_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -221,7 +221,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Status_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Status_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -230,7 +230,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Status_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Status_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -239,7 +239,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Status_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Status_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -248,7 +248,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Status_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Status_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -257,7 +257,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Status_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Status_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -269,7 +269,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'ActivityPriority_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'ActivityPriority_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -278,7 +278,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Priority_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Priority_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -287,7 +287,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Priority_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Priority_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -296,7 +296,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Priority_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Priority_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -305,7 +305,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Priority_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Priority_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -314,7 +314,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Activity_Priority_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Activity_Priority_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          }  else {
             return this.ValidateEveryRequest();
          }
@@ -326,7 +326,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'ContactRole_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'ContactRole_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -335,7 +335,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Contact_Role_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Contact_Role_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -344,7 +344,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Contact_Role_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Contact_Role_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -353,7 +353,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Contact_Role_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Contact_Role_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -362,7 +362,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Contact_Role_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Contact_Role_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -371,7 +371,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Contact_Role_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Contact_Role_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -383,7 +383,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -392,7 +392,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Machine_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Machine_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -401,7 +401,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Machine_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Machine_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -410,7 +410,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Machine_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Machine_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -419,7 +419,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Machine_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Machine_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -428,7 +428,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Machine_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Machine_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -440,7 +440,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'ControllerType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'ControllerType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -449,7 +449,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Controller_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Controller_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -458,7 +458,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Controller_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Controller_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -467,7 +467,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Controller_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Controller_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -476,7 +476,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Controller_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Controller_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -485,7 +485,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Controller_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Controller_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -497,7 +497,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineMaintenancePart_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineMaintenancePart_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -506,7 +506,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineMaintenancePart_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineMaintenancePart_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -515,7 +515,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineMaintenancePart_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineMaintenancePart_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -524,7 +524,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineMaintenancePart_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineMaintenancePart_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -533,7 +533,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineMaintenancePart_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineMaintenancePart_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -542,7 +542,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineMaintenancePart_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineMaintenancePart_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -554,7 +554,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineScheduleActivity_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineScheduleActivity_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -563,7 +563,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineScheduleActivity_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineScheduleActivity_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -572,7 +572,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineScheduleActivity_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineScheduleActivity_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -581,7 +581,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineScheduleActivity_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineScheduleActivity_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -590,7 +590,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineScheduleActivity_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineScheduleActivity_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -599,7 +599,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'MachineScheduleActivity_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'MachineScheduleActivity_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -611,7 +611,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'TicketType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'TicketType_AsyncValidate', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -620,7 +620,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Ticket_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Ticket_Type_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -629,7 +629,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Ticket_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Ticket_Type_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -638,7 +638,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Ticket_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Ticket_Type_SimpleList', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -647,7 +647,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Ticket_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+            return this.http.post(API_URL + 'Ticket_Type_Update', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }
@@ -656,7 +656,7 @@ export class CrmSettingsService {
          if (this.Service.If_LoggedIn()) {
             this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
             sessionStorage.setItem('SessionKey', btoa(Date()));
-            return this.http.post(Live_API_URL + 'Ticket_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            return this.http.post(API_URL + 'Ticket_Type_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
          } else {
             return this.ValidateEveryRequest();
          }

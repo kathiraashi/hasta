@@ -2,7 +2,6 @@
 <!-- Create and search Section -->
 <div class="row header_part">
    <div class="col-sm-6">
-      <button class="Create_Button" mat-raised-button (click)="CreateAttendanceLog()"> + Create </button>
    </div>
    <div class="col-sm-6">
       <div class="Search_Section">
@@ -16,12 +15,13 @@
    <table>
       <thead>
          <tr>
-            <th>S.no</th>
+            <th> S.no </th>
             <th> Employee </th>
             <th> Date </th>
             <th> Attendance </th>
-            <th> Attendance Status </th>
+            <th> Status </th>
             <th> Registered By </th>
+            <th> Action </th>
          </tr>
       </thead>
       <tbody>
@@ -45,6 +45,14 @@
                <span class="Style_1"> {{Attendance?.Created_By?.Name }} </span>
                <br> 
                <span class="Time"> {{Attendance?.createdAt | date:'medium'}}  </span>
+            </td>
+            <td>
+               <button *ngIf="Attendance.Attendance_Status === 'Pending'" (click)="Approve(i)" class="Table_Action_mini Bg_Success" mat-mini-fab color="primary">
+                  <i class="material-icons">done</i>
+               </button>
+               <button *ngIf="Attendance.Attendance_Status === 'Pending'" (click)=" Reject(i)" class="Table_Action_mini Bg_Danger" mat-mini-fab color="primary">
+                  <i class="material-icons">clear</i>
+               </button>
             </td>
          </tr>
       </tbody>

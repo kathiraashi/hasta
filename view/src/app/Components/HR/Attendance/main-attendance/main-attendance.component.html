@@ -17,14 +17,18 @@
             <div class="Left_Section">
                <ul class="Tabs">
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Attendance_Log'}" (click)="Active_Tab_Change('Attendance_Log')"><span class="Tab_Content">Attendance Log</span></li>     
+                  <li class="Tab" [ngClass]="{'active':Active_Tab === 'Attendance_Approve'}" (click)="Active_Tab_Change('Attendance_Approve')"><span class="Tab_Content">Attendance Pending</span></li> 
                   <li class="Tab" [ngClass]="{'active':Active_Tab === 'Attendance_Report'}" (click)="Active_Tab_Change('Attendance_Report')"><span class="Tab_Content">Attendance Report</span></li>  
                </ul>
             </div>
             <!-- Right Section -->
             <div class="Right_Section">
-              <div *ngIf="Active_Tab === 'Attendance_Log'">
+               <div *ngIf="Active_Tab === 'Attendance_Log'">
                   <app-attendance-log-hr></app-attendance-log-hr>
-               </div> 
+               </div>
+               <div *ngIf="Active_Tab === 'Attendance_Approve'">
+                  <app-attendance-approve-list></app-attendance-approve-list>
+               </div>
                <div *ngIf="Active_Tab === 'Attendance_Report'">
                   <app-attendance-report-list></app-attendance-report-list>
                </div>   

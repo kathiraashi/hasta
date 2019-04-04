@@ -171,6 +171,7 @@ import { TicketsEditComponent } from './models/CRM/Tickets/tickets-edit/tickets-
 import { TicketActivitiesEditComponent } from './models/CRM/Tickets/ticket-activities-edit/ticket-activities-edit.component';
 import { ModelExpensesApproveComponent } from './models/HRMS/model-expenses-approve/model-expenses-approve.component';
 import { ModelExpensesPayComponent } from './models/HRMS/model-expenses-pay/model-expenses-pay.component';
+import { AttendanceApproveListComponent } from './Components/HR/Attendance/SubComponents/attendance-approve-list/attendance-approve-list.component';
 
 
 
@@ -319,7 +320,8 @@ import { ModelExpensesPayComponent } from './models/HRMS/model-expenses-pay/mode
            TicketsEditComponent,
            TicketActivitiesEditComponent,
            ModelExpensesApproveComponent,
-           ModelExpensesPayComponent
+           ModelExpensesPayComponent,
+           AttendanceApproveListComponent
    ],
    imports: [
       // Default Modules
@@ -391,7 +393,8 @@ import { ModelExpensesPayComponent } from './models/HRMS/model-expenses-pay/mode
     TicketsEditComponent,
     TicketActivitiesEditComponent,
     ModelExpensesApproveComponent,
-    ModelExpensesPayComponent
+    ModelExpensesPayComponent,
+    AttendanceApproveListComponent
     ],
    bootstrap: [AppComponent]
 })

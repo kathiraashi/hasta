@@ -44,6 +44,7 @@
                   <th>S.no</th>
                   <th> Date </th>
                   <th> Attendance </th>
+                  <th> Attendance Status</th>
                   <th> Registered By </th>
                   </tr>
                </thead>
@@ -57,6 +58,9 @@
                      </td>
                      <td>
                         <span class="Style_1"> {{Attendance?.Attendance }} </span>
+                     </td>
+                     <td>
+                        <span class="Style_1"> {{Attendance?.Attendance_Status }} </span>
                      </td>
                      <td>
                         <span class="Style_1"> {{Attendance?.Created_By?.Name }} </span>
