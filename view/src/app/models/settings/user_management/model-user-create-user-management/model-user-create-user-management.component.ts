@@ -7,6 +7,7 @@ import * as CryptoJS from 'crypto-js';
 import { map } from 'rxjs/operators';
 
 import { HrService } from './../../../../services/Hr/hr.service';
+import { CrmService } from './../../../../services/Crm/crm.service';
 import { LoginService } from './../../../../services/LoginService/login.service';
 import { AdminService  } from './../../../../services/Admin/admin.service';
 import { ToastrService } from './../../../../services/common-services/toastr-service/toastr.service';
@@ -30,7 +31,8 @@ export class ModelUserCreateUserManagementComponent implements OnInit {
 
    ShowReportsTo: Boolean = false;
    _AccessPermissions: any[] = [];
-   _EmployeeList;
+   _EmployeeList: any[] = [];
+   _CustomersList: any[] = [];
    User_Name_Changed: Boolean = false;
    UserNameValidated: Boolean = false;
    User_NameAvailable: Boolean = false;
@@ -44,7 +46,8 @@ export class ModelUserCreateUserManagementComponent implements OnInit {
                public Login_Service: LoginService,
                public Service: AdminService,
                private Toastr: ToastrService,
-               private Hr_Service: HrService
+               private Hr_Service: HrService,
+               private Crm_Service: CrmService
             ) {
                this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
                const Data = { User_Id : this.User_Id };
@@ -62,6 +65,19 @@ export class ModelUserCreateUserManagementComponent implements OnInit {
                     this.Toastr.NewToastrMessage( { Type: 'Error', Message: response['Message'] } );
                   } else {
                      this.Toastr.NewToastrMessage( { Type: 'Error', Message: 'Employee List Getting Error!, Error not Identify!' } );
+                  }
+               });
+               this.Crm_Service.CrmCustomers_List_WithoutUserManage({'Info': Info}).subscribe( response => {
+                  const ResponseData = JSON.parse(response['_body']);
+                  if (response['status'] === 200 && ResponseData['Status'] ) {
+                     const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
+                     const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+                     this._CustomersList = DecryptedData;
+                     console.log(DecryptedData);
+                  } else if (response['status'] === 400 || response['status'] === 417 || response['status'] === 401 && !ResponseData['Status']) {
+                     this.Toastr.NewToastrMessage( { Type: 'Error', Message: response['Message'] } );
+                  } else {
+                     this.Toastr.NewToastrMessage( { Type: 'Error', Message: 'Customers List Getting Error!, Error not Identify!' } );
                   }
                });
             }
@@ -99,6 +115,8 @@ export class ModelUserCreateUserManagementComponent implements OnInit {
    UserType_Change(_event) {
       if (_event === 'Employee') {
          this.Form.addControl('Employee',  new FormControl(null, Validators.required) );
+      } else if (_event === 'Customer') {
+         this.Form.addControl('Customer',  new FormControl(null, Validators.required) );
       } else {
        this.Form.removeControl('Employee');
       }

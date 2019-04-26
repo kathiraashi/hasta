@@ -368,7 +368,7 @@ exports.Attendance_Report_Create = function(req, res) {
                Promise.all(
                   DatArr.map(obj => DateDetailsFind(obj))
                ).then(response => {
-                  var YearsFirstDay = new Date(result.DateOfJoining);
+                  var YearsFirstDay = new Date(result.Leave_Calculation_Start_Date);
                   var YearsLastDay = new Date(YearsFirstDay.getFullYear() + 1, YearsFirstDay.getMonth(), YearsFirstDay.getDate());
                   if(YearsLastDay.valueOf() < From.valueOf()) {
                      var YearsFirstDay = new Date(From.getFullYear(), YearsFirstDay.getMonth(), YearsFirstDay.getDate())

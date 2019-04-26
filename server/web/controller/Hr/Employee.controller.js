@@ -84,6 +84,8 @@ exports.Employee_Create = function(req, res) {
          res.status(400).send({Status: false, Message: "Employee Code can not be empty" });
       } else if(!ReceivingData.DateOfJoining || ReceivingData.DateOfJoining === '' ) {
          res.status(400).send({Status: false, Message: "Date of joining can not be empty" });
+      } else if(!ReceivingData.Leave_Calculation_Start_Date || ReceivingData.Leave_Calculation_Start_Date === '' ) {
+         res.status(400).send({Status: false, Message: "Leave Calculation Start Date can not be empty" });
       } else if(!ReceivingData.MaritalStatus || ReceivingData.MaritalStatus === '' ) {
          res.status(400).send({Status: false, Message: "Marital Status can not be empty" });
       } else if(!ReceivingData.Personal_MobileNo || ReceivingData.Personal_MobileNo === '' ) {
@@ -125,6 +127,7 @@ exports.Employee_Create = function(req, res) {
             Department: ReceivingData.Department,
             Designation: ReceivingData.Designation,
             DateOfJoining: ReceivingData.DateOfJoining,
+            Leave_Calculation_Start_Date: ReceivingData.Leave_Calculation_Start_Date,
             EmployeeRole: ReceivingData.EmployeeRole,
             Working_Location: ReceivingData.Working_Location,
             Customers: ReceivingData.Customers,
@@ -293,6 +296,8 @@ exports.Employee_Update = function(req, res) {
          res.status(400).send({Status: false, Message: "Employee Code can not be empty" });
       } else if(!ReceivingData.DateOfJoining || ReceivingData.DateOfJoining === '' ) {
          res.status(400).send({Status: false, Message: "Date of joining can not be empty" });
+      } else if(!ReceivingData.Leave_Calculation_Start_Date || ReceivingData.Leave_Calculation_Start_Date === '' ) {
+         res.status(400).send({Status: false, Message: "Leave Calculation Start Date can not be empty" });
       } else if(!ReceivingData.MaritalStatus || ReceivingData.MaritalStatus === '' ) {
          res.status(400).send({Status: false, Message: "Marital Status can not be empty" });
       } else if(!ReceivingData.Personal_MobileNo || ReceivingData.Personal_MobileNo === '' ) {
@@ -341,6 +346,7 @@ exports.Employee_Update = function(req, res) {
                   Department: ReceivingData.Department,
                   Designation: ReceivingData.Designation,
                   DateOfJoining: ReceivingData.DateOfJoining,
+                  Leave_Calculation_Start_Date: ReceivingData.Leave_Calculation_Start_Date,
                   EmployeeRole: ReceivingData.EmployeeRole,
                   Working_Location: ReceivingData.Working_Location,
                   Customers: ReceivingData.Customers,

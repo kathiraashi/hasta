@@ -47,7 +47,7 @@
             </div>
             <ng-container formArrayName="Expenses_Array">
                <div *ngFor="let Expenses of Form.controls['Expenses_Array']['controls']; let i = index" [formGroupName]="i" class="row"  style=" align-items: center;">
-                  <div class="col-sm-2 Form_Input" [ngClass]="{'Form_Err': !Expenses.controls['Date'].pristine && Expenses.controls['Date'].errors, 'Form_Success': Expenses.controls['Date'].valid && !Expenses.controls['Date'].pristine }">
+                  <div class="col-sm-1 Form_Input" style="padding-right: 0px" [ngClass]="{'Form_Err': !Expenses.controls['Date'].pristine && Expenses.controls['Date'].errors, 'Form_Success': Expenses.controls['Date'].valid && !Expenses.controls['Date'].pristine }">
                      <label>Date:</label>
                      <input matInput formControlName="Date" [matDatepicker]="DatePicker1" (dateChange)="DateChange($event.value)" (click)="DatePicker1.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Date">
                      <mat-datepicker #DatePicker1></mat-datepicker>
@@ -63,7 +63,7 @@
                         <span *ngIf="Expenses.controls['Amount'].errors.pattern">Only Numbers are Allowed </span>
                      </p>
                   </div>
-                  <div class="col-sm-3 Form_Select" >
+                  <div class="col-sm-2 Form_Select" >
                      <label>Expenses Type:</label>
                      <ng-select class="NgSelect" 
                                  [items]="_ExpensesTypes" 
@@ -77,11 +77,18 @@
                         <span *ngIf="Expenses.controls['Expenses_Type'].errors.required">Expenses Type is required</span>
                      </p>
                   </div>
-                  <div class="col-sm-4 Form_TextArea" [ngClass]="{'Form_Err': !Expenses.controls['Description'].pristine && Expenses.controls['Description'].errors, 'Form_Success': Expenses.controls['Description'].valid && !Expenses.controls['Description'].pristine }">
+                  <div class="col-sm-3 Form_TextArea" [ngClass]="{'Form_Err': !Expenses.controls['Description'].pristine && Expenses.controls['Description'].errors, 'Form_Success': Expenses.controls['Description'].valid && !Expenses.controls['Description'].pristine }">
                      <label>Description:</label>
                      <textarea rows="3" formControlName="Description"></textarea>
                      <p class="error" *ngIf="Expenses.controls['Description'].errors && !Expenses.controls['Description'].pristine">
                         <span *ngIf="Expenses.controls['Description'].errors.required">Description is required</span>
+                     </p>
+                  </div>
+                  <div class="col-sm-3 Form_TextArea" [ngClass]="{'Form_Err': !Expenses.controls['Remarks'].pristine && Expenses.controls['Remarks'].errors, 'Form_Success': Expenses.controls['Remarks'].valid && !Expenses.controls['Remarks'].pristine }">
+                     <label>Remarks:</label>
+                     <textarea rows="3" formControlName="Remarks"></textarea>
+                     <p class="error" *ngIf="Expenses.controls['Remarks'].errors && !Expenses.controls['Remarks'].pristine">
+                        <span *ngIf="Expenses.controls['Remarks'].errors.required">Remarks is required</span>
                      </p>
                   </div>
                   <div class="col-sm-1">

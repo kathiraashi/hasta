@@ -39,7 +39,8 @@
                      <th> Amount </th>
                      <th> Approved Amount </th>
                      <th> Expenses Type </th>
-                     <th style="width: 35%;"> Description </th>
+                     <th style="width: 20%;"> Description </th>
+                     <th style="width: 20%;"> Remarks </th>
                   </tr>
                </thead>
                <tbody>
@@ -62,6 +63,9 @@
                            </td>
                            <td>
                               <span class="Style_1" style="line-height: 16px; display: inline-block;"> {{Expenses.controls['Description'].value}} </span>
+                           </td>
+                           <td>
+                              <span class="Style_1" style="line-height: 16px; display: inline-block;"> {{Expenses.controls['Remarks'].value}} </span>
                            </td>
                         </tr>
                      </ng-container>

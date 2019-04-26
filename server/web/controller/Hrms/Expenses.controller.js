@@ -55,6 +55,7 @@ var Expenses_Documents = multer({
                   Total_Paid_Expenses: 0,
                   Expenses_Array: ReceivingData.Expenses_Array,
                   Documents: Documents,
+                  Payment_Remarks: '',
                   Current_Status: 'Draft',
                   Stage: 'Stage_1',
                   Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
@@ -231,7 +232,7 @@ var Expenses_Documents = multer({
          res.status(400).send({Status: false, Message: "Total Paid Amount can not be empty" });
       } else if (!ReceivingData.Expenses_Array || ReceivingData.Expenses_Array.length <= 0  ) {
          res.status(400).send({Status: false, Message: "Expenses can not be valid" });
-      }else {
+      }else {         
          if (ReceivingData.Expenses_Array.length > 0) {
             Promise.all(
                ReceivingData.Expenses_Array.map(Obj => {
@@ -250,6 +251,7 @@ var Expenses_Documents = multer({
                ExpensesModel.ExpensesSchema.updateOne(
                   { _id: mongoose.Types.ObjectId(ReceivingData.Expenses_Id) },
                   { $set: {   Total_Paid_Expenses : ReceivingData.Total_Paid_Expenses,
+                              Payment_Remarks: ReceivingData.Payment_Remarks,
                               Current_Status : paid_status,
                               Stage: paid_stage,
                               Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id)

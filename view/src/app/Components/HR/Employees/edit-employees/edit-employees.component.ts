@@ -95,7 +95,6 @@ export class EditEmployeesComponent implements OnInit {
                      const CryptoBytes  = CryptoJS.AES.decrypt(ResponseData['Response'], 'SecretKeyOut@123');
                      const DecryptedData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
                      this._Data = DecryptedData;
-                     console.log(DecryptedData);
                      setTimeout(() => {
                         this.UpdateFormValues();
                         this.UpdateDepartment();
@@ -171,6 +170,7 @@ export class EditEmployeesComponent implements OnInit {
          Department: new FormControl(null),
          Designation: new FormControl(null),
          DateOfJoining: new FormControl(null, Validators.required),
+         Leave_Calculation_Start_Date: new FormControl(null, Validators.required),
          EmployeeRole: new FormControl(null),
          Working_Location: new FormControl(),
          Customers: new FormControl(null, Validators.required),
@@ -213,6 +213,7 @@ export class EditEmployeesComponent implements OnInit {
       this.Form.controls['EmployeeName'].setValue(this._Data['EmployeeName']);
       this.Form.controls['EmployeeCode'].setValue(this._Data['EmployeeCode']);
       this.Form.controls['DateOfJoining'].setValue(new Date(this._Data['DateOfJoining']));
+      this.Form.controls['Leave_Calculation_Start_Date'].setValue(new Date(this._Data['Leave_Calculation_Start_Date']));
       this.Form.controls['EmployeeRole'].setValue(this._Data['EmployeeRole']);
       this.Form.controls['Working_Location'].setValue(this._Data['Working_Location']);
       this.Form.controls['EmployeeFatherName'].setValue(this._Data['EmployeeFatherName']);

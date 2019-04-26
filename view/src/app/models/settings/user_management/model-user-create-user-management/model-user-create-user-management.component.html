@@ -65,6 +65,19 @@
                   <span *ngIf="Form.controls['Employee'].errors.required"> Employee is required</span>
                </p>
             </div>
+            <div *ngIf="Form.value.User_Type === 'Customer'" class="col-sm-6 Form_Select">
+               <label> Customer :</label>
+               <ng-select class="NgSelect"
+                           [items]="_CustomersList"
+                           [bindLabel]="'CompanyName'"
+                           [bindValue]="'_id'"
+                           [searchable]="true"
+                           formControlName="Customer">
+               </ng-select>
+               <p class="error" *ngIf="Form.controls['Customer'].errors && !Form.controls['Customer'].pristine">
+                  <span *ngIf="Form.controls['Customer'].errors.required"> Customer is required</span>
+               </p>
+            </div>
          </div>
       </Form>
    </div>

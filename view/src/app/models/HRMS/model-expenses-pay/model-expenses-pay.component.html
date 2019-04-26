@@ -6,7 +6,7 @@
    </div>
    <div class="Model_Body">
       <div class="row">
-         <div class="col-sm-8">
+         <div class="col-sm-7">
             <form [formGroup]="Form">
                <div class="view_item">
                   <div class="Static"> Employee Name </div>
@@ -30,7 +30,21 @@
                </div>
             </form>
          </div>
-         <div class="col-sm-4">
+         <div class="col-sm-5">
+            <ng-container *ngIf="_Data['Stage'] === 'Stage_8' || _Data['Stage'] === 'Stage_7'">
+               <form [formGroup]="Form">
+                  <div class="view_item">
+                     <div class="Static"> Payment Remarks </div>
+                     <div class="dots"> : </div>
+                  </div>
+                  <div class="view_item" style="grid-template-columns: 5% 95%">
+                     <div></div>
+                     <div class="Form_TextArea"> 
+                        <textarea rows="5" formControlName="Payment_Remarks"></textarea>
+                     </div>
+                  </div>
+               </form>
+            </ng-container>
          </div>
       </div>
       <h5 class="Previous_Documents_Header" *ngIf="_Data['Expenses_Array'].length > 0"> Expenses Details </h5>
@@ -45,7 +59,8 @@
                      <th> Approved Amount </th>
                      <th> paid Amount </th>
                      <th> Expenses Type </th>
-                     <th style="width: 35%;"> Description </th>
+                     <th style="width: 20%;"> Description </th>
+                     <th style="width: 20%;"> Remarks </th>
                   </tr>
                </thead>
                <tbody>
@@ -71,6 +86,9 @@
                            </td>
                            <td>
                               <span class="Style_1" style="line-height: 16px; display: inline-block;"> {{Expenses.controls['Description'].value}} </span>
+                           </td>
+                           <td>
+                              <span class="Style_1" style="line-height: 16px; display: inline-block;"> {{Expenses.controls['Remarks'].value}} </span>
                            </td>
                         </tr>
                      </ng-container>

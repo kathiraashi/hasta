@@ -301,6 +301,34 @@ exports.Payroll_List = function(req, res) {
    }
 };
 
+// Payroll List For Employee-----------------------------------------------
+exports.Payroll_List_ForEmployee = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   } else if(!ReceivingData.Employee || ReceivingData.Employee === '' ) {
+      res.status(400).send({Status: false, Message: "Employee can not be empty" });
+   }else {
+      HrPayrollModel.Payroll
+      .find({ 'If_Deleted': false, 'Employee': mongoose.Types.ObjectId(ReceivingData.Employee)  }, {}, {sort: { updatedAt: -1 }})
+      .populate({ path: 'Employee', select: ['EmployeeName', 'EmployeeCode'] })
+      .populate({ path: 'Created_By', select: ['Name', 'User_Type'] })
+      .populate({ path: 'Last_Modified_By', select: ['Name', 'User_Type'] })
+      .exec(function(err, result) {
+      if(err) {
+         ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'HR Payroll Find Find Query Error', 'Payroll.controller.js', err);
+         res.status(417).send({status: false, Error:err, Message: "Some error occurred while Find The HR Payroll!."});
+      } else {
+         var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+         ReturnData = ReturnData.toString();
+         res.status(200).send({Status: true, Response: ReturnData });
+      }
+   });
+   }
+};
+
 
 
 // Payroll View -----------------------------------------------

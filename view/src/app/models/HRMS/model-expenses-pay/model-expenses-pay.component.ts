@@ -42,7 +42,8 @@ export class ModelExpensesPayComponent implements OnInit {
          Total_Expenses: new FormControl(this._Data['Total_Expenses']),
          Total_Approved_Expenses: new FormControl(this._Data['Total_Approved_Expenses']),
          Total_Paid_Expenses: new FormControl(this._Data['Total_Paid_Expenses'], Validators.required),
-         User_Id: new FormControl(this.User_Id, Validators.required)
+         User_Id: new FormControl(this.User_Id, Validators.required),
+         Payment_Remarks: new FormControl(this._Data['Payment_Remarks']),
       });
       this._Data['Expenses_Array'].map(obj => {
          const control = <FormArray>this.Form.get('Expenses_Array');
@@ -54,6 +55,7 @@ export class ModelExpensesPayComponent implements OnInit {
             Paid_Amount: new FormControl(obj['Paid_Amount'], [Validators.required, Validators.max(obj['Approved_Amount']), Validators.pattern('^[0-9\,\.\]*$')]),
             Expenses_Type: new FormControl(obj['Expenses_Type']['Expenses_Type']),
             Description: new FormControl(obj['Description']),
+            Remarks: new FormControl(obj['Remarks']),
          }));
       });
    }

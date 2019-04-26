@@ -231,5 +231,51 @@ export class HrmsServiceService {
             return this.ValidateEveryRequest();
          }
       }
+
+
+      public DailyReport_Create(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'DailyReport_Create', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public DailyReport_Update(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'DailyReport_Update', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public DailyReport_List(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            const User_Type = this.Service.LoginUser_Info()['User_Type'];
+            if (User_Type === 'Employee') {
+               return this.http.post(API_URL + 'DailyReport_List_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            } else {
+               return this.http.post(API_URL + 'DailyReport_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+            }
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+      public DailyReport_Delete(Info: any): Observable<any[]> {
+         if (this.Service.If_LoggedIn()) {
+            this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
+            sessionStorage.setItem('SessionKey', btoa(Date()));
+            return this.http.post(API_URL + 'DailyReport_Delete', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }  else {
+            return this.ValidateEveryRequest();
+         }
+      }
+
+      
+
 }
 

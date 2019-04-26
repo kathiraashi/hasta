@@ -8,6 +8,7 @@ var Schema = mongoose.Schema;
       Department: { type: Schema.Types.ObjectId, ref: 'Department' },
       Designation: { type: Schema.Types.ObjectId, ref: 'Designation' },
       DateOfJoining: { type : String, require : true},
+      Leave_Calculation_Start_Date: { type : String, require : true},
       EmployeeRole: { type : String },
       Working_Location: { type : String },
       Customers: [{ type: Schema.Types.ObjectId, ref: 'CrmCustomers' }],

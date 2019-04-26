@@ -89,7 +89,12 @@ export class PayrollService {
       if (this.Service.If_LoggedIn()) {
          this.headers.set('Authorization', atob(sessionStorage.getItem('SessionToken')));
          sessionStorage.setItem('SessionKey', btoa(Date()));
-         return this.http.post(API_URL + 'Payroll_List', Info, {headers: this.headers }).pipe( map(response => response), catchError(error => of(error)));
+         const User_Type = this.Service.LoginUser_Info()['User_Type'];
+         if (User_Type === 'Employee') {
+            return this.http.post(API_URL + 'Payroll_List_ForEmployee', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         } else {
+            return this.http.post(API_URL + 'Payroll_List', Info, {headers: this.headers }).pipe( map(response => response),  catchError(error => of(error)));
+         }
       } else {
          return this.ValidateEveryRequest();
       }

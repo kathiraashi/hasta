@@ -59,7 +59,6 @@ export class ModelPayrollMasterComponent implements OnInit {
    }
    ngOnInit() {
       this.onClose = new Subject();
-      console.log(this.Data);
 
       // If Create New PayrollMaster
       if (this.Type === 'Create') {

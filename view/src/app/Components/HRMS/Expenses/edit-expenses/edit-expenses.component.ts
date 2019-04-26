@@ -174,6 +174,7 @@ export class EditExpensesComponent implements OnInit {
          Amount: new FormControl(obj['Amount'], [Validators.required, Validators.pattern('^[0-9\,\.\]*$')]),
          Expenses_Type: new FormControl(obj['Expenses_Type']['_id'], Validators.required),
          Description: new FormControl(obj['Description'], Validators.required),
+         Remarks: new FormControl(obj['Remarks'], Validators.required),
       }));
    }
 
@@ -218,6 +219,7 @@ export class EditExpensesComponent implements OnInit {
                Amount: new FormControl(0, [Validators.required, Validators.pattern('^[0-9\,\.\]*$')]),
                Expenses_Type: new FormControl(null, Validators.required),
                Description: new FormControl('', Validators.required),
+               Remarks: new FormControl('', Validators.required),
             });
    }
 

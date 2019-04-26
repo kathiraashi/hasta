@@ -42,7 +42,8 @@ export class ModelExpensesApproveComponent implements OnInit {
          Expenses_Array: new FormArray([]),
          Total_Expenses: new FormControl(this._Data['Total_Expenses']),
          Total_Approved_Expenses: new FormControl(this._Data['Total_Approved_Expenses'], Validators.required),
-         User_Id: new FormControl(this.User_Id, Validators.required)
+         User_Id: new FormControl(this.User_Id, Validators.required),
+         Payment_Remarks: new FormControl(this._Data['Payment_Remarks']),
       });
       this._Data['Expenses_Array'].map(obj => {
          const control = <FormArray>this.Form.get('Expenses_Array');
@@ -53,6 +54,7 @@ export class ModelExpensesApproveComponent implements OnInit {
             Approved_Amount: new FormControl(obj['Approved_Amount'], [Validators.required, Validators.pattern('^[0-9\,\.\]*$')]),
             Expenses_Type: new FormControl(obj['Expenses_Type']['Expenses_Type']),
             Description: new FormControl(obj['Description']),
+            Remarks: new FormControl(obj['Remarks']),
          }));
       });
    }

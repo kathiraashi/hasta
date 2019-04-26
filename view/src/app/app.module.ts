@@ -172,8 +172,8 @@ import { TicketActivitiesEditComponent } from './models/CRM/Tickets/ticket-activ
 import { ModelExpensesApproveComponent } from './models/HRMS/model-expenses-approve/model-expenses-approve.component';
 import { ModelExpensesPayComponent } from './models/HRMS/model-expenses-pay/model-expenses-pay.component';
 import { AttendanceApproveListComponent } from './Components/HR/Attendance/SubComponents/attendance-approve-list/attendance-approve-list.component';
-
-
+import { DailyReportListComponent } from './Components/HRMS/DailyReport/daily-report-list/daily-report-list.component';
+import { ModelDailyReportComponent } from './models/HRMS/model-daily-report/model-daily-report.component';
 
 @NgModule({
    declarations: [
@@ -321,7 +321,9 @@ import { AttendanceApproveListComponent } from './Components/HR/Attendance/SubCo
            TicketActivitiesEditComponent,
            ModelExpensesApproveComponent,
            ModelExpensesPayComponent,
-           AttendanceApproveListComponent
+           AttendanceApproveListComponent,
+           DailyReportListComponent,
+           ModelDailyReportComponent
    ],
    imports: [
       // Default Modules
@@ -394,7 +396,8 @@ import { AttendanceApproveListComponent } from './Components/HR/Attendance/SubCo
     TicketActivitiesEditComponent,
     ModelExpensesApproveComponent,
     ModelExpensesPayComponent,
-    AttendanceApproveListComponent
+    AttendanceApproveListComponent,
+    ModelDailyReportComponent
     ],
    bootstrap: [AppComponent]
 })

@@ -21,6 +21,7 @@ export class MainPayrollHrComponent implements OnInit {
    _List: any[] = [];
    User_Id: any;
    User_Type: any;
+   If_Employee: any;
    bsModalRef: BsModalRef;
 
    constructor(
@@ -31,8 +32,12 @@ export class MainPayrollHrComponent implements OnInit {
             ) {
                this.User_Id = this.Login_Service.LoginUser_Info()['_id'];
                this.User_Type = this.Login_Service.LoginUser_Info()['_UserType'];
+               this.If_Employee = this.Login_Service.LoginUser_Info()['Employee'];
                // Get Attendance Report List
                const Data = { 'User_Id' : this.User_Id};
+               if (this.User_Type === 'Employee') {
+                  Data['Employee'] = this.If_Employee['_id'];
+               }
                let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
                Info = Info.toString();
                this.Service.Payroll_List({'Info': Info}).subscribe( response => {
@@ -64,7 +69,7 @@ export class MainPayrollHrComponent implements OnInit {
             const Data = { Payroll_Id: this._List[_index]['_id'], Report_Id: this._List[_index]['Attendance_Report'], 'User_Id' : this.User_Id };
             let Info = CryptoJS.AES.encrypt(JSON.stringify(Data), 'SecretKeyIn@123');
             Info = Info.toString();
-            this.Service.Payroll_List({ 'Info': Info }).subscribe(response => {
+            this.Service.Payroll_Delete({ 'Info': Info }).subscribe(response => {
                const ResponseData = JSON.parse(response['_body']);
                this.Loader = false;
                if (response['status'] === 200 && ResponseData['Status'] ) {

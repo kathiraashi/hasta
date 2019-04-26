@@ -75,6 +75,13 @@
                               <span *ngIf="Form.controls['DateOfJoining'].errors.required"> Date Of Joining is required</span>
                            </p>
                         </div>
+                        <div class="col-sm-4 Form_Input" >
+                           <input type="text" formControlName="Leave_Calculation_Start_Date" [matDatepicker]="Datepicker12" (click)="Datepicker12.open()" (keypress)="NotAllow()" (keydown)="NotAllow()" placeholder="Leave Calculation Start Date">
+                           <mat-datepicker #Datepicker12></mat-datepicker>
+                           <p class="error" *ngIf="Form.controls['Leave_Calculation_Start_Date'].errors && !Form.controls['Leave_Calculation_Start_Date'].pristine">
+                              <span *ngIf="Form.controls['Leave_Calculation_Start_Date'].errors.required">Leave Calculation Start Date is required</span>
+                           </p>
+                        </div>
                         <div class="col-sm-4 Form_Select" >
                            <ng-select class="NgSelect ValueBold"
                                     [items]="_EmployeeRoles"

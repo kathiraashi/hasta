@@ -1,6 +1,7 @@
 var CryptoJS = require("crypto-js");
 var AdminModel = require('./../../models/Admin/AdminManagement.model.js');
 var HrModel = require('./../../models/Hr/Employee.model.js');
+var CrmModel = require('./../../models/Crm/CrmCustomers.model.js');
 var ErrorManagement = require('./../../../handling/ErrorHandling.js');
 var mongoose = require('mongoose');
 var crypto = require("crypto");
@@ -41,8 +42,9 @@ var crypto = require("crypto");
       } else if (!ReceivingData.User_Password || ReceivingData.User_Password === ''  ) {
          res.status(400).send({Status: false, Message: "User Password can not be empty" });
       } else {
-         AdminModel.User_Management.findOne({'User_Name': { $regex : new RegExp("^" + ReceivingData.User_Name + "$", "i") }, 'User_Password': ReceivingData.User_Password, 'Active_Status': true, 'User_Type': {$in: ['Admin', 'Employee']}  }, { User_Password: 0 }, {})
+         AdminModel.User_Management.findOne({'User_Name': { $regex : new RegExp("^" + ReceivingData.User_Name + "$", "i") }, 'User_Password': ReceivingData.User_Password, 'Active_Status': true, 'User_Type': {$in: ['Admin', 'Employee', 'Customer']}  }, { User_Password: 0 }, {})
          .populate({path:'Employee', select:['EmployeeName', 'Customers']})
+         .populate({path:'Customer', select:['CompanyName', 'CompanyType']})
          .exec(function(err, result) {
             if(err) {
                ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'User Details Validate Query Error', 'RegisterAndLogin.controller.js', err);
@@ -108,6 +110,9 @@ var crypto = require("crypto");
          if (ReceivingData.User_Type === 'Employee' && ReceivingData.Employee !== undefined && ReceivingData.Employee !== '') {
             ReceivingData.Employee = mongoose.Types.ObjectId(ReceivingData.Employee);
          }
+         if (ReceivingData.User_Type === 'Customer' && ReceivingData.Customer !== undefined && ReceivingData.Customer !== '') {
+            ReceivingData.Customer = mongoose.Types.ObjectId(ReceivingData.Customer);
+         }
          var CreateUser_Management = new AdminModel.User_Management({
             User_Name : ReceivingData.User_Name,
             User_Password : ReceivingData.User_Password,
@@ -116,6 +121,7 @@ var crypto = require("crypto");
             Email : ReceivingData.Email,
             User_Type: ReceivingData.User_Type,
             Employee: ReceivingData.Employee || null,
+            Customer: ReceivingData.Customer || null,
             Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
             Last_ModifiedBy : mongoose.Types.ObjectId(ReceivingData.User_Id),
             Active_Status : ReceivingData.Active_Status || true,
@@ -127,6 +133,9 @@ var crypto = require("crypto");
             } else {
                if (ReceivingData.User_Type === 'Employee' && ReceivingData.Employee !== undefined && ReceivingData.Employee !== '') {
                   HrModel.EmployeeSchema.updateOne({_id: ReceivingData.Employee}, { $set: { If_UserManage: true }}).exec();
+               }
+               if (ReceivingData.User_Type === 'Customer' && ReceivingData.Customer !== undefined && ReceivingData.Customer !== '') {
+                  CrmModel.CrmCustomersSchema.updateOne({_id: ReceivingData.Customer}, { $set: { User_Created: true }}).exec();
                }
                AdminModel.User_Management.findOne({_id: result._id }, {}, {})
                   .populate({path:'Employee', select:'EmployeeName'})

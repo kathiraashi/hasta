@@ -173,6 +173,7 @@ export class CreateExpensesComponent implements OnInit {
                Amount: new FormControl(0, [Validators.required, Validators.pattern('^[0-9\,\.\]*$')]),
                Expenses_Type: new FormControl(null, Validators.required),
                Description: new FormControl('', Validators.required),
+               Remarks: new FormControl('', Validators.required),
             });
    }
 

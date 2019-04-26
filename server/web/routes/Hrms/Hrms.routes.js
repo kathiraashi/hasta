@@ -2,6 +2,8 @@ module.exports = function(app){
 
    var Leaves_Controller = require('../../controller/Hrms/Leaves.controller.js');
    var Expenses_Controller = require('../../controller/Hrms/Expenses.controller.js');
+   var DailyReport_Controller = require('../../controller/Hrms/DailyReport.controller');
+
 
 
    // Leaves
@@ -30,5 +32,13 @@ module.exports = function(app){
    app.post('/API/Hrms/Expenses_View', Expenses_Controller.Expenses_View);
    app.post('/API/Hrms/Expenses_Update', Expenses_Controller.Expenses_Update);
    app.post('/API/Hrms/Expenses_Modify', Expenses_Controller.Expenses_Modify);
+
+
+   // DailyReport
+   app.post('/API/Hrms/DailyReport_Create', DailyReport_Controller.DailyReport_Create);
+   app.post('/API/Hrms/DailyReport_Update', DailyReport_Controller.DailyReport_Update);
+   app.post('/API/Hrms/DailyReport_List', DailyReport_Controller.DailyReport_List);
+   app.post('/API/Hrms/DailyReport_List_ForEmployee', DailyReport_Controller.DailyReport_List_ForEmployee);
+   app.post('/API/Hrms/DailyReport_Delete', DailyReport_Controller.DailyReport_Delete);
 
 }

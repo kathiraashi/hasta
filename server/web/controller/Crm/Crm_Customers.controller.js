@@ -1,6 +1,7 @@
 
 var CryptoJS = require("crypto-js");
 var CrmCustomersModel = require('./../../models/Crm/CrmCustomers.model.js');
+var AdminModel = require('./../../models/Admin/AdminManagement.model.js');
 var HrModel = require('./../../models/Hr/Employee.model.js');
 var ErrorManagement = require('./../../../handling/ErrorHandling.js');
 var mongoose = require('mongoose');
@@ -91,6 +92,7 @@ exports.CrmCustomers_Create = function(req, res) {
          Created_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
          Last_Modified_By : mongoose.Types.ObjectId(ReceivingData.User_Id),
          If_Deleted: false,
+         User_Created: false,
          Active_Status : ReceivingData.Active_Status || true,
       });
       
@@ -119,6 +121,27 @@ exports.CrmCustomers_List = function(req, res) {
          if(err) {
             ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customers List Find Query Error', 'Crm_Customers.controller.js', err);
             res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customers List!."});
+         } else {
+            var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
+            ReturnData = ReturnData.toString();
+            res.status(200).send({Status: true, Response: ReturnData });
+         }
+      });
+   }
+};
+exports.CrmCustomers_List_WithoutUserManage = function(req, res) {
+   var CryptoBytes  = CryptoJS.AES.decrypt(req.body.Info, 'SecretKeyIn@123');
+   var ReceivingData = JSON.parse(CryptoBytes.toString(CryptoJS.enc.Utf8));
+
+   if (!ReceivingData.User_Id || ReceivingData.User_Id === ''  ) {
+      res.status(400).send({Status: false, Message: "User Details can not be empty" });
+   }else {
+      CrmCustomersModel.CrmCustomersSchema
+         .find({'If_Deleted': false, 'User_Created': false}, {CompanyName: 1 }, {sort: { updatedAt: -1 }})
+         .exec(function(err, result) {
+         if(err) {
+            ErrorManagement.ErrorHandling.ErrorLogCreation(req, 'CRM Customers Simple List Find Query Error', 'Crm_Customers.controller.js', err);
+            res.status(417).send({status: false, Message: "Some error occurred while Find The Crm Customers Simple List!."});
          } else {
             var ReturnData = CryptoJS.AES.encrypt(JSON.stringify(result), 'SecretKeyOut@123');
             ReturnData = ReturnData.toString();
@@ -292,6 +315,9 @@ exports.CrmCustomers_Delete = function(req, res) {
          CrmCustomersModel.CrmTicketsSchema.updateMany(
             { Customer : mongoose.Types.ObjectId(ReceivingData.Customer_Id)  },
             {  $set: { If_Deleted : true } }).exec(),
+         AdminModel.User_Management.updateOne(
+            { Customer : mongoose.Types.ObjectId(ReceivingData.Customer_Id)  },
+            {  $set: { Active_Status : false } }).exec(),
       ]).then( result => {
          res.status(200).send({Status: true, Message: 'Customer Successfully Hided'  });
       }).catch(err => {

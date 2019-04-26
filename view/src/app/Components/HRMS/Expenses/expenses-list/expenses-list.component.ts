@@ -84,7 +84,7 @@ export class ExpensesListComponent implements OnInit {
       if (Stage === 'Stage_3') {
          this._ShowMenus = ['ModifyData'];
       }
-      if (Stage === 'Stage_5' || Stage === 'Stage_7') {
+      if ((Stage === 'Stage_5' || Stage === 'Stage_7') && this.User_Type !== 'Employee') {
          this._ShowMenus = ['Payment'];
       }
       if (Stage === 'Stage_6' || Stage === 'Stage_8') {
@@ -163,9 +163,11 @@ export class ExpensesListComponent implements OnInit {
             if (parseFloat(ResponseStatus['Response']['Total_Approved_Expenses'].toString()) === parseFloat(ResponseStatus['Response']['Total_Paid_Expenses'].toString())) {
                this._List[_index].Current_Status = 'Payment Completed';
                this._List[_index].Stage = 'Stage_8';
+               this._List[_index].Payment_Remarks = ResponseStatus['Response']['Payment_Remarks'];
             } else {
                this._List[_index].Current_Status = 'Payment Pending';
                this._List[_index].Stage = 'Stage_7';
+               this._List[_index].Payment_Remarks = ResponseStatus['Response']['Payment_Remarks'];
             }
             this._List[_index].Total_Paid_Expenses = ResponseStatus['Response']['Total_Paid_Expenses'];
             ResponseStatus['Response']['Expenses_Array'].map(obj => {

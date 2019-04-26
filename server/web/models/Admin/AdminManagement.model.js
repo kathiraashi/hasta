@@ -10,6 +10,7 @@ var UserManagementSchema = mongoose.Schema({
    Email: { type : String , required : true },
    User_Type: { type : String , required : true } ,
    Employee: { type: Schema.Types.ObjectId, ref: 'Employees' },
+   Customer: { type: Schema.Types.ObjectId, ref: 'CrmCustomers' },
    Reports_To: { type: Schema.Types.ObjectId, ref: 'User_Management' },
    Created_By: { type: Schema.Types.ObjectId, ref: 'User_Management' },
    Last_ModifiedBy: { type: Schema.Types.ObjectId, ref: 'User_Management' },

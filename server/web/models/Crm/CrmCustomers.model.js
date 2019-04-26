@@ -40,7 +40,8 @@ var Schema = mongoose.Schema;
       Created_By : { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Last_Modified_By: { type: Schema.Types.ObjectId, ref: 'User_Management', required : true },
       Active_Status: { type : Boolean , required : true},
-      If_Deleted: { type : Boolean , required : true }
+      If_Deleted: { type : Boolean , required : true },
+      User_Created: { type : Boolean , required : true },
       },
       { timestamps : true }
    );

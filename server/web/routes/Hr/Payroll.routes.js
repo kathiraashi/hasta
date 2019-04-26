@@ -11,4 +11,7 @@ module.exports = function(app){
       app.post('/API/Payroll/Payroll_Create', Controller.Payroll_Create);
       app.post('/API/Payroll/Payroll_List', Controller.Payroll_List);
       app.post('/API/Payroll/Payroll_View', Controller.Payroll_View);
+
+      app.post('/API/Payroll/Payroll_List_ForEmployee', Controller.Payroll_List_ForEmployee);
+
 };
